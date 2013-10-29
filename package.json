@@ -9,8 +9,9 @@
     "express": "3.4.3",
     "jade": "*",
     "mongodb": "",
-    "mongoose": ""
-    },
+    "mongoose": "",
+    "stylus": ""
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
