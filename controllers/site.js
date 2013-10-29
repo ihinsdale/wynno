@@ -11,7 +11,9 @@ exports.refresh = function(req, res) {
   twit.get('https://api.twitter.com/1.1/statuses/home_timeline.json', {count: 10}, function(error, data) {
     console.log('number of tweets:', data.length);
     for (var i = 0; i < data.length; i++) {
-      fs.writeFileSync('tweet' + i + 'keys.txt', Object.keys(data[i]));
+      for (var key in data[i]) {
+
+      }
     }
     // for (var i = 0; i < data.length; i++) {
     //   var tweet = {};
