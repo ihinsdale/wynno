@@ -43,7 +43,8 @@ var Schema = mongoose.Schema;
 //   notifications: Boolean
 // });
 
-exports.tweetSchema = new Schema({
+exports.tweetSchema = tweetSchema = new Schema({
+  recordId: Schema.Types.ObjectId,
   p: Number,
   vote: Number,
 
@@ -80,4 +81,5 @@ exports.tweetSchema = new Schema({
 
 });
 
-exports.Tweet = Tweet = mongoose.model('Tweet', exports.tweetSchema);
+// Create the Tweet model
+exports.Tweet = mongoose.model('Tweet', tweetSchema);

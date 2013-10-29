@@ -11,11 +11,10 @@ module.exports = function(app) {
   mongoose.connect(dbConnUrl);
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
+
+  // Once database connection is open, go back and launch the server
   db.once('open', function() {
-    // Create the server
     require('../app.js')(app);
   });
 
-  // Setup models
-  mongoose.model('Tweet', require('../models/Tweet.js').tweetSchema);
 };
