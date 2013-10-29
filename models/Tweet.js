@@ -26,9 +26,7 @@ var Tweet = module.exports = new Schema({
     location: String,
     description: String,
     url: String,
-  //*******************
-    entities: [Object],
-  //*******************
+    entities: Schema.Types.Mixed,
     protected: Boolean,
     followers_count: Number,
     friends_count: Number,
@@ -66,7 +64,7 @@ var Tweet = module.exports = new Schema({
   coordinates: Schema.Types.Mixed, // or perhaps String because it is geoJSON
   place: Schema.Types.Mixed, // or perhaps String
   contributors: Schema.Types.Mixed, // or perhaps String
-  
+
   // These all come as properties of an object called 'retweeted_status'
   retweeted_status: {
     created_at: String,
@@ -80,18 +78,14 @@ var Tweet = module.exports = new Schema({
     in_reply_to_user_id: Number,
     in_reply_to_user_id_str: String,
     in_reply_to_screen_name: String,
-  //*****************
-    user: [Object],
-  //*****************
+    user: Schema.Types.Mixed,
     //geo: null,
     coordinates: Schema.Types.Mixed, // or perhaps String
     place: Schema.Types.Mixed, // or perhaps String
     contributors: Schema.Types.Mixed, // or perhaps String
     retweet_count: Number,
     favorite_count: Number,
-  //*****************
-    entities: [Object],
-  //*****************
+    entities: Schema.Types.Mixed,
     favorited: Boolean,
     retweeted: Boolean,
     possibly_sensitive: Boolean,
