@@ -10,7 +10,8 @@
     "jade": "*",
     "mongodb": "",
     "mongoose": "",
-    "stylus": ""
+    "stylus": "",
+    "ntwitter": ""
   },
   "devDependencies": {
     "grunt": "~0.4.1",
