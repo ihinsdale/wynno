@@ -44,7 +44,6 @@ var Schema = mongoose.Schema;
 // });
 
 exports.tweetSchema = tweetSchema = new Schema({
-  recordId: Schema.Types.ObjectId,
   p: Number,
   vote: Number,
 
