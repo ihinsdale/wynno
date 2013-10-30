@@ -10,12 +10,14 @@ exports.index = function(req, res) {
 };
 
 exports.old = function(req, res) {
-  res.send();
+  db.findAllTweets(Tweet, function(docs){
+    res.send(docs);
+  });
 }
 
 exports.fresh = function(req, res) {
   // find the id of the last tweet saved to the db
-  db.findLastTweet(Tweet,
+  db.lastTweetId(Tweet,
     // then fetch new tweets since that id from Twitter API
     twitter.fetch,
     // and save those new tweets to the db

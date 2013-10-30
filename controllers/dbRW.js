@@ -20,9 +20,9 @@ exports.saveSync = saveSync = function(TweetModel, array, counter, callback) {
   } else if (callback) {
     callback();
   }
-}
+};
 
-exports.findLastTweet = function(TweetModel, callback, callback2) {
+exports.lastTweetId = function(TweetModel, callback, callback2) {
   var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
     n = n.toString(); // but n should be passed in as a string
     var result = n;
@@ -58,4 +58,13 @@ exports.findLastTweet = function(TweetModel, callback, callback2) {
   });
 }
 
-
+exports.findAllTweets = function(TweetModel, callback) {
+  TweetModel.find({}, 'text', {}, function(err, docs) {
+    if (err) {
+      console.log('error grabbing all tweets');
+    } else {
+      console.log('the docs look like:', docs);
+      callback(docs);
+    }
+  });
+};
