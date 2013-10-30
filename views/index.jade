@@ -1,5 +1,37 @@
 extends layout
 
 block content
+  .container(ng-view='')
+  script
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+  script(src='/public/app/bower_components/jquery/jquery.js')
+  script(src='/public/app/bower_components/angular/angular.js')
+
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-affix.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-alert.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-dropdown.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-tooltip.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-modal.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-transition.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-button.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-popover.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-typeahead.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-carousel.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-scrollspy.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-collapse.js')
+  script(src='../public/app/bower_components/bootstrap-sass/js/bootstrap-tab.js')
+
+  script(src='../public/app/bower_components/angular-resource/angular-resource.js')
+  script(src='../public/app/bower_components/angular-cookies/angular-cookies.js')
+  script(src='../public/app/bower_components/angular-sanitize/angular-sanitize.js')
+
+  script(src='../public/app/scripts/app.js')
+  script(src='../public/app/scripts/controllers/main.js')
+
   h1= title
   p Welcome to #{title}
