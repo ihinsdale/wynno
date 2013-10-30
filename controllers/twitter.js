@@ -5,6 +5,12 @@ exports.fetchAndSave = function(callback) {
   var saveSync = function(TweetModel, array, counter) {
     if (counter >= 0) {
       console.log('tweet id', array[counter].id_str, 'created at', array[counter].created_at);
+
+      // add empty p and vote fields to the tweet before adding to database
+      array[counter].p = null;
+      array[counter].vote = null;
+
+      // create tweet document and save it to the database
       var tweet = new TweetModel(array[counter]);
       tweet.save(function(error, tweet) {
         if (error) {
@@ -40,12 +46,12 @@ exports.fetchAndSave = function(callback) {
 
   var options = {count: 200};
   Tweet.findOne().sort('-_id').exec(function(err, item) {
-    console.log('last tweets id string is', item.id_str);
     if (err) {
       console.log('Error searching collection for a record');
     } else if (item === null) {
       console.log('Collection has no records');
     } else {
+      console.log('last tweets id string is', item.id_str);
       options.since_id = incStrNum(item.id_str); // this incrementing performed because since_id is actually inclusive,
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
       console.log(options);
