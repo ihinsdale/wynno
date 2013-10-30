@@ -1,6 +1,7 @@
 /*
  * GET home page.
  */
+var async = require('async');
 var twitter = require('./twitter.js');
 var db = require('./dbRW.js');
 var Tweet = require('../models/Tweet.js').Tweet;
@@ -16,10 +17,20 @@ exports.old = function(req, res) {
 }
 
 exports.fresh = function(req, res) {
-  // find the id of the last tweet saved to the db
-  db.lastTweetId(Tweet,
-    // then fetch new tweets since that id from Twitter API
+  async.waterfall([
+    // find (Twitter's) tweet id of the last saved tweet
+    db.lastTweetId,
+    // use that id to grab new tweets from Twitter API
     twitter.fetch,
-    // and save those new tweets to the db
-    db.saveSync);
+    // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
+    function(tweetsArray, callback) {
+      async.eachSeries(tweetsArray.reverse(), db.saveTweet, function(err) {
+        if (err) {
+          console.log('error saving tweet');
+        } else {
+          callback(null);
+        }
+      });
+    }
+  ]);
 };

@@ -11,7 +11,8 @@
     "mongodb": "",
     "mongoose": "",
     "stylus": "",
-    "ntwitter": ""
+    "ntwitter": "",
+    "async": ""
   },
   "devDependencies": {
     "grunt": "~0.4.1",
