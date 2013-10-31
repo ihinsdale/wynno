@@ -1,4 +1,5 @@
 var Tweet = require('../models/Tweet.js').Tweet;
+var _ = require('../node_modules/underscore/underscore-min.js')
 
 // function to save a tweet to the db
 exports.saveTweet = function(tweet, callback) {
@@ -23,7 +24,7 @@ processTweet = function(tweet) {
   tweet.__p = null;
   tweet.__vote = null;
   if (tweet.retweeted_status) {
-    tweet.__text = tweet.retweeted_status.text;
+    tweet.__text = _.unescape(tweet.retweeted_status.text);
     delete tweet.retweeted_status.text;
     tweet.__user = tweet.retweeted_status.user;
     delete tweet.retweeted_status.user;
@@ -34,7 +35,7 @@ processTweet = function(tweet) {
     tweet.__id_str = tweet.retweeted_status.id_str;
     delete tweet.retweeted_status.id_str;
   } else {
-    tweet.__text = tweet.text;
+    tweet.__text = _.unescape(tweet.text);
     delete tweet.text;
     tweet.__user = tweet.user;
     delete tweet.user;

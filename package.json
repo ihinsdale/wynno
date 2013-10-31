@@ -12,7 +12,8 @@
     "mongoose": "",
     "stylus": "",
     "ntwitter": "",
-    "async": ""
+    "async": "",
+    "underscore": ""
   },
   "devDependencies": {
     "grunt": "~0.4.1",
