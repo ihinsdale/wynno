@@ -1,5 +1,21 @@
 <div class="tweet" ng-repeat="tweet in tweets">
-  <div class="tweetText">
-    {{tweet.__origtext}}
+  <div class="tweeterImage">
+    <img src='{{tweet.__user.profile_image_url}}'>
+  </div>
+  <div class="tweetContent">
+    <div class="tweetMeta">
+      <div class="tweeterName">{{tweet.__user.name}}</div>
+      <div class="tweeterScreenName">{{tweet.__user.screen_name}}</div>
+      <div class="tweetTimestamp">{{tweet.__created_at}}</div>
+    </div>
+    <div class="tweetText">
+      {{tweet.__text}}
+    </div>
+    <div class="tweetFooter">
+      <div class="retweetedStatus">{{tweet.__retweeter.name}}</div>
+      <div class="tweetLink">
+        <a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">Link</a>
+      </div>
+    </div>
   </div>
 </div>

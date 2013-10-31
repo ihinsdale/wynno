@@ -46,13 +46,18 @@ var Schema = mongoose.Schema;
 exports.tweetSchema = tweetSchema = new Schema({
   __p: Number,
   __vote: Number,
-  __origtext: String, // this is necessary because the text field is truncated when the tweet is a retweet.
+  __text: String, // this is necessary because the text field is truncated when the tweet is a retweet.
   // i.e. full text resides in the retweeted_status nested object's text property
+  __user: Schema.Types.Mixed,
+  __created_at: String, //UTC time
+  __retweeter: Schema.Types.Mixed,
+  __id_str: String,
 
-  created_at: String, // UTC time
+
+  //created_at: String, // UTC time
   id: Number,
   id_str: String,
-  text: String,
+  //text: String,
   source: String,
   truncated: Boolean,
   in_reply_to_status_id: Number,
@@ -62,7 +67,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   in_reply_to_screen_name: String,
 
   // These all come as properties of an object called user
-  user: Schema.Types.Mixed,
+  //user: Schema.Types.Mixed,
 
   //geo: null, // deprecated by Twitter
   coordinates: Schema.Types.Mixed, // or perhaps String because it is geoJSON

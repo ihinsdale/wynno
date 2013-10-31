@@ -3,16 +3,10 @@ var Tweet = require('../models/Tweet.js').Tweet;
 // function to save a tweet to the db
 exports.saveTweet = function(tweet, callback) {
   console.log('tweet id', tweet.id_str, 'created at', tweet.created_at);
-  console.log('tweet text is', tweet.text);
-  
-  // add info to tweet object before storing in db
-  tweet.__p = null;
-  tweet.__vote = null;
-  if (tweet.retweeted_status) {
-    tweet.__origtext = tweet.retweeted_status.text;
-  } else {
-    tweet.__origtext = tweet.text;
-  }
+
+  // add info to tweet object and clean before storing in db
+  tweet = processTweet(tweet);
+
   // create tweet document and save it to the database
   var tweetDoc = new Tweet(tweet);
   tweetDoc.save(function(error, tweetDoc) {
@@ -24,6 +18,34 @@ exports.saveTweet = function(tweet, callback) {
     }
   });
 };
+
+processTweet = function(tweet) {
+  tweet.__p = null;
+  tweet.__vote = null;
+  if (tweet.retweeted_status) {
+    tweet.__text = tweet.retweeted_status.text;
+    delete tweet.retweeted_status.text;
+    tweet.__user = tweet.retweeted_status.user;
+    delete tweet.retweeted_status.user;
+    tweet.__created_at = tweet.retweeted_status.created_at;
+    delete tweet.retweeted_status.created_at;
+    tweet.__retweeter = tweet.user;
+    delete tweet.user;
+    tweet.__id_str = tweet.retweeted_status.id_str;
+    delete tweet.retweeted_status.id_str;
+  } else {
+    tweet.__text = tweet.text;
+    delete tweet.text;
+    tweet.__user = tweet.user;
+    delete tweet.user;
+    tweet.__created_at = tweet.created_at;
+    delete tweet.created_at;
+    tweet.__id_str = tweet.id_str;
+    //note we do not want to delete the id_str of the retweeting tweet
+    //because that is our marker for requests to the API
+  }
+  return tweet;
+}
 
 exports.lastTweetId = function(callback) {
   var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
@@ -63,8 +85,10 @@ exports.lastTweetId = function(callback) {
   });
 }
 
+var renderedTweetFields = '__p __vote __text __created_at __user __retweeter __id_str';
+
 exports.findAllTweets = function(callback) {
-  Tweet.find({}, '__origtext', { sort: { _id: -1 } }, function(err, docs) {
+  Tweet.find({}, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
     if (err) {
       console.log('error grabbing all tweets');
     } else {
@@ -79,7 +103,7 @@ exports.findTweetsSince_id = function(tweet_id, callback) {
   if (tweet_id) {
     criteria._id = {$gt: tweet_id};
   }
-  Tweet.find(criteria, '__origtext', { sort: { _id: -1 } }, function(err, docs) {
+  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
     if (err) {
       console.log('error grabbing new tweets');
     } else {
