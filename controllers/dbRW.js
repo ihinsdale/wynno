@@ -20,9 +20,13 @@ exports.saveTweet = function(tweet, callback) {
   });
 };
 
+// defines fields on tweet which are used in rendering the tweet
+// also unescapes tweet text like &amp;
 processTweet = function(tweet) {
   tweet.__p = null;
   tweet.__vote = null;
+  // if the text is a retweet, the tweet rendered to the user
+  // should look like the original tweet that has been retweeted
   if (tweet.retweeted_status) {
     tweet.__text = _.unescape(tweet.retweeted_status.text);
     delete tweet.retweeted_status.text;

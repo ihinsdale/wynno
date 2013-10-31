@@ -14,7 +14,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     yeoman: {
       // configurable paths
-      app: require('./bower.json').appPath || 'app',
+      app: require('./bower.json').appPath || 'public/app',
       dist: 'dist'
     },
     watch: {
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
     },
     connect: {
       options: {
-        port: 9000,
+        port: 3000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
         livereload: 35729
@@ -138,7 +138,7 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
-        cssDir: '.tmp/styles',
+        cssDir: '<%= yeoman.app %>/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
@@ -174,17 +174,17 @@ module.exports = function (grunt) {
       }
     },
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>'
-      }
+      //html: '<%= yeoman.app %>/index.html',
+      //options: {
+      //  dest: '<%= yeoman.dist %>'
+      //}
     },
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-      options: {
-        dirs: ['<%= yeoman.dist %>']
-      }
+      //html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      //css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      //options: {
+      //  dirs: ['<%= yeoman.dist %>']
+      //}
     },
     imagemin: {
       dist: {
@@ -366,5 +366,4 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  //grunt.loadNpmTasks('grunt-karma');
 };

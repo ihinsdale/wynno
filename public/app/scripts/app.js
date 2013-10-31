@@ -3,7 +3,8 @@
 angular.module('wynnoApp', [
   'ngCookies',
   'ngResource',
-  'ngSanitize'
+  'ngSanitize',
+  'ui.bootstrap'
 ])
   .config(function ($routeProvider) {
     $routeProvider
