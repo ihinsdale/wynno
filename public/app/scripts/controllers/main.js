@@ -9,7 +9,7 @@ angular.module('wynnoApp')
       $http.get('/new')
       .success(function(data2, status2, headers2, config2) {
         console.log('success getting new tweets, they look like:', data2);
-        $scope.tweets = _.extend($scope.tweets, data2);
+        $scope.tweets = data2.concat($scope.tweets);
       })
       .error(function(data2, status2) {
         console.log('error getting /new, data look like:', data2);

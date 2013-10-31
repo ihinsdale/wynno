@@ -11,7 +11,7 @@ exports.index = function(req, res) {
 };
 
 exports.old = function(req, res) {
-  db.findAllTweets(Tweet, function(docs){
+  db.findAllTweets(function(docs) {
     res.send(docs);
   });
 }
@@ -23,14 +23,22 @@ exports.fresh = function(req, res) {
     // use that id to grab new tweets from Twitter API
     twitter.fetch,
     // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
-    function(tweetsArray, callback) {
+    function(tweetsArray, _id, callback) {
       async.eachSeries(tweetsArray.reverse(), db.saveTweet, function(err) {
         if (err) {
           console.log('error saving tweet');
         } else {
-          callback(null);
+          callback(null, _id);
         }
       });
+    },
+    // calculate p-values for the new batch of tweets
+    // get this new batch of tweets out of the database
+    db.findTweetsSince_id,
+    // send the tweets back to the client
+    function(tweets, callback) {
+      res.send(tweets);
+      callback(null);
     }
   ]);
 };

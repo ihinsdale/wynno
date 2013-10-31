@@ -44,8 +44,10 @@ var Schema = mongoose.Schema;
 // });
 
 exports.tweetSchema = tweetSchema = new Schema({
-  p: Number,
-  vote: Number,
+  __p: Number,
+  __vote: Number,
+  __origtext: String, // this is necessary because the text field is truncated when the tweet is a retweet.
+  // i.e. full text resides in the retweeted_status nested object's text property
 
   created_at: String, // UTC time
   id: Number,
