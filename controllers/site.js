@@ -48,6 +48,9 @@ exports.processVote = function(req, res) {
   async.series([
     function(callback) {
       db.saveVote(data._id, data.vote, callback);
+    },
+    function(callback) {
+      res.send('successfully recorded your vote on that tweet');
     }
   ]);
 };

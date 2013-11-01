@@ -23,10 +23,10 @@ angular.module('wynnoApp')
     $scope.vote = function(_id, vote) {
       $http({method: 'POST', url: '/vote', data: {_id: _id, vote: vote}})
       .success(function(data, status, headers, config) {
-        console.log('success sending vote', data.vote, 'on tweet', data._id);
+        console.log('success sending vote', vote, 'on tweet', _id);
       })
       .error(function(data, status) {
-        console.log('error sending vote', data.vote, 'on tweet', data._id);
+        console.log('error sending vote', vote, 'on tweet', _id);
       });
     };
   });

@@ -1,5 +1,25 @@
 extends layout
 
+block nav
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .navContainer
+        //
+        .btn-navbar is used as the toggle for collapsed navbar content 
+        a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        //
+        Be sure to leave the brand out there if you want it shown 
+        a.brand(href='#') Project name
+        //
+        Everything you want hidden at 940px or less, place within here 
+        .nav-collapse.collapse
+          //
+          .nav, .navbar-search, .navbar-form, etc 
+
+
 block content
   .container(ng-view='')
   script
