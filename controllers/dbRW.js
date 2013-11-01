@@ -104,6 +104,7 @@ exports.findAllTweets = function(callback) {
 };
 
 exports.findTweetsSince_id = function(tweet_id, callback) {
+  //tweet_id must be a db record id, i.e. _id, not a Twitter API id
   var criteria = {};
   if (tweet_id) {
     criteria._id = {$gt: tweet_id};
@@ -117,3 +118,17 @@ exports.findTweetsSince_id = function(tweet_id, callback) {
     }
   });
 };
+
+exports.saveVote = function(tweet_id, vote, callback) {
+  //tweet_id must be a db record id, i.e. _id, not a Twitter API id
+  Tweet.update({_id: tweet_id}, {__vote: vote}, {}, function (err, numberAffected, raw) {
+    if (err) {
+      console.log('error updating tweet', tweet_id);
+    } else {
+      console.log('The number of updated documents was %d', numberAffected);
+      console.log('The raw response from Mongo was ', raw);
+      callback(null);
+    }
+  });
+};
+

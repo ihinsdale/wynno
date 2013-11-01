@@ -9,4 +9,6 @@ module.exports = function(app) {
   app.get('/old', routes.old)
   // GET request to /new initiates request to Twitter API, saves tweets to database, send to client
   app.get('/new', routes.fresh);
+  // POST request to /vote saves vote in the database
+  app.post('/vote', routes.processVote);
 };

@@ -14,7 +14,7 @@ exports.old = function(req, res) {
   db.findAllTweets(function(docs) {
     res.send(docs);
   });
-}
+};
 
 exports.fresh = function(req, res) {
   async.waterfall([
@@ -39,6 +39,15 @@ exports.fresh = function(req, res) {
     function(tweets, callback) {
       res.send(tweets);
       callback(null);
+    }
+  ]);
+};
+
+exports.processVote = function(req, res) {
+  var data = req.body;
+  async.series([
+    function(callback) {
+      db.saveVote(data._id, data.vote, callback);
     }
   ]);
 };
