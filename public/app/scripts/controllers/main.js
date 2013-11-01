@@ -2,6 +2,7 @@
 
 angular.module('wynnoApp')
   .controller('MainCtrl', function ($scope, $http) {
+
     $http.get('/old')
     .success(function(data, status, headers, config) {
       console.log('success getting old tweets, they look like:', data);
@@ -18,4 +19,14 @@ angular.module('wynnoApp')
     .error(function(data, status) {
       console.log('error getting /old, data look like:', data);
     });
+
+    $scope.vote = function(_id, vote) {
+      $http({method: 'POST', url: '/vote', data: {_id: _id, vote: vote}})
+      .success(function(data, status, headers, config) {
+        console.log('success sending vote', data.vote, 'on tweet', data._id);
+      })
+      .error(function(data, status) {
+        console.log('error sending vote', data.vote, 'on tweet', data._id);
+      });
+    };
   });

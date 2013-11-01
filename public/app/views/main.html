@@ -1,5 +1,5 @@
 <div class="tweet" ng-repeat="tweet in tweets">
-  <div class="voteAye">
+  <div ng-click="vote(tweet._id, 1)" class="voteAye">
     <div class="aye">
       <span class="icon-checkmark-circle"></span>
     </div>
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div class="voteNay">
+  <div ng-click="vote({{tweet._id}}, 0)" class="voteNay">
     <div class="nay">
       <span class="icon-cancel-circle"></span>
     </div>

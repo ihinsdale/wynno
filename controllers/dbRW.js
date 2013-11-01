@@ -90,7 +90,7 @@ exports.lastTweetId = function(callback) {
   });
 }
 
-var renderedTweetFields = '__p __vote __text __created_at __user __retweeter __id_str';
+var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str';
 
 exports.findAllTweets = function(callback) {
   Tweet.find({}, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
