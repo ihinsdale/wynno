@@ -17,21 +17,24 @@ body {
 $tweet-border: 1px solid #e0e0e0;
 
 .container {
-    width: 480px;
+    width: 620px;
 }
 
 .tweet {
     margin-left: auto;
     margin-right: auto;
+    overflow: auto;
 }
 
 .tweetStuff {
     width: 458px;
-    min-height: 70px;
+    height: 100%;
     padding: 5px 10px 5px 10px;
     border-left: $tweet-border;
     border-bottom: $tweet-border;
     border-right: $tweet-border;
+    display: inline;
+    float: left;
 }
 
 .tweeterImage {
@@ -84,12 +87,41 @@ $tweet-border: 1px solid #e0e0e0;
     display: block;
 }
 
+.voteAye, .voteNay {
+    width: 50px;
+    display: inline;
+    float: left;
+}
 
+$vote-button-side-padding: 20px;
+$vote-button-vert-padding: 20px;
+$glyph-size: 30px;
 
+.voteAye {
+    padding-right: $vote-button-side-padding;
+}
 
+.voteNay {
+    padding-left: $vote-button-side-padding;
+}
 
+.aye {
+    width: $glyph-size;
+    height: $glyph-size;
+    float: right;
+    padding: $vote-button-vert-padding 0;
+    font-size: $glyph-size;
+    color: green;
+}
 
-
+.nay {
+    width: $glyph-size;
+    height: $glyph-size;
+    float: left;
+    padding: $vote-button-vert-padding 0;
+    font-size: $glyph-size;
+    color: red;
+}
 
 
 .hero-unit {

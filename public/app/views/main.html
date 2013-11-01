@@ -1,4 +1,9 @@
 <div class="tweet" ng-repeat="tweet in tweets">
+  <div class="voteAye">
+    <div class="aye">
+      <span class="icon-checkmark-circle"></span>
+    </div>
+  </div>
   <div class="tweetStuff">
     <div class="tweeterImage">
       <img src='{{tweet.__user.profile_image_url}}'>
@@ -18,6 +23,11 @@
           <a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">Link</a>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="voteNay">
+    <div class="nay">
+      <span class="icon-cancel-circle"></span>
     </div>
   </div>
 </div>

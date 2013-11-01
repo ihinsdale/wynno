@@ -53,3 +53,9 @@
 .icon-filter2:before {
 	content: "\e609";
 }
+.icon-thumbs-up:before {
+	content: "\e60a";
+}
+.icon-thumbs-up2:before {
+	content: "\e60b";
+}
