@@ -9,10 +9,88 @@ html, body {
 }
 
 body {
-    background: #cccccc;
+    background: #f8f8f8;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
+
+$tweet-border: 1px solid #e0e0e0;
+
+.container {
+    width: 480px;
+}
+
+.tweet {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tweetStuff {
+    width: 458px;
+    min-height: 70px;
+    padding: 5px 10px 5px 10px;
+    border-left: $tweet-border;
+    border-bottom: $tweet-border;
+    border-right: $tweet-border;
+}
+
+.tweeterImage {
+    float: left;
+    padding: 4px 10px 6px 0px;
+    display: inline-block;
+}
+
+.tweetContent {
+    width: 400px;
+    height: 100%;
+    display: inline-block;
+}
+
+.tweetMeta {
+    display: block;
+}
+
+.tweeterName {
+    font-weight: bold;
+    display: inline;
+}
+
+.tweeterScreenName {
+    font-size: 12px;
+    display: inline;
+}
+
+.tweetTimestamp {
+    float: right;
+    display: inline;
+}
+
+.tweetText {
+    display: block;
+}
+
+.tweetFooter {
+    width: 100%;
+}
+
+.retweetedStatus {
+    float: left;
+    width: 100%;
+    display: block;
+}
+
+.tweetLink {
+    float: right;
+    display: block;
+}
+
+
+
+
+
+
+
+
 
 .hero-unit {
     margin: 50px auto 0 auto;

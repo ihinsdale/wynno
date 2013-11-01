@@ -6811,12 +6811,93 @@ html, body {
 
 /* line 11, main.scss */
 body {
-  background: #cccccc;
+  background: #f8f8f8;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 }
 
-/* line 17, main.scss */
+/* line 19, main.scss */
+.container {
+  width: 480px;
+}
+
+/* line 23, main.scss */
+.tweet {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 28, main.scss */
+.tweetStuff {
+  width: 458px;
+  min-height: 70px;
+  padding: 5px 10px 5px 10px;
+  border-left: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+/* line 37, main.scss */
+.tweeterImage {
+  float: left;
+  padding: 4px 10px 6px 0px;
+  display: inline-block;
+}
+
+/* line 43, main.scss */
+.tweetContent {
+  width: 400px;
+  height: 100%;
+  display: inline-block;
+}
+
+/* line 49, main.scss */
+.tweetMeta {
+  display: block;
+}
+
+/* line 53, main.scss */
+.tweeterName {
+  font-weight: bold;
+  display: inline;
+}
+
+/* line 58, main.scss */
+.tweeterScreenName {
+  font-size: 12px;
+  display: inline;
+}
+
+/* line 63, main.scss */
+.tweetTimestamp {
+  float: right;
+  display: inline;
+}
+
+/* line 68, main.scss */
+.tweetText {
+  display: block;
+}
+
+/* line 72, main.scss */
+.tweetFooter {
+  width: 100%;
+}
+
+/* line 76, main.scss */
+.retweetedStatus {
+  float: left;
+  width: 100%;
+  display: block;
+}
+
+/* line 82, main.scss */
+.tweetLink {
+  float: right;
+  display: block;
+}
+
+/* line 95, main.scss */
 .hero-unit {
   margin: 50px auto 0 auto;
   width: 300px;
@@ -6828,7 +6909,7 @@ body {
   padding: 60px;
 }
 
-/* line 28, main.scss */
+/* line 106, main.scss */
 .hero-unit h1 {
   font-size: 60px;
   line-height: 1;
