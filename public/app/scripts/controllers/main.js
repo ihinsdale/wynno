@@ -20,13 +20,21 @@ angular.module('wynnoApp')
       console.log('error getting /old, data look like:', data);
     });
 
-    $scope.vote = function(_id, vote) {
+    $scope.vote = function($index, _id, vote) {
+      var priorVote = $scope.tweets[$index].__vote;
+      // update the model with the new vote
+      $scope.tweets[$index].__vote = vote;
+      // save the vote to the database
       $http({method: 'POST', url: '/vote', data: {_id: _id, vote: vote}})
       .success(function(data, status, headers, config) {
         console.log('success sending vote', vote, 'on tweet', _id);
       })
       .error(function(data, status) {
         console.log('error sending vote', vote, 'on tweet', _id);
+        // if the vote wasn't recorded, reset it on the model
+        $scope.tweets[$index].__vote = priorVote;
       });
     };
+
+    $scope.threshold = 0;
   });
