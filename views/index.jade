@@ -15,10 +15,10 @@ block nav
         .nav-collapse.collapse
           // .nav, .navbar-search, .navbar-form, etc 
           ul.nav
-            li.active(ng-click='viewPassing()')
+            li(ng-click='viewPassing()', ng-class='{active: passingActive}')
               a(href='')
                 span.icon-smiley
-            li(ng-click='viewFailing()')
+            li(ng-click='viewFailing()', ng-class='{active: failingActive}')
               a(href='')
                 span.icon-eye-blocked
             li

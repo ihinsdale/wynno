@@ -57,14 +57,19 @@ angular.module('wynnoApp')
   })
   .controller('NavCtrl', function($rootScope, $scope) {
     $rootScope.viewingPassing = true;
+    $scope.passingActive = true;
     $scope.viewPassing = function() {
       if (!$rootScope.viewingPassing) {
         $rootScope.viewingPassing = !$rootScope.viewingPassing;
+        $scope.passingActive = true;
+        $scope.failingActive = false;
       }
     };
     $scope.viewFailing = function() {
       if ($rootScope.viewingPassing) {
         $rootScope.viewingPassing = !$rootScope.viewingPassing;
+        $scope.passingActive = false;
+        $scope.failingActive = true;
       }
     }
   });
