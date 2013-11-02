@@ -59,3 +59,51 @@
 .icon-thumbs-up2:before {
 	content: "\e60b";
 }
+.icon-remove:before {
+	content: "\e60c";
+}
+.icon-eye-blocked:before {
+	content: "\e60d";
+}
+.icon-eye:before {
+	content: "\e60e";
+}
+.icon-equalizer:before {
+	content: "\e60f";
+}
+.icon-happy:before {
+	content: "\e610";
+}
+.icon-neutral:before {
+	content: "\e611";
+}
+.icon-sad:before {
+	content: "\e612";
+}
+.icon-smiley:before {
+	content: "\e613";
+}
+.icon-drawer:before {
+	content: "\e614";
+}
+.icon-heart:before {
+	content: "\e615";
+}
+.icon-remove:before {
+	content: "\e617";
+}
+.icon-settings:before {
+	content: "\e616";
+}
+.icon-trash:before {
+	content: "\e618";
+}
+.icon-heart:before {
+	content: "\e619";
+}
+.icon-params:before {
+	content: "\e61a";
+}
+.icon-stack:before {
+	content: "\e61b";
+}
