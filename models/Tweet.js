@@ -52,6 +52,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   __created_at: String, //UTC time
   __retweeter: Schema.Types.Mixed,
   __id_str: String,
+  __displayStatus: Boolean,
 
 
   //created_at: String, // UTC time

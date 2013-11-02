@@ -1,7 +1,7 @@
 extends layout
 
 block nav
-  .navbar.navbar-fixed-top
+  .navbar.navbar-fixed-top(ng-controller='NavCtrl')
     .navbar-inner
       .navContainer
         // .btn-navbar is used as the toggle for collapsed navbar content 
@@ -15,14 +15,14 @@ block nav
         .nav-collapse.collapse
           // .nav, .navbar-search, .navbar-form, etc 
           ul.nav
-            li.active
-              a(href='#')
+            li.active(ng-click='viewPassing()')
+              a(href='')
                 span.icon-smiley
-            li
-              a(href='#')
+            li(ng-click='viewFailing()')
+              a(href='')
                 span.icon-eye-blocked
             li
-              a(href='#')
+              a(href='')
                 span.icon-cogs
 
 

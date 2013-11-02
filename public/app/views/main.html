@@ -1,4 +1,4 @@
-<div class="tweet" ng-repeat="tweet in tweets" ng-hide="tweet.__p < threshold || tweet.__vote == 0">
+<div class="tweet" ng-repeat="tweet in tweets" ng-show="displayed(tweet)">
   <div ng-click="vote(tweet, 1)" class="voteAye">
     <div class="aye">
       <span class="icon-checkmark-circle"></span>
