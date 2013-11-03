@@ -6902,22 +6902,23 @@ body {
 
 /* line 92, main.scss */
 .voteAye, .voteNay {
+  height: 50px;
   width: 50px;
   display: inline;
   float: left;
 }
 
-/* line 102, main.scss */
+/* line 103, main.scss */
 .voteAye {
   padding-right: 20px;
 }
 
-/* line 106, main.scss */
+/* line 107, main.scss */
 .voteNay {
   padding-left: 20px;
 }
 
-/* line 110, main.scss */
+/* line 111, main.scss */
 .aye {
   width: 30px;
   height: 30px;
@@ -6927,7 +6928,7 @@ body {
   color: #62d7a5;
 }
 
-/* line 119, main.scss */
+/* line 120, main.scss */
 .nay {
   width: 30px;
   height: 30px;
@@ -6937,7 +6938,7 @@ body {
   color: #ff9c74;
 }
 
-/* line 129, main.scss */
+/* line 130, main.scss */
 .hero-unit {
   margin: 50px auto 0 auto;
   width: 300px;
@@ -6949,20 +6950,20 @@ body {
   padding: 60px;
 }
 
-/* line 140, main.scss */
+/* line 141, main.scss */
 .hero-unit h1 {
   font-size: 60px;
   line-height: 1;
   letter-spacing: -1px;
 }
 
-/* line 146, main.scss */
+/* line 147, main.scss */
 .nav li a {
   font-size: 25px;
   padding-right: 27px !important;
 }
 
-/* line 151, main.scss */
+/* line 152, main.scss */
 .navbar .brand {
   padding-left: 40px;
   font-size: 32px;
@@ -6970,7 +6971,7 @@ body {
   text-shadow: none;
 }
 
-/* line 158, main.scss */
+/* line 159, main.scss */
 .navbar-inner {
   background-color: #9cd5bc;
   background-image: none;

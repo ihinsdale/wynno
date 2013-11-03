@@ -52,6 +52,14 @@ angular.module('wynnoApp')
       }
     };
 
+    $scope.hideVoteButtons = function(tweet) {
+      if (tweet.__vote !== null) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     $scope.threshold = 0;
 
   })

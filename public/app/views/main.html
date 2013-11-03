@@ -1,6 +1,6 @@
 <div class="tweet" ng-repeat="tweet in tweets" ng-show="displayed(tweet)">
   <div ng-click="vote(tweet, 1)" class="voteAye">
-    <div class="aye">
+    <div class="aye" ng-hide="hideVoteButtons(tweet)">
       <span class="icon-checkmark-circle"></span>
     </div>
   </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
   <div ng-click="vote(tweet, 0)" class="voteNay">
-    <div class="nay">
+    <div class="nay" ng-hide="hideVoteButtons(tweet)">
       <span class="icon-cancel-circle"></span>
     </div>
   </div>
