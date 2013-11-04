@@ -12,6 +12,10 @@ angular.module('wynnoApp', [
         templateUrl: '/app/views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/settings', {
+        templateUrl: '/app/views/settings.html',
+        controller: 'SettingsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

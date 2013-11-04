@@ -80,4 +80,7 @@ angular.module('wynnoApp')
         $scope.failingActive = true;
       }
     }
+  })
+  .controller('SettingsCtrl', function($scope, $http) {
+    
   });
