@@ -3,23 +3,25 @@
 angular.module('wynnoApp')
 
   .controller('MainCtrl', function ($rootScope, $scope, $http) {
-    // upon main page load, make a GET request to /old
-    $http.get('/old')
-    .success(function(data, status, headers, config) {
-      console.log('success getting old tweets, they look like:', data);
-      $scope.tweets = data;
-      // $http.get('/new')
-      // .success(function(data2, status2, headers2, config2) {
-      //   console.log('success getting new tweets, they look like:', data2);
-      //   $scope.tweets = data2.concat($scope.tweets);
-      // })
-      // .error(function(data2, status2) {
-      //   console.log('error getting /new, data look like:', data2);
-      // });
-    })
-    .error(function(data, status) {
-      console.log('error getting /old, data look like:', data);
-    });
+    if (!$rootScope.tweets) {
+      // upon main page load, make a GET request to /old
+      $http.get('/old')
+      .success(function(data, status, headers, config) {
+        console.log('success getting old tweets, they look like:', data);
+        $rootScope.tweets = data;
+        // $http.get('/new')
+        // .success(function(data2, status2, headers2, config2) {
+        //   console.log('success getting new tweets, they look like:', data2);
+        //   $rootScope.tweets = data2.concat($rootScope.tweets);
+        // })
+        // .error(function(data2, status2) {
+        //   console.log('error getting /new, data look like:', data2);
+        // });
+      })
+      .error(function(data, status) {
+        console.log('error getting /old, data look like:', data);
+      });
+    }
 
     // function to record user's votes
     $scope.vote = function(tweet, vote) {
