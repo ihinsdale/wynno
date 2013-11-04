@@ -1,4 +1,4 @@
-/*
+/*!
  * Bootstrap v2.3.2
  *
  * Copyright 2012 Twitter, Inc
@@ -6830,6 +6830,7 @@ body {
 
 /* line 31, main.scss */
 .tweetStuff {
+  background: #ffffff;
   width: 458px;
   height: 100%;
   padding: 5px 10px 5px 10px;
@@ -6840,67 +6841,67 @@ body {
   float: left;
 }
 
-/* line 42, main.scss */
+/* line 43, main.scss */
 .tweeterImage {
   float: left;
   padding: 4px 10px 6px 0px;
   display: inline-block;
 }
 
-/* line 48, main.scss */
+/* line 49, main.scss */
 .tweetContent {
   width: 400px;
   height: 100%;
   display: inline-block;
 }
 
-/* line 54, main.scss */
+/* line 55, main.scss */
 .tweetMeta {
   display: block;
 }
 
-/* line 58, main.scss */
+/* line 59, main.scss */
 .tweeterName {
   font-weight: bold;
   display: inline;
 }
 
-/* line 63, main.scss */
+/* line 64, main.scss */
 .tweeterScreenName {
   font-size: 12px;
   display: inline;
 }
 
-/* line 68, main.scss */
+/* line 69, main.scss */
 .tweetTimestamp {
   float: right;
   display: inline;
 }
 
-/* line 73, main.scss */
+/* line 74, main.scss */
 .tweetText {
   display: block;
 }
 
-/* line 77, main.scss */
+/* line 78, main.scss */
 .tweetFooter {
   width: 100%;
 }
 
-/* line 81, main.scss */
+/* line 82, main.scss */
 .retweetedStatus {
   float: left;
   width: 100%;
   display: block;
 }
 
-/* line 87, main.scss */
+/* line 88, main.scss */
 .tweetLink {
   float: right;
   display: block;
 }
 
-/* line 92, main.scss */
+/* line 93, main.scss */
 .voteAye, .voteNay {
   height: 50px;
   width: 50px;
@@ -6908,17 +6909,17 @@ body {
   float: left;
 }
 
-/* line 103, main.scss */
+/* line 104, main.scss */
 .voteAye {
   padding-right: 20px;
 }
 
-/* line 107, main.scss */
+/* line 108, main.scss */
 .voteNay {
   padding-left: 20px;
 }
 
-/* line 111, main.scss */
+/* line 112, main.scss */
 .aye {
   width: 30px;
   height: 30px;
@@ -6928,7 +6929,7 @@ body {
   color: #62d7a5;
 }
 
-/* line 120, main.scss */
+/* line 121, main.scss */
 .nay {
   width: 30px;
   height: 30px;
@@ -6938,7 +6939,7 @@ body {
   color: #ff9c74;
 }
 
-/* line 130, main.scss */
+/* line 131, main.scss */
 .hero-unit {
   margin: 50px auto 0 auto;
   width: 300px;
@@ -6950,30 +6951,36 @@ body {
   padding: 60px;
 }
 
-/* line 141, main.scss */
+/* line 142, main.scss */
 .hero-unit h1 {
   font-size: 60px;
   line-height: 1;
   letter-spacing: -1px;
 }
 
-/* line 147, main.scss */
+/* line 148, main.scss */
 .nav li a {
   font-size: 25px;
   padding-right: 27px !important;
 }
 
-/* line 152, main.scss */
+/* line 153, main.scss */
 .navbar .brand {
   padding-left: 40px;
   font-size: 32px;
-  color: #a63001;
+  font-weight: bold;
+  color: #c4006b;
   text-shadow: none;
 }
 
-/* line 159, main.scss */
+/* line 161, main.scss */
 .navbar-inner {
-  background-color: #9cd5bc;
+  background-color: #f8f8f8;
   background-image: none;
   background-image: no-repeat;
+}
+
+/* line 167, main.scss */
+.active {
+  color: #0f8e02;
 }

@@ -29,6 +29,7 @@ $tweet-border: 1px solid #e0e0e0;
 }
 
 .tweetStuff {
+    background: #ffffff;
     width: 458px;
     height: 100%;
     padding: 5px 10px 5px 10px;
@@ -152,12 +153,17 @@ $glyph-size: 30px;
 .navbar .brand {
     padding-left: 40px;
     font-size: 32px;
-    color: #a63001;
+    font-weight: bold;
+    color: #c4006b;
     text-shadow: none;
 }
 
 .navbar-inner {
-    background-color: #9cd5bc;
+    background-color: #f8f8f8;
     background-image: none;
     background-image: no-repeat;
+}
+
+.active {
+    color: #0f8e02;
 }
