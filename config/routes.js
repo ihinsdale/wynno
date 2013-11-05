@@ -11,4 +11,8 @@ module.exports = function(app) {
   app.get('/new', routes.fresh);
   // POST request to /vote saves vote in the database
   app.post('/vote', routes.processVote);
+  // POST request to /settings saves new filter setting in the database
+  app.post('/settings', routes.processSetting);
+  // GET request to /settings
+  app.get('/settings', routes.getSettings);
 };

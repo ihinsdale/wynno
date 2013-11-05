@@ -1,4 +1,5 @@
 var Tweet = require('../models/Tweet.js').Tweet;
+var User = require('../models/User.js').User;
 var _ = require('../node_modules/underscore/underscore-min.js')
 
 // function to save a tweet to the db
@@ -121,14 +122,150 @@ exports.findTweetsSince_id = function(tweet_id, callback) {
 
 exports.saveVote = function(tweet_id, vote, callback) {
   //tweet_id must be a db record id, i.e. _id, not a Twitter API id
-  Tweet.update({_id: tweet_id}, {__vote: vote}, {}, function (err, numberAffected, raw) {
-    if (err) {
-      console.log('error updating tweet', tweet_id);
+
+  // prevent any malicious $-sign input
+  if (tweet_id.indexOf('$') !== -1 || vote.indexOf('$') !== -1) {
+    callback('invalid input');
+  } else {
+    Tweet.update({_id: tweet_id}, {__vote: vote}, {}, function (err, numberAffected, raw) {
+      if (err) {
+        console.log('error updating tweet', tweet_id);
+        callback(err);
+      } else {
+        console.log('The number of updated documents was %d', numberAffected);
+        console.log('The raw response from Mongo was ', raw);
+        callback(null);
+      }
+    });
+  }
+};
+
+exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_protect, input, callback) {
+  var addToList = function(list) {
+    User.findById(user_id, list, function(err, doc) {
+      if (err) {
+        console.log('error adding', input, 'as a', mute_or_protect, user_or_word);
+      } else {
+        // if user/word isn't already in list, add him
+        if (doc[list].indexOf(input) === -1) {
+          var what = {};
+          what[list] = input;
+          doc.update({$push: what}, function(err, numberAffected, raw) {
+            if (err) {
+              console.log('error adding', input, 'as a', mute_or_protect, user_or_word);
+              callback(err);
+            } else {
+              console.log('The number of updated documents was %d', numberAffected);
+              console.log('The raw response from Mongo was ', raw);
+              callback(null);
+            }
+          });
+        // if user/word is already in list, don't need to do anything
+        } else {
+          console.log(user_or_word, 'already in list, didnt need to add');
+          callback(null);
+        }
+      }
+    });
+  };
+
+  var removeFromList = function(list) {
+    User.findById(user_id, list, function(err, doc) {
+      if (err) {
+        console.log('error removing', input, 'as a', mute_or_protect, user_or_word);
+      } else {
+        var location = doc[list].indexOf(input)
+        // if user/word isn't in list, don't need to do anything
+        if (doc[list].indexOf(input) === -1) {
+          callback(null);
+        } else {
+          var what = {};
+          what[list] = doc[list].slice(0,location).concat(doc[list].slice(location + 1));
+          doc.update(what, function(err, numberAffected, raw) {
+            if (err) {
+              console.log('error removing', input, 'as a', mute_or_protect, user_or_word);
+              callback(err);
+            } else {
+              console.log('The number of updated documents was %d', numberAffected);
+              console.log('The raw response from Mongo was ', raw);
+              callback(null);
+            }
+          });
+        }
+      }
+    });
+  };
+
+  if (add_or_remove.indexOf('$') !== -1 || user_or_word.indexOf('$') !== -1 || mute_or_protect.indexOf('$') !== -1) {
+    callback('invalid input');
+    // ALSO CHECK THAT USER_ID IS THE CURRENTLY LOGGED IN USER
+  } else {
+    if (add_or_remove === 'add') {
+      if (user_or_word === 'user') {
+        if (mute_or_protect === 'mute') {
+          addToList('mutedUsers');
+        } else if (mute_or_protect === 'protect') {
+          addToList('protectedUsers');
+        } else {
+          callback('improperly specified request');
+        }
+      } else if (user_or_word === 'word') {
+        if (mute_or_protect === 'mute') {
+          addToList('mutedWords');
+        } else if (mute_or_protect === 'protect') {
+          addToList('protectedWords');
+        } else {
+          callback('improperly specified request');
+        }
+      } else {
+        callback('improperly specified request');
+      }
+    } else if (add_or_remove === 'remove') {
+      if (user_or_word === 'user') {
+        if (mute_or_protect === 'mute') {
+          removeFromList('mutedUsers');
+        } else if (mute_or_protect === 'protect') {
+          removeFromList('protectedUsers');
+        } else {
+          callback('improperly specified request');
+        }
+      } else if (user_or_word === 'word') {
+        if (mute_or_protect === 'mute') {
+          removeFromList('mutedWords');
+        } else if (mute_or_protect === 'protect') {
+          removeFromList('protectedWords');
+        } else {
+          callback('improperly specified request');
+        }
+      } else {
+        callback('improperly specified request');
+      }
     } else {
-      console.log('The number of updated documents was %d', numberAffected);
-      console.log('The raw response from Mongo was ', raw);
+      callback('improperly specified request');
+    }
+  }
+};
+
+exports.createUser = function(user, callback) {
+  var newUser = new User(user);
+  newUser.save(function(error, newUser) {
+    if (error) {
+      callback('error creating user');
+    } else {
+      console.log('Created record for new user',newUser.email, 'with _id', newUser._id, 'in db');
       callback(null);
     }
   });
 };
 
+exports.getSettings = function(user_id, callback) {
+  User.findById(user_id, 'mutedUsers protectedUsers mutedWords protectedWords', function(err, doc) {
+    if (err) {
+      console.log('error finding user', user_id, 'settings');
+      callback(err);
+    } else {
+      console.log('user settings look like', doc);
+      callback(null, doc);
+    }
+  });
+};

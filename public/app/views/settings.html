@@ -1,28 +1,28 @@
 <div class="lists">
-  <div class="protectedUsers">
-    <input type="text" ng-model="{{protectedUserInput}}" ng-minlength="1" placeholder="Enter a username"></input>
-    <button ng-click="saveProtUser(protectedUserInput)" value="Add"></button>
+  <div class="protectedUsers"> Protected Users
+    <input type="text" ng-model="protectedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
+    <button ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
     <div class="protectedUser" ng-repeat="user in settings.protectedUsers">
       {{user}}
     </div>
   </div>
-  <div class="protectedWords">
-    <input type="text" ng-model="{{protectedWordInput}}" ng-minlength="1" placeholder="Enter a word"></input>
-    <button ng-click="saveProtWord(protectedWordInput)" value="Add"></button>
+  <div class="protectedWords"> Protected Words
+    <input type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+    <button ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
     <div class="protectedWord" ng-repeat="word in settings.protectedWords">
       {{word}}
     </div>
   </div>
-  <div class="mutedUsers">
-    <input type="text" ng-model="{{mutedUserInput}}" ng-minlength="1" placeholder="Enter a username"></input>
-    <button ng-click="saveMuteUser(mutedUserInput)" value="Add"></button>
+  <div class="mutedUsers"> Muted Users
+    <input type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
+    <button ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
     <div class="mutedUser" ng-repeat="user in settings.mutedUsers">
       {{user}}
     </div>
   </div>
-  <div class="mutedWords">
-    <input type="text" ng-model="{{mutedWordInput}}" ng-minlength="1" placeholder="Enter a word"></input>
-    <button ng-click="saveMuteWord(mutedWordInput)" value="Add"></button>
+  <div class="mutedWords"> Muted Words
+    <input type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+    <button ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
     <div class="mutedWord" ng-repeat="word in settings.mutedWords">
       {{word}}
     </div>

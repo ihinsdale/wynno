@@ -44,6 +44,7 @@ var Schema = mongoose.Schema;
 // });
 
 exports.tweetSchema = tweetSchema = new Schema({
+  __user_id: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   __p: Number,
   __vote: Number,
   __text: String, // this is necessary because the text field is truncated when the tweet is a retweet.
@@ -53,7 +54,6 @@ exports.tweetSchema = tweetSchema = new Schema({
   __retweeter: Schema.Types.Mixed,
   __id_str: String,
   __displayStatus: Boolean,
-
 
   //created_at: String, // UTC time
   id: Number,
