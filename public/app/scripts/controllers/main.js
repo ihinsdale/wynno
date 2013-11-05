@@ -22,7 +22,7 @@ angular.module('wynnoApp')
         console.log('error getting /old, data look like:', data);
       });
     }
-    if (!rootScope.settings) {
+    if (!$rootScope.settings) {
       $http.get('/settings')
       .success(function(data3, status3, header3, config3) {
         console.log('success getting settings, they look like:', data3);
@@ -51,17 +51,80 @@ angular.module('wynnoApp')
       });
     };
 
+    $scope.hasWordInList = function(text, list) {
+      var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+      var noExtraSpaces = noPunctuation.replace(/\s{2,}/g," ");
+      var words = noExtraSpaces.split(' ');
+      var wordsHash = {};
+      for (var i = 0; i < words.length; i++) {
+        wordsHash[words[i]] = true;
+      }
+      for (var j = 0; j < list.length; j++) {
+        if (wordsHash.hasOwnProperty(list[j])) {
+          console.log('matched a word')
+          return true;
+        }
+      }
+      console.log('no word match');
+      return false;
+    };
+    $scope.hasUserInList = function(user1, user2, list) {
+      for (var i = 0; i < list.length; i++) {
+        if (user1 === list[i] || user2 === list[i]) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $scope.isMutedUser = function(tweeter, retweeter) {
+      return $scope.hasUserInList(tweeter, retweeter, $rootScope.settings.mutedUsers);
+    };
+    $scope.hasMutedWord = function(text) {
+      return $scope.hasWordInList(text, $rootScope.settings.mutedWords);
+    };
+    $scope.isProtectedUser = function(tweeter, retweeter) {
+      return $scope.hasUserInList(tweeter, retweeter, $rootScope.settings.protectedUsers);
+    };
+    $scope.hasProtectedWord = function(text) {
+      return $scope.hasWordInList(text, $rootScope.settings.protectedWords);
+    };
+
     // function to determine whether a tweet is displayed or not
     $scope.displayed = function(tweet) {
+      var retweeter;
+      if (tweet.__retweeter) {
+        retweeter = tweet.__retweeter.screen_name;
+      }
       if ($rootScope.viewing === 'passing') {
         if (tweet.__vote === null) {
-          return (tweet.__p >= $scope.threshold);
+          if ($scope.isProtectedUser(tweet.__user.screen_name, retweeter) || $scope.hasProtectedWord(tweet.__text)) {
+            return true;
+          } else if ($scope.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text)) {
+            return false;
+          } else {
+            if (tweet.__p >= $scope.threshold) {
+              return true;
+            } else {
+              return false;
+            }
+          }
         } else {
           return !!tweet.__vote;
         }
       } else if ($rootScope.viewing === 'failing') {
         if (tweet.__vote === null) {
-          return (tweet.__p < $scope.threshold);
+          if ($scope.isProtectedUser(tweet.__user.screen_name, retweeter) || $scope.hasProtectedWord(tweet.__text)) {
+            return false;
+          } else if ($scope.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text)) {
+            return true;
+          } else {
+            if (tweet.__p >= $scope.threshold) {
+              return false;
+            } else {
+              return true;
+            }
+          }
         } else {
           return !tweet.__vote;
         }
@@ -75,7 +138,7 @@ angular.module('wynnoApp')
       } else {
         return false;
       }
-    }
+    };
 
     $scope.threshold = 0;
 

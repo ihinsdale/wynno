@@ -123,21 +123,17 @@ exports.findTweetsSince_id = function(tweet_id, callback) {
 exports.saveVote = function(tweet_id, vote, callback) {
   //tweet_id must be a db record id, i.e. _id, not a Twitter API id
 
-  // prevent any malicious $-sign input
-  if (tweet_id.indexOf('$') !== -1 || vote.indexOf('$') !== -1) {
-    callback('invalid input');
-  } else {
-    Tweet.update({_id: tweet_id}, {__vote: vote}, {}, function (err, numberAffected, raw) {
-      if (err) {
-        console.log('error updating tweet', tweet_id);
-        callback(err);
-      } else {
-        console.log('The number of updated documents was %d', numberAffected);
-        console.log('The raw response from Mongo was ', raw);
-        callback(null);
-      }
-    });
-  }
+  // should do something here to protect against malicious $-sign input?
+  Tweet.update({_id: tweet_id}, {__vote: vote}, {}, function (err, numberAffected, raw) {
+    if (err) {
+      console.log('error updating tweet', tweet_id);
+      callback(err);
+    } else {
+      console.log('The number of updated documents was %d', numberAffected);
+      console.log('The raw response from Mongo was ', raw);
+      callback(null);
+    }
+  });
 };
 
 exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_protect, input, callback) {
