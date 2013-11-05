@@ -6984,3 +6984,27 @@ body {
 .active {
   color: #0f8e02;
 }
+
+/* line 171, main.scss */
+.protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
+  width: 280px;
+}
+
+/* line 175, main.scss */
+.protectedUser, .protectedWord, .mutedUser, .mutedWord {
+  width: 100%;
+}
+
+/* line 179, main.scss */
+.user, .word {
+  display: inline;
+  width: 180px;
+}
+
+/* line 184, main.scss */
+.removeSetting {
+  display: inline;
+  width: 16px;
+  padding-left: 4px;
+  font-size: 16px;
+}

@@ -99,7 +99,7 @@ $tweet-border: 1px solid #e0e0e0;
 
 $vote-button-side-padding: 20px;
 $vote-button-vert-padding: 20px;
-$glyph-size: 30px;
+$tweet-glyph-size: 30px;
 
 .voteAye {
     padding-right: $vote-button-side-padding;
@@ -110,20 +110,20 @@ $glyph-size: 30px;
 }
 
 .aye {
-    width: $glyph-size;
-    height: $glyph-size;
+    width: $tweet-glyph-size;
+    height: $tweet-glyph-size;
     float: right;
     padding: $vote-button-vert-padding 0;
-    font-size: $glyph-size;
+    font-size: $tweet-glyph-size;
     color: #62d7a5;
 }
 
 .nay {
-    width: $glyph-size;
-    height: $glyph-size;
+    width: $tweet-glyph-size;
+    height: $tweet-glyph-size;
     float: left;
     padding: $vote-button-vert-padding 0;
-    font-size: $glyph-size;
+    font-size: $tweet-glyph-size;
     color: #ff9c74;
 }
 
@@ -166,4 +166,24 @@ $glyph-size: 30px;
 
 .active {
     color: #0f8e02;
+}
+
+.protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
+    width: 280px;
+}
+
+.protectedUser, .protectedWord, .mutedUser, .mutedWord {
+    width: 100%;
+}
+
+.user, .word {
+    display: inline;
+    width: 180px;
+}
+
+.removeSetting {
+    display: inline;
+    width: 16px;
+    padding-left: 4px;
+    font-size: 16px;
 }

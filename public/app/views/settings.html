@@ -3,28 +3,40 @@
     <input type="text" ng-model="protectedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
     <button ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
     <div class="protectedUser" ng-repeat="user in settings.protectedUsers">
-      {{user}}
+      <div class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
+        <span class="icon-cancel-circle"></span>
+      </div>
+      <div class="user">{{user}}</div>
     </div>
   </div>
   <div class="protectedWords"> Protected Words
     <input type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
     <button ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
     <div class="protectedWord" ng-repeat="word in settings.protectedWords">
-      {{word}}
+      <div class="removeSetting" ng-click="updateSetting('remove','word','protect', word)">
+        <span class="icon-cancel-circle"></span>
+      </div>
+      <div class="word">{{word}}</div>
     </div>
   </div>
   <div class="mutedUsers"> Muted Users
     <input type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
     <button ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
     <div class="mutedUser" ng-repeat="user in settings.mutedUsers">
-      {{user}}
+      <div class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
+        <span class="icon-cancel-circle"></span>
+      </div>
+      <div class="user">{{user}}</div>
     </div>
   </div>
   <div class="mutedWords"> Muted Words
     <input type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
     <button ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
     <div class="mutedWord" ng-repeat="word in settings.mutedWords">
-      {{word}}
+      <div class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
+        <span class="icon-cancel-circle"></span>
+      </div>
+      <div class="word">{{word}}</div>
     </div>
   </div>
 </div>
