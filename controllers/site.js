@@ -59,7 +59,7 @@ exports.processVote = function(req, res) {
 exports.processSetting = function(req, res) {
   var data = req.body;
   console.log('request data look like', data)
-  async.series([
+  async.waterfall([
     // function(callback) {
     //   db.createUser({email: 'ihinsdale@gmail.com', password: 'test'}, callback);
     // },
@@ -67,7 +67,10 @@ exports.processSetting = function(req, res) {
       db.saveSetting(data.user_id, data.add_or_remove, data.user_or_word, data.mute_or_protect, data.input, callback);
     },
     function(callback) {
-      res.send('successfully updated your settings');
+      db.getSettings('52783164c5d992a75e000001', callback);
+    },
+    function(settings, callback) {
+      res.send(settings);
       callback(null);
     }
   ]);

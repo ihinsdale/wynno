@@ -22,14 +22,16 @@ angular.module('wynnoApp')
         console.log('error getting /old, data look like:', data);
       });
     }
-    $http.get('/settings')
-    .success(function(data3, status3, header3, config3) {
-      console.log('success getting settings, they look like:', data3);
-      $scope.settings = data3;
-    })
-    .error(function(data3, status3) {
-      console.log('error getting settings');
-    })
+    if (!rootScope.settings) {
+      $http.get('/settings')
+      .success(function(data3, status3, header3, config3) {
+        console.log('success getting settings, they look like:', data3);
+        $rootScope.settings = data3;
+      })
+      .error(function(data3, status3) {
+        console.log('error getting settings');
+      })
+    }
 
     // function to record user's votes
     $scope.vote = function(tweet, vote) {
@@ -102,11 +104,12 @@ angular.module('wynnoApp')
     }
   })
 
-  .controller('SettingsCtrl', function($scope, $http) {
+  .controller('SettingsCtrl', function($rootScope, $scope, $http) {
     $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_protect, input) {
       $http({method: 'POST', url: '/settings',
         data: {user_id: '52783164c5d992a75e000001', add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_protect: mute_or_protect, input: input}})
       .success(function(data, status, headers, config) {
+        $rootScope.settings = data;
         console.log('success updating settings to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
       })
       .error(function(data, status) {
