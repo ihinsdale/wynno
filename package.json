@@ -13,7 +13,8 @@
     "stylus": "",
     "ntwitter": "",
     "async": "",
-    "underscore": ""
+    "underscore": "",
+    "zerorpc": ""
   },
   "devDependencies": {
     "grunt": "~0.4.1",
