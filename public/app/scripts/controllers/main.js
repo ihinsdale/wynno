@@ -61,11 +61,9 @@ angular.module('wynnoApp')
       }
       for (var j = 0; j < list.length; j++) {
         if (wordsHash.hasOwnProperty(list[j])) {
-          console.log('matched a word')
           return true;
         }
       }
-      console.log('no word match');
       return false;
     };
     $scope.hasUserInList = function(user1, user2, list) {
@@ -89,18 +87,31 @@ angular.module('wynnoApp')
     $scope.hasProtectedWord = function(text) {
       return $scope.hasWordInList(text, $rootScope.settings.protectedWords);
     };
-
-    // function to determine whether a tweet is displayed or not
-    $scope.displayed = function(tweet) {
+    $scope.tweetIsProtected = function(tweet) {
       var retweeter;
       if (tweet.__retweeter) {
         retweeter = tweet.__retweeter.screen_name;
       }
+      tweet.__isProtected = ($scope.isProtectedUser(tweet.__user.screen_name, retweeter) || $scope.hasProtectedWord(tweet.__text));
+    };
+    $scope.tweetIsMuted = function(tweet) {
+      var retweeter;
+      if (tweet.__retweeter) {
+        retweeter = tweet.__retweeter.screen_name;
+      }
+      tweet.__isMuted = ($scope.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text));
+    }
+
+    // function to determine whether a tweet is displayed or not
+    $scope.displayed = function(tweet) {
+
       if ($rootScope.viewing === 'passing') {
         if (tweet.__vote === null) {
-          if ($scope.isProtectedUser(tweet.__user.screen_name, retweeter) || $scope.hasProtectedWord(tweet.__text)) {
+          $scope.tweetIsProtected(tweet);
+          $scope.tweetIsMuted(tweet);
+          if (tweet.__isProtected) {
             return true;
-          } else if ($scope.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text)) {
+          } else if (tweet.__isMuted) {
             return false;
           } else {
             if (tweet.__p >= $scope.threshold) {
@@ -114,9 +125,11 @@ angular.module('wynnoApp')
         }
       } else if ($rootScope.viewing === 'failing') {
         if (tweet.__vote === null) {
-          if ($scope.isProtectedUser(tweet.__user.screen_name, retweeter) || $scope.hasProtectedWord(tweet.__text)) {
+          $scope.tweetIsProtected(tweet);
+          $scope.tweetIsMuted(tweet);
+          if (tweet.__isProtected) {
             return false;
-          } else if ($scope.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text)) {
+          } else if (tweet.__isMuted) {
             return true;
           } else {
             if (tweet.__p >= $scope.threshold) {
@@ -133,7 +146,7 @@ angular.module('wynnoApp')
 
     // if tweet has been voted on, hide the vote buttons
     $scope.hideVoteButtons = function(tweet) {
-      if (tweet.__vote !== null) {
+      if (tweet.__vote !== null || tweet.__isProtected || tweet.__isMuted) {
         return true;
       } else {
         return false;
