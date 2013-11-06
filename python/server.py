@@ -1,3 +1,4 @@
+import pymongo
 import zerorpc
 
 class HelloRPC(object):
