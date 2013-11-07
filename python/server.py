@@ -15,6 +15,7 @@ print 'Out of ' + str(tweets.find().count()) + ' total tweets'
 votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
 nonvotedTweets = tweets.find( {"__vote": None})
 print str(nonvotedTweets.count())
+print str(type(nonvotedTweets))
 
 def tweet_features(tweet):
   features = {}
@@ -33,6 +34,11 @@ def tweet_features(tweet):
   # certain keywords like cartoon
 
   return features
+
+def save_guesses(guesses):
+  for pair in guesses:
+    print db.tweets.find_one({"_id": pair[0]})
+  return
 
 def crunch(votedTweets, nonvotedTweets):
   votedFeatureSets = [(tweet_features(tweet), tweet['__vote']) for tweet in votedTweets]
@@ -56,9 +62,22 @@ def crunch(votedTweets, nonvotedTweets):
   print nltk.classify.accuracy(classifier, testSet)
   classifier.show_most_informative_features(10)
 
-  nonvotedFeatureSet = [tweet_features(tweet) for tweet in nonvotedTweets]
-  print classifier.batch_classify(nonvotedFeatureSet)
+  guesses = []
+  for tweet in nonvotedTweets:
+    guesses.append([tweet['_id'], round(classifier.prob_classify(tweet_features(tweet)).prob(1), 3)])
 
+  save_guesses(guesses)
+
+  # to check that prob_classify is working the way I expect:
+  # (and indeed it does)
+  # nonvotedFeatureSets = [tweet_features(tweet) for tweet in nonvotedTweets]
+  # probguesses = [tweet.prob(1) for tweet in classifier.batch_prob_classify(nonvotedFeatureSets)]
+  # guesses = classifier.batch_classify(nonvotedFeatureSets)
+  # for i in range(0,len(guesses)):
+  #   if guesses[i] != round(probguesses[i]):
+  #     print 'there is a difference'
+  #   elif guesses[i] == round(probguesses[i]):
+  #     print 'same'
 
   # errors = []
   # for (tweet, tag) in devtestSet:
@@ -68,12 +87,12 @@ def crunch(votedTweets, nonvotedTweets):
 
   # for (tag, guess, tweet) in sorted(errors):
   #   print 'correct=%-8s guess=%-8s features=%-30s' % (tag, guess, tweet)
-  return
+
+  return guesses
 
 crunch(votedTweets, nonvotedTweets)
 
-def save_guesses():
-  return
+
 
 # class HelloRPC(object):
 #     def hello(self, name):
