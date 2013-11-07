@@ -3,6 +3,7 @@ import zerorpc
 import nltk
 import random
 import math
+from bson.json_util import dumps
 
 from pymongo import MongoClient
 client = MongoClient()
@@ -15,7 +16,6 @@ print 'Out of ' + str(tweets.find().count()) + ' total tweets'
 votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
 nonvotedTweets = tweets.find( {"__vote": None})
 print str(nonvotedTweets.count())
-print str(type(nonvotedTweets))
 
 def tweet_features(tweet):
   features = {}
@@ -34,11 +34,6 @@ def tweet_features(tweet):
   # certain keywords like cartoon
 
   return features
-
-def save_guesses(guesses):
-  for pair in guesses:
-    print db.tweets.find_one({"_id": pair[0]})
-  return
 
 def crunch(votedTweets, nonvotedTweets):
   votedFeatureSets = [(tweet_features(tweet), tweet['__vote']) for tweet in votedTweets]
@@ -62,11 +57,19 @@ def crunch(votedTweets, nonvotedTweets):
   print nltk.classify.accuracy(classifier, testSet)
   classifier.show_most_informative_features(10)
 
+  # errors = []
+  # for (tweet, tag) in devtestSet:
+  #   guess = classifier.classify(tweet)
+  #   if guess != tag:
+  #     errors.append( (tag, guess, tweet) )
+
+  # for (tag, guess, tweet) in sorted(errors):
+  #   print 'correct=%-8s guess=%-8s features=%-30s' % (tag, guess, tweet)
+
   guesses = []
   for tweet in nonvotedTweets:
     guesses.append([tweet['_id'], round(classifier.prob_classify(tweet_features(tweet)).prob(1), 3)])
-
-  save_guesses(guesses)
+  return guesses
 
   # to check that prob_classify is working the way I expect:
   # (and indeed it does)
@@ -79,28 +82,22 @@ def crunch(votedTweets, nonvotedTweets):
   #   elif guesses[i] == round(probguesses[i]):
   #     print 'same'
 
-  # errors = []
-  # for (tweet, tag) in devtestSet:
-  #   guess = classifier.classify(tweet)
-  #   if guess != tag:
-  #     errors.append( (tag, guess, tweet) )
-
-  # for (tag, guess, tweet) in sorted(errors):
-  #   print 'correct=%-8s guess=%-8s features=%-30s' % (tag, guess, tweet)
-
   return guesses
 
-crunch(votedTweets, nonvotedTweets)
+def save_guesses(guesses):
+  for pair in guesses:
+    result = db.tweets.update({"_id": pair[0]}, {"$set": {"__p": pair[1]}})
+    if result['err']:
+      raise SaveError('there was an error saving the prediction')
+  return guesses
 
+class HelloRPC(object):
+  def predict(self):
+    return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
 
-
-# class HelloRPC(object):
-#     def hello(self, name):
-#         return "Hello, %s" % name
-
-# s = zerorpc.Server(HelloRPC())
-# s.bind("tcp://0.0.0.0:4242")
-# s.run()
+s = zerorpc.Server(HelloRPC())
+s.bind("tcp://0.0.0.0:4242")
+s.run()
 
 # take all tweets that have been voted on, divide into training and dev sets
 # where training is 4/5 and dev 1/5
