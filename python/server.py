@@ -2,38 +2,66 @@ import pymongo
 import zerorpc
 import nltk
 import random
+import math
 
 from pymongo import MongoClient
 client = MongoClient()
 db = client.test
 tweets = db.tweets
+
+print 'Tweets voted on: ' + str(tweets.find({"__vote": {"$gte": 0}}).count())
+print 'Out of ' + str(tweets.find().count()) + ' total tweets'
+
 votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
 
 def tweet_features(tweet):
   features = {}
   features['tweeter'] = tweet['__user']['screen_name']
 
-  # if retweeter
-  features['retweeter'] = tweet['__retweeter']['screen_name']
+  if '__retweeter' in tweet:
+    features['isRetweet'] = True
+    features['retweeter'] = tweet['__retweeter']['screen_name']
+  else:
+    features['isRetweet'] = False
+    features['retweeter'] = None
+
+  # contains link / more than one
+  # contains hashtag / more than one
+  # whether person being retweeted has e.g. > 5,000 followers
+  # length of tweet
+  # and of course the words in the tweet
+  # certain keywords like cartoon
 
   return features
 
-
 featureSets = [(tweet_features(tweet), tweet['__vote']) for tweet in votedTweets]
-#random.shuffle(feature_sets)
+random.shuffle(featureSets)
 
-twoThirds = math.floor(len(featureSets)*2/3)
-halfOfRemaining = math.floor(len(featureSets)*5/6)
+twoThirds = int(math.floor(len(featureSets)*2/3))
+print 'Size of training set:'
+print twoThirds
+halfOfRemaining = int(math.floor(len(featureSets)*5/6))
+print 'Size of devtest set:'
+print halfOfRemaining - twoThirds
+print 'Size of test set:'
+print len(featureSets) - halfOfRemaining
 
 trainSet = featureSets[:twoThirds]
 devtestSet = featureSets[twoThirds:halfOfRemaining]
 testSet = featureSets[halfOfRemaining:]
 
-print 'Tweets voted on: ' + str(tweets.find({"__vote": {"$gte": 0}}).count())
-print 'Out of ' + str(tweets.find({"__vote": None}).count()) ' total tweets'
-#for tweet in tweets.find():
-#    print tweet
-print 'hello, world'
+classifier = nltk.NaiveBayesClassifier.train(trainSet)
+print nltk.classify.accuracy(classifier, devtestSet)
+print nltk.classify.accuracy(classifier, testSet)
+
+# errors = []
+# for (tweet, tag) in devtestSet:
+#   guess = classifier.classify(tweet)
+#   if guess != tag:
+#     errors.append( (tag, guess, tweet) )
+
+# for (tag, guess, tweet) in sorted(errors):
+#   print 'correct=%-8s guess=%-8s features=%-30s' % (tag, guess, tweet)
 
 # class HelloRPC(object):
 #     def hello(self, name):
