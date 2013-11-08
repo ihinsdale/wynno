@@ -2,11 +2,22 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 
 # Install Python dependencies
+git clone git://github.com/zeromq/libzmq.git
+cd libzmq
+./autogen.sh
+./configure     # add other options here
+make
+make check
+sudo make install
+sudo ldconfig
+
 sudo apt-get install python-pip
 sudo pip install pymongo
-sudo pip install zerorpc
 sudo pip install -U numpy
 sudo pip install -U pyyaml nltk
+sudo pip install pyzmq
+sudo pip install zerorpc
+
 
 # Install nvm: node-version manager
 # https://github.com/creationix/nvm

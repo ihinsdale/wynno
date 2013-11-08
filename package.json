@@ -14,7 +14,8 @@
     "ntwitter": "",
     "async": "",
     "underscore": "",
-    "zerorpc": ""
+    "zerorpc": "",
+    "nodemon": ""
   },
   "devDependencies": {
     "grunt": "~0.4.1",
