@@ -23,6 +23,7 @@ sudo pip install pymongo
 sudo pip install -U numpy
 sudo pip install -U pyyaml nltk
 
+sudo apt-get install libevent-dev
 sudo pip install zerorpc
 
 # Install nvm: node-version manager
@@ -52,7 +53,7 @@ nvm use v0.10.21
 
 # Install Heroku toolbelt
 # https://toolbelt.heroku.com/debian
-wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+# wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 # git pull and install dotfiles as well
 # cd $HOME
