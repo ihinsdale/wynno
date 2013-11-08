@@ -5,7 +5,7 @@
 sudo service mongodb start
 
 # Install node dependencies
-npm install
+npm install -g
 
 # then launch python and node servers
 python python/server.py & nodemon app.js
