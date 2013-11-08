@@ -39,6 +39,8 @@ processTweet = function(tweet) {
     delete tweet.user;
     tweet.__id_str = tweet.retweeted_status.id_str;
     delete tweet.retweeted_status.id_str;
+    tweet.__entities = tweet.retweeted_status.entities;
+    delete tweet.retweeted_status.entities;
   } else {
     tweet.__text = _.unescape(tweet.text);
     delete tweet.text;
@@ -49,6 +51,8 @@ processTweet = function(tweet) {
     tweet.__id_str = tweet.id_str;
     //note we do not want to delete the id_str of the retweeting tweet
     //because that is our marker for requests to the API
+    tweet.__entities = tweet.entities;
+    delete tweet.entities;
   }
   return tweet;
 }
@@ -91,15 +95,16 @@ exports.lastTweetId = function(callback) {
   });
 }
 
-var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str';
+var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
 
 exports.findAllTweets = function(callback) {
   Tweet.find({}, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
     if (err) {
       console.log('error grabbing all tweets');
+      callback('there was an error grabbing tweets from db');
     } else {
       console.log('the docs look like:', docs);
-      callback(docs);
+      callback(null, docs);
     }
   });
 };

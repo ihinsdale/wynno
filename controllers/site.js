@@ -6,15 +6,21 @@ var twitter = require('./twitter.js');
 var db = require('./dbRW.js');
 var Tweet = require('../models/Tweet.js').Tweet;
 var algo = require('./algo.js');
+var rendering = require('./rendering.js');
 
 exports.index = function(req, res) {
   res.render('index', { title: 'Express' });
 };
 
 exports.old = function(req, res) {
-  db.findAllTweets(function(docs) {
-    res.send(docs);
-  });
+  async.waterfall([
+    db.findAllTweets,
+    rendering.renderLinks,
+    function(tweets, callback) {
+      res.send(tweets);
+      callback(null);
+    }
+  ]);
 };
 
 exports.fresh = function(req, res) {
@@ -41,6 +47,8 @@ exports.fresh = function(req, res) {
     algo.crunchTheNumbers,
     // get this new batch of tweets out of the database
     db.findTweetsSince_id,
+    // render any links in the tweets
+    rendering.renderLinks,
     // send the tweets back to the client
     function(tweets, callback) {
       res.send(tweets);

@@ -7,8 +7,12 @@ exports.fetch = function(id, _id, callback) {
     options.since_id = id;
   }
   twit.get('https://api.twitter.com/1.1/statuses/home_timeline.json', options, function(error, data) {
-    console.log('number of tweets:', data.length);
-    callback(null, data, _id);
+    if (error) {
+      console.log('there was an error getting tweets from Twitter API:', error);
+    } else {
+      console.log('number of tweets:', data.length);
+      callback(null, data, _id);
+    }
   });
 };
 
