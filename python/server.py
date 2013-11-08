@@ -89,11 +89,14 @@ def save_guesses(guesses):
     result = db.tweets.update({"_id": pair[0]}, {"$set": {"__p": pair[1]}})
     if result['err']:
       raise SaveError('there was an error saving the prediction')
-  return guesses
+  #return guesses
+  return
 
 class HelloRPC(object):
   def predict(self):
-    return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
+    save_guesses(crunch(votedTweets, nonvotedTweets))
+    #return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
+    return 'success'
 
 s = zerorpc.Server(HelloRPC())
 s.bind("tcp://0.0.0.0:4242")

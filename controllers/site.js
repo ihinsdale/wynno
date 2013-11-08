@@ -5,6 +5,7 @@ var async = require('async');
 var twitter = require('./twitter.js');
 var db = require('./dbRW.js');
 var Tweet = require('../models/Tweet.js').Tweet;
+var algo = require('./algo.js');
 
 exports.index = function(req, res) {
   res.render('index', { title: 'Express' });
@@ -33,6 +34,7 @@ exports.fresh = function(req, res) {
       });
     },
     // calculate p-values for the new batch of tweets
+    algo.crunchTheNumbers,
     // get this new batch of tweets out of the database
     db.findTweetsSince_id,
     // send the tweets back to the client

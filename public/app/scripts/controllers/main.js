@@ -3,35 +3,52 @@
 angular.module('wynnoApp')
 
   .controller('MainCtrl', function ($rootScope, $scope, $http) {
-    if (!$rootScope.tweets) {
-      // upon main page load, make a GET request to /old
-      $http.get('/old')
-      .success(function(data, status, headers, config) {
-        console.log('success getting old tweets, they look like:', data);
-        $rootScope.tweets = data;
-        $http.get('/new')
-        .success(function(data2, status2, headers2, config2) {
-          console.log('success getting new tweets, they look like:', data2);
-          $rootScope.tweets = data2.concat($rootScope.tweets);
+    $scope.getOldTweets = function(callback) {
+      if (!$rootScope.tweets) {
+        // upon main page load, make a GET request to /old
+        $http.get('/old')
+        .success(function(data, status, headers, config) {
+          console.log('success getting old tweets, they look like:', data);
+          $rootScope.tweets = data;
+          if (callback) {
+            callback();
+          }
         })
-        .error(function(data2, status2) {
-          console.log('error getting /new, data look like:', data2);
+        .error(function(data, status) {
+          console.log('error getting /old, data look like:', data);
         });
+      }
+    };
+
+    $scope.getNewTweets = function(callback) {
+      $http.get('/new')
+      .success(function(data2, status2, headers2, config2) {
+        console.log('success getting new tweets, they look like:', data2);
+        $rootScope.tweets = data2.concat($rootScope.tweets);
+        if (callback) {
+          callback();
+        }
       })
-      .error(function(data, status) {
-        console.log('error getting /old, data look like:', data);
+      .error(function(data2, status2) {
+        console.log('error getting /new, data look like:', data2);
       });
     }
-    if (!$rootScope.settings) {
-      $http.get('/settings')
-      .success(function(data3, status3, header3, config3) {
-        console.log('success getting settings, they look like:', data3);
-        $rootScope.settings = data3;
-      })
-      .error(function(data3, status3) {
-        console.log('error getting settings');
-      })
-    }
+
+    $scope.getSettings = function(callback) {
+      if (!$rootScope.settings) {
+        $http.get('/settings')
+        .success(function(data3, status3, header3, config3) {
+          console.log('success getting settings, they look like:', data3);
+          $rootScope.settings = data3;
+          if (callback) {
+            callback();
+          }
+        })
+        .error(function(data3, status3) {
+          console.log('error getting settings');
+        })
+      }
+    };
 
     // function to record user's votes
     $scope.vote = function(tweet, vote) {
@@ -66,6 +83,7 @@ angular.module('wynnoApp')
       }
       return false;
     };
+
     $scope.hasUserInList = function(user1, user2, list) {
       for (var i = 0; i < list.length; i++) {
         if (user1 === list[i] || user2 === list[i]) {
@@ -104,7 +122,6 @@ angular.module('wynnoApp')
 
     // function to determine whether a tweet is displayed or not
     $scope.displayed = function(tweet) {
-
       if ($rootScope.viewing === 'passing') {
         if (tweet.__vote === null) {
           $scope.tweetIsProtected(tweet);
@@ -153,7 +170,11 @@ angular.module('wynnoApp')
       }
     };
 
-    $scope.threshold = 0;
+    $scope.getOldTweets(function() {
+      $scope.getNewTweets();
+    });
+    $scope.getSettings();
+    $scope.threshold = 0.5;
 
   })
 
