@@ -1,23 +1,28 @@
 #!/bin/bash
 # Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
 
-# Install Python dependencies
-git clone git://github.com/zeromq/libzmq.git
-cd libzmq
-./autogen.sh
-./configure     # add other options here
-make
-make check
-sudo make install
-sudo ldconfig
+sudo apt-get update
+sudo apt-get install build-essential
 
-sudo apt-get install python-pip
+# Install MongoDB
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+sudo apt-get update
+sudo apt-get install mongodb-10gen
+
+# Install Python dependencies
+sudo install python-setuptools
+sudo easy_install pip
+
+sudo apt-get install libzmq-dev
+sudo pip install pyzmq
+
 sudo pip install pymongo
+
 sudo pip install -U numpy
 sudo pip install -U pyyaml nltk
-sudo pip install pyzmq
-sudo pip install zerorpc
 
+sudo pip install zerorpc
 
 # Install nvm: node-version manager
 # https://github.com/creationix/nvm
@@ -62,12 +67,3 @@ wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 # ln -sb dotfiles/.bashrc .
 # ln -sb dotfiles/.bashrc_custom .
 # ln -sf dotfiles/.emacs.d .
-
-
-
-
-
-
-
-
-python python/server.py & nodemon app.js
