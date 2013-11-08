@@ -13,6 +13,7 @@ sudo apt-get install mongodb-10gen
 # Install Python dependencies
 sudo apt-get install python-setuptools
 sudo apt-get install python-pip
+sudo apt-get install python-dev
 
 sudo apt-get install libzmq-dev
 sudo pip install pyzmq
