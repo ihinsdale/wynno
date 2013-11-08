@@ -69,18 +69,6 @@ def crunch(votedTweets, nonvotedTweets):
   guesses = []
   for tweet in nonvotedTweets:
     guesses.append([tweet['_id'], round(classifier.prob_classify(tweet_features(tweet)).prob(1), 3)])
-  return guesses
-
-  # to check that prob_classify is working the way I expect:
-  # (and indeed it does)
-  # nonvotedFeatureSets = [tweet_features(tweet) for tweet in nonvotedTweets]
-  # probguesses = [tweet.prob(1) for tweet in classifier.batch_prob_classify(nonvotedFeatureSets)]
-  # guesses = classifier.batch_classify(nonvotedFeatureSets)
-  # for i in range(0,len(guesses)):
-  #   if guesses[i] != round(probguesses[i]):
-  #     print 'there is a difference'
-  #   elif guesses[i] == round(probguesses[i]):
-  #     print 'same'
 
   return guesses
 
@@ -92,17 +80,14 @@ def save_guesses(guesses):
   #return guesses
   return
 
-class HelloRPC(object):
+class RPC(object):
   def predict(self):
     save_guesses(crunch(votedTweets, nonvotedTweets))
-    #return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
     return 'success'
+    # this will return the p's for all nonvoted tweets which have just been crunched
+    # requires save_guesses to return the guesses
+    # return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
 
-s = zerorpc.Server(HelloRPC())
+s = zerorpc.Server(RPC())
 s.bind("tcp://0.0.0.0:4242")
 s.run()
-
-# take all tweets that have been voted on, divide into training and dev sets
-# where training is 4/5 and dev 1/5
-
-# classification should be done on all non-voted-upon tweets

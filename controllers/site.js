@@ -34,6 +34,10 @@ exports.fresh = function(req, res) {
       });
     },
     // calculate p-values for the new batch of tweets
+    // currently this command crunches the numbers for all tweets which haven't been voted on
+    // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
+    // until the user has done some new voting--e.g. implement a vote counter so that numbers
+    // only get crunched every 50 votes
     algo.crunchTheNumbers,
     // get this new batch of tweets out of the database
     db.findTweetsSince_id,
