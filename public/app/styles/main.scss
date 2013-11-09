@@ -2,6 +2,7 @@ $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
+@import "bootstrap-sass/lib/responsive";
 
 /* Put your CSS here */
 html, body {
@@ -12,6 +13,7 @@ body {
     background: #f8f8f8;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
+    padding-top: 5px;
 }
 
 $color-scheme:  3321TvCw0w0w0;
@@ -186,4 +188,14 @@ $tweet-glyph-size: 30px;
     width: 16px;
     padding-left: 4px;
     font-size: 16px;
+}
+
+.signIn {
+    min-width: 158px;
+    min-height: 28px;
+    #padding: 9px 10px 9px 10px;
+    background-image: url('../images/sign-in-with-twitter-gray.png');
+    # background-color: #C0DEED;
+    background-repeat: no-repeat;
+    background-position: left;
 }

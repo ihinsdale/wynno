@@ -170,9 +170,10 @@ angular.module('wynnoApp')
       }
     };
 
-    $scope.getOldTweets(function() {
-      $scope.getNewTweets();
-    });
+    // $scope.getOldTweets(function() {
+    //   $scope.getNewTweets();
+    // });
+    $scope.getOldTweets();
     $scope.getSettings();
     $scope.threshold = 0.5;
 
