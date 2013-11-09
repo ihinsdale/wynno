@@ -15,8 +15,7 @@
         <div class="tweetTimestamp">{{tweet.__created_at}}</div>
         <div class="pvalue">{{tweet.__p}}</div>
       </div>
-      <div class="tweetText">
-        {{tweet.__text}}
+      <div class="tweetText" ng-bind-html-unsafe="tweet.__text">
       </div>
       <div class="tweetFooter">
         <div class="retweetedStatus">{{tweet.__retweeter.name}}</div>

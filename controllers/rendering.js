@@ -3,15 +3,20 @@ var replaceAt = function(string, start, end, using) {
 };
 
 var insertLinkHTML = function(tweet) {
-  if (tweet.__entities) {
-    console.log('about to replace url with link');
-    var urls = tweet.__entities.urls;
-    if (urls && urls.length !== 0) {
-      for (var i = 0; i < urls.length; i++) {
-        tweet.__text = replaceAt(tweet.__text, urls[i].indices[0], urls[i].indices[1], '<a href="' + urls[i].url + '">' + urls[i].display_url + '</a>');
+  var insertType = function(urls_or_media) {
+    var type = tweet.__entities[urls_or_media];
+    if (type && type.length !== 0) {
+      for (var i = 0; i < type.length; i++) {
+        tweet.__text = replaceAt(tweet.__text, type[i].indices[0], type[i].indices[1], '<a href="' + type[i].url + '" target="_blank">' + type[i].display_url + '</a>');
         console.log('text with rendered link looks like:', tweet.__text);
       }
     }
+  };
+
+  if (tweet.__entities) {
+    console.log('about to replace url with link');
+    insertType('urls');
+    insertType('media');
   }
 };
 

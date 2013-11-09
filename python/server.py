@@ -10,13 +10,6 @@ client = MongoClient()
 db = client.test
 tweets = db.tweets
 
-print 'Tweets voted on: ' + str(tweets.find({"__vote": {"$gte": 0}}).count())
-print 'Out of ' + str(tweets.find().count()) + ' total tweets'
-
-votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
-nonvotedTweets = tweets.find( {"__vote": None})
-print str(nonvotedTweets.count())
-
 def tweet_features(tweet):
   features = {}
   features['tweeter'] = tweet['__user']['screen_name']
@@ -82,6 +75,10 @@ def save_guesses(guesses):
 
 class RPC(object):
   def predict(self):
+    print 'Tweets voted on: ' + str(tweets.find({"__vote": {"$gte": 0}}).count())
+    print 'Out of ' + str(tweets.find().count()) + ' total tweets'
+    votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
+    nonvotedTweets = tweets.find( {"__vote": None})
     save_guesses(crunch(votedTweets, nonvotedTweets))
     return 'success'
     # this will return the p's for all nonvoted tweets which have just been crunched
