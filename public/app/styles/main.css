@@ -8452,7 +8452,7 @@ body {
 }
 
 /* line 150, main.scss */
-.nav li a {
+.nav.wynnoButtons li a {
   font-size: 25px;
   padding-right: 27px !important;
 }
@@ -8462,39 +8462,42 @@ body {
   padding-left: 40px;
   font-size: 32px;
   font-weight: bold;
+  line-height: 100%;
   color: #c4006b;
   text-shadow: none;
+  padding-top: 7px;
+  padding-bottom: 6px;
 }
 
-/* line 163, main.scss */
+/* line 166, main.scss */
 .navbar-inner {
   background-color: #f8f8f8;
   background-image: none;
   background-image: no-repeat;
 }
 
-/* line 169, main.scss */
+/* line 172, main.scss */
 .active {
   color: #0f8e02;
 }
 
-/* line 173, main.scss */
+/* line 176, main.scss */
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
   width: 280px;
 }
 
-/* line 177, main.scss */
+/* line 180, main.scss */
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
   width: 100%;
 }
 
-/* line 181, main.scss */
+/* line 184, main.scss */
 .user, .word {
   display: inline;
   width: 180px;
 }
 
-/* line 186, main.scss */
+/* line 189, main.scss */
 .removeSetting {
   display: inline;
   width: 16px;
@@ -8502,11 +8505,12 @@ body {
   font-size: 16px;
 }
 
-/* line 193, main.scss */
+/* line 196, main.scss */
 .signIn {
   min-width: 158px;
   min-height: 28px;
-  #padding: 9px 10px 9px 10px;
+  padding-top: 8px !important;
+  padding-bottom: 7px !important;
   background-image: url("../images/sign-in-with-twitter-gray.png");
   # background-color: #C0DEED;
   background-repeat: no-repeat;

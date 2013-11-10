@@ -147,7 +147,7 @@ $tweet-glyph-size: 30px;
     letter-spacing: -1px;
 }
 
-.nav li a {
+.nav.wynnoButtons li a {
     font-size: 25px;
     padding-right: 27px !important;
 }
@@ -156,8 +156,11 @@ $tweet-glyph-size: 30px;
     padding-left: 40px;
     font-size: 32px;
     font-weight: bold;
+    line-height: 100%;
     color: #c4006b;
     text-shadow: none;
+    padding-top: 7px;
+    padding-bottom: 6px;
 }
 
 .navbar-inner {
@@ -193,7 +196,8 @@ $tweet-glyph-size: 30px;
 .signIn {
     min-width: 158px;
     min-height: 28px;
-    #padding: 9px 10px 9px 10px;
+    padding-top: 8px !important;
+    padding-bottom: 7px !important;
     background-image: url('../images/sign-in-with-twitter-gray.png');
     # background-color: #C0DEED;
     background-repeat: no-repeat;
