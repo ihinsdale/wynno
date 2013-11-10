@@ -152,12 +152,19 @@ $tweet-glyph-size: 30px;
     padding-right: 27px !important;
 }
 
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+    background-color: #b0e69f;
+    box-shadow: none;
+}
+
 .navbar .brand {
     padding-left: 40px;
     font-size: 32px;
     font-weight: bold;
     line-height: 100%;
-    color: #c4006b;
+    color: #ff6f00;
     text-shadow: none;
     padding-top: 7px;
     padding-bottom: 6px;
@@ -167,10 +174,6 @@ $tweet-glyph-size: 30px;
     background-color: #f8f8f8;
     background-image: none;
     background-image: no-repeat;
-}
-
-.active {
-    color: #0f8e02;
 }
 
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
@@ -193,13 +196,24 @@ $tweet-glyph-size: 30px;
     font-size: 16px;
 }
 
+.signInContainer {
+    width: 153px;
+    height: 28px;
+    margin: 9px 15px 8px 0;
+}
+
 .signIn {
-    min-width: 158px;
-    min-height: 28px;
-    padding-top: 8px !important;
-    padding-bottom: 7px !important;
-    background-image: url('../images/sign-in-with-twitter-gray.png');
-    # background-color: #C0DEED;
+    width: 141px;
+    min-height: 16px;
+    background-image: url('../images/sign-in-with-twitter-link.png');
+    background-color: #C0DEED;
     background-repeat: no-repeat;
-    background-position: left;
+    background-position: center;
+    border: 1px solid #1dcaff;
+    border-radius: 2px;
+    padding: 5px;
+}
+
+.signIn:hover {
+    background-color: #FFFFFF;
 }

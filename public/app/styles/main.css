@@ -8457,47 +8457,50 @@ body {
   padding-right: 27px !important;
 }
 
-/* line 155, main.scss */
+/* line 157, main.scss */
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+  background-color: #b0e69f;
+  box-shadow: none;
+}
+
+/* line 162, main.scss */
 .navbar .brand {
   padding-left: 40px;
   font-size: 32px;
   font-weight: bold;
   line-height: 100%;
-  color: #c4006b;
+  color: #ff6f00;
   text-shadow: none;
   padding-top: 7px;
   padding-bottom: 6px;
 }
 
-/* line 166, main.scss */
+/* line 173, main.scss */
 .navbar-inner {
   background-color: #f8f8f8;
   background-image: none;
   background-image: no-repeat;
 }
 
-/* line 172, main.scss */
-.active {
-  color: #0f8e02;
-}
-
-/* line 176, main.scss */
+/* line 179, main.scss */
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
   width: 280px;
 }
 
-/* line 180, main.scss */
+/* line 183, main.scss */
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
   width: 100%;
 }
 
-/* line 184, main.scss */
+/* line 187, main.scss */
 .user, .word {
   display: inline;
   width: 180px;
 }
 
-/* line 189, main.scss */
+/* line 192, main.scss */
 .removeSetting {
   display: inline;
   width: 16px;
@@ -8505,14 +8508,27 @@ body {
   font-size: 16px;
 }
 
-/* line 196, main.scss */
+/* line 199, main.scss */
+.signInContainer {
+  width: 153px;
+  height: 28px;
+  margin: 9px 15px 8px 0;
+}
+
+/* line 205, main.scss */
 .signIn {
-  min-width: 158px;
-  min-height: 28px;
-  padding-top: 8px !important;
-  padding-bottom: 7px !important;
-  background-image: url("../images/sign-in-with-twitter-gray.png");
-  # background-color: #C0DEED;
+  width: 141px;
+  min-height: 16px;
+  background-image: url("../images/sign-in-with-twitter-link.png");
+  background-color: #C0DEED;
   background-repeat: no-repeat;
-  background-position: left;
+  background-position: center;
+  border: 1px solid #1dcaff;
+  border-radius: 2px;
+  padding: 5px;
+}
+
+/* line 217, main.scss */
+.signIn:hover {
+  background-color: #FFFFFF;
 }
