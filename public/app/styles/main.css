@@ -8303,7 +8303,7 @@ html, body {
 
 /* line 12, main.scss */
 body {
-  background: #f8f8f8;
+  background: #f0f0f0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
   padding-top: 5px;
@@ -8319,9 +8319,10 @@ body {
   margin-left: auto;
   margin-right: auto;
   overflow: auto;
+  #background: #dbd4e1;
 }
 
-/* line 33, main.scss */
+/* line 34, main.scss */
 .tweetStuff {
   background: #ffffff;
   width: 458px;
@@ -8334,67 +8335,67 @@ body {
   float: left;
 }
 
-/* line 45, main.scss */
+/* line 46, main.scss */
 .tweeterImage {
   float: left;
   padding: 4px 10px 6px 0px;
   display: inline-block;
 }
 
-/* line 51, main.scss */
+/* line 52, main.scss */
 .tweetContent {
   width: 400px;
   height: 100%;
   display: inline-block;
 }
 
-/* line 57, main.scss */
+/* line 58, main.scss */
 .tweetMeta {
   display: block;
 }
 
-/* line 61, main.scss */
+/* line 62, main.scss */
 .tweeterName {
   font-weight: bold;
   display: inline;
 }
 
-/* line 66, main.scss */
+/* line 67, main.scss */
 .tweeterScreenName {
   font-size: 12px;
   display: inline;
 }
 
-/* line 71, main.scss */
+/* line 72, main.scss */
 .tweetTimestamp {
   float: right;
   display: inline;
 }
 
-/* line 76, main.scss */
+/* line 77, main.scss */
 .tweetText {
   display: block;
 }
 
-/* line 80, main.scss */
+/* line 81, main.scss */
 .tweetFooter {
   width: 100%;
 }
 
-/* line 84, main.scss */
+/* line 85, main.scss */
 .retweetedStatus {
   float: left;
   width: 100%;
   display: block;
 }
 
-/* line 90, main.scss */
+/* line 91, main.scss */
 .tweetLink {
   float: right;
   display: block;
 }
 
-/* line 95, main.scss */
+/* line 96, main.scss */
 .voteAye, .voteNay {
   height: 50px;
   width: 50px;
@@ -8402,105 +8403,117 @@ body {
   float: left;
 }
 
-/* line 106, main.scss */
+/* line 107, main.scss */
 .voteAye {
   padding-right: 20px;
 }
 
-/* line 110, main.scss */
+/* line 111, main.scss */
 .voteNay {
   padding-left: 20px;
 }
 
-/* line 114, main.scss */
+/* line 115, main.scss */
 .aye {
   width: 30px;
   height: 30px;
   float: right;
   padding: 20px 0;
   font-size: 30px;
-  color: #62d7a5;
 }
 
 /* line 123, main.scss */
+.aye > a {
+  color: #62d7a5;
+}
+
+/* line 127, main.scss */
 .nay {
   width: 30px;
   height: 30px;
   float: left;
   padding: 20px 0;
   font-size: 30px;
+}
+
+/* line 135, main.scss */
+.nay > a {
   color: #ff9c74;
 }
 
-/* line 133, main.scss */
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 300px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
+/* line 139, main.scss */
+.aye > a:hover, .nay > a:hover {
+  color: #b385db;
 }
 
-/* line 144, main.scss */
-.hero-unit h1 {
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-
-/* line 150, main.scss */
+/* line 143, main.scss */
 .nav.wynnoButtons li a {
   font-size: 25px;
   padding-right: 27px !important;
+  text-shadow: none;
 }
 
-/* line 157, main.scss */
+/* line 149, main.scss */
+.nav.wynnoButtons li a:hover {
+  background-color: #f8f8f8;
+}
+
+/* line 155, main.scss */
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
-  background-color: #b0e69f;
+  background-color: #ffffff;
   box-shadow: none;
 }
 
-/* line 162, main.scss */
+/* line 160, main.scss */
 .navbar .brand {
   padding-left: 40px;
   font-size: 32px;
   font-weight: bold;
   line-height: 100%;
-  color: #ff6f00;
+  color: #a166d5;
   text-shadow: none;
   padding-top: 7px;
   padding-bottom: 6px;
 }
 
-/* line 173, main.scss */
+/* line 171, main.scss */
 .navbar-inner {
-  background-color: #f8f8f8;
+  background-color: #f0f0f0;
   background-image: none;
   background-image: no-repeat;
 }
 
-/* line 179, main.scss */
+/* line 178, main.scss */
+.navbar .nav > .passing > a,
+.navbar .nav > .passing > a:hover {
+  color: #62d7a5;
+}
+
+/* line 183, main.scss */
+.navbar .nav > .failing > a,
+.navbar .nav > .failing > a:hover {
+  color: #ff9c74;
+}
+
+/* line 187, main.scss */
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
   width: 280px;
 }
 
-/* line 183, main.scss */
+/* line 191, main.scss */
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
   width: 100%;
 }
 
-/* line 187, main.scss */
+/* line 195, main.scss */
 .user, .word {
   display: inline;
   width: 180px;
 }
 
-/* line 192, main.scss */
+/* line 200, main.scss */
 .removeSetting {
   display: inline;
   width: 16px;
@@ -8508,14 +8521,14 @@ body {
   font-size: 16px;
 }
 
-/* line 199, main.scss */
+/* line 207, main.scss */
 .signInContainer {
   width: 153px;
   height: 28px;
   margin: 9px 15px 8px 0;
 }
 
-/* line 205, main.scss */
+/* line 213, main.scss */
 .signIn {
   width: 141px;
   min-height: 16px;
@@ -8528,7 +8541,7 @@ body {
   padding: 5px;
 }
 
-/* line 217, main.scss */
+/* line 225, main.scss */
 .signIn:hover {
   background-color: #FFFFFF;
 }

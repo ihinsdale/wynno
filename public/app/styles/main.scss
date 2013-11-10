@@ -10,7 +10,7 @@ html, body {
 }
 
 body {
-    background: #f8f8f8;
+    background: #f0f0f0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
     padding-top: 5px;
@@ -28,6 +28,7 @@ $tweet-border: 1px solid #e0e0e0;
     margin-left: auto;
     margin-right: auto;
     overflow: auto;
+    #background: #dbd4e1;
 }
 
 .tweetStuff {
@@ -117,6 +118,9 @@ $tweet-glyph-size: 30px;
     float: right;
     padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
+}
+
+.aye > a {
     color: #62d7a5;
 }
 
@@ -126,36 +130,30 @@ $tweet-glyph-size: 30px;
     float: left;
     padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
+}
+
+.nay > a {
     color: #ff9c74;
 }
 
-
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-}
-
-.hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+.aye > a:hover, .nay > a:hover {
+    color: #b385db;
 }
 
 .nav.wynnoButtons li a {
     font-size: 25px;
     padding-right: 27px !important;
+    text-shadow: none;
+}
+
+.nav.wynnoButtons li a:hover {
+    background-color: #f8f8f8;
 }
 
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
-    background-color: #b0e69f;
+    background-color: #ffffff;
     box-shadow: none;
 }
 
@@ -164,16 +162,26 @@ $tweet-glyph-size: 30px;
     font-size: 32px;
     font-weight: bold;
     line-height: 100%;
-    color: #ff6f00;
+    color: #a166d5;
     text-shadow: none;
     padding-top: 7px;
     padding-bottom: 6px;
 }
 
 .navbar-inner {
-    background-color: #f8f8f8;
+    background-color: #f0f0f0;
     background-image: none;
     background-image: no-repeat;
+}
+
+.navbar .nav > .passing > a,
+.navbar .nav > .passing > a:hover {
+    color: #62d7a5;
+}
+
+.navbar .nav > .failing > a,
+.navbar .nav > .failing > a:hover {
+    color: #ff9c74;
 }
 
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {

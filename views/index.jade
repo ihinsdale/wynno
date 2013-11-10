@@ -15,10 +15,10 @@ block nav
         .nav-collapse.collapse
           // .nav, .navbar-search, .navbar-form, etc 
           ul.nav.pull-left.wynnoButtons
-            li(ng-click='viewPassing()', ng-class='{active: active[0]}')
+            li.passing(ng-click='viewPassing()', ng-class='{active: active[0]}')
               a(href='#')
                 span.icon-smiley
-            li(ng-click='viewFailing()', ng-class='{active: active[1]}')
+            li.failing(ng-click='viewFailing()', ng-class='{active: active[1]}')
               a(href='#')
                 span.icon-eye-blocked
             li(ng-click='viewSettings()', ng-class='{active: active[2]}')
