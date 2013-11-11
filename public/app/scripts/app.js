@@ -4,13 +4,19 @@ angular.module('wynnoApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'wynnoApp.services',
+  'wynnoApp.controllers',
 ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: '/app/views/main.html',
         controller: 'MainCtrl'
+      })
+      .when('/failing', {
+        controller: 'FailingCtrl',
+        templateUrl: '/app/views/failing.html'
       })
       .when('/settings', {
         templateUrl: '/app/views/settings.html',

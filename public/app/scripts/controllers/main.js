@@ -1,24 +1,32 @@
 'use strict';
 
-angular.module('wynnoApp')
+angular.module('wynnoApp.controllers')
 
-  .controller('MainCtrl', function ($rootScope, $scope, $http) {
-    $scope.getOldTweets = function(callback) {
-      if (!$rootScope.tweets) {
-        // upon main page load, make a GET request to /old
-        $http.get('/old')
-        .success(function(data, status, headers, config) {
-          console.log('success getting old tweets, they look like:', data);
-          $rootScope.tweets = data;
-          if (callback) {
-            callback();
-          }
-        })
-        .error(function(data, status) {
-          console.log('error getting /old, data look like:', data);
-        });
-      }
-    };
+  .controller('MainCtrl', function($rootScope, $scope, $http, TweetService) {
+
+    $scope.getOldTweets = function() {
+      TweetService.getOldTweets()
+      .then(function(tweets) {
+        $scope.tweets = tweets;
+      })
+    }
+
+    // $scope.getOldTweets = function(callback) {
+    //   if (!$rootScope.tweets) {
+    //     // upon main page load, make a GET request to /old
+    //     $http.get('/old')
+    //     .success(function(data, status, headers, config) {
+    //       console.log('success getting old tweets, they look like:', data);
+    //       $rootScope.tweets = data;
+    //       if (callback) {
+    //         callback();
+    //       }
+    //     })
+    //     .error(function(data, status) {
+    //       console.log('error getting /old, data look like:', data);
+    //     });
+    //   }
+    // };
 
     $scope.getNewTweets = function(callback) {
       $http.get('/new')
@@ -122,6 +130,10 @@ angular.module('wynnoApp')
 
     // function to determine whether a tweet is displayed or not
     $scope.displayed = function(tweet) {
+      TweetService.getPassingTweets()
+      .then(function(tweets) {
+        $scope.tweets = tweets;
+      })
       if ($rootScope.viewing === 'passing') {
         if (tweet.__vote === null) {
           $scope.tweetIsProtected(tweet);

@@ -1,7 +1,7 @@
 extends layout
 
 block nav
-  .navbar.navbar-fixed-top(ng-controller='NavCtrl')
+  .navbar.navbar-fixed-top
     .navbar-inner
       .navContainer
         // .btn-navbar is used as the toggle for collapsed navbar content 
@@ -65,4 +65,7 @@ block content
   script(src='/app/bower_components/angular-bootstrap/ui-bootstrap.js')
 
   script(src='/app/scripts/app.js')
+  script(src='/app/scripts/controllers/init.js')
   script(src='/app/scripts/controllers/main.js')
+  script(src='/app/scripts/services/init.js')
+  script(src='/app/scripts/services/tweet.js')
