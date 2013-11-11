@@ -14,9 +14,9 @@ angular.module('wynnoApp', [
         templateUrl: '/app/views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/failing', {
-        controller: 'FailingCtrl',
-        templateUrl: '/app/views/failing.html'
+      .when('/out', {
+        controller: 'OutCtrl',
+        templateUrl: '/app/views/out.html'
       })
       .when('/settings', {
         templateUrl: '/app/views/settings.html',

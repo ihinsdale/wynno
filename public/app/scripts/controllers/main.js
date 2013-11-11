@@ -8,38 +8,16 @@ angular.module('wynnoApp.controllers')
       TweetService.getOldTweets()
       .then(function(tweets) {
         $scope.tweets = tweets;
-      })
+      }).then(function() {
+        $scope.getNewTweets();
+      });
     }
 
-    // $scope.getOldTweets = function(callback) {
-    //   if (!$rootScope.tweets) {
-    //     // upon main page load, make a GET request to /old
-    //     $http.get('/old')
-    //     .success(function(data, status, headers, config) {
-    //       console.log('success getting old tweets, they look like:', data);
-    //       $rootScope.tweets = data;
-    //       if (callback) {
-    //         callback();
-    //       }
-    //     })
-    //     .error(function(data, status) {
-    //       console.log('error getting /old, data look like:', data);
-    //     });
-    //   }
-    // };
-
     $scope.getNewTweets = function(callback) {
-      $http.get('/new')
-      .success(function(data2, status2, headers2, config2) {
-        console.log('success getting new tweets, they look like:', data2);
-        $rootScope.tweets = data2.concat($rootScope.tweets);
-        if (callback) {
-          callback();
-        }
+      TweetService.getNewTweets()
+      .then(function(tweets) {
+        $scope.tweets = tweets;
       })
-      .error(function(data2, status2) {
-        console.log('error getting /new, data look like:', data2);
-      });
     }
 
     $scope.getSettings = function(callback) {

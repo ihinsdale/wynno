@@ -16,13 +16,31 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
+    getNewTweets: function() {
+      var d = $q.defer();
+      $http.get('/new')
+      .success(function(data, status) {
+        console.log('success getting new tweets, they look like:', data);
+        service.currentTweets = data.concat(service.currentTweets);
+        d.resolve(service.currentTweets);
+      })
+      .error(function(reason, status) {
+        d.reject(reason);
+      })
+      return d.promise;
+    },
     getPassingTweets: function() {
       var d = $q.defer(),
-          workingTweets = [];
+      tweetsToDisplay = [];
       angular.forEach(service.currentTweets, function(tweet) {
         // return true to include or false to exclude
       });
       return d.promise;
+    },
+    getFailingTweets: function() {
+      var d = $q.defer(),
+      tweetsToDisplay = [];
+      angular.forEach
     }
   };
 
