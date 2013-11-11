@@ -179,7 +179,7 @@ angular.module('wynnoApp')
 
   })
 
-  .controller('NavCtrl', function($rootScope, $scope) {
+  .controller('NavCtrl', function($rootScope, $scope, $http) {
     $rootScope.viewing = 'passing';
     $scope.active = [true, false, false];
     $scope.viewPassing = function() {
@@ -193,12 +193,21 @@ angular.module('wynnoApp')
         $rootScope.viewing = 'failing';
         $scope.active = [false, true, false];
       }
-    }
+    };
     $scope.viewSettings = function() {
       if ($rootScope.viewing !== 'settings') {
         $rootScope.viewing = 'settings';
         $scope.active = [false, false, true];
       }
+    };
+    $scope.signIn = function() {
+      $http.get('/auth/twitter')
+      .success(function(data, status, headers, config) {
+        console.log('successful token request:', data);
+      })
+      .error(function(data, status) {
+        console.log('error requesting token:', data);
+      });
     }
   })
 

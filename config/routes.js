@@ -15,4 +15,8 @@ module.exports = function(app) {
   app.post('/settings', routes.processSetting);
   // GET request to /settings
   app.get('/settings', routes.getSettings);
+  // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
+  app.get('/auth/twitter', routes.signIn);
+  // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
+  app.get('/auth/twitter/callback', routes.signInSuccessCallback);
 };

@@ -100,4 +100,12 @@ exports.getSettings = function(req, res) {
       callback(null);
     }
   ]);
-}
+};
+
+exports.signIn = function(req, res) {
+  twitter.getRequestToken(req, res);
+};
+
+exports.signInSuccessCallback = function(req, res, next) {
+  twitter.successCallback(req, res, next);
+};
