@@ -130,10 +130,10 @@ angular.module('wynnoApp.controllers')
 
     // function to determine whether a tweet is displayed or not
     $scope.displayed = function(tweet) {
-      TweetService.getPassingTweets()
-      .then(function(tweets) {
-        $scope.tweets = tweets;
-      })
+      // TweetService.getPassingTweets()
+      // .then(function(tweets) {
+      //   $scope.tweets = tweets;
+      // })
       if ($rootScope.viewing === 'passing') {
         if (tweet.__vote === null) {
           $scope.tweetIsProtected(tweet);

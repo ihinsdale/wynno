@@ -17,7 +17,8 @@ angular.module('wynnoApp.services')
       return d.promise;
     },
     getPassingTweets: function() {
-      var d = $q.defer();
+      var d = $q.defer(),
+          workingTweets = [];
       angular.forEach(service.currentTweets, function(tweet) {
         // return true to include or false to exclude
       });
