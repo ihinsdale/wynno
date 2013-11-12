@@ -200,14 +200,9 @@ angular.module('wynnoApp.controllers')
     };
 
     $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_protect, input) {
-      $http({method: 'POST', url: '/settings',
-        data: {user_id: '52783164c5d992a75e000001', add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_protect: mute_or_protect, input: input}})
-      .success(function(data, status, headers, config) {
-        $scope.settings = data;
-        console.log('success updating settings to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
-      })
-      .error(function(data, status) {
-        console.log('error updating setting to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
+      SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_protect, input)
+      .then(function(settings) {
+        $scope.settings = settings;
       });
     };
 

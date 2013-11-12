@@ -11,7 +11,7 @@ angular.module('wynnoApp.services')
           service.settings = data;
           d.resolve(service.settings);
         })
-        .error(function(data3, status3) {
+        .error(function(reason, status) {
           console.log('error getting settings');
           d.reject(reason);
         })
@@ -25,6 +25,24 @@ angular.module('wynnoApp.services')
         var d = $q.defer();
         d.resolve(service.settings);
       }
+    },
+    updateSetting: function(add_or_remove, user_or_word, mute_or_protect, input) {
+      var d = $q.defer();
+      $http({method: 'POST', url: '/settings',
+        data: {user_id: '52783164c5d992a75e000001', add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_protect: mute_or_protect, input: input}})
+      .success(function(data, status) {
+        console.log('success updating settings to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
+        // could optimize this by updating service.settings with the particular
+        // setting that was changed, rather than receiving the whole
+        // settings object again from the server
+        service.settings = data;
+        d.resolve(service.settings);
+      })
+      .error(function(reason, status) {
+        console.log('error updating setting to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
+        d.reject(reason);
+      });
+      return d.promise;
     }
   };
 
