@@ -8525,7 +8525,7 @@ body {
 .signInContainer {
   width: 153px;
   height: 28px;
-  margin: 9px 15px 8px 0;
+  margin: 9px 15px 8px 15px;
 }
 
 /* line 213, main.scss */
@@ -8547,11 +8547,32 @@ body {
 }
 
 /* line 229, main.scss */
+.refreshSpinnerContainer {
+  width: 28px;
+  height: 26px;
+  margin: 9px 0 8px 0;
+  background-color: #ffffff;
+  border: 1px solid #1dcaff;
+  border-radius: 2px;
+}
+
+/* line 238, main.scss */
 .refreshSpinner {
   width: 20px;
   height: 20px;
-  background-image: url("../images/3-128.gif");
+  padding: 3px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
+  background-image: url("../images/3-128-ltgray.gif");
+}
+
+/* line 248, main.scss */
+.refreshSpinner:hover {
+  background-image: url("../images/3-128-darkgray.gif");
+}
+
+/* line 252, main.scss */
+.refreshSpinner.spinning {
+  background-image: url("../images/3-128-white.gif");
 }
