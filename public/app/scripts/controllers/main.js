@@ -2,19 +2,13 @@
 
 angular.module('wynnoApp.controllers')
 
-  .controller('MainCtrl', function($rootScope, $scope, $http, TweetService, SettingsService) {
+  .controller('MainCtrl', function($rootScope, $scope, $http, TweetService, SettingsService, VoteService) {
 
     $scope.getOldTweets = function() {
       TweetService.getOldTweets()
       .then(function(tweets) {
         $scope.tweets = tweets;
-        //$scope.getNewTweets();
-        $scope.threshold = 0.5;
-        if ($scope.viewing === 'passing') {
-          $scope.displayPassing($scope.threshold);
-        } else if ($scope.viewing === 'failing') {
-          $scope.displayFailing($scope.threshold);
-        }
+        $scope.getNewTweets();
       });
     };
 
@@ -22,31 +16,24 @@ angular.module('wynnoApp.controllers')
       TweetService.getNewTweets()
       .then(function(tweets) {
         $scope.tweets = tweets;
+        $scope.threshold = 0.5;
+        $scope.renderInOrOut($scope.threshold);
       })
     };
 
-    $scope.getSettingsFromDb = function() {
-      SettingsService.getSettingsFromDb()
-      .then(function(settings) {
-        $scope.settings = settings;
-      })
-    };
+    $scope.renderInOrOut = function(threshold) {
+      if ($scope.viewing === 'passing') {
+        $scope.displayPassing($scope.threshold);
+      } else if ($scope.viewing === 'failing') {
+        $scope.displayFailing($scope.threshold);
+      }
+    }
 
     // function to record user's votes
     $scope.vote = function(tweet, vote) {
-      var priorVote = tweet.__vote;
-      // update the model with the new vote
-      tweet.__vote = vote;
-
-      // save the vote to the database
-      $http({method: 'POST', url: '/vote', data: {_id: tweet._id, vote: vote}})
-      .success(function(data, status, headers, config) {
-        console.log('success sending vote', vote, 'on tweet', tweet._id);
-      })
-      .error(function(data, status) {
-        console.log('error sending vote', vote, 'on tweet', tweet._id);
-        // if the vote wasn't recorded, reset it on the model
-        tweet.__vote = priorVote;
+      VoteService.vote(tweet, vote)
+      .then(function(newVote) {
+        tweet.__vote = newVote;
       });
     };
 

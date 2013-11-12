@@ -88,7 +88,6 @@ angular.module('wynnoApp.services')
       tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
     },
     getPassingTweets: function(threshold) {
-      console.log('preparing passing tweets');
       return SettingsService.provideSettings()
       .then(function(settings) {
         service.settings = settings;
@@ -118,7 +117,6 @@ angular.module('wynnoApp.services')
         d.resolve(tweetsToDisplay);
         return d.promise;
       });
-
     },
     getFailingTweets: function(threshold) {
       return SettingsService.provideSettings()
