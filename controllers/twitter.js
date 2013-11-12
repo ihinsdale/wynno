@@ -51,9 +51,7 @@ exports.successCallback = function(req, res, next) {
     next(new Error("you're not supposed to be here."));
 };
 
-
-
-
+exports.timeOfLastFetch = timeOfLastFetch = null;
 
 // Fetch new tweets from Twitter API
 exports.fetch = function(id, _id, callback) {
@@ -64,6 +62,9 @@ exports.fetch = function(id, _id, callback) {
     options.since_id = id;
   }
   twit.get('https://api.twitter.com/1.1/statuses/home_timeline.json', options, function(error, data) {
+    console.log('time of last fetch was:', timeOfLastFetch);
+    timeOfLastFetch = new Date().getTime();
+    console.log('time of last fetch now is:', timeOfLastFetch);
     if (error) {
       console.log('there was an error getting tweets from Twitter API:', error);
     } else {

@@ -103,7 +103,7 @@ exports.findAllTweets = function(callback) {
       console.log('error grabbing all tweets');
       callback('there was an error grabbing tweets from db');
     } else {
-      console.log('the docs look like:', docs);
+      //console.log('the docs look like:', docs);
       callback(null, docs);
     }
   });
@@ -119,7 +119,7 @@ exports.findTweetsSince_id = function(tweet_id, callback) {
     if (err) {
       console.log('error grabbing new tweets');
     } else {
-      console.log('new tweets look like', docs);
+      //console.log('new tweets look like', docs);
       callback(null, docs);
     }
   });

@@ -208,6 +208,7 @@ $tweet-glyph-size: 30px;
     width: 153px;
     height: 28px;
     margin: 9px 15px 8px 15px;
+    padding: 0 !important;
 }
 
 .signIn {
@@ -230,9 +231,10 @@ $tweet-glyph-size: 30px;
     width: 28px;
     height: 26px;
     margin: 9px 0 8px 0;
-    background-color: #ffffff;
+    #background-color: #ffffff;
     border: 1px solid #1dcaff;
     border-radius: 2px;
+    padding: 0 !important;
 }
 
 .refreshSpinner {

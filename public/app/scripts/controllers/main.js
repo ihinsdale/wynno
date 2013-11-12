@@ -18,6 +18,8 @@ angular.module('wynnoApp.controllers')
         $scope.tweets = tweets;
         $scope.threshold = 0.5;
         $scope.renderInOrOut($scope.threshold);
+      }, function(reason) {
+        console.log('error:', reason);
       })
     };
 

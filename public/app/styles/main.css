@@ -8554,9 +8554,10 @@ body {
   background-color: #ffffff;
   border: 1px solid #1dcaff;
   border-radius: 2px;
+  padding: 0 !important;
 }
 
-/* line 238, main.scss */
+/* line 239, main.scss */
 .refreshSpinner {
   width: 20px;
   height: 20px;
@@ -8567,12 +8568,12 @@ body {
   background-image: url("../images/3-128-ltgray.gif");
 }
 
-/* line 248, main.scss */
+/* line 249, main.scss */
 .refreshSpinner:hover {
-  background-image: url("../images/3-128-darkgray.gif");
+  background-image: url("../images/3-128-darkgray.png");
 }
 
-/* line 252, main.scss */
+/* line 253, main.scss */
 .refreshSpinner.spinning {
-  background-image: url("../images/3-128-white.gif");
+  background-image: url("../images/3-128-white.png");
 }

@@ -24,37 +24,46 @@ exports.old = function(req, res) {
 };
 
 exports.fresh = function(req, res) {
-  async.waterfall([
-    // find (Twitter's) tweet id of the last saved tweet
-    db.lastTweetId,
-    // use that id to grab new tweets from Twitter API
-    twitter.fetch,
-    // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
-    function(tweetsArray, _id, callback) {
-      async.eachSeries(tweetsArray.reverse(), db.saveTweet, function(err) {
-        if (err) {
-          console.log('error saving tweet');
-        } else {
-          callback(null, _id);
-        }
-      });
-    },
-    // calculate p-values for the new batch of tweets
-    // currently this command crunches the numbers for all tweets which haven't been voted on
-    // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
-    // until the user has done some new voting--e.g. implement a vote counter so that numbers
-    // only get crunched every 50 votes
-    algo.crunchTheNumbers,
-    // get this new batch of tweets out of the database
-    db.findTweetsSince_id,
-    // render any links in the tweets
-    rendering.renderLinks,
-    // send the tweets back to the client
-    function(tweets, callback) {
-      res.send(tweets);
-      callback(null);
-    }
-  ]);
+  console.log('time of last fetch from Twitter API:', twitter.timeOfLastFetch);
+  if (twitter.timeOfLastFetch) {
+    var timeSinceLastTwitterApiCall = twitter.timeOfLastFetch - new Date().getTime();
+    console.log('time since last fetch from Twitter, in seconds:', Math.ceil(timeSinceLastTwitterApiCall/1000));
+  }
+  if (timeSinceLastTwitterApiCall && timeSinceLastTwitterApiCall < 61000) {
+    res.send(429, 'Please try again in' + Math.ceil((61000 - timeSinceLastTwitterApiCall)/1000).toString() + 'seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+  } else {
+    async.waterfall([
+      // find (Twitter's) tweet id of the last saved tweet
+      db.lastTweetId,
+      // use that id to grab new tweets from Twitter API
+      twitter.fetch,
+      // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
+      function(tweetsArray, _id, callback) {
+        async.eachSeries(tweetsArray.reverse(), db.saveTweet, function(err) {
+          if (err) {
+            console.log('error saving tweet');
+          } else {
+            callback(null, _id);
+          }
+        });
+      },
+      // calculate p-values for the new batch of tweets
+      // currently this command crunches the numbers for all tweets which haven't been voted on
+      // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
+      // until the user has done some new voting--e.g. implement a vote counter so that numbers
+      // only get crunched every 50 votes
+      algo.crunchTheNumbers,
+      // get this new batch of tweets out of the database
+      db.findTweetsSince_id,
+      // render any links in the tweets
+      rendering.renderLinks,
+      // send the tweets back to the client
+      function(tweets, callback) {
+        res.send(tweets);
+        callback(null);
+      }
+    ]);
+  }
 };
 
 exports.processVote = function(req, res) {
