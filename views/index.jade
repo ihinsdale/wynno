@@ -16,10 +16,10 @@ block nav
           // .nav, .navbar-search, .navbar-form, etc 
           ul.nav.pull-left.wynnoButtons
             li.passing(ng-click='viewPassing()', ng-class='{active: active[0]}')
-              a(href='#')
+              a(href='#/in')
                 span.icon-smiley
             li.failing(ng-click='viewFailing()', ng-class='{active: active[1]}')
-              a(href='#')
+              a(href='#/out')
                 span.icon-eye-blocked
             li(ng-click='viewSettings()', ng-class='{active: active[2]}')
               a(href='#/settings')
@@ -70,3 +70,4 @@ block content
   script(src='/app/scripts/services/init.js')
   script(src='/app/scripts/services/tweet.js')
   script(src='/app/scripts/services/settings.js')
+  
