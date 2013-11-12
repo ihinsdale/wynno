@@ -112,10 +112,10 @@ angular.module('wynnoApp.controllers')
     };
 
     $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_protect, input) {
-      SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_protect, input);
-      // .then(function(settings) {
-      //   $scope.settings = settings;
-      // });
+      SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_protect, input)
+      .then(function(settings) {
+        $scope.settings = settings;
+      });
     };
 
     $scope.injectSettings();

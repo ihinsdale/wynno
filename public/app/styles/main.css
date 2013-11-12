@@ -8545,3 +8545,13 @@ body {
 .signIn:hover {
   background-color: #FFFFFF;
 }
+
+/* line 229, main.scss */
+.refreshSpinner {
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/3-128.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
