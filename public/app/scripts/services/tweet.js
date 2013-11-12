@@ -94,19 +94,19 @@ angular.module('wynnoApp.services')
         service.settings = settings;
         var d = $q.defer();
         tweetsToDisplay = [];
-        angular.forEach(service.currentTweets, function(tweet, threshold) {
+        angular.forEach(service.currentTweets, function(tweet) {
           if (tweet.__vote === null) {
             service.tweetIsProtected(tweet);
             service.tweetIsMuted(tweet);
             if (tweet.__isProtected) {
               tweetsToDisplay.push(tweet);
             } else if (tweet.__isMuted) {
-              //return false;
+              //do nothing
             } else {
               if (tweet.__p >= threshold) {
                 tweetsToDisplay.push(tweet);
               } else {
-                //return false;
+                //do nothing
               }
             }
           } else {
@@ -121,25 +121,22 @@ angular.module('wynnoApp.services')
 
     },
     getFailingTweets: function(threshold) {
-      threshold = threshold;
-      console.log('preparing failing tweets');
       return SettingsService.provideSettings()
       .then(function(settings) {
         service.settings = settings;
         var d = $q.defer(),
         tweetsToDisplay = [];
-        angular.forEach(service.currentTweets, function(tweet, threshold) {
-          console.log('threshold is:', threshold);
+        angular.forEach(service.currentTweets, function(tweet) {
           if (tweet.__vote === null) {
             service.tweetIsProtected(tweet);
             service.tweetIsMuted(tweet);
             if (tweet.__isProtected) {
-              //return false;
+              //do nothing
             } else if (tweet.__isMuted) {
               tweetsToDisplay.push(tweet);
             } else {
               if (tweet.__p >= threshold) {
-                //return false;
+                //do nothing
               } else {
                 tweetsToDisplay.push(tweet);
               }

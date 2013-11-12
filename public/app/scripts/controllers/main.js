@@ -51,16 +51,16 @@ angular.module('wynnoApp.controllers')
     };
 
     // function to determine whether a tweet is displayed or not
-    $scope.displayPassing = function() {
-      TweetService.getPassingTweets()
+    $scope.displayPassing = function(threshold) {
+      TweetService.getPassingTweets(threshold)
       .then(function(tweets) {
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
       });
     };
 
-    $scope.displayFailing = function() {
-      TweetService.getFailingTweets()
+    $scope.displayFailing = function(threshold) {
+      TweetService.getFailingTweets(threshold)
       .then(function(tweets) {
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
