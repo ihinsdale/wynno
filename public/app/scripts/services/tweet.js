@@ -1,5 +1,5 @@
 angular.module('wynnoApp.services')
-.factory('TweetService', ['$q', '$http', function($q, $http) {
+.factory('TweetService', ['$q', '$http', 'SettingsService', function($q, $http, SettingsService) {
   var service = {
     //inject current settings here for use in passing/failing helper functions
     // can then remove the call to settings in main.js
@@ -18,6 +18,8 @@ angular.module('wynnoApp.services')
           console.log('error getting old tweets:', reason);
           d.reject(reason);
         })
+      } else {
+        d.resolve(service.currentTweets);
       }
       return d.promise;
     },
@@ -60,78 +62,97 @@ angular.module('wynnoApp.services')
       return false;
     },
     isMutedUser: function(tweeter, retweeter) {
-      return service.hasUserInList(tweeter, retweeter, $scope.settings.mutedUsers);
+      return service.hasUserInList(tweeter, retweeter, service.settings.mutedUsers);
     },
     hasMutedWord: function(text) {
-      return service.hasWordInList(text, $scope.settings.mutedWords);
+      return service.hasWordInList(text, service.settings.mutedWords);
     },
     isProtectedUser: function(tweeter, retweeter) {
-      return service.hasUserInList(tweeter, retweeter, $scope.settings.protectedUsers);
+      return service.hasUserInList(tweeter, retweeter, service.settings.protectedUsers);
     },
     hasProtectedWord: function(text) {
-      return service.hasWordInList(text, $scope.settings.protectedWords);
+      return service.hasWordInList(text, service.settings.protectedWords);
     },
     tweetIsProtected: function(tweet) {
       var retweeter;
       if (tweet.__retweeter) {
         retweeter = tweet.__retweeter.screen_name;
       }
-      tweet.__isProtected = (service.isProtectedUser(tweet.__user.screen_name, retweeter) || $scope.hasProtectedWord(tweet.__text));
+      tweet.__isProtected = (service.isProtectedUser(tweet.__user.screen_name, retweeter) || service.hasProtectedWord(tweet.__text));
     },
     tweetIsMuted: function(tweet) {
       var retweeter;
       if (tweet.__retweeter) {
         retweeter = tweet.__retweeter.screen_name;
       }
-      tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text));
-    };
+      tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
+    },
     getPassingTweets: function(threshold) {
-      var d = $q.defer(),
-      tweetsToDisplay = [];
-      angular.forEach(service.currentTweets, function(tweet) {
-        if (tweet.__vote === null) {
-          $scope.tweetIsProtected(tweet);
-          $scope.tweetIsMuted(tweet);
-          if (tweet.__isProtected) {
-            return true;
-          } else if (tweet.__isMuted) {
-            return false;
-          } else {
-            if (tweet.__p >= threshold) {
-              return true;
+      console.log('preparing passing tweets');
+      return SettingsService.provideSettings()
+      .then(function(settings) {
+        service.settings = settings;
+        var d = $q.defer();
+        tweetsToDisplay = [];
+        angular.forEach(service.currentTweets, function(tweet, threshold) {
+          if (tweet.__vote === null) {
+            service.tweetIsProtected(tweet);
+            service.tweetIsMuted(tweet);
+            if (tweet.__isProtected) {
+              tweetsToDisplay.push(tweet);
+            } else if (tweet.__isMuted) {
+              //return false;
             } else {
-              return false;
+              if (tweet.__p >= threshold) {
+                tweetsToDisplay.push(tweet);
+              } else {
+                //return false;
+              }
+            }
+          } else {
+            if (!!tweet.__vote) {
+              tweetsToDisplay.push(tweet);
             }
           }
-        } else {
-          return !!tweet.__vote;
-        }
+        });
+        d.resolve(tweetsToDisplay);
+        return d.promise;
       });
-      return d.promise;
+
     },
     getFailingTweets: function(threshold) {
-      var d = $q.defer(),
-      tweetsToDisplay = [];
-      angular.forEach(service.currentTweets, function(tweet) {
-        if (tweet.__vote === null) {
-          $scope.tweetIsProtected(tweet);
-          $scope.tweetIsMuted(tweet);
-          if (tweet.__isProtected) {
-            return false;
-          } else if (tweet.__isMuted) {
-            return true;
-          } else {
-            if (tweet.__p >= threshold) {
-              return false;
+      threshold = threshold;
+      console.log('preparing failing tweets');
+      return SettingsService.provideSettings()
+      .then(function(settings) {
+        service.settings = settings;
+        var d = $q.defer(),
+        tweetsToDisplay = [];
+        angular.forEach(service.currentTweets, function(tweet, threshold) {
+          console.log('threshold is:', threshold);
+          if (tweet.__vote === null) {
+            service.tweetIsProtected(tweet);
+            service.tweetIsMuted(tweet);
+            if (tweet.__isProtected) {
+              //return false;
+            } else if (tweet.__isMuted) {
+              tweetsToDisplay.push(tweet);
             } else {
-              return true;
+              if (tweet.__p >= threshold) {
+                //return false;
+              } else {
+                tweetsToDisplay.push(tweet);
+              }
+            }
+          } else {
+            if (!tweet.__vote) {
+              tweetsToDisplay.push(tweet);
             }
           }
-        } else {
-          return !tweet.__vote;
-        }
+        });
+        d.resolve(tweetsToDisplay);
+        return d.promise;
       });
-      return d.promise;
     }
   };
 

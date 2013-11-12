@@ -25,6 +25,7 @@ angular.module('wynnoApp.services')
         var d = $q.defer();
         d.resolve(service.settings);
       }
+      return d.promise;
     },
     updateSetting: function(add_or_remove, user_or_word, mute_or_protect, input) {
       var d = $q.defer();
