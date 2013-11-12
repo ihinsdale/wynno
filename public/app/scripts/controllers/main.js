@@ -2,7 +2,7 @@
 
 angular.module('wynnoApp.controllers')
 
-  .controller('MainCtrl', function($rootScope, $scope, $http, TweetService, SettingsService, VoteService) {
+  .controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
 
     $scope.getOldTweets = function() {
       TweetService.getOldTweets()
@@ -42,7 +42,6 @@ angular.module('wynnoApp.controllers')
       });
     };
 
-    // function to determine whether a tweet is displayed or not
     $scope.displayPassing = function(threshold) {
       TweetService.setPassingTweets(threshold)
       .then(function(tweets) {
@@ -68,10 +67,6 @@ angular.module('wynnoApp.controllers')
       }
     };
 
-    // $scope.getOldTweets(function() {
-    //   $scope.getNewTweets();
-    // });
-    //$scope.getSettingsFromDb();
     $scope.getOldTweets();
 
   })
@@ -108,7 +103,7 @@ angular.module('wynnoApp.controllers')
     }
   })
 
-  .controller('SettingsCtrl', function($scope, $http, SettingsService) {
+  .controller('SettingsCtrl', function($scope, SettingsService) {
     $scope.injectSettings = function() {
       SettingsService.provideSettings()
       .then(function(settings) {
