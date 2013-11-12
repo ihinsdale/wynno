@@ -7,7 +7,7 @@ angular.module('wynnoApp.controllers')
     $scope.getOldTweets = function() {
       TweetService.getOldTweets()
       .then(function(tweets) {
-        $scope.tweets = tweets;
+        //$scope.tweets = tweets;
         $scope.getNewTweets();
       });
     };
@@ -34,12 +34,17 @@ angular.module('wynnoApp.controllers')
       VoteService.vote(tweet, vote)
       .then(function(newVote) {
         tweet.__vote = newVote;
+        if ($scope.viewing === 'passing' && tweet.__vote === 0) {
+          tweet.__isDisplayed = false;
+        } else if ($scope.viewing === 'failing' && tweet.__vote === 1) {
+          tweet.__isDisplayed = false;
+        }
       });
     };
 
     // function to determine whether a tweet is displayed or not
     $scope.displayPassing = function(threshold) {
-      TweetService.getPassingTweets(threshold)
+      TweetService.setPassingTweets(threshold)
       .then(function(tweets) {
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
@@ -47,7 +52,7 @@ angular.module('wynnoApp.controllers')
     };
 
     $scope.displayFailing = function(threshold) {
-      TweetService.getFailingTweets(threshold)
+      TweetService.setFailingTweets(threshold)
       .then(function(tweets) {
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);

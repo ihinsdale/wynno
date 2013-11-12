@@ -87,65 +87,59 @@ angular.module('wynnoApp.services')
       }
       tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
     },
-    getPassingTweets: function(threshold) {
+    setPassingTweets: function(threshold) {
       return SettingsService.provideSettings()
       .then(function(settings) {
         service.settings = settings;
         var d = $q.defer();
-        tweetsToDisplay = [];
         angular.forEach(service.currentTweets, function(tweet) {
           if (tweet.__vote === null) {
             service.tweetIsProtected(tweet);
             service.tweetIsMuted(tweet);
             if (tweet.__isProtected) {
-              tweetsToDisplay.push(tweet);
+              tweet.__isDisplayed = true;
             } else if (tweet.__isMuted) {
-              //do nothing
+              tweet.__isDisplayed = false;
             } else {
               if (tweet.__p >= threshold) {
-                tweetsToDisplay.push(tweet);
+                tweet.__isDisplayed = true;
               } else {
-                //do nothing
+                tweet.__isDisplayed = false;
               }
             }
           } else {
-            if (!!tweet.__vote) {
-              tweetsToDisplay.push(tweet);
-            }
+            tweet.__isDisplayed = !!tweet.__vote;
           }
         });
-        d.resolve(tweetsToDisplay);
+        d.resolve(service.currentTweets);
         return d.promise;
       });
     },
-    getFailingTweets: function(threshold) {
+    setFailingTweets: function(threshold) {
       return SettingsService.provideSettings()
       .then(function(settings) {
         service.settings = settings;
-        var d = $q.defer(),
-        tweetsToDisplay = [];
+        var d = $q.defer();
         angular.forEach(service.currentTweets, function(tweet) {
           if (tweet.__vote === null) {
             service.tweetIsProtected(tweet);
             service.tweetIsMuted(tweet);
             if (tweet.__isProtected) {
-              //do nothing
+              tweet.__isDisplayed = false;
             } else if (tweet.__isMuted) {
-              tweetsToDisplay.push(tweet);
+              tweet.__isDisplayed = true;
             } else {
               if (tweet.__p >= threshold) {
-                //do nothing
+                tweet.__isDisplayed = false;
               } else {
-                tweetsToDisplay.push(tweet);
+                tweet.__isDisplayed = true;
               }
             }
           } else {
-            if (!tweet.__vote) {
-              tweetsToDisplay.push(tweet);
-            }
+            tweet.__isDisplayed = !tweet.__vote
           }
         });
-        d.resolve(tweetsToDisplay);
+        d.resolve(service.currentTweets);
         return d.promise;
       });
     }
