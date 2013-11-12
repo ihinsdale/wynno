@@ -7,10 +7,12 @@ angular.module('wynnoApp.services')
       if (service.currentTweets.length <= 0) {
         $http.get('/old')
         .success(function(data, status) {
+          console.log('success getting old tweets, they look like:', data);
           service.currentTweets = data;
           d.resolve(service.currentTweets);
         })
         .error(function(reason, status) {
+          console.log('error getting old tweets:', reason);
           d.reject(reason);
         })
       }
@@ -25,6 +27,7 @@ angular.module('wynnoApp.services')
         d.resolve(service.currentTweets);
       })
       .error(function(reason, status) {
+        console.log('error getting new tweets:', reason);
         d.reject(reason);
       })
       return d.promise;
@@ -45,19 +48,4 @@ angular.module('wynnoApp.services')
   };
 
   return service;
-      // $scope.getOldTweets = function(callback) {
-      // if (!$rootScope.tweets) {
-      //   // upon main page load, make a GET request to /old
-      //   $http.get('/old')
-      //   .success(function(data, status, headers, config) {
-      //     console.log('success getting old tweets, they look like:', data);
-      //     $rootScope.tweets = data;
-      //     if (callback) {
-      //       callback();
-      //     }
-      //   })
-      //   .error(function(data, status) {
-      //     console.log('error getting /old, data look like:', data);
-      //   });
-      // }
-}])
+}]);

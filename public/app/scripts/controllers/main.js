@@ -2,38 +2,28 @@
 
 angular.module('wynnoApp.controllers')
 
-  .controller('MainCtrl', function($rootScope, $scope, $http, TweetService) {
+  .controller('MainCtrl', function($rootScope, $scope, $http, TweetService, SettingsService) {
 
     $scope.getOldTweets = function() {
       TweetService.getOldTweets()
       .then(function(tweets) {
         $scope.tweets = tweets;
-      }).then(function() {
         $scope.getNewTweets();
       });
-    }
+    };
 
-    $scope.getNewTweets = function(callback) {
+    $scope.getNewTweets = function() {
       TweetService.getNewTweets()
       .then(function(tweets) {
         $scope.tweets = tweets;
       })
-    }
+    };
 
-    $scope.getSettings = function(callback) {
-      if (!$rootScope.settings) {
-        $http.get('/settings')
-        .success(function(data3, status3, header3, config3) {
-          console.log('success getting settings, they look like:', data3);
-          $rootScope.settings = data3;
-          if (callback) {
-            callback();
-          }
-        })
-        .error(function(data3, status3) {
-          console.log('error getting settings');
-        })
-      }
+    $scope.getSettingsFromDb = function() {
+      SettingsService.getSettingsFromDb()
+      .then(function(settings) {
+        $scope.settings = settings;
+      })
     };
 
     // function to record user's votes
@@ -80,16 +70,16 @@ angular.module('wynnoApp.controllers')
     };
 
     $scope.isMutedUser = function(tweeter, retweeter) {
-      return $scope.hasUserInList(tweeter, retweeter, $rootScope.settings.mutedUsers);
+      return $scope.hasUserInList(tweeter, retweeter, $scope.settings.mutedUsers);
     };
     $scope.hasMutedWord = function(text) {
-      return $scope.hasWordInList(text, $rootScope.settings.mutedWords);
+      return $scope.hasWordInList(text, $scope.settings.mutedWords);
     };
     $scope.isProtectedUser = function(tweeter, retweeter) {
-      return $scope.hasUserInList(tweeter, retweeter, $rootScope.settings.protectedUsers);
+      return $scope.hasUserInList(tweeter, retweeter, $scope.settings.protectedUsers);
     };
     $scope.hasProtectedWord = function(text) {
-      return $scope.hasWordInList(text, $rootScope.settings.protectedWords);
+      return $scope.hasWordInList(text, $scope.settings.protectedWords);
     };
     $scope.tweetIsProtected = function(tweet) {
       var retweeter;
@@ -104,7 +94,7 @@ angular.module('wynnoApp.controllers')
         retweeter = tweet.__retweeter.screen_name;
       }
       tweet.__isMuted = ($scope.isMutedUser(tweet.__user.screen_name, retweeter) || $scope.hasMutedWord(tweet.__text));
-    }
+    };
 
     // function to determine whether a tweet is displayed or not
     $scope.displayed = function(tweet) {
@@ -164,7 +154,7 @@ angular.module('wynnoApp.controllers')
     //   $scope.getNewTweets();
     // });
     $scope.getOldTweets();
-    $scope.getSettings();
+    $scope.getSettingsFromDb();
     $scope.threshold = 0.5;
 
   })
@@ -201,16 +191,25 @@ angular.module('wynnoApp.controllers')
     }
   })
 
-  .controller('SettingsCtrl', function($rootScope, $scope, $http) {
+  .controller('SettingsCtrl', function($scope, $http, SettingsService) {
+    $scope.injectSettings = function() {
+      SettingsService.provideSettings()
+      .then(function(settings) {
+        $scope.settings = settings;
+      });
+    };
+
     $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_protect, input) {
       $http({method: 'POST', url: '/settings',
         data: {user_id: '52783164c5d992a75e000001', add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_protect: mute_or_protect, input: input}})
       .success(function(data, status, headers, config) {
-        $rootScope.settings = data;
+        $scope.settings = data;
         console.log('success updating settings to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
       })
       .error(function(data, status) {
         console.log('error updating setting to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
       });
     };
+
+    $scope.injectSettings();
   });
