@@ -22,11 +22,11 @@ angular.module('wynnoApp.controllers')
     $scope.firstGet = function() {
       TweetService.getOldTweets($scope.lastTweetId)
       .then(function(tweets) {
-        if (!TweetService.timeOfLastFetch) {
-          $scope.getNewTweets();
-        } else {
+        // if (!TweetService.timeOfLastFetch) {
+        //   $scope.getNewTweets();
+        // } else {
           $scope.renderInOrOut(tweets);
-        }
+        //}
       });
     };
 
@@ -51,6 +51,7 @@ angular.module('wynnoApp.controllers')
     $scope.renderInOrOut = function(tweets) {
       $scope.tweets = tweets;
       $scope.threshold = 0.5;
+      console.log('rendering the', $scope.viewing, 'tweets');
       if ($scope.viewing === 'passing') {
         $scope.displayPassing($scope.threshold);
       } else if ($scope.viewing === 'failing') {
@@ -98,7 +99,6 @@ angular.module('wynnoApp.controllers')
       }
     };
 
-    //$scope.getOldTweets();
     $scope.$on('refreshRequest', function(event, args) {
       $scope.getNewTweets();
     });

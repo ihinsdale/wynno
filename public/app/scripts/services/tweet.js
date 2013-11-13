@@ -150,7 +150,7 @@ angular.module('wynnoApp.services')
             }
           }
         });
-        d.resolve(service.currentTweets);
+        d.resolve(tweetsToDisplay);
         return d.promise;
       });
     }
