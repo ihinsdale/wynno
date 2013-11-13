@@ -8521,14 +8521,15 @@ body {
   font-size: 16px;
 }
 
-/* line 207, main.scss */
+/* line 209, main.scss */
 .signInContainer {
   width: 153px;
   height: 28px;
   margin: 9px 15px 8px 15px;
+  padding: 0 !important;
 }
 
-/* line 213, main.scss */
+/* line 216, main.scss */
 .signIn {
   width: 141px;
   min-height: 16px;
@@ -8537,43 +8538,47 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #1dcaff;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 5px;
 }
 
-/* line 225, main.scss */
+/* line 228, main.scss */
 .signIn:hover {
   background-color: #FFFFFF;
 }
 
-/* line 229, main.scss */
+/* line 232, main.scss */
 .refreshSpinnerContainer {
   width: 28px;
-  height: 26px;
+  height: 28px;
   margin: 9px 0 8px 0;
-  background-color: #ffffff;
-  border: 1px solid #1dcaff;
-  border-radius: 2px;
   padding: 0 !important;
 }
 
 /* line 239, main.scss */
-.refreshSpinner {
+.refreshSpinner, .refreshSpinner:hover {
+  border: 1px solid #1dcaff;
+  border-radius: 3px;
+  background-color: #ffffff;
   width: 20px;
   height: 20px;
   padding: 3px;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100% 100%;
-  background-image: url("../images/3-128-ltgray.gif");
+  background-size: 20px 20px;
 }
 
-/* line 249, main.scss */
+/* line 251, main.scss */
+.refreshSpinner {
+  background-image: url("../images/3-128-ltgray.png");
+}
+
+/* line 255, main.scss */
 .refreshSpinner:hover {
   background-image: url("../images/3-128-darkgray.png");
 }
 
-/* line 253, main.scss */
+/* line 259, main.scss */
 .refreshSpinner.spinning {
-  background-image: url("../images/3-128-white.png");
+  background-image: url("../images/3-128-white.gif");
 }

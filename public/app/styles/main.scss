@@ -204,6 +204,8 @@ $tweet-glyph-size: 30px;
     font-size: 16px;
 }
 
+$twitterButtonRadius: 3px;
+
 .signInContainer {
     width: 153px;
     height: 28px;
@@ -219,7 +221,7 @@ $tweet-glyph-size: 30px;
     background-repeat: no-repeat;
     background-position: center;
     border: 1px solid #1dcaff;
-    border-radius: 2px;
+    border-radius: $twitterButtonRadius;
     padding: 5px;
 }
 
@@ -229,22 +231,25 @@ $tweet-glyph-size: 30px;
 
 .refreshSpinnerContainer {
     width: 28px;
-    height: 26px;
+    height: 28px;
     margin: 9px 0 8px 0;
-    #background-color: #ffffff;
-    border: 1px solid #1dcaff;
-    border-radius: 2px;
     padding: 0 !important;
 }
 
-.refreshSpinner {
+.refreshSpinner, .refreshSpinner:hover {
+    border: 1px solid #1dcaff;
+    border-radius: $twitterButtonRadius;
+    background-color: #ffffff;
     width: 20px;
     height: 20px;
     padding: 3px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
-    background-image: url('../images/3-128-ltgray.gif');
+    background-size: 20px 20px;
+}
+
+.refreshSpinner {
+    background-image: url('../images/3-128-ltgray.png');
 }
 
 .refreshSpinner:hover {
@@ -252,5 +257,5 @@ $tweet-glyph-size: 30px;
 }
 
 .refreshSpinner.spinning {
-    background-image: url('../images/3-128-white.png');
+    background-image: url('../images/3-128-white.gif');
 }
