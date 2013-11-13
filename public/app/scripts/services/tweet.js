@@ -1,10 +1,7 @@
 angular.module('wynnoApp.services')
 .factory('TweetService', ['$q', '$http', 'SettingsService', function($q, $http, SettingsService) {
   var service = {
-    //inject current settings here for use in passing/failing helper functions
-    // can then remove the call to settings in main.js
-    // but then need to make sure that passing/failing reruns when settings updated
-    timeOfLastFetch: null,
+    //timeOfLastFetch: null,
     currentTweets: [],
     getOldTweets: function() {
       var d = $q.defer();
@@ -26,14 +23,13 @@ angular.module('wynnoApp.services')
     },
     getNewTweets: function() {
       var d = $q.defer();
-      if (service.timeOfLastFetch) {
-        
-      }
+      //if (service.timeOfLastFetch) {
+      //}
       $http.get('/new')
       .success(function(data, status) {
         console.log('success getting new tweets, they look like:', data);
         service.currentTweets = data.concat(service.currentTweets);
-        service.timeOfLastFetch = new Date().getTime();
+        //service.timeOfLastFetch = new Date().getTime();
         d.resolve(service.currentTweets);
       })
       .error(function(reason, status) {

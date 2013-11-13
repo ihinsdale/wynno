@@ -24,10 +24,8 @@ exports.old = function(req, res) {
 };
 
 exports.fresh = function(req, res) {
-  console.log('time of last fetch from Twitter API:', twitter.timeOfLastFetch);
   if (twitter.timeOfLastFetch) {
     var timeSinceLastTwitterApiCall = new Date().getTime() - twitter.timeOfLastFetch;
-    console.log('time since last fetch from Twitter, in seconds:', Math.ceil(timeSinceLastTwitterApiCall/1000));
   }
   if (timeSinceLastTwitterApiCall && timeSinceLastTwitterApiCall < 61000) {
     res.send(429, 'Please try again in ' + Math.ceil((61000 - timeSinceLastTwitterApiCall)/1000).toString() + 'seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
