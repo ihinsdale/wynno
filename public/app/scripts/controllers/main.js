@@ -8,7 +8,7 @@ angular.module('wynnoApp.controllers')
       TweetService.getOldTweets()
       .then(function(tweets) {
         //$scope.tweets = tweets;
-        //$scope.getNewTweets();
+        $scope.getNewTweets();
       });
     };
 
