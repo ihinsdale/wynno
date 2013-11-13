@@ -1,6 +1,6 @@
-<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
-  <div class="tweet" ng-repeat="tweet in tweets" ng-show="tweet.__isDisplayed">
-    <div ng-click="vote(tweet, 1)" class="voteAye">
+<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0'>
+  <div class="tweet" ng-repeat="tweet in tweets">
+    <div ng-click="vote(tweet, 1, $index)" class="voteAye">
       <div class="aye" ng-hide="hideVoteButtons(tweet)">
         <a href=''><span class="icon-checkmark-circle"></span></a>
       </div>
@@ -26,10 +26,11 @@
         </div>
       </div>
     </div>
-    <div ng-click="vote(tweet, 0)" class="voteNay">
+    <div ng-click="vote(tweet, 0, $index)" class="voteNay">
       <div class="nay" ng-hide="hideVoteButtons(tweet)">
         <a href=''><span class="icon-cancel-circle"></span></a>
       </div>
     </div>
   </div>
+  <div ng-show='busy'>Loading earlier tweets...</div>
 </div>

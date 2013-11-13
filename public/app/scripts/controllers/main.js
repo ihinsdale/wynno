@@ -4,8 +4,23 @@ angular.module('wynnoApp.controllers')
 
   .controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
 
-    $scope.getOldTweets = function() {
-      TweetService.getOldTweets()
+    $scope.busy = false;
+    $scope.lastTweetId = 0;
+
+    $scope.nextPage = function() {
+      if ($scope.busy) {
+        return;
+      }
+      $scope.busy = true;
+      if (!TweetService.timeOfLastFetch) {
+        $scope.firstGet();
+      } else {
+        $scope.subsequentGet();
+      }
+    }
+
+    $scope.firstGet = function() {
+      TweetService.getOldTweets($scope.lastTweetId)
       .then(function(tweets) {
         if (!TweetService.timeOfLastFetch) {
           $scope.getNewTweets();
@@ -14,6 +29,13 @@ angular.module('wynnoApp.controllers')
         }
       });
     };
+
+    $scope.subsequentGet = function() {
+      TweetService.getOldTweets($scope.lastTweetId)
+      .then(function(tweets) {
+        $scope.renderInOrOut(tweets);
+      })
+    }
 
     $scope.getNewTweets = function() {
       TweetService.getNewTweets()
@@ -34,10 +56,12 @@ angular.module('wynnoApp.controllers')
       } else if ($scope.viewing === 'failing') {
         $scope.displayFailing($scope.threshold);
       }
+      $scope.lastTweetId = $scope.tweets[$scope.tweets.length - 1]._id;
+      $scope.busy = false;
     };
 
     $scope.displayPassing = function(threshold) {
-      TweetService.setPassingTweets(threshold)
+      TweetService.getPassingTweets(threshold)
       .then(function(tweets) {
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
@@ -45,7 +69,7 @@ angular.module('wynnoApp.controllers')
     };
 
     $scope.displayFailing = function(threshold) {
-      TweetService.setFailingTweets(threshold)
+      TweetService.getFailingTweets(threshold)
       .then(function(tweets) {
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
@@ -53,14 +77,14 @@ angular.module('wynnoApp.controllers')
     }
 
     // function to record user's votes
-    $scope.vote = function(tweet, vote) {
+    $scope.vote = function(tweet, vote, index) {
       VoteService.vote(tweet, vote)
       .then(function(newVote) {
         tweet.__vote = newVote;
         if ($scope.viewing === 'passing' && tweet.__vote === 0) {
-          tweet.__isDisplayed = false;
+          $scope.tweets.splice(index, 1);
         } else if ($scope.viewing === 'failing' && tweet.__vote === 1) {
-          tweet.__isDisplayed = false;
+          $scope.tweets.splice(index, 1);
         }
       });
     };

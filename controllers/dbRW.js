@@ -88,6 +88,7 @@ exports.lastTweetId = function(callback) {
       console.log('last tweets id string is', item.id_str);
       id = incStrNum(item.id_str);
       _id = item._id
+      console.log('last tweets db id is:', _id);
     }
     callback(null, id, _id);
       // this incrementing performed because since_id is actually inclusive,
@@ -97,13 +98,29 @@ exports.lastTweetId = function(callback) {
 
 var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
 
-exports.findAllTweets = function(callback) {
-  Tweet.find({}, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
+// THIS FUNCTION UNNECESSARY NOW BECAUSE WE ALWAYS QUERY FOR TWEETS RELATIVE TO AN ID
+// exports.findAllTweets = function(callback) {
+//   Tweet.find({}, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
+//     if (err) {
+//       console.log('error grabbing all tweets');
+//       callback('there was an error grabbing tweets from db');
+//     } else {
+//       //console.log('the docs look like:', docs);
+//       callback(null, docs);
+//     }
+//   });
+// };
+
+exports.findTweetsBefore_id = function(tweet_id, callback) {
+  //tweet_id must be a db record id, i.e. _id, not a Twitter API id
+  var criteria = {};
+  if (tweet_id !== '0') {
+    criteria._id = {$lt: tweet_id};
+  }
+  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 }, limit: 20 }, function(err, docs) {
     if (err) {
-      console.log('error grabbing all tweets');
-      callback('there was an error grabbing tweets from db');
+      console.log('error grabbing tweets');
     } else {
-      //console.log('the docs look like:', docs);
       callback(null, docs);
     }
   });
@@ -111,18 +128,18 @@ exports.findAllTweets = function(callback) {
 
 exports.findTweetsSince_id = function(tweet_id, callback) {
   //tweet_id must be a db record id, i.e. _id, not a Twitter API id
-  var criteria = {};
-  if (tweet_id) {
-    criteria._id = {$gt: tweet_id};
+  if (!tweet_id) {
+    callback('no tweet id provided to grab tweets since');
+  } else {
+    var criteria = { _id: {$gt: tweet_id} };
+    Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
+      if (err) {
+        console.log('error grabbing tweets');
+      } else {
+        callback(null, docs);
+      }
+    });
   }
-  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
-    if (err) {
-      console.log('error grabbing new tweets');
-    } else {
-      //console.log('new tweets look like', docs);
-      callback(null, docs);
-    }
-  });
 };
 
 exports.saveVote = function(tweet_id, vote, callback) {
