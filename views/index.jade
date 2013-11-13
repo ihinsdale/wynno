@@ -27,7 +27,7 @@ block nav
           ul.nav.pull-right
             li(ng-click='refreshRequest()')
               a(href='').refreshSpinnerContainer
-                .refreshSpinner
+                .refreshSpinner(ng-class='{spinning: activeRequest}')
             li(ng-click='signIn()')
               a(href='').signInContainer
                 .signIn

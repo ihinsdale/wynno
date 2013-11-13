@@ -19,8 +19,10 @@ angular.module('wynnoApp.controllers')
       TweetService.getNewTweets()
       .then(function(tweets) {
         $scope.renderInOrOut(tweets);
+        $scope.$emit('refreshRequestCompleted');
       }, function(reason) {
         console.log('error getting new tweets:', reason);
+        $scope.$emit('refreshRequestCompleted');
       })
     };
 
@@ -82,6 +84,7 @@ angular.module('wynnoApp.controllers')
   .controller('NavCtrl', function($scope, $http, TweetService) {
     $scope.viewing = 'passing';
     $scope.active = [true, false, false];
+    $scope.activeRequest = true;
     $scope.viewPassing = function() {
       if ($scope.viewing !== 'passing') {
         $scope.viewing = 'passing';
@@ -109,10 +112,20 @@ angular.module('wynnoApp.controllers')
         console.log('error requesting token:', data);
       });
     };
+
     $scope.refreshRequest = function() {
+      $scope.activeRequest = true;
       $scope.$broadcast('refreshRequest');
       console.log('refreshRequest event emitted');
-    }
+    };
+
+    $scope.endSpinning = function() {
+      $scope.activeRequest = false;
+    };
+
+    $scope.$on('refreshRequestCompleted', function(event, args) {
+      $scope.endSpinning();
+    })
   })
 
   .controller('SettingsCtrl', function($scope, SettingsService) {
