@@ -29,20 +29,31 @@ var insertLinkHTML = function(tweet) {
       }
     } else if (total > 1) {
       // could optimize this by using always using provided indices for first replacement
+      var after;
       var start;
       var end;
       if (numUrls) {
         for (var i = 0; i < numUrls; i++) {
-          start = tweet.__text.indexOf(urls[i].url);
-          end = urls[i].url.length;
-          tweet.__text = replaceAt(tweet.__text, start, start + end, '<a href="' + urls[i].url + '" target="_blank">' + urls[i].display_url + '</a>');
+          if (i === 0) {
+            after = 0;
+          } else {
+            after = start + 30 + urls[i-1].url.length + urls[i-1].display_url.length;
+          }  // so that we always search for urls[i].url after our last insertion (assumes urls come in order from Twitter API, which they appear to be)
+          start = tweet.__text.indexOf(urls[i].url, after);
+          end = start + urls[i].url.length;
+          tweet.__text = replaceAt(tweet.__text, start, end, '<a href="' + urls[i].url + '" target="_blank">' + urls[i].display_url + '</a>');
         }
       }
       if (numMedia) {
         for (var j = 0; j < numMedia; j++) {
-          start = tweet.__text.indexOf(media[j].url);
-          end = media[j].url.length;
-          tweet.__text = replaceAt(tweet.__text, start, start + end, '<a href="' + media[j].url + '" target="_blank">' + media[j].display_url + '</a>');
+          if (j === 0) {
+            after = 0;
+          } else {
+            after = start + 30 + media[j-1].url.length + media[j-1].display_url.length;
+          } // so that we always search for media[i].url after our last insertion (assumes urls come in order from Twitter API, which they appear to be)
+          start = tweet.__text.indexOf(media[j].url, after);
+          end = start + media[j].url.length;
+          tweet.__text = replaceAt(tweet.__text, start, end, '<a href="' + media[j].url + '" target="_blank">' + media[j].display_url + '</a>');
         }
       }
     }
