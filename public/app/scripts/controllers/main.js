@@ -4,44 +4,36 @@ angular.module('wynnoApp.controllers')
 
   .controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
 
+    $scope.getOldTweets();
+
     $scope.getOldTweets = function() {
       TweetService.getOldTweets()
       .then(function(tweets) {
-        //$scope.tweets = tweets;
-        $scope.getNewTweets();
+        if (!TweetService.timeOfLastFetch) {
+          $scope.getNewTweets();
+        } else {
+          $scope.renderInOrOut(tweets);
+        }
       });
     };
 
     $scope.getNewTweets = function() {
       TweetService.getNewTweets()
       .then(function(tweets) {
-        $scope.tweets = tweets;
-        $scope.threshold = 0.5;
-        $scope.renderInOrOut($scope.threshold);
+        $scope.renderInOrOut(tweets);
       }, function(reason) {
-        console.log('error:', reason);
+        console.log('error getting new tweets:', reason);
       })
     };
 
-    $scope.renderInOrOut = function(threshold) {
+    $scope.renderInOrOut = function(tweets) {
+      $scope.tweets = tweets;
+      $scope.threshold = 0.5;
       if ($scope.viewing === 'passing') {
         $scope.displayPassing($scope.threshold);
       } else if ($scope.viewing === 'failing') {
         $scope.displayFailing($scope.threshold);
       }
-    }
-
-    // function to record user's votes
-    $scope.vote = function(tweet, vote) {
-      VoteService.vote(tweet, vote)
-      .then(function(newVote) {
-        tweet.__vote = newVote;
-        if ($scope.viewing === 'passing' && tweet.__vote === 0) {
-          tweet.__isDisplayed = false;
-        } else if ($scope.viewing === 'failing' && tweet.__vote === 1) {
-          tweet.__isDisplayed = false;
-        }
-      });
     };
 
     $scope.displayPassing = function(threshold) {
@@ -60,6 +52,19 @@ angular.module('wynnoApp.controllers')
       })
     }
 
+    // function to record user's votes
+    $scope.vote = function(tweet, vote) {
+      VoteService.vote(tweet, vote)
+      .then(function(newVote) {
+        tweet.__vote = newVote;
+        if ($scope.viewing === 'passing' && tweet.__vote === 0) {
+          tweet.__isDisplayed = false;
+        } else if ($scope.viewing === 'failing' && tweet.__vote === 1) {
+          tweet.__isDisplayed = false;
+        }
+      });
+    };
+
     // if tweet has been voted on, hide the vote buttons
     $scope.hideVoteButtons = function(tweet) {
       if (tweet.__vote !== null || tweet.__isProtected || tweet.__isMuted) {
@@ -69,11 +74,9 @@ angular.module('wynnoApp.controllers')
       }
     };
 
-    $scope.getOldTweets();
-
   })
 
-  .controller('NavCtrl', function($scope, $http) {
+  .controller('NavCtrl', function($scope, $http, TweetService) {
     $scope.viewing = 'passing';
     $scope.active = [true, false, false];
     $scope.viewPassing = function() {
@@ -102,6 +105,9 @@ angular.module('wynnoApp.controllers')
       .error(function(data, status) {
         console.log('error requesting token:', data);
       });
+    };
+    $scope.getNewFromTwitter = function() {
+      
     }
   })
 

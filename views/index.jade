@@ -25,7 +25,7 @@ block nav
               a(href='#/settings')
                 span.icon-cogs
           ul.nav.pull-right
-            li
+            li(ng-click='getNewFromTwitter()')
               a(href='').refreshSpinnerContainer
                 .refreshSpinner
             li(ng-click='signIn()')

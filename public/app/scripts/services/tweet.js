@@ -1,7 +1,7 @@
 angular.module('wynnoApp.services')
 .factory('TweetService', ['$q', '$http', 'SettingsService', function($q, $http, SettingsService) {
   var service = {
-    //timeOfLastFetch: null,
+    timeOfLastFetch: null,
     currentTweets: [],
     getOldTweets: function() {
       var d = $q.defer();
@@ -23,19 +23,24 @@ angular.module('wynnoApp.services')
     },
     getNewTweets: function() {
       var d = $q.defer();
-      //if (service.timeOfLastFetch) {
-      //}
-      $http.get('/new')
-      .success(function(data, status) {
-        console.log('success getting new tweets, they look like:', data);
-        service.currentTweets = data.concat(service.currentTweets);
-        //service.timeOfLastFetch = new Date().getTime();
-        d.resolve(service.currentTweets);
-      })
-      .error(function(reason, status) {
-        console.log('error getting new tweets:', reason);
-        d.reject(reason);
-      })
+      if (service.timeOfLastFetch) {
+        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch;
+      }
+      if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
+        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + 'seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+      } else {
+        $http.get('/new')
+        .success(function(data, status) {
+          console.log('success getting new tweets, they look like:', data);
+          service.currentTweets = data.concat(service.currentTweets);
+          service.timeOfLastFetch = new Date().getTime();
+          d.resolve(service.currentTweets);
+        })
+        .error(function(reason, status) {
+          console.log('error getting new tweets:', reason);
+          d.reject(reason);
+        });
+      }
       return d.promise;
     },
 
