@@ -74,7 +74,7 @@ angular.module('wynnoApp.controllers')
       }
     };
 
-    $scope.getOldTweets();
+    //$scope.getOldTweets();
     $scope.$on('refreshRequest', function(event, args) {
       $scope.getNewTweets();
     });
