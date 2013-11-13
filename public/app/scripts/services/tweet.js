@@ -27,7 +27,7 @@ angular.module('wynnoApp.services')
         var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch;
       }
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + 'seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
       } else {
         $http.get('/new')
         .success(function(data, status) {

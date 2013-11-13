@@ -28,7 +28,7 @@ exports.fresh = function(req, res) {
     var timeSinceLastFetch = new Date().getTime() - twitter.timeOfLastFetch;
   }
   if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-    res.send(429, 'Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + 'seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+    res.send(429, 'Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
   } else {
     async.waterfall([
       // find (Twitter's) tweet id of the last saved tweet

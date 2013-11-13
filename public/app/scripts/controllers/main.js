@@ -4,8 +4,6 @@ angular.module('wynnoApp.controllers')
 
   .controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
 
-    $scope.getOldTweets();
-
     $scope.getOldTweets = function() {
       TweetService.getOldTweets()
       .then(function(tweets) {
@@ -74,6 +72,11 @@ angular.module('wynnoApp.controllers')
       }
     };
 
+    $scope.getOldTweets();
+    $scope.$on('refreshRequest', function(event, args) {
+      $scope.getNewTweets();
+    });
+
   })
 
   .controller('NavCtrl', function($scope, $http, TweetService) {
@@ -106,8 +109,9 @@ angular.module('wynnoApp.controllers')
         console.log('error requesting token:', data);
       });
     };
-    $scope.getNewFromTwitter = function() {
-      
+    $scope.refreshRequest = function() {
+      $scope.$broadcast('refreshRequest');
+      console.log('refreshRequest event emitted');
     }
   })
 
