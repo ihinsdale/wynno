@@ -9,7 +9,7 @@ var algo = require('./algo.js');
 var rendering = require('./rendering.js');
 
 exports.index = function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'wynno' });
 };
 
 exports.old = function(req, res) {
