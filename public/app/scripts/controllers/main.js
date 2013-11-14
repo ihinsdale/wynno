@@ -5,39 +5,49 @@ angular.module('wynnoApp.controllers')
   .controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
 
     $scope.busy = false;
-    $scope.lastTweetId = 0;
+
+    $scope.initialLoad = function() {
+      console.log('initialLoad firing');
+      if (!TweetService.timeOfLastFetch) {
+        $scope.firstGet();
+      } else {
+        $scope.getAlreadyGotten();
+      }
+    };
 
     $scope.nextPage = function() {
+      console.log('nextPage firing');
       if ($scope.busy) {
         return;
       }
       $scope.busy = true;
-      if (!TweetService.timeOfLastFetch) {
-        $scope.firstGet();
-      } else {
-        $scope.subsequentGet();
-      }
+      $scope.getMoreOldTweets();
     }
 
     $scope.firstGet = function() {
-      TweetService.getOldTweets($scope.lastTweetId)
+      console.log('firstGet firing');
+      console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
+      TweetService.getOldTweets(TweetService.oldestTweetId)
       .then(function(tweets) {
-        // if (!TweetService.timeOfLastFetch) {
-        //   $scope.getNewTweets();
-        // } else {
+        if (!TweetService.timeOfLastFetch) {
+          $scope.getNewTweets();
+        } else {
           $scope.renderInOrOut(tweets);
-        //}
+        }
       });
     };
 
-    $scope.subsequentGet = function() {
-      TweetService.getOldTweets($scope.lastTweetId)
+    $scope.getMoreOldTweets = function() {
+      console.log('getMoreOlder firing');
+      console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
+      TweetService.getOldTweets(TweetService.oldestTweetId)
       .then(function(tweets) {
         $scope.renderInOrOut(tweets);
       })
-    }
+    };
 
     $scope.getNewTweets = function() {
+      console.log('getNewTweets firing');
       TweetService.getNewTweets()
       .then(function(tweets) {
         $scope.renderInOrOut(tweets);
@@ -48,6 +58,11 @@ angular.module('wynnoApp.controllers')
       })
     };
 
+    $scope.getAlreadyGotten = function() {
+      console.log('getAlreadyGotten firing');
+      $scope.renderInOrOut(TweetService.currentTweets);
+    }
+
     $scope.renderInOrOut = function(tweets) {
       $scope.tweets = tweets;
       $scope.threshold = 0.5;
@@ -57,7 +72,6 @@ angular.module('wynnoApp.controllers')
       } else if ($scope.viewing === 'failing') {
         $scope.displayFailing($scope.threshold);
       }
-      $scope.lastTweetId = $scope.tweets[$scope.tweets.length - 1]._id;
       $scope.busy = false;
     };
 
@@ -99,6 +113,8 @@ angular.module('wynnoApp.controllers')
       }
     };
 
+
+    $scope.initialLoad();
     $scope.$on('refreshRequest', function(event, args) {
       $scope.getNewTweets();
     });

@@ -13,11 +13,11 @@ exports.index = function(req, res) {
 };
 
 exports.old = function(req, res) {
-  var lastTweetId = req.query.lastTweetId;
-  console.log('lastTweetId sent in request looks like:', lastTweetId);
+  var oldestTweetId = req.query.oldestTweetId;
+  console.log('oldestTweetId sent in request looks like:', oldestTweetId);
   async.waterfall([
     function(callback) {
-      db.findTweetsBefore_id(lastTweetId, callback);
+      db.findTweetsBefore_id(oldestTweetId, callback);
     },
     rendering.renderLinks,
     function(tweets, callback) {

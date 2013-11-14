@@ -1,4 +1,4 @@
-<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0'>
+<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
   <div class="tweet" ng-repeat="tweet in tweets">
     <div ng-click="vote(tweet, 1, $index)" class="voteAye">
       <div class="aye" ng-hide="hideVoteButtons(tweet)">

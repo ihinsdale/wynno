@@ -3,15 +3,18 @@ angular.module('wynnoApp.services')
   var service = {
     timeOfLastFetch: null,
     currentTweets: [],
-    getOldTweets: function(lastTweetId) {
-      lastTweetId = lastTweetId || 0;
+    oldestTweetId: 0,
+    getOldTweets: function(oldestTweetId) {
+      oldestTweetId = oldestTweetId || 0;
       var d = $q.defer();
       $http.get('/old', {
-        params: {lastTweetId: lastTweetId}
+        params: {oldestTweetId: oldestTweetId}
       })
       .success(function(data, status) {
         console.log('success getting old tweets, they look like:', data);
         service.currentTweets = service.currentTweets.concat(data);
+        service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1]._id;
+        console.log('oldestTweetId after getting batch of tweets is:', service.oldestTweetId);
         d.resolve(service.currentTweets);
       })
       .error(function(reason, status) {
