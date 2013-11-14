@@ -75,6 +75,7 @@ angular.module('wynnoApp.controllers')
     $scope.displayPassing = function(threshold) {
       TweetService.getPassingTweets(threshold)
       .then(function(tweets) {
+        $scope.elegantizeTimestamps(tweets, new Date().getTime());
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
       });
@@ -83,10 +84,37 @@ angular.module('wynnoApp.controllers')
     $scope.displayFailing = function(threshold) {
       TweetService.getFailingTweets(threshold)
       .then(function(tweets) {
+        $scope.elegantizeTimestamps(tweets, new Date().getTime());
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
       })
-    }
+    };
+
+    $scope.elegantizeTimestamps = function(tweets, presentTime) {
+      var elegantize = function(UTCtimestamp) {
+        var numMilliseconds = presentTime - Date.parse(UTCtimestamp); 
+        var numSeconds = numMilliseconds/1000;
+        var numMinutes = numSeconds/60;
+        var numHours = numMinutes/60;
+        var approx = '';
+        if (numHours >= 24) {
+          var timeOfEventArray = UTCtimestamp.split(' ');
+          approx = timeOfEventArray[1] + ' ' + timeOfEventArray[2];
+        } else if (numHours >= 1 && numHours < 24) {
+          approx = Math.round(numHours).toString() + 'h';
+        } else if (numMinutes >= 1 && numHours < 1) {
+          approx = Math.round(numMinutes).toString() + 'm';
+        } else if (numSeconds >= 1 && numMinutes < 1) {
+          approx = Math.round(numSeconds).toString() + 's';
+        } else {
+          approx = 'now';
+        }
+        return approx;
+      };
+      for (var i = 0; i < tweets.length; i++) {
+        tweets[i].__elegant_time = elegantize(tweets[i].__created_at);
+      }
+    };
 
     // function to record user's votes
     $scope.vote = function(tweet, vote, index) {
@@ -109,7 +137,6 @@ angular.module('wynnoApp.controllers')
         return false;
       }
     };
-
 
     $scope.initialLoad();
     $scope.$on('refreshRequest', function(event, args) {
