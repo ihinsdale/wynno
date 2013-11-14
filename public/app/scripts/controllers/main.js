@@ -29,11 +29,8 @@ angular.module('wynnoApp.controllers')
       console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
       TweetService.getOldTweets(TweetService.oldestTweetId)
       .then(function(tweets) {
-        if (!TweetService.timeOfLastFetch) {
-          $scope.getNewTweets();
-        } else {
-          $scope.renderInOrOut(tweets);
-        }
+        $scope.renderInOrOut(tweets);
+        $scope.getNewTweets();
       });
     };
 
