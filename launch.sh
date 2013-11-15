@@ -2,7 +2,11 @@
 # launch the python server and the node server
 
 # Launch the MongoDB instance
-sudo service mongodb start
+sudo service mongodb stop
+sudo /usr/bin/mongod -- dbpath ~/db/data
+
+# For initial deployment, mongorestore the db from the dump folder
+mongorestore --db wynno-dev
 
 # Install node dependencies
 npm install -g
