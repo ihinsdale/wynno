@@ -25,7 +25,7 @@ var handleType = function(type, tweet) {
         }  // so that we always search for items[i].screen_name after our last insertion (assumes screen_names come in order from Twitter API, which they appear to be)
         start = tweet.__text.indexOf('@', after) + 1;
         end = start + items[i].screen_name.length;
-        tweet.__text = replaceAt(tweet.__text, start, end, '<a href="https://twitter.com/' + items[i].url + '" target="_blank">' + items[i].display_url + '</a>');
+        tweet.__text = replaceAt(tweet.__text, start, end, '<a href="https://twitter.com/' + items[i].screen_name + '" target="_blank">' + items[i].screen_name + '</a>');
       }
     }
   }
