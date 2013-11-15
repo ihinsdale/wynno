@@ -98,19 +98,6 @@ exports.lastTweetId = function(callback) {
 
 var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
 
-// THIS FUNCTION UNNECESSARY NOW BECAUSE WE ALWAYS QUERY FOR TWEETS RELATIVE TO AN ID
-// exports.findAllTweets = function(callback) {
-//   Tweet.find({}, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
-//     if (err) {
-//       console.log('error grabbing all tweets');
-//       callback('there was an error grabbing tweets from db');
-//     } else {
-//       //console.log('the docs look like:', docs);
-//       callback(null, docs);
-//     }
-//   });
-// };
-
 exports.findTweetsBefore_id = function(tweet_id, callback) {
   //tweet_id must be a db record id, i.e. _id, not a Twitter API id
   var criteria = {};
