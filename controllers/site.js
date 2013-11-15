@@ -19,7 +19,7 @@ exports.old = function(req, res) {
     function(callback) {
       db.findTweetsBefore_id(oldestTweetId, callback);
     },
-    rendering.renderLinks,
+    rendering.renderLinksAndMentions,
     function(tweets, callback) {
       res.send(tweets);
       callback(null);
@@ -58,7 +58,7 @@ exports.fresh = function(req, res) {
       // get this new batch of tweets out of the database
       db.findTweetsSince_id,
       // render any links in the tweets
-      rendering.renderLinks,
+      rendering.renderLinksAndMentions,
       // send the tweets back to the client
       function(tweets, callback) {
         res.send(tweets);
