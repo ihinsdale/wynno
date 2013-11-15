@@ -1,0 +1,1 @@
+{ "options" : { "create" : "demo-collection" }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "wynno-dev.demo-collection", "name" : "_id_" } ] }
