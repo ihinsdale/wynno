@@ -3,7 +3,7 @@ var url = require('url');
 
 module.exports = function(app) {
   // Setup DB connection
-  var dbConnUrl = process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017';
+  var dbConnUrl = process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017/wynno-dev';
   var host = url.parse(dbConnUrl).hostname;
   var port = new Number(url.parse(dbConnUrl).port);
 
