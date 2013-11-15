@@ -39,7 +39,9 @@
     "load-grunt-tasks": "~0.1.0",
     "grunt-google-cdn": "~0.2.0",
     "grunt-ngmin": "~0.0.2",
-    "time-grunt": "~0.1.0"
+    "time-grunt": "~0.1.0",
+    "expect.js": "~0.2.0",
+    "superagent": "~0.15.7"
   },
   "engines": {
     "node": ">=0.8.0"
