@@ -145,7 +145,7 @@ angular.module('wynnoApp.controllers')
 
   })
 
-  .controller('NavCtrl', function($scope, $http, TweetService) {
+  .controller('NavCtrl', function($scope, $http, $location, TweetService) {
     $scope.viewing = 'passing';
     $scope.active = [true, false, false];
     $scope.activeRequest = true;
@@ -169,8 +169,12 @@ angular.module('wynnoApp.controllers')
     };
     $scope.signIn = function() {
       $http.get('/auth/twitter')
+      // .then(function(resp) {
+      //   // user should be redirected;
+      // });
       .success(function(data, status, headers, config) {
         console.log('successful token request:', data);
+        window.location.replace('https://twitter.com/oauth/authorize?oauth_token='+data.oauth_token);
       })
       .error(function(data, status) {
         console.log('error requesting token:', data);

@@ -7,7 +7,7 @@ var oa = new OAuth(
   "https://api.twitter.com/oauth/access_token",
   keys.consumer_key,
   keys.consumer_secret,
-  "1.0",
+  "1.0A",
   "http://127.0.0.1:8080/auth/twitter/callback",
   "HMAC-SHA1"
 );
@@ -27,12 +27,15 @@ exports.getRequestToken = function(req, res) {
     } else {
       console.log('response body:', results);
       console.log('oauth_token is:', oauth_token);
+      console.log('oauth_secret is:', oauth_token_secret);
       // req.session.oauth = {};
       // req.session.oauth.token = oauth_token;
       // console.log('oauth.token: ' + req.session.oauth.token);
       // req.session.oauth.token_secret = oauth_token_secret;
       // console.log('oauth.token_secret: ' + req.session.oauth.token_secret);
-      res.redirect('https://twitter.com/oauth/authorize?oauth_token='+oauth_token)
+
+      res.send({"oauth_token": oauth_token});
+      //res.redirect('https://twitter.com/oauth/authorize?oauth_token='+oauth_token);
       // send JSON object with the oauth token back to angular which then does the redirect on the front end
       // somehow tell angular to ignore the callback get request coming from twitter
     }
