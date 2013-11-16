@@ -7,7 +7,7 @@ from bson.json_util import dumps
 
 from pymongo import MongoClient
 client = MongoClient()
-db = client.wynno-dev
+db = client['wynno-dev']
 tweets = db.tweets
 
 def tweet_features(tweet):
