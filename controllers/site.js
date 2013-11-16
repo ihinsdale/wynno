@@ -118,5 +118,6 @@ exports.signIn = function(req, res) {
 };
 
 exports.signInSuccessCallback = function(req, res, next) {
+  console.log('inside signInSuccessCallback');
   twitter.successCallback(req, res, next);
 };
