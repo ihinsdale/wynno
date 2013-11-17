@@ -174,7 +174,7 @@ angular.module('wynnoApp.controllers')
       // });
       .success(function(data, status, headers, config) {
         console.log('successful token request:', data);
-        window.location.replace('https://twitter.com/oauth/authorize?oauth_token='+data.oauth_token);
+        $location.url('https://twitter.com/oauth/authorize?oauth_token='+data.oauth_token);
       })
       .error(function(data, status) {
         console.log('error requesting token:', data);

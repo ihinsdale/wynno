@@ -38,33 +38,45 @@ exports.getRequestToken = function(req, res) {
       //res.redirect('https://twitter.com/oauth/authorize?oauth_token='+oauth_token);
       // send JSON object with the oauth token back to angular which then does the redirect on the front end
       // somehow tell angular to ignore the callback get request coming from twitter
+      // withCredentials - jquery helper[?] for user authentication
     }
   });
 };
 
 exports.successCallback = function(req, res, next) {
   console.log('inside the success callback');
-  if (req.session.oauth) {
-    req.session.oauth.verifier = req.query.oauth_verifier;
-    var oauth = req.session.oauth;
+  console.log(req);
 
-    oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
-    function(error, oauth_access_token, oauth_access_token_secret, results){
-      if (error){
-        console.log(error);
-        res.send("yeah something broke.");
-      } else {
-        req.session.oauth.access_token = oauth_access_token;
-        req.session.oauth.access_token_secret = oauth_access_token_secret;
-        console.log(results);
-        console.log('user access token is:', req.session.oauth.access_token);
-        console.log('user secret is:', req.session.oauth.access_token_secret);
-        res.send("worked. nice one.");
-      }
-    }
-    );
-  } else
-    next(new Error("you're not supposed to be here."));
+  if (res.query) {
+
+  } else {
+    
+  }
+  res.query.oauth_token
+  res.query.oauth_verifier;
+
+  // if (req.session.oauth) {
+  //   req.session.oauth.verifier = req.query.oauth_verifier;
+  //   var oauth = req.session.oauth;
+
+  //   oa.getOAuthAccessToken(oauth.token,oauth.token_secret,oauth.verifier, 
+  //   function(error, oauth_access_token, oauth_access_token_secret, results){
+  //     if (error){
+  //       console.log(error);
+  //       res.send("yeah something broke.");
+  //     } else {
+  //       req.session.oauth.access_token = oauth_access_token;
+  //       req.session.oauth.access_token_secret = oauth_access_token_secret;
+  //       console.log(results);
+  //       console.log('user access token is:', req.session.oauth.access_token);
+  //       console.log('user secret is:', req.session.oauth.access_token_secret);
+  //       res.send("worked. nice one.");
+  //     }
+  //   }
+  //   );
+  // } else {
+  //   next(new Error("you're not supposed to be here."));
+  // }
 };
 
 exports.timeOfLastFetch = null;

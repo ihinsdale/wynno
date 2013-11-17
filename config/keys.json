@@ -2,5 +2,11 @@
   "twitter": {
     "consumer_key": "0adZZZjZVIDxGtDJY0shkA",
     "consumer_secret": "Ke3KzVQk01grsPb6Df5h4nCvAQVLJQX7rEqTwkcnKY"
+  },
+  "db": {
+    "host": "",
+    "port": 27017,
+    "username": "Ian",
+    "password": "gHz32KplsW5241431fdsa234234aiwieqiwue"
   }
 }

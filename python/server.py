@@ -3,10 +3,15 @@ import zerorpc
 import nltk
 import random
 import math
+import json
+import os.path
 from bson.json_util import dumps
 
 from pymongo import MongoClient
-client = MongoClient()
+
+keys = json.load(open(os.path.join(os.path.dirname,'/config/keys.json')))
+print keys
+client = MongoClient('mongodb://127.0.0.1:27017/')
 db = client['wynno-dev']
 tweets = db.tweets
 
