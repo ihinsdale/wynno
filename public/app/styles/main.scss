@@ -69,6 +69,11 @@ $tweet-border: 1px solid #e0e0e0;
     display: inline;
 }
 
+.pvalue {
+    display: inline;
+    float: right;
+}
+
 .tweetTimestamp {
     float: right;
     display: inline;
@@ -158,14 +163,43 @@ $tweet-glyph-size: 30px;
 }
 
 .navbar .brand {
+    font-family: "Maven Pro", sans-serif;
     padding-left: 40px;
     font-size: 32px;
     font-weight: bold;
     line-height: 100%;
     color: #a166d5;
     text-shadow: none;
-    padding-top: 7px;
-    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-bottom: 3px;
+}
+
+.w, .y, .biggern, .smallern, .o {
+    background-color: #FFFFFF;
+    display: inline
+}
+
+.w {
+    font-size: 34px;
+}
+
+.y {
+    font-size: 30px;
+    color: #62d7a5;
+}
+
+.biggern {
+    font-size: 30px;
+}
+
+.smallern {
+    font-size: 30px;
+    color: #ff9c74;
+}
+
+.o {
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .navbar-inner {

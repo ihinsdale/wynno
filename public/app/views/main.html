@@ -7,14 +7,14 @@
     </div>
     <div class="tweetStuff">
       <div class="tweeterImage">
-        <img src='{{tweet.__user.profile_image_url}}'>
+        <img ng-src='{{tweet.__user.profile_image_url}}'>
       </div>
       <div class="tweetContent">
         <div class="tweetMeta">
           <div class="tweeterName">{{tweet.__user.name}}</div>
           <div class="tweeterScreenName">@{{tweet.__user.screen_name}}</div>
           <div class="tweetTimestamp">{{tweet.__elegant_time}}</div>
-          <div class="pvalue">{{tweet.__p}}</div>
+          <div class="pvalue">p = {{tweet.__p}}</div>
         </div>
         <div class="tweetText" ng-bind-html="tweet.__text">
         </div>

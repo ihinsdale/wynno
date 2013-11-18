@@ -47,13 +47,18 @@ exports.successCallback = function(req, res, next) {
   console.log('inside the success callback');
   console.log(req);
 
-  if (res.query) {
-
+  if (req.query) {
+    req.session['oauth'] = {
+      'token': req.query.oauth_token,
+      'verifier': req.query.oauth_verifier
+    }
+    res.redirect('/');
+    // res.query.oauth_token
+    // res.query.oauth_verifier;
   } else {
     
   }
-  res.query.oauth_token
-  res.query.oauth_verifier;
+
 
   // if (req.session.oauth) {
   //   req.session.oauth.verifier = req.query.oauth_verifier;

@@ -1,6 +1,7 @@
 angular.module('wynnoApp.services')
 .factory('TweetService', ['$q', '$http', 'SettingsService', function($q, $http, SettingsService) {
   var service = {
+    // store oauth token in here
     timeOfLastFetch: null,
     currentTweets: [],
     oldestTweetId: 0,
