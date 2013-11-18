@@ -16,7 +16,7 @@
           <div class="tweetTimestamp">{{tweet.__elegant_time}}</div>
           <div class="pvalue">{{tweet.__p}}</div>
         </div>
-        <div class="tweetText" ng-bind-html-unsafe="tweet.__text">
+        <div class="tweetText" ng-bind-html="tweet.__text">
         </div>
         <div class="tweetFooter">
           <div ng-if="tweet.__retweeter.length > 0" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>

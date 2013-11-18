@@ -7,7 +7,8 @@ angular.module('wynnoApp', [
   'ui.bootstrap',
   'wynnoApp.services',
   'wynnoApp.controllers',
-  'infinite-scroll'
+  'infinite-scroll',
+  'ngRoute'
 ])
   .config(function ($routeProvider) {
     $routeProvider
