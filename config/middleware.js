@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 
 module.exports = function(app) {
-  app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -13,4 +12,5 @@ module.exports = function(app) {
   console.log('dirname is', __dirname);
   console.log('path', path.join(__dirname, '..', 'public'));
   app.use(express.static(path.join(__dirname, '..', 'public')));
+  app.use(express.favicon(path.join(__dirname, '..', 'public/app/images/favicon.ico')));
 };
