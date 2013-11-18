@@ -9,9 +9,8 @@ from bson.json_util import dumps
 
 from pymongo import MongoClient
 
-keys = json.load(open(os.path.join(os.path.dirname,'/config/keys.json')))
-print keys
-client = MongoClient('mongodb://127.0.0.1:27017/')
+keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
+client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@127.0.0.1:27017/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
 
