@@ -60,12 +60,14 @@ $tweet-border: 1px solid #e0e0e0;
 }
 
 .tweeterName {
+    font-size: 14px;
     font-weight: bold;
     display: inline;
+    color: #000000;
 }
 
 .tweeterScreenName {
-    font-size: 12px;
+    #font-size: 12px;
     display: inline;
 }
 
@@ -77,6 +79,7 @@ $tweet-border: 1px solid #e0e0e0;
 .tweetTimestamp {
     float: right;
     display: inline;
+    padding-left: 15px;
 }
 
 .tweetText {
@@ -85,17 +88,22 @@ $tweet-border: 1px solid #e0e0e0;
 
 .tweetFooter {
     width: 100%;
+    display: block;
 }
 
 .retweetedStatus {
     float: left;
-    width: 100%;
-    display: block;
+    display: inline;
 }
 
 .tweetLink {
     float: right;
-    display: block;
+    display: inline;
+}
+
+.tweetMeta, .tweetFooter {
+    color: #989898;
+    font-size: 12px;
 }
 
 .voteAye, .voteNay {

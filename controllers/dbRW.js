@@ -104,7 +104,7 @@ exports.findTweetsBefore_id = function(tweet_id, callback) {
   if (tweet_id !== '0') {
     criteria._id = {$lt: tweet_id};
   }
-  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 }, limit: 20 }, function(err, docs) {
+  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 }, limit: 50 }, function(err, docs) {
     if (err) {
       console.log('error grabbing tweets');
     } else {

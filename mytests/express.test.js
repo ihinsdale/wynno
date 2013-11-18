@@ -7,7 +7,7 @@ describe('express server', function() {
     .end(function(error, res) {
       expect(error).to.eql(null);
       expect(res.body).to.be.an('array');
-      expect(res.body.length).to.be.below(21);
+      expect(res.body.length).to.be.below(51);
       done();
     });
   });
