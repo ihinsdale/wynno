@@ -6,7 +6,7 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 /* Put your CSS here */
 html, body {
-  margin: 20px;
+    margin: 20px;
 }
 
 body {
@@ -21,19 +21,19 @@ $color-scheme:  3321TvCw0w0w0;
 $tweet-border: 1px solid #e0e0e0;
 
 .container {
-    width: 625px;
+    #width: 625px;
 }
 
 .tweet {
-    margin-left: auto;
-    margin-right: auto;
-    overflow: auto;
+    #margin-left: auto;
+    #margin-right: auto;
+    #overflow: auto;
     #background: #dbd4e1;
 }
 
 .tweetStuff {
     background: #ffffff;
-    width: 458px;
+    #width: 458px;
     height: 100%;
     padding: 5px 10px 5px 10px;
     border-left: $tweet-border;
@@ -43,24 +43,28 @@ $tweet-border: 1px solid #e0e0e0;
     float: left;
 }
 
+.topRow {
+    width: 100%;
+    display: inline-block;
+}
+
 .tweeterImage {
     float: left;
     padding: 4px 10px 6px 0px;
-    display: inline-block;
-}
-
-.tweetContent {
-    width: 400px;
-    height: 100%;
-    display: inline-block;
+    display: inline;
+    width: 49px;
 }
 
 .tweetMeta {
-    display: block;
+    width: 80%;
+    display: inline;
 }
+
+
 
 .tweeterName {
     font-size: 14px;
+    line-height: 14px;
     font-weight: bold;
     display: inline;
     color: #000000;
@@ -68,18 +72,30 @@ $tweet-border: 1px solid #e0e0e0;
 
 .tweeterScreenName {
     #font-size: 12px;
+    line-height: 14px;
+    vertical-align: text-bottom;
     display: inline;
 }
 
 .pvalue {
+    line-height: 14px;
+    vertical-align: text-bottom;
     display: inline;
     float: right;
 }
 
 .tweetTimestamp {
+    line-height: 14px;
+    vertical-align: text-bottom;
     float: right;
     display: inline;
     padding-left: 15px;
+}
+
+.tweetContent {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
 }
 
 .tweetText {
@@ -107,8 +123,8 @@ $tweet-border: 1px solid #e0e0e0;
 }
 
 .voteAye, .voteNay {
-    height: 50px;
-    width: 50px;
+    #height: 50px;
+    #width: 50px;
     display: inline;
     float: left;
 }
@@ -119,6 +135,7 @@ $tweet-glyph-size: 30px;
 
 .voteAye {
     padding-right: $vote-button-side-padding;
+    #padding-bottom: $vote-button-vert-padding;
 }
 
 .voteNay {

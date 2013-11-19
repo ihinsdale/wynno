@@ -1,21 +1,23 @@
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
-  <div class="tweet" ng-repeat="tweet in tweets">
-    <div ng-click="vote(tweet, 1, $index)" class="voteAye">
+  <div class="tweet row" ng-repeat="tweet in tweets">
+    <div ng-click="vote(tweet, 1, $index)" class="voteAye span1 offset2">
       <div class="aye" ng-hide="hideVoteButtons(tweet)">
         <a href=''><span class="icon-checkmark-circle"></span></a>
       </div>
     </div>
-    <div class="tweetStuff">
-      <div class="tweeterImage">
-        <img ng-src='{{tweet.__user.profile_image_url}}'>
-      </div>
-      <div class="tweetContent">
+    <div class="tweetStuff span6">
+      <div class="topRow">
+        <div class="tweeterImage">
+          <img ng-src='{{tweet.__user.profile_image_url}}'>
+        </div>
         <div class="tweetMeta">
           <div class="tweeterName">{{tweet.__user.name}}</div>
           <div class="tweeterScreenName">@{{tweet.__user.screen_name}}</div>
           <div class="tweetTimestamp">{{tweet.__elegant_time}}</div>
           <div class="pvalue">p = {{tweet.__p}}</div>
         </div>
+      </div>
+      <div class="tweetContent">
         <div class="tweetText" ng-bind-html="tweet.__text">
         </div>
         <div class="tweetFooter">
@@ -26,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div ng-click="vote(tweet, 0, $index)" class="voteNay">
+    <div ng-click="vote(tweet, 0, $index)" class="voteNay span1">
       <div class="nay" ng-hide="hideVoteButtons(tweet)">
         <a href=''><span class="icon-cancel-circle"></span></a>
       </div>
