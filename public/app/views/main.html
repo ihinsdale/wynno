@@ -6,18 +6,16 @@
       </div>
     </div>
     <div class="tweetStuff span6">
-      <div class="topRow">
-        <div class="tweeterImage">
-          <img ng-src='{{tweet.__user.profile_image_url}}'>
-        </div>
+      <div class="tweeterImage">
+        <img ng-src='{{tweet.__user.profile_image_url}}'>
+      </div>
+      <div class="tweetContent">
         <div class="tweetMeta">
           <div class="tweeterName">{{tweet.__user.name}}</div>
           <div class="tweeterScreenName">@{{tweet.__user.screen_name}}</div>
           <div class="tweetTimestamp">{{tweet.__elegant_time}}</div>
           <div class="pvalue">p = {{tweet.__p}}</div>
         </div>
-      </div>
-      <div class="tweetContent">
         <div class="tweetText" ng-bind-html="tweet.__text">
         </div>
         <div class="tweetFooter">
