@@ -5,7 +5,7 @@ block nav
     .navbar-inner
       .navContainer
         // .btn-navbar is used as the toggle for collapsed navbar content 
-        a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+        a.btn.btn-navbar(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
           span.icon-bar
           span.icon-bar
           span.icon-bar
@@ -17,7 +17,7 @@ block nav
           .smallern n
           .o o
         // Everything you want hidden at 940px or less, place within here 
-        .nav-collapse.collapse
+        .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
           // .nav, .navbar-search, .navbar-form, etc 
           ul.nav.pull-left.wynnoButtons
             li.passing(ng-click='viewPassing()', ng-class='{active: active[0]}')
@@ -53,20 +53,6 @@ block content
   script(src='/app/bower_components/angular/angular.min.js')
   script(src='/app/bower_components/angular-route/angular-route.min.js')
   script(src='/app/bower_components/ngInfiniteScroll/ng-infinite-scroll.js')
-
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-affix.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-alert.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-dropdown.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-tooltip.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-modal.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-transition.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-button.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-popover.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-typeahead.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-carousel.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-scrollspy.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-collapse.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-tab.js')
 
   script(src='/app/bower_components/angular-resource/angular-resource.js')
   script(src='/app/bower_components/angular-cookies/angular-cookies.js')
