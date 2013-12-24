@@ -4,21 +4,24 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 @import "bootstrap-sass/lib/bootstrap";
 @import "bootstrap-sass/lib/responsive";
 
-/* Put your CSS here */
-html, body {
-    margin: 20px;
-}
+$color-scheme:  3321TvCw0w0w0;
+
+$tweet-border-dotted: 1px dotted #e0e0e0;
+$tweet-border-solid: 1px solid #e0e0e0;
+$background-color: #ffffff;
+
+$vote-button-side-padding: 20px;
+$vote-button-vert-padding: 5px;
+$tweet-glyph-size: 30px;
 
 body {
-    background: #f0f0f0;
+    background: $background-color;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
     padding-top: 5px;
 }
 
-$color-scheme:  3321TvCw0w0w0;
 
-$tweet-border: 1px solid #e0e0e0;
 
 .container {
     #width: 625px;
@@ -29,18 +32,22 @@ $tweet-border: 1px solid #e0e0e0;
     #margin-right: auto;
     #overflow: auto;
     #background: #dbd4e1;
+    padding-bottom: 20px;
+}
+
+.tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
+    background-color: #f8f8f8;
 }
 
 .tweetStuff {
-    background: #ffffff;
     #width: 458px;
     height: 100%;
-    padding: 5px 10px 5px 10px;
-    border-left: $tweet-border;
-    border-bottom: $tweet-border;
-    border-right: $tweet-border;
-    display: inline;
-    float: left;
+    min-height: 102px;
+    #padding: 5px 10px 5px 10px;
+    #float: left;
+    border-right: $tweet-border-dotted;
+    border-bottom: $tweet-border-dotted;
+    border-left: $tweet-border-dotted;
 }
 
 .tweeterImage {
@@ -114,52 +121,76 @@ $tweet-border: 1px solid #e0e0e0;
     font-size: 12px;
 }
 
-.voteAye, .voteNay {
-    #height: 50px;
-    #width: 50px;
-    display: inline;
-    float: left;
+.voteButtons {
+    border-top: $tweet-border-dotted;
+    border-right: $tweet-border-dotted;
+    border-bottom: $tweet-border-dotted;
+    border-left: $tweet-border-dotted;
+    display: inline-block;
 }
 
-$vote-button-side-padding: 20px;
-$vote-button-vert-padding: 20px;
-$tweet-glyph-size: 30px;
+.voteButtonStandin {
+    border: 1px solid $background-color;
+}
 
 .voteAye {
-    padding-right: $vote-button-side-padding;
-    #padding-bottom: $vote-button-vert-padding;
+    border-right: $tweet-border-dotted;
 }
 
-.voteNay {
-    padding-left: $vote-button-side-padding;
+.voteAye, .voteNay {
+    display: inline-block;
+    width: 49%;
+}
+
+@media (min-width: 768px) {
+    .tweet {
+        padding-bottom: 0;
+    }
+
+    .tweetStuff {
+        border-left: $tweet-border-solid;
+        border-right: $tweet-border-solid;
+        border-bottom: $tweet-border-solid;
+    }
+    .voteAye, .voteNay {
+        display: block;
+        width: 100%;
+    }
+
+    .voteAye {
+        border-right: 0;
+        border-bottom: $tweet-border-dotted;
+    }
+}
+
+.aye, .nay {
+    margin: 0 auto;
 }
 
 .aye {
     width: $tweet-glyph-size;
     height: $tweet-glyph-size;
-    float: right;
     padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
 }
 
-.aye > a {
+a .aye {
     color: #62d7a5;
 }
 
 .nay {
     width: $tweet-glyph-size;
     height: $tweet-glyph-size;
-    float: left;
     padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
 }
 
-.nay > a {
+a .nay {
     color: #ff9c74;
 }
 
-.aye > a:hover, .nay > a:hover {
-    color: #b385db;
+a:hover > .voteAye, a:hover > .voteNay {
+    background-color: #f5e9ff;
 }
 
 .nav.wynnoButtons li a {
@@ -180,15 +211,22 @@ $tweet-glyph-size: 30px;
 }
 
 .navbar .brand {
-    font-family: "Maven Pro", sans-serif;
+    //font-family: "Maven Pro", sans-serif;
+    font-family: "Raleway Dots", sans-serif;
     padding-left: 40px;
     font-size: 32px;
-    font-weight: bold;
+    //font-weight: bold;
     line-height: 100%;
     color: #a166d5;
     text-shadow: none;
     padding-top: 4px;
     padding-bottom: 3px;
+}
+
+.funnel {
+    display: inline;
+    font-size: 20px;
+    padding-right: 16px
 }
 
 .w, .y, .biggern, .smallern, .o {
@@ -201,28 +239,36 @@ $tweet-glyph-size: 30px;
 }
 
 .y {
-    font-size: 30px;
+    font-size: 36px;
     color: #62d7a5;
 }
 
 .biggern {
-    font-size: 30px;
+    font-size: 36px;
 }
 
 .smallern {
-    font-size: 30px;
+    font-size: 36px;
     color: #ff9c74;
 }
 
 .o {
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 36px;
+    //font-weight: bold;
+}
+
+.navbar-fixed-top .navbar-inner {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .navbar-inner {
-    background-color: #f0f0f0;
+    //background-color: #f0f0f0;
+    background-color: #ffffff;
     background-image: none;
     background-image: no-repeat;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .navbar .nav > .passing > a,

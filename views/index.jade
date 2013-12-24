@@ -8,8 +8,7 @@ block nav
         a.btn.btn-navbar(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
           span.icon-bar
           span.icon-bar
-          span.icon-bar
-        // Be sure to leave the brand out there if you want it shown 
+          span.icon-bar 
         a.brand.pull-left(href='#')
           .w w
           .y y
@@ -21,13 +20,13 @@ block nav
           // .nav, .navbar-search, .navbar-form, etc 
           ul.nav.pull-left.wynnoButtons
             li.passing(ng-click='viewPassing()', ng-class='{active: active[0]}')
-              a(href='#/in')
-                span.icon-smiley
+              a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='1000')
+                span.icon-filter2
             li.failing(ng-click='viewFailing()', ng-class='{active: active[1]}')
-              a(href='#/out')
-                span.icon-neutral
+              a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='1000')
+                span.icon-filter2
             li(ng-click='viewSettings()', ng-class='{active: active[2]}')
-              a(href='#/settings')
+              a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='1000')
                 span.icon-cogs
           ul.nav.pull-right
             li(ng-click='refreshRequest()')
@@ -58,6 +57,7 @@ block content
   script(src='/app/bower_components/angular-cookies/angular-cookies.js')
   script(src='/app/bower_components/angular-sanitize/angular-sanitize.js')
   script(src='/app/bower_components/angular-bootstrap/ui-bootstrap.js')
+  script(src='/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
 
   script(src='/app/scripts/app.js')
   script(src='/app/scripts/controllers/init.js')
