@@ -9,6 +9,7 @@ $color-scheme:  3321TvCw0w0w0;
 $tweet-border-dotted: 1px dotted #e0e0e0;
 $tweet-border-solid: 1px solid #e0e0e0;
 $background-color: #ffffff;
+$tweet-background-hover-color: #f8f8f8;
 
 $vote-button-side-padding: 20px;
 $vote-button-vert-padding: 5px;
@@ -31,12 +32,7 @@ body {
     #margin-left: auto;
     #margin-right: auto;
     #overflow: auto;
-    #background: #dbd4e1;
     padding-bottom: 20px;
-}
-
-.tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
-    background-color: #f8f8f8;
 }
 
 .tweetStuff {
@@ -142,9 +138,21 @@ body {
     width: 49%;
 }
 
+.even {
+    background-color: $tweet-background-hover-color;
+}
+
 @media (min-width: 768px) {
     .tweet {
         padding-bottom: 0;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
+        background-color: $tweet-background-hover-color !important;
     }
 
     .tweetStuff {
@@ -160,6 +168,10 @@ body {
     .voteAye {
         border-right: 0;
         border-bottom: $tweet-border-dotted;
+    }
+
+    a:hover > .voteAye, a:hover > .voteNay {
+        background-color: #f5e9ff;
     }
 }
 
@@ -189,8 +201,9 @@ a .nay {
     color: #ff9c74;
 }
 
-a:hover > .voteAye, a:hover > .voteNay {
-    background-color: #f5e9ff;
+// necessary to remove underline which appears in gap between voteButtons due to their 49% width
+#aVoteAye:hover {
+    text-decoration: none;
 }
 
 .nav.wynnoButtons li a {

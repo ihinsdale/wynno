@@ -1,8 +1,8 @@
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
     <div class="voteButtonStandin span1 offset2" ng-if="hideVoteButtons(tweet)"></div>
-    <div class="voteButtons span1 offset2" ng-hide="hideVoteButtons(tweet)">
-      <a href=''>
+    <div class="voteButtons span1 offset2" ng-if="!hideVoteButtons(tweet)" ng-class="{even: $index%2==0}">
+      <a href='' id="aVoteAye">
         <div ng-click="vote(tweet, 1, $index)" class="voteAye">
           <div class="aye">
             <span class="icon-checkmark-circle"></span>
@@ -17,7 +17,7 @@
         </div>
       </a>
     </div>
-    <div class="tweetStuff span6">
+    <div class="tweetStuff span6" ng-class="{even: $index%2==0}">
       <div class="tweeterImage">
         <img ng-src='{{tweet.__user.profile_image_url}}'>
       </div>
