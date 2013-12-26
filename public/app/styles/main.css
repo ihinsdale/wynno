@@ -8300,25 +8300,15 @@ body {
   background: white;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
-  padding-top: 5px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000327}}
-.container {
-  #width: 625px;
-}
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000331}}
 .tweet {
-  #margin-left: auto;
-  #margin-right: auto;
-  #overflow: auto;
   padding-bottom: 20px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000338}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000331}}
 .tweetStuff {
-  #width: 458px;
   height: 100%;
   min-height: 102px;
   #padding: 5px 10px 5px 10px;
@@ -8328,20 +8318,20 @@ body {
   border-left: 1px dotted #e0e0e0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000349}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000341}}
 .tweeterImage {
   float: left;
   padding: 4px 10px 6px 0px;
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000355}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000347}}
 .tweetMeta {
   #width: 80%;
   display: block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000361}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000353}}
 .tweeterName {
   font-size: 14px;
   line-height: 14px;
@@ -8350,7 +8340,7 @@ body {
   color: #000000;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000369}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000361}}
 .tweeterScreenName {
   #font-size: 12px;
   line-height: 14px;
@@ -8358,7 +8348,7 @@ body {
   display: inline;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000376}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000368}}
 .pvalue {
   line-height: 14px;
   vertical-align: text-bottom;
@@ -8366,7 +8356,7 @@ body {
   float: right;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000383}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000375}}
 .tweetTimestamp {
   line-height: 14px;
   vertical-align: text-bottom;
@@ -8375,42 +8365,42 @@ body {
   padding-left: 15px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000391}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000383}}
 .tweetContent {
   height: 100%;
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000396}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000388}}
 .tweetText {
   display: block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003100}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000392}}
 .tweetFooter {
   width: 100%;
   display: block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003105}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000397}}
 .retweetedStatus {
   float: left;
   display: inline;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003110}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003102}}
 .tweetLink {
   float: right;
   display: inline;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003115}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003107}}
 .tweetMeta, .tweetFooter {
   color: #989898;
   font-size: 12px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003120}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003112}}
 .voteButtons {
   border-top: 1px dotted #e0e0e0;
   border-right: 1px dotted #e0e0e0;
@@ -8419,73 +8409,33 @@ body {
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003128}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003120}}
 .voteButtonStandin {
   border: 1px solid white;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003132}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003124}}
 .voteAye {
   border-right: 1px dotted #e0e0e0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003136}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003128}}
 .voteAye, .voteNay {
   display: inline-block;
   width: 49%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003141}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003133}}
 .even {
   background-color: #f8f8f8;
 }
 
-@media (min-width: 768px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003146}}
-  .tweet {
-    padding-bottom: 0;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003150}}
-  .even {
-    background-color: #ffffff;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003154}}
-  .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
-    background-color: #f8f8f8 !important;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003158}}
-  .tweetStuff {
-    border-left: 1px solid #e0e0e0;
-    border-right: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003163}}
-  .voteAye, .voteNay {
-    display: block;
-    width: 100%;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003168}}
-  .voteAye {
-    border-right: 0;
-    border-bottom: 1px dotted #e0e0e0;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003173}}
-  a:hover > .voteAye, a:hover > .voteNay {
-    background-color: #f5e9ff;
-  }
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003178}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003137}}
 .aye, .nay {
   margin: 0 auto;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003182}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003141}}
 .aye {
   width: 30px;
   height: 30px;
@@ -8493,12 +8443,12 @@ body {
   font-size: 30px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003189}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003148}}
 a .aye {
   color: #62d7a5;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003193}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003152}}
 .nay {
   width: 30px;
   height: 30px;
@@ -8506,29 +8456,29 @@ a .aye {
   font-size: 30px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003200}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003159}}
 a .nay {
   color: #ff9c74;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003205}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003164}}
 #aVoteAye:hover {
   text-decoration: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003209}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003168}}
 .nav.wynnoButtons li a {
   font-size: 25px;
   padding-right: 27px !important;
   text-shadow: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003215}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003174}}
 .nav.wynnoButtons li a:hover {
   background-color: #f8f8f8;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003221}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003180}}
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
@@ -8536,65 +8486,64 @@ a .nay {
   box-shadow: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003226}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003185}}
 .navbar .brand {
-  font-family: "Raleway Dots", sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  padding-right: 0;
   padding-left: 40px;
   font-size: 32px;
   line-height: 100%;
   color: #a166d5;
   text-shadow: none;
-  padding-top: 4px;
-  padding-bottom: 3px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003239}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003198}}
 .funnel {
   display: inline;
   font-size: 20px;
   padding-right: 16px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003245}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003204}}
 .w, .y, .biggern, .smallern, .o {
   background-color: #FFFFFF;
   display: inline;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003250}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003209}}
 .w {
   font-size: 36px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003254}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003213}}
 .y {
   font-size: 36px;
   color: #62d7a5;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003259}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003218}}
 .biggern {
   font-size: 36px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003263}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003222}}
 .smallern {
   font-size: 36px;
   color: #ff9c74;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003268}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003227}}
 .o {
   font-size: 36px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003273}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003232}}
 .navbar-fixed-top .navbar-inner {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003278}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003237}}
 .navbar-inner {
   background-color: #ffffff;
   background-image: none;
@@ -8603,35 +8552,35 @@ a .nay {
   box-shadow: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003288}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003247}}
 .navbar .nav > .passing > a,
 .navbar .nav > .passing > a:hover {
   color: #62d7a5;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003293}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003252}}
 .navbar .nav > .failing > a,
 .navbar .nav > .failing > a:hover {
   color: #ff9c74;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003297}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003256}}
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
   width: 280px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003301}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003260}}
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
   width: 100%;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003305}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003264}}
 .user, .word {
   display: inline;
   width: 180px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003310}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003269}}
 .removeSetting {
   display: inline;
   width: 16px;
@@ -8639,7 +8588,7 @@ a .nay {
   font-size: 16px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003319}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003278}}
 .signInContainer {
   width: 153px;
   height: 28px;
@@ -8647,7 +8596,7 @@ a .nay {
   padding: 0 !important;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003326}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003285}}
 .signIn {
   width: 141px;
   min-height: 16px;
@@ -8660,12 +8609,12 @@ a .nay {
   padding: 5px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003338}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003297}}
 .signIn:hover {
   background-color: #FFFFFF;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003342}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003301}}
 .refreshSpinnerContainer {
   width: 28px;
   height: 28px;
@@ -8673,7 +8622,7 @@ a .nay {
   padding: 0 !important;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003349}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003308}}
 .refreshSpinner, .refreshSpinner:hover {
   border: 1px solid #1dcaff;
   border-radius: 3px;
@@ -8686,17 +8635,76 @@ a .nay {
   background-size: 20px 20px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003361}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003320}}
 .refreshSpinner {
   background-image: url("../images/3-128-ltgray.png");
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003365}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003324}}
 .refreshSpinner:hover {
   background-image: url("../images/3-128-darkgray.png");
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003369}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003328}}
 .refreshSpinner.spinning {
   background-image: url("../images/3-128-white.gif");
+}
+
+@media (max-width: 979px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003333}}
+  .navbar-fixed-top .navbar-inner {
+    padding: 0;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003336}}
+  .navbar .brand {
+    padding-top: 0px;
+    padding-bottom: 3px;
+  }
+}
+@media (min-width: 980px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003343}}
+  .navbar .brand {
+    padding-top: 4px;
+  }
+}
+@media (min-width: 768px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003349}}
+  .tweet {
+    padding-bottom: 0;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003353}}
+  .even {
+    background-color: #ffffff;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003357}}
+  .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
+    background-color: #f8f8f8 !important;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003361}}
+  .tweetStuff {
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003366}}
+  .voteAye, .voteNay {
+    display: block;
+    width: 100%;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003371}}
+  .voteAye {
+    border-right: 0;
+    border-bottom: 1px dotted #e0e0e0;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003376}}
+  a:hover > .voteAye, a:hover > .voteNay {
+    background-color: #f5e9ff;
+  }
 }
