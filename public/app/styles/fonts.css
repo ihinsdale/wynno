@@ -9,7 +9,7 @@
 	font-style: normal;
 }
 
-[class*="icon-"] {
+[class*="icomoon-"] {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -23,87 +23,87 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-cog:before {
+.icomoon-cog:before {
 	content: "\e600";
 }
-.icon-cogs:before {
+.icomoon-cogs:before {
 	content: "\e601";
 }
-.icon-cog2:before {
+.icomoon-cog2:before {
 	content: "\e602";
 }
-.icon-checkmark:before {
+.icomoon-checkmark:before {
 	content: "\e603";
 }
-.icon-checkmark2:before {
+.icomoon-checkmark2:before {
 	content: "\e604";
 }
-.icon-close:before {
+.icomoon-close:before {
 	content: "\e605";
 }
-.icon-cancel-circle:before {
+.icomoon-cancel-circle:before {
 	content: "\e606";
 }
-.icon-checkmark-circle:before {
+.icomoon-checkmark-circle:before {
 	content: "\e607";
 }
-.icon-filter:before {
+.icomoon-filter:before {
 	content: "\e608";
 }
-.icon-filter2:before {
+.icomoon-filter2:before {
 	content: "\e609";
 }
-.icon-thumbs-up:before {
+.icomoon-thumbs-up:before {
 	content: "\e60a";
 }
-.icon-thumbs-up2:before {
+.icomoon-thumbs-up2:before {
 	content: "\e60b";
 }
-.icon-remove:before {
+.icomoon-remove:before {
 	content: "\e60c";
 }
-.icon-eye-blocked:before {
+.icomoon-eye-blocked:before {
 	content: "\e60d";
 }
-.icon-eye:before {
+.icomoon-eye:before {
 	content: "\e60e";
 }
-.icon-equalizer:before {
+.icomoon-equalizer:before {
 	content: "\e60f";
 }
-.icon-happy:before {
+.icomoon-happy:before {
 	content: "\e610";
 }
-.icon-neutral:before {
+.icomoon-neutral:before {
 	content: "\e611";
 }
-.icon-sad:before {
+.icomoon-sad:before {
 	content: "\e612";
 }
-.icon-smiley:before {
+.icomoon-smiley:before {
 	content: "\e613";
 }
-.icon-drawer:before {
+.icomoon-drawer:before {
 	content: "\e614";
 }
-.icon-heart:before {
+.icomoon-heart:before {
 	content: "\e615";
 }
-.icon-remove:before {
+.icomoon-remove:before {
 	content: "\e617";
 }
-.icon-settings:before {
+.icomoon-settings:before {
 	content: "\e616";
 }
-.icon-trash:before {
+.icomoon-trash:before {
 	content: "\e618";
 }
-.icon-heart:before {
+.icomoon-heart:before {
 	content: "\e619";
 }
-.icon-params:before {
+.icomoon-params:before {
 	content: "\e61a";
 }
-.icon-stack:before {
+.icomoon-stack:before {
 	content: "\e61b";
 }
