@@ -35,59 +35,65 @@ body {
 .tweetStuff {
     height: 100%;
     min-height: 85px;
-    padding: 5px 10px 5px 10px;
+    padding: 5px;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
     border-bottom: $tweet-border-dotted;
     border-left: $tweet-border-dotted;
 }
 
-.tweeterImage {
-    margin-left: -58px;
-    padding: 4px 0px 6px 0px;
+.leftColumn {
+    float: left;
 }
 
-.tweetContent {
-    margin-left: 58px;
+.tweeterImage {
+}
+
+.tweeterImage > img {
+    vertical-align: inherit;
+}
+
+.rightColumn {
+    padding-left: 10px;
+    overflow: hidden;
 }
 
 .tweetMeta {
 }
 
-.leftBlock {
-    display: inline;
+.tweeterName, .tweeterScreenName {
+    float: left;
 }
 
-.rightBlock {
-
+.tweetTimestamp {
+    float: right;
 }
 
 .tweeterName {
     font-size: 14px;
-    line-height: 14px;
     font-weight: bold;
-
     color: #000000;
 }
 
 .tweeterScreenName {
-    #font-size: 12px;
-    line-height: 14px;
-
 }
 
 .tweetTimestamp {
-    line-height: 14px;
-
     padding-left: 15px;
 }
 
 .pvalue {
-    line-height: 14px;
+    padding-left: 8px;
+}
 
+.pvalue > .badge {
+    background-color: #c7a9e1;
 }
 
 .tweetText {
+    //padding-top: 2px;
+    font-size: 14px;
+    display: inline-block;
 }
 
 .tweetFooter {
@@ -252,6 +258,7 @@ a .nay {
     text-shadow: none;
     border-color: $deep-purple;
     background-color: whitesmoke;
+    margin-right: 15px; //necessary because body margin shrunk to 10px from 20px
 }
 
 .navbar .btn-navbar:hover {
@@ -371,6 +378,13 @@ $twitterButtonRadius: 3px;
     }
 }
 
+@media (max-width: 767px) {
+    body {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
 @media (min-width: 768px) {
     .tweet {
         padding-bottom: 0;
@@ -407,6 +421,6 @@ $twitterButtonRadius: 3px;
 
     a:hover > .voteAye, a:hover > .voteNay,
     a:focus > .voteAye, a:focus > .voteNay {
-        background-color: #f5e9ff;
+        background-color: #e4d8ed;
     }
 }

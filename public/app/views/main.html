@@ -1,25 +1,23 @@
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
     <div class="tweetStuff span6 offset3" ng-class="{even: $index%2==0}">
-
-      <div class="tweetContent">
+      <div class="leftColumn">
+        <div class="tweeterImage">
+          <img ng-src="{{tweet.__user.profile_image_url}}">
+        </div>
+        <div class="pvalue">
+          <span class="badge">{{tweet.__pScore}}</span>
+        </div>
+      </div>
+      <div class="rightColumn">
         <div class="tweetMeta">
-
-          <a class="leftBlock" href="https://twitter.com/{{tweet.__user.screen_name}}">
-            <img class="tweeterImage" ng-src='{{tweet.__user.profile_image_url}}'>
+          <a href="https://twitter.com/{{tweet.__user.screen_name}}">
             <span class="tweeterName">{{tweet.__user.name}}</span>
             <span class="tweeterScreenName">@{{tweet.__user.screen_name}}</span>
           </a>
-          <div class="rightBlock">
-
-            <div class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></div>
-            <div class="pvalue">p = {{tweet.__p}}</div>
-
-          </div>
-
+            <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></span>
         </div>
-        <div class="tweetText" ng-bind-html="tweet.__text">
-        </div>
+        <div class="tweetText" ng-bind-html="tweet.__text"></div>
         <div class="tweetFooter">
           <div ng-if="tweet.__retweeter" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>
         </div>

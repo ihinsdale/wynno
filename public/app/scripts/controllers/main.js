@@ -75,7 +75,7 @@ angular.module('wynnoApp.controllers')
     $scope.displayPassing = function(threshold) {
       TweetService.getPassingTweets(threshold)
       .then(function(tweets) {
-        $scope.elegantizeTimestamps(tweets, new Date().getTime());
+        $scope.elegantize(tweets, new Date().getTime());
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
       });
@@ -84,14 +84,14 @@ angular.module('wynnoApp.controllers')
     $scope.displayFailing = function(threshold) {
       TweetService.getFailingTweets(threshold)
       .then(function(tweets) {
-        $scope.elegantizeTimestamps(tweets, new Date().getTime());
+        $scope.elegantize(tweets, new Date().getTime());
         $scope.tweets = tweets;
         console.log('displaying tweets:', $scope.tweets);
       })
     };
 
-    $scope.elegantizeTimestamps = function(tweets, presentTime) {
-      var elegantize = function(UTCtimestamp) {
+    $scope.elegantize = function(tweets, presentTime) {
+      var elegantizeTimestamp = function(UTCtimestamp) {
         var numMilliseconds = presentTime - Date.parse(UTCtimestamp); 
         var numSeconds = numMilliseconds/1000;
         var numMinutes = numSeconds/60;
@@ -111,8 +111,12 @@ angular.module('wynnoApp.controllers')
         }
         return approx;
       };
+      var elegantizeP = function(p) {
+        return Math.round(p * 100);
+      }
       for (var i = 0; i < tweets.length; i++) {
-        tweets[i].__elegant_time = elegantize(tweets[i].__created_at);
+        tweets[i].__elegant_time = elegantizeTimestamp(tweets[i].__created_at);
+        tweets[i].__pScore = elegantizeP(tweets[i].__p)
       }
     };
 
