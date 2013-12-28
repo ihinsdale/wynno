@@ -75,6 +75,7 @@ exports.lastTweetId = function(callback) {
     return result;
   };
 
+  // SHOULDN'T THIS BE CHANGED TO FIND().LIMIT(1) ??
   Tweet.findOne().sort('-_id').exec(function(err, item) {
     var id;
     var _id;
@@ -251,14 +252,22 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
   }
 };
 
-exports.createUser = function(user, callback) {
-  var newUser = new User(user);
-  newUser.save(function(error, newUser) {
-    if (error) {
-      callback('error creating user');
+exports.findOrCreateUser = function(user, callback) {
+  // following passport.js signature: http://passportjs.org/guide/twitter/
+  console.log('user inside findOrCreateUser looks like:', user);
+  User.findOne({ 'twitter_id': user.id }, function(err, doc) {
+    if (err) {
+      new User(user).save(function(err, newUser) {
+        if (err) {
+          return callback(err);
+        } else {
+          console.log('User is:', newUser);
+          callback(null, newUser);
+        }
+      });
     } else {
-      console.log('Created record for new user',newUser.email, 'with _id', newUser._id, 'in db');
-      callback(null);
+      console.log('User is:', doc); // don't need to send whole doc, should limit results sent to the fields necessary
+      callback(null, doc);
     }
   });
 };

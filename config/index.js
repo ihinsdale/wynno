@@ -4,7 +4,6 @@ module.exports = function(app) {
   app.set('port', process.env.PORT || 8080);
   app.set('views', path.resolve(__dirname, '../views'));
   app.set('view engine', 'jade');
-  //app.set(express.cookieParser()); // see hackhall example in azat's book
 
   // Include environments
   require('./environments.js')(app);

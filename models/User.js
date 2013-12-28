@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 // Create a User Schema
 exports.userSchema = userSchema = new Schema({
+  twitter_id: String,
   email: String,
   password: String,
   twitterUsername: String,

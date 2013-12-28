@@ -14,6 +14,10 @@ block nav
         .biggern n
         .smallern n
         .o o
+      a(href='/auth/twitter').signInContainer.pull-right
+        .twitterBird
+          img(ng-src="/app/images/twitter-bird.png")
+        .signIn Sign in with Twitter
       // Everything you want hidden at 940px or less, place within here 
       .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
         // .nav, .navbar-search, .navbar-form, etc 
@@ -31,10 +35,6 @@ block nav
           li(ng-click='refreshRequest()')
             a(href='').refreshSpinnerContainer
               .refreshSpinner(ng-class='{spinning: activeRequest}')
-          li(ng-click='signIn()')
-            a(href='').signInContainer
-              .signIn
-
 
 
 block content
@@ -61,6 +61,8 @@ block content
   script(src='/app/scripts/app.js')
   script(src='/app/scripts/controllers/init.js')
   script(src='/app/scripts/controllers/main.js')
+  script(src='/app/scripts/controllers/settings.js')
+  script(src='/app/scripts/controllers/nav.js')
   script(src='/app/scripts/services/init.js')
   script(src='/app/scripts/services/tweet.js')
   script(src='/app/scripts/services/settings.js')

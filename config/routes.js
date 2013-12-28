@@ -2,6 +2,7 @@ module.exports = function(app) {
   // Include controllers
   var routes = require('../controllers/site.js');
   var user = require('../controllers/user.js');
+  var passport = require('passport');
 
   // GET request to homepage
   app.get('/', routes.index);
@@ -16,7 +17,9 @@ module.exports = function(app) {
   // GET request to /settings
   app.get('/settings', routes.getSettings);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
-  app.get('/auth/twitter', routes.signIn);
+  app.get('/auth/twitter', passport.authenticate('twitter'));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
-  app.get('/auth/twitter/callback', routes.signInSuccessCallback);
+  app.get('/auth/twitter/callback', 
+    passport.authenticate('twitter', { successRedirect: '/',
+                                     failureRedirect: '/login' }));
 };
