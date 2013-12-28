@@ -29,20 +29,20 @@ body {
 }
 
 .tweet {
-    padding-bottom: 20px;
+    padding-bottom: 5px;
 }
 
 .tweetStuff {
-    height: 100%;
-    min-height: 85px;
     padding: 5px;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
     border-bottom: $tweet-border-dotted;
     border-left: $tweet-border-dotted;
+    overflow: auto; //necessary to prevent badge from protruding outside of tweetStuff box
 }
 
 .leftColumn {
+    height: 100%;
     float: left;
 }
 
@@ -54,11 +54,14 @@ body {
 }
 
 .rightColumn {
+    height: 100%;
     padding-left: 10px;
     overflow: hidden;
 }
 
 .tweetMeta {
+    width: 100%;
+    display: inline-block;
 }
 
 .tweeterName, .tweeterScreenName {
@@ -76,6 +79,12 @@ body {
 }
 
 .tweeterScreenName {
+    vertical-align: bottom;
+    color: #989898;
+}
+
+.tweeterScreenName:hover {
+    text-decoration: underline;
 }
 
 .tweetTimestamp {
@@ -91,20 +100,21 @@ body {
 }
 
 .tweetText {
-    //padding-top: 2px;
     font-size: 14px;
     display: inline-block;
 }
 
 .tweetFooter {
+    color: #989898;
+    padding-top: 5px;
 }
 
 .retweetedStatus {
 }
 
 .tweetMeta, .tweetFooter {
-    color: #989898;
     font-size: 12px;
+    line-height: 14px;
 }
 
 .voteButtons {
@@ -373,6 +383,10 @@ $twitterButtonRadius: 3px;
 }
 
 @media (min-width: 980px) {
+    .container {
+        padding-top: 66px;
+    }
+
     .navbar .brand {
         padding-top: 4px;
     }
@@ -395,6 +409,7 @@ $twitterButtonRadius: 3px;
     }
 
     .voteButtons {
+        margin-top: 1px; // because 'perfect' alignment of voteButtons and tweet actually makes voteButtons look higher
         border-top: $tweet-border-dotted;
     }
 
