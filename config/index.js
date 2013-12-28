@@ -1,12 +1,11 @@
 var path = require('path');
 var os = require('os');
+var credentials = require('./keys.json')
 
 module.exports = function(app) {
   app.set('env', process.env.NODE_ENV || 'development')
   app.set('port', process.env.PORT || 8080);
-  app.set('host', os.hostname());
-  console.log('Port is:', app.get('port'));
-  console.log('Host is:', app.get('host'));
+  app.set('publicDNS', credentials.publicDNS);
   
   app.set('views', path.resolve(__dirname, '../views'));
   app.set('view engine', 'jade');
