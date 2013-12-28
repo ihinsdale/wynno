@@ -1,8 +1,9 @@
 var path = require('path');
 
 module.exports = function(app) {
+  app.set('env', process.env.NODE_ENV || 'development')
   app.set('port', process.env.PORT || 8080);
-  app.set('host', process.env.HOSTNAME);
+  app.set('host', process.env.HOSTNAME || "127.0.0.1");
   console.log('Port is:', app.get('port'));
   console.log('Host is:', app.get('host'));
   
