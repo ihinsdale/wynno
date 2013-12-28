@@ -20,7 +20,7 @@ module.exports = function(app) {
   app.get('/auth/twitter', passport.authenticate('twitter'));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
   app.get('/auth/twitter/callback', 
-    passport.authenticate('twitter', { successRedirect: '/',
+    passport.authorize('twitter', { successRedirect: '/',
                                      failureRedirect: '/login' })
   );
 };
