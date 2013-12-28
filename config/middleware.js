@@ -28,7 +28,7 @@ module.exports = function(app) {
   passport.use(new TwitterStrategy({
       consumerKey: credentials.twitter.consumer_key,
       consumerSecret: credentials.twitter.consumer_secret,
-      callbackURL: "http://localhost:8080/auth/twitter/callback"
+      callbackURL: "http://" + app.get('host') + ":" + app.get('port') + "/auth/twitter/callback"
     },
     function(token, tokenSecret, profile, done) {
       // store token and tokenSecret for use with Twitter API calls

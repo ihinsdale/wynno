@@ -12,12 +12,5 @@
   "secrets": {
     "cookieParser": "in the middle of a shave 234234235",
     "session": "oh yoko 239239r8131"
-  },
-  "dev": {
-    "host": ,
-    "port": 8080
-  },
-  "production": {
-
   }
 }
