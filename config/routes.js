@@ -21,5 +21,6 @@ module.exports = function(app) {
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
   app.get('/auth/twitter/callback', 
     passport.authenticate('twitter', { successRedirect: '/',
-                                     failureRedirect: '/login' }));
+                                     failureRedirect: '/login' })
+  );
 };

@@ -35,9 +35,10 @@ module.exports = function(app) {
 
       // register user with the db
       console.log('Twitter profile looks like:', profile);
-      // user = {
-      // };
-      // db.findOrCreateUser(user, done)
+      user = {
+        twitter_id: profile.id
+      };
+      db.findOrCreateUser(user, done);
     }
   ));
 };
