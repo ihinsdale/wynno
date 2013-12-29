@@ -17,10 +17,10 @@ module.exports = function(app) {
   // GET request to /settings
   app.get('/settings', routes.getSettings);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
-  app.get('/auth/twitter', passport.authorize('twitter', { failureRedirect: '/account' }));
+  app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/account' }));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
   app.get('/auth/twitter/callback', 
-    passport.authorize('twitter', { successRedirect: '/',
+    passport.authenticate('twitter', { successRedirect: '/',
                                      failureRedirect: '/login' })
   );
 };
