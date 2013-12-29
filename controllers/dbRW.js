@@ -3,27 +3,30 @@ var User = require('../models/User.js').User;
 var _ = require('../node_modules/underscore/underscore-min.js')
 
 // function to save a tweet to the db
-exports.saveTweet = function(tweet, callback) {
+exports.saveTweet = function(user_id, tweet, callback) {
+  // *_id must be a db record id, i.e. _id, not a Twitter API id
   console.log('tweet id', tweet.id_str, 'created at', tweet.created_at);
 
   // add info to tweet object and clean before storing in db
-  tweet = processTweet(tweet);
+  tweet = processTweet(user_id, tweet);
 
   // create tweet document and save it to the database
   var tweetDoc = new Tweet(tweet);
   tweetDoc.save(function(error, tweetDoc) {
     if (error) {
       console.log('Error saving tweet', tweetDoc.id_str, 'to db');
+      callback('Error saving tweet', tweetDoc.id_str, 'to db');
     } else {
       console.log('Saved tweet',tweetDoc.id_str, 'to db');
-      callback();
+      callback(null);
     }
   });
 };
 
 // defines fields on tweet which are used in rendering the tweet
 // also unescapes tweet text like &amp;
-processTweet = function(tweet) {
+processTweet = function(user_id, tweet) {
+  tweet.__user_id = user_id;
   tweet.__p = null;
   tweet.__vote = null;
   // if the text is a retweet, the tweet rendered to the user
@@ -57,7 +60,9 @@ processTweet = function(tweet) {
   return tweet;
 }
 
-exports.lastTweetId = function(callback) {
+exports.lastTweetId = function(user_id, callback) {
+  // *_id must be a db record id, i.e. _id, not a Twitter API id
+
   var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
     n = n.toString(); // but n should be passed in as a string
     var result = n;
@@ -75,8 +80,9 @@ exports.lastTweetId = function(callback) {
     return result;
   };
 
-  // SHOULDN'T THIS BE CHANGED TO FIND().LIMIT(1) ??
-  Tweet.findOne().sort('-_id').exec(function(err, item) {
+  // TODO: refactor this so that last tweet id is stored as a field in the User schema
+  //       so that we don't have to sort through all user's tweets just to find the last one
+  Tweet.find({ __user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, item) {
     var id;
     var _id;
     if (err) {
@@ -91,7 +97,7 @@ exports.lastTweetId = function(callback) {
       _id = item._id
       console.log('last tweets db id is:', _id);
     }
-    callback(null, id, _id);
+    callback(null, user_id, id, _id);
       // this incrementing performed because since_id is actually inclusive,
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
   });
@@ -99,9 +105,9 @@ exports.lastTweetId = function(callback) {
 
 var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
 
-exports.findTweetsBefore_id = function(tweet_id, callback) {
-  //tweet_id must be a db record id, i.e. _id, not a Twitter API id
-  var criteria = {};
+exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
+  // *_id must be a db record id, i.e. _id, not a Twitter API id
+  var criteria = { __user_id: user_id };
   if (tweet_id !== '0') {
     criteria._id = {$lt: tweet_id};
   }
@@ -114,15 +120,16 @@ exports.findTweetsBefore_id = function(tweet_id, callback) {
   });
 };
 
-exports.findTweetsSince_id = function(tweet_id, callback) {
-  //tweet_id must be a db record id, i.e. _id, not a Twitter API id
+exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
+  // *_id must be a db record id, i.e. _id, not a Twitter API id
   if (!tweet_id) {
     callback('no tweet id provided to grab tweets since');
   } else {
-    var criteria = { _id: {$gt: tweet_id} };
+    var criteria = { __user_id: user_id, _id: {$gt: tweet_id} };
     Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
       if (err) {
-        console.log('error grabbing tweets');
+        console.log('error grabbing tweets:', err);
+        callback(err);
       } else {
         callback(null, docs);
       }
@@ -130,11 +137,11 @@ exports.findTweetsSince_id = function(tweet_id, callback) {
   }
 };
 
-exports.saveVote = function(tweet_id, vote, callback) {
-  //tweet_id must be a db record id, i.e. _id, not a Twitter API id
+exports.saveVote = function(user_id, tweet_id, vote, callback) {
+  // *_id must be a db record id, i.e. _id, not a Twitter API id
 
-  // should do something here to protect against malicious $-sign input?
-  Tweet.update({_id: tweet_id}, {__vote: vote}, {}, function (err, numberAffected, raw) {
+  // querying by __user_id not necessary
+  Tweet.update({ _id: tweet_id }, { __vote: vote }, {}, function (err, numberAffected, raw) {
     if (err) {
       console.log('error updating tweet', tweet_id);
       callback(err);

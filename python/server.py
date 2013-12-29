@@ -78,11 +78,11 @@ def save_guesses(guesses):
   return
 
 class RPC(object):
-  def predict(self):
-    print 'Tweets voted on: ' + str(tweets.find({"__vote": {"$gte": 0}}).count())
-    print 'Out of ' + str(tweets.find().count()) + ' total tweets'
-    votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
-    nonvotedTweets = tweets.find( {"__vote": None})
+  def predict(self, user_id):
+    print 'Tweets voted on: ' + str(tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } }).count())
+    print 'Out of ' + str(tweets.find({ "__user_id": user_id }).count()) + ' total tweets'
+    votedTweets = tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } })
+    nonvotedTweets = tweets.find({ "__user_id": user_id, "__vote": None })
     save_guesses(crunch(votedTweets, nonvotedTweets))
     return 'success'
     # this will return the p's for all nonvoted tweets which have just been crunched

@@ -87,11 +87,13 @@ exports.successCallback = function(req, res, next) {
 exports.timeOfLastFetch = null;
 
 // Fetch new tweets from Twitter API
-exports.fetch = function(id, _id, callback) {
+exports.fetch = function(user_id, id, _id, callback) {
   console.log('fetching tweets since', id);
-  var options = {count: 200};
+  var options = {count: 195};
   if (id) {
     options.since_id = id;
+    console.log('Twitter id of last tweet, as sent in fetch call to Twitter API:', options.since_id);
+    console.log('type of that id:', typeof options.since_id);
   }
   twit.get('https://api.twitter.com/1.1/statuses/home_timeline.json', options, function(error, data) {
     exports.timeOfLastFetch = new Date().getTime();
@@ -99,7 +101,7 @@ exports.fetch = function(id, _id, callback) {
       console.log('there was an error getting tweets from Twitter API:', error);
     } else {
       console.log('number of tweets:', data.length);
-      callback(null, data, _id);
+      callback(null, user_id, data, _id);
     }
   });
 };

@@ -13,19 +13,21 @@ exports.index = function(req, res) {
 };
 
 exports.old = function(req, res) {
-  console.log('req.user looks like:', req.user);
   var oldestTweetId = req.query.oldestTweetId;
   console.log('oldestTweetId sent in request looks like:', oldestTweetId);
   async.waterfall([
     function(callback) {
-      db.findTweetsBefore_id(oldestTweetId, callback);
+      db.findTweetsBefore_id(req.user._id, oldestTweetId, callback);
     },
-    rendering.renderLinksAndMentions,
-    function(tweets, callback) {
+    rendering.renderLinksAndMentions
+  ], function(error, tweets) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
       res.send(tweets);
-      callback(null);
     }
-  ]);
+  });
 };
 
 exports.fresh = function(req, res) {
@@ -37,18 +39,25 @@ exports.fresh = function(req, res) {
   } else {
     async.waterfall([
       // find (Twitter's) tweet id of the last saved tweet
-      db.lastTweetId,
+      function(callback) {
+        db.lastTweetId(req.user._id, callback);
+      },
       // use that id to grab new tweets from Twitter API
       twitter.fetch,
       // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
-      function(tweetsArray, _id, callback) {
-        async.eachSeries(tweetsArray.reverse(), db.saveTweet, function(err) {
-          if (err) {
-            console.log('error saving tweet');
-          } else {
-            callback(null, _id);
+      function(user_id, tweetsArray, _id, callback) {
+        async.eachSeries(tweetsArray.reverse(), 
+          function(tweet, callback) {
+            db.saveTweet(user_id, tweet, callback);
+          }, 
+          function(err) {
+            if (err) {
+              console.log('Error saving fresh tweets:', err);
+            } else {
+              callback(null, user_id, _id);
+            }
           }
-        });
+        );
       },
       // calculate p-values for the new batch of tweets
       // currently this command crunches the numbers for all tweets which haven't been voted on
@@ -61,12 +70,15 @@ exports.fresh = function(req, res) {
       // render any links in the tweets
       // TODO: do this only once and save the rendered version in a field in the db
       rendering.renderLinksAndMentions,
-      // send the tweets back to the client
-      function(tweets, callback) {
+    ], function(error, tweets) {
+      if (error) {
+        console.log(error);
+        res.send(500);
+      } else {
+        // send the tweets back to the client
         res.send(tweets);
-        callback(null);
       }
-    ]);
+    });
   }
 };
 
@@ -74,45 +86,49 @@ exports.processVote = function(req, res) {
   var data = req.body;
   async.series([
     function(callback) {
-      db.saveVote(data._id, data.vote, callback);
-    },
-    function(callback) {
-      res.send('successfully recorded your vote on that tweet');
-      callback(null);
+      db.saveVote(req.user._id, data._id, data.vote, callback);
     }
-  ]);
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully recorded your vote on tweet', data._id);
+    }
+  });
 };
 
 exports.processSetting = function(req, res) {
   var data = req.body;
   console.log('request data look like', data)
   async.waterfall([
-    // function(callback) {
-    //   db.createUser({email: 'ihinsdale@gmail.com', password: 'test'}, callback);
-    // },
     function(callback) {
-      db.saveSetting(data.user_id, data.add_or_remove, data.user_or_word, data.mute_or_protect, data.input, callback);
+      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_protect, data.input, callback);
     },
+    // TODO: this step of getting the updated settings could be removed if logic on the client-side updates the settings
+    //       model/view upon success message from server
     function(callback) {
-      db.getSettings('52783164c5d992a75e000001', callback);
-    },
-    function(settings, callback) {
-      res.send(settings);
-      callback(null);
+      db.getSettings(req.user._id, callback);
     }
-  ]);
+  ], function(error, settings) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send(settings);
+    }
+  });
 };
 
 exports.getSettings = function(req, res) {
-  async.waterfall([
-    function(callback) {
-      db.getSettings('52783164c5d992a75e000001', callback);
-    },
-    function(settings, callback) {
+  db.getSettings(req.user._id, function(error, settings) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
       res.send(settings);
-      callback(null);
     }
-  ]);
+  });
 };
 
 exports.signIn = function(req, res) {
