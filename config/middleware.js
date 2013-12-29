@@ -42,4 +42,13 @@ module.exports = function(app) {
       db.findOrCreateUser(user, done);
     }
   ));
+
+  passport.serializeUser(function(user, done) {
+    console.log('serializeUser: ' + user._id);
+    done(null, user._id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    db.findUser(id, done);
+  });
 };
