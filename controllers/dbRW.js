@@ -92,6 +92,7 @@ exports.lastTweetId = function(user_id, callback) {
       id = null;
       _id = null;
     } else {
+      console.log('item looks like:', item);
       console.log('last tweets id string is', item.id_str);
       id = incStrNum(item.id_str);
       _id = item._id
