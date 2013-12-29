@@ -18,7 +18,7 @@ module.exports = function(app) {
   require('./db.js')(app);
 
   // Include middleware
-  require('./middleware.js')(app);
+  require('./middleware.js').init(app);
 
   // Include routes
   require('./routes.js')(app);

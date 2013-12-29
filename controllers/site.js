@@ -13,6 +13,7 @@ exports.index = function(req, res) {
 };
 
 exports.old = function(req, res) {
+  console.log('req.user looks like:', req.user);
   var oldestTweetId = req.query.oldestTweetId;
   console.log('oldestTweetId sent in request looks like:', oldestTweetId);
   async.waterfall([
@@ -58,6 +59,7 @@ exports.fresh = function(req, res) {
       // get this new batch of tweets out of the database
       db.findTweetsSince_id,
       // render any links in the tweets
+      // TODO: do this only once and save the rendered version in a field in the db
       rendering.renderLinksAndMentions,
       // send the tweets back to the client
       function(tweets, callback) {

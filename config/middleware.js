@@ -6,7 +6,7 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var User = require('../models/User.js').User;
 var db = require('../controllers/dbRW.js');
 
-module.exports = function(app) {
+exports.init = function(app) {
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -28,7 +28,8 @@ module.exports = function(app) {
   passport.use(new TwitterStrategy({
       consumerKey: credentials.twitter.consumer_key,
       consumerSecret: credentials.twitter.consumer_secret,
-      callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
+      //callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
+      callbackURL: "http://127.0.0.1:" + app.get('port') + "/auth/twitter/callback",
       userAuthorizationURL: 'https://api.twitter.com/oauth/authorize'
     },
     function(token, tokenSecret, profile, done) {
@@ -51,4 +52,13 @@ module.exports = function(app) {
   passport.deserializeUser(function(id, done) {
     db.findUser(id, done);
   });
+};
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected.
+exports.ensureAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.send(401);
 };
