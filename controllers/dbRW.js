@@ -252,6 +252,17 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
   }
 };
 
+exports.findUser = function(user_id, callback) {
+  User.findById(user_id, function(err, user) {
+    console.log('findUser found user:', user);
+    if(!err) {
+      callback(null, user);
+    } else {
+      callback(err, null);
+    }
+  });
+};
+
 exports.findOrCreateUser = function(user, callback) {
   // following passport.js signature: http://passportjs.org/guide/twitter/
   console.log('user inside findOrCreateUser looks like:', user);
