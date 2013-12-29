@@ -87,8 +87,8 @@ exports.lastTweetId = function(user_id, callback) {
     var _id;
     if (err) {
       console.log('Error searching collection for a record');
-    } else if (item === null) {
-      console.log('Collection has no records');
+    } else if (!item.length) {
+      console.log('Collection has no records for user', user_id);
       id = null;
       _id = null;
     } else {
