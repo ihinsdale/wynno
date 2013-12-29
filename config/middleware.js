@@ -28,8 +28,8 @@ exports.init = function(app) {
   passport.use(new TwitterStrategy({
       consumerKey: credentials.twitter.consumer_key,
       consumerSecret: credentials.twitter.consumer_secret,
-      //callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
-      callbackURL: "http://127.0.0.1:" + app.get('port') + "/auth/twitter/callback",
+      callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
+      //callbackURL: "http://127.0.0.1:" + app.get('port') + "/auth/twitter/callback",
       userAuthorizationURL: 'https://api.twitter.com/oauth/authorize'
     },
     function(token, tokenSecret, profile, done) {

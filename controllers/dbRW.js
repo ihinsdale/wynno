@@ -202,6 +202,8 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
     });
   };
 
+  // TODO: change this if/else branching to switch style
+  //       can also remove the $-escaping check in next line
   if (add_or_remove.indexOf('$') !== -1 || user_or_word.indexOf('$') !== -1 || mute_or_protect.indexOf('$') !== -1) {
     callback('invalid input');
     // ALSO CHECK THAT USER_ID IS THE CURRENTLY LOGGED IN USER
