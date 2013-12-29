@@ -25,6 +25,7 @@ exports.old = function(req, res) {
       console.log(error);
       res.send(500);
     } else {
+      console.log(tweets);
       res.send(tweets);
     }
   });
