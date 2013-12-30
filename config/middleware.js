@@ -37,7 +37,7 @@ exports.init = function(app) {
       // register user with the db, i.e. find and update access_token and access_secret, or create
       console.log('Twitter profile looks like:', profile);
       user = {
-        tw_id: profile._json.id
+        tw_id: profile._json.id,
         tw_id_str: profile._json.id_str,
         tw_name: profile._json.name,
         tw_screen_name: profile._json.screen_name,
