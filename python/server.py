@@ -1,3 +1,4 @@
+import logging
 import pymongo
 import zerorpc
 import nltk
