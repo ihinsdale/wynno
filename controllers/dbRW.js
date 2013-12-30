@@ -82,16 +82,17 @@ exports.lastTweetId = function(user_id, callback) {
 
   // TODO: refactor this so that last tweet id is stored as a field in the User schema
   //       so that we don't have to sort through all user's tweets just to find the last one
-  Tweet.find({ __user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, item) {
+  Tweet.find({ __user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, docs) {
     var id;
     var _id;
     if (err) {
       console.log('Error searching collection for a record');
-    } else if (!item.length) {
+    } else if (!docs.length) {
       console.log('Collection has no records for user', user_id);
       id = null;
       _id = null;
     } else {
+      var item = docs[0];
       console.log('item looks like:', item);
       console.log('last tweets id string is', item.id_str);
       id = incStrNum(item.id_str);
