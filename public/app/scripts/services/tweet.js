@@ -113,7 +113,7 @@ angular.module('wynnoApp.services')
             } else if (tweet.__isMuted) {
               //do nothing
             } else {
-              if (tweet.__p >= threshold) {
+              if (tweet.__p >= threshold || tweet.__p === null) {
                 tweetsToDisplay.push(tweet);
               } else {
                 //do nothing
@@ -144,7 +144,7 @@ angular.module('wynnoApp.services')
             } else if (tweet.__isMuted) {
               tweetsToDisplay.push(tweet);
             } else {
-              if (tweet.__p >= threshold) {
+              if (tweet.__p >= threshold || tweet.__p === null) {
                 //do nothing
               } else {
                 tweetsToDisplay.push(tweet);
