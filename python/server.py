@@ -75,7 +75,7 @@ def crunch(votedTweets, nonvotedTweets):
 def save_guesses(guesses):
   for pair in guesses:
     result = db.tweets.update({"_id": pair[0]}, {"$set": {"__p": pair[1]}})
-    if result['err']:
+    if result['err']: # is this test formulated correctly?
       raise SaveError('there was an error saving the prediction')
   #return guesses
   return
@@ -86,7 +86,7 @@ class RPC(object):
     print 'Out of ' + str(tweets.find({ "__user_id": user_id }).count()) + ' total tweets'
     votedTweets = tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } })
     nonvotedTweets = tweets.find({ "__user_id": user_id, "__vote": None })
-    if len(votedTweets):
+    if votedTweets.count():
       save_guesses(crunch(votedTweets, nonvotedTweets))
     return 'success'
     # this will return the p's for all nonvoted tweets which have just been crunched
