@@ -10,6 +10,8 @@ from bson.json_util import dumps
 
 from pymongo import MongoClient
 
+logging.basicConfig();
+
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
 client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@127.0.0.1:27017/wynno-dev')
 db = client['wynno-dev']
