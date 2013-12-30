@@ -86,7 +86,8 @@ class RPC(object):
     print 'Out of ' + str(tweets.find({ "__user_id": user_id }).count()) + ' total tweets'
     votedTweets = tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } })
     nonvotedTweets = tweets.find({ "__user_id": user_id, "__vote": None })
-    save_guesses(crunch(votedTweets, nonvotedTweets))
+    if len(votedTweets):
+      save_guesses(crunch(votedTweets, nonvotedTweets))
     return 'success'
     # this will return the p's for all nonvoted tweets which have just been crunched
     # requires save_guesses to return the guesses
