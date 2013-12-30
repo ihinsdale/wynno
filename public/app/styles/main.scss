@@ -33,7 +33,7 @@ body {
 }
 
 .tweetStuff {
-    min-height: 74px // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
+    min-height: 74px; // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
     padding: 5px;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
