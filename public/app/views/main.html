@@ -5,7 +5,7 @@
         <div class="tweeterImage">
           <img ng-src="{{tweet.__user.profile_image_url}}">
         </div>
-        <div class="pvalue">
+        <div class="pvalue" ng-if="tweet.__p!=null">
           <span class="badge">{{tweet.__pScore}}</span>
         </div>
       </div>
