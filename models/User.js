@@ -3,15 +3,18 @@ var Schema = mongoose.Schema;
 
 // Create a User Schema
 exports.userSchema = userSchema = new Schema({
-  twitter_id: String,
+  tw_id: Number,
+  tw_id_str: String,
+  tw_name: String,
+  tw_screen_name: String,
   email: String,
-  password: String,
-  twitterUsername: String,
-  twitterPassword: String,
+  tw_profile_image_url: String,
   protectedUsers: [],
   protectedWords: [],
   mutedUsers: [],
-  mutedWords: []
+  mutedWords: [],
+  tw_access_token: String,
+  tw_access_secret: String
 });
 
 exports.User = mongoose.model('User', userSchema);

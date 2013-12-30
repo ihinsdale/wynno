@@ -58,7 +58,7 @@ processTweet = function(user_id, tweet) {
     delete tweet.entities;
   }
   return tweet;
-}
+};
 
 exports.lastTweetId = function(user_id, callback) {
   // *_id must be a db record id, i.e. _id, not a Twitter API id
@@ -273,22 +273,21 @@ exports.findUser = function(user_id, callback) {
   });
 };
 
-exports.findOrCreateUser = function(user, callback) {
+exports.registerUser = function(user, callback) {
   // following passport.js signature: http://passportjs.org/guide/twitter/
   console.log('user inside findOrCreateUser looks like:', user);
-  User.findOne({ 'twitter_id': user.id }, function(err, doc) {
+  User.findOneAndUpdate({ tw_id: user.tw_id }, { 
+    tw_name: user.tw_name,
+    tw_screen_name: user.tw_screen_name,
+    tw_profile_image_url: user.tw_profile_image_url,
+    tw_access_token: user.tw_access_token,
+    tw_access_secret: user.tw_access_secret
+  }, { upsert: true }, function(err, doc) {
     if (err) {
-      new User(user).save(function(err, newUser) {
-        if (err) {
-          return callback(err);
-        } else {
-          console.log('User is:', newUser);
-          callback(null, newUser);
-        }
-      });
+      callback(err);
     } else {
       console.log('User is:', doc); // don't need to send whole doc, should limit results sent to the fields necessary
-      callback(null, doc);
+      callback(null, doc); // as prescribed by passport.js
     }
   });
 };

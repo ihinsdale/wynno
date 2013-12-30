@@ -30,17 +30,28 @@ exports.init = function(app) {
       consumerSecret: credentials.twitter.consumer_secret,
       callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
       //callbackURL: "http://127.0.0.1:" + app.get('port') + "/auth/twitter/callback",
-      userAuthorizationURL: 'https://api.twitter.com/oauth/authorize'
+      userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
+      passReqToCallback: true
     },
-    function(token, tokenSecret, profile, done) {
-      // store token and tokenSecret for use with Twitter API calls
-
-      // register user with the db
+    function(req, token, tokenSecret, profile, done) {
+      // register user with the db, i.e. find and update access_token and access_secret, or create
       console.log('Twitter profile looks like:', profile);
       user = {
-        twitter_id: profile.id
+        tw_id: profile._json.id
+        tw_id_str: profile._json.id_str,
+        tw_name: profile._json.name,
+        tw_screen_name: profile._json.screen_name,
+        tw_profile_image_url: profile._json.profile_image_url,
+        tw_access_token: token,
+        tw_access_secret: tokenSecret
       };
-      db.findOrCreateUser(user, done);
+      // save the token and secret in the session for easy access when using to query Twitter API
+      req.session.access_token = token;
+      req.session.access_secret = tokenSecret;
+
+      // also save the token and secret in the db in case they're ever needed for server processes
+      // which don't access the session store. Also save other user details in the db of course.
+      db.registerUser(user, done);
     }
   ));
 

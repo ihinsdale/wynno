@@ -44,7 +44,9 @@ exports.fresh = function(req, res) {
         db.lastTweetId(req.user._id, callback);
       },
       // use that id to grab new tweets from Twitter API
-      twitter.fetch,
+      function(user_id, id, _id, callback) {
+        twitter.fetch(user_id, req.session.access_token, req.session.access_secret, id, _id, callback);
+      },
       // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
       function(user_id, tweetsArray, _id, callback) {
         async.eachSeries(tweetsArray.reverse(), 
