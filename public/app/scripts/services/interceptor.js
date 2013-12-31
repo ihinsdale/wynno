@@ -8,8 +8,8 @@ angular.module('wynnoApp')
         console.log('401 response from server intercepted, redirecting to /login.');
         $cookieStore.remove('user');
         $location.path('/');
-        return $q.reject(rejection);
       }
+      return $q.reject(rejection);
     }
   };
 
