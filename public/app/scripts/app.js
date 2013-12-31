@@ -15,6 +15,9 @@ angular.module('wynnoApp', [
       .when('/', {
         redirectTo: '/in'
       })
+      .when('/signinwithtwitter', {
+        templateUrl: '/app/views/signinwithtwitter.html'
+      })
       .when('/in', {
         templateUrl: '/app/views/main.html',
         controller: 'MainCtrl'

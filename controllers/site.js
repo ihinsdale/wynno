@@ -9,6 +9,9 @@ var algo = require('./algo.js');
 var rendering = require('./rendering.js');
 
 exports.index = function(req, res) {
+  if (req.user) {
+    res.redirect('#/in');
+  }
   res.render('index', { title: 'wynno' });
 };
 
