@@ -1,6 +1,6 @@
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
-    <div class="tweetStuff span6 offset3" ng-class="{even: $index%2==0}">
+    <div class="tweetStuff span5 offset3" ng-class="{even: $index%2==0}">
       <div class="leftColumn">
         <div class="tweeterImage">
           <img ng-src="{{tweet.__user.profile_image_url}}">

@@ -8297,7 +8297,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\0000322}}
 body {
-  background: white;
+  background: #888888;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 }
@@ -8413,7 +8413,7 @@ body {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003128}}
 .voteButtonStandin {
-  border: 1px solid white;
+  border: 1px solid #888888;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ian\/Documents\/development\/wynno\/wynno\/public\/app\/styles\/main\.scss}line{font-family:\00003132}}
