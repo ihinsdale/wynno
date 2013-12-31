@@ -13,7 +13,7 @@ angular.module('wynnoApp', [
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        redirectTo: '/in'
+        templateUrl: '/app/views/landing.html'
       })
       .when('/signinwithtwitter', {
         templateUrl: '/app/views/signinwithtwitter.html'
