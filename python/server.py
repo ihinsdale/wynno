@@ -82,6 +82,7 @@ def save_guesses(guesses):
 
 class RPC(object):
   def predict(self, user_id):
+    print user_id
     print 'Tweets voted on: ' + str(tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } }).count())
     print 'Out of ' + str(tweets.find({ "__user_id": user_id }).count()) + ' total tweets'
     votedTweets = tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } })
