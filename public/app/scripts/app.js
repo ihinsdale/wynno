@@ -20,6 +20,7 @@ angular.module('wynnoApp', [
       templateUrl: '/app/views/signinwithtwitter.html'
     })
     .when('/clientcheckin', {
+      templateUrl: '/app/views/checkingin.html',
       controller: 'CheckinCtrl'
     })
     .when('/in', {
