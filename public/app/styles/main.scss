@@ -8,7 +8,8 @@ $color-scheme:  3321TvCw0w0w0;
 
 $tweet-border-dotted: 1px dotted #e0e0e0;
 $tweet-border-solid: 1px solid #e0e0e0;
-$background-color: #ffffff;
+$background-color: #b8b8b8;
+$tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
 
 $vote-button-side-padding: 20px;
@@ -30,6 +31,7 @@ body {
 
 .tweet {
     padding-bottom: 5px;
+    background-color: $tweet-background-color;
 }
 
 .tweetStuff {
@@ -123,10 +125,6 @@ body {
     border-bottom: $tweet-border-dotted;
     border-left: $tweet-border-dotted;
     display: inline-block;
-}
-
-.voteButtonStandin {
-    border: 1px solid $background-color;
 }
 
 .voteAye {
@@ -409,7 +407,7 @@ $twitterButtonRadius: 3px;
     }
 
     .even {
-        background-color: #ffffff;
+        background-color: $tweet-background-color;
     }
 
     .voteButtons {
