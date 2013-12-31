@@ -100,8 +100,8 @@ exports.lastTweetId = function(user_id, callback) {
       console.log('last tweets db id is:', _id);
     }
     callback(null, user_id, id, _id);
-      // this incrementing performed because since_id is actually inclusive,
-      // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
+    // this incrementing performed because since_id is actually inclusive,
+    // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
   });
 }
 
