@@ -8,7 +8,7 @@ $color-scheme:  3321TvCw0w0w0;
 
 $tweet-border-dotted: 1px dotted #e0e0e0;
 $tweet-border-solid: 1px solid #e0e0e0;
-$background-color: #b8b8b8;
+$background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
 
@@ -31,10 +31,10 @@ body {
 
 .tweet {
     padding-bottom: 5px;
-    background-color: $tweet-background-color;
 }
 
 .tweetStuff {
+    background-color: $tweet-background-color;
     min-height: 74px; // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
     padding: 5px;
     border-top: $tweet-border-dotted;
@@ -121,6 +121,7 @@ body {
 }
 
 .voteButtons {
+    background-color: $tweet-background-color;
     border-right: $tweet-border-dotted;
     border-bottom: $tweet-border-dotted;
     border-left: $tweet-border-dotted;
@@ -134,10 +135,6 @@ body {
 .voteAye, .voteNay {
     display: inline-block;
     width: 49%;
-}
-
-.even {
-    background-color: $tweet-background-hover-color;
 }
 
 .aye, .nay {
@@ -404,10 +401,6 @@ $twitterButtonRadius: 3px;
 @media (min-width: 768px) {
     .tweet {
         padding-bottom: 0;
-    }
-
-    .even {
-        background-color: $tweet-background-color;
     }
 
     .voteButtons {
