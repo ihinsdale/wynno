@@ -10,9 +10,23 @@ var rendering = require('./rendering.js');
 
 exports.index = function(req, res) {
   if (req.user) {
-    res.redirect('#/in');
+    res.cookie('user', JSON.stringify({
+      username: req.user.tw_screen_name,
+      profile_image_url: req.user.tw_profile_image_url
+    }));
   }
   res.render('index', { title: 'wynno' });
+};
+
+exports.checkin = function(req, res) {
+  // send cookie to client containing user info
+  res.cookie('user', JSON.stringify({
+    username: req.user.tw_screen_name,
+    profile_image_url: req.user.tw_profile_image_url
+  }));
+  // can also check here whether user has just signed up, in which case, redirect them to terms and conditions
+  // else
+  res.redirect('#/clientcheckin');
 };
 
 exports.old = function(req, res) {

@@ -17,11 +17,13 @@ module.exports = function(app) {
   app.post('/settings', ensureAuthenticated, site.processSetting);
   // GET request to /settings
   app.get('/settings', ensureAuthenticated, site.getSettings);
+  // GET request to /checkin after authenticating with Twitter
+  app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
   app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/account' }));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
   app.get('/auth/twitter/callback', 
-    passport.authenticate('twitter', { successRedirect: '#/in',
+    passport.authenticate('twitter', { successRedirect: '/checkin',
                                      failureRedirect: '#/signinwithtwitter' })
   );
 };
