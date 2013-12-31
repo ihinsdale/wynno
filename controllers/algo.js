@@ -4,10 +4,7 @@ var client = new zerorpc.Client();
 client.connect("tcp://127.0.0.1:4242");
 
 exports.crunchTheNumbers = function(user_id, _id, callback) {
-  console.log('typeof user_id:', typeof user_id);
-  console.log('user_id for sending to Python looks like:', user_id);
-  console.log('typeof stringified user_id:', typeof user_id.toString());
-  console.log('stringified user_id for sending to Python looks like:', user_id.toString());
+  // need to stringify the user_id ObjectId object before sending to Python
   client.invoke("predict", user_id.toString(), function(error, res, more) {
     if (error) {
       console.log('there was an error:', error)
