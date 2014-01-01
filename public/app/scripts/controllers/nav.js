@@ -26,6 +26,18 @@ angular.module('wynnoApp.controllers')
     $scope.activeRequest = false;
   };
 
+  $scope.logout = function() {
+    AuthService.logout()
+    .then(function(data){
+      console.log(data);
+      console.log('is authenticated still:', AuthService.isAuthenticated());
+      console.log('current user:', AuthService.getCurrentUser());
+      $location.path('/');
+    }, function(err){
+      console.log('failed to logout:', err);
+    });
+  };
+
   $scope.$on('refreshRequestCompleted', function(event, args) {
     $scope.endSpinning();
   })

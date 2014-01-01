@@ -26,4 +26,9 @@ module.exports = function(app) {
     passport.authenticate('twitter', { successRedirect: '/checkin',
                                      failureRedirect: '#/signinwithtwitter' })
   );
+  // POST request to /logout
+  app.post('/logout', function(req, res) {
+    req.logout() = null; // passport.js provides a logout method on the req object which removes req.user and clears the session
+    res.send('logged out');
+  });
 };

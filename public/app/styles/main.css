@@ -8760,6 +8760,11 @@ a .nay {
   }
 
   /* line 436, main.scss */
+  .signInContainer, .username {
+    margin-top: 9px;
+  }
+
+  /* line 440, main.scss */
   .signIn {
     font-size: 14px;
   }

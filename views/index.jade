@@ -18,7 +18,13 @@ block nav
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
-      .username.pull-right(ng-show="currentPathNeedsAuth") {{username}}
+      .username.pull-right.dropdown(ng-show="currentPathNeedsAuth")
+        a.dropdown-toggle(href='', ng-bind="username")
+        ul.dropdown-menu
+          li
+            a(ng-click="logout()")
+              span.icon-exit
+              span Sign out
       // Everything you want hidden at 940px or less, place within here 
       .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
         // .nav, .navbar-search, .navbar-form, etc 
