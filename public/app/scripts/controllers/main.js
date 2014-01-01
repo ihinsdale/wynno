@@ -2,10 +2,6 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, AuthService, TweetService, SettingsService, VoteService) {
-  var path = $location.path();
-  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path); // this property belongs to NavCtrl scope
-  console.log('currentPathNeedsAuth, from inside MainCtrl:', $scope.currentPathNeedsAuth);
-  $scope.active = AuthService.whatPageIsActive(path); // this property belongs to NavCtrl scope
   $scope.busy = false;
 
   $scope.initialLoad = function() {

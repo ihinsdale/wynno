@@ -24,7 +24,7 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
-    doesCurrentPathNeedAuth: function(path) {
+    doesPathNeedAuth: function(path) {
       switch(path) {
         case '':
           return false;

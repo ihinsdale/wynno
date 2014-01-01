@@ -2,9 +2,6 @@
 
 angular.module('wynnoApp.controllers')
 .controller('SettingsCtrl', function($scope, $location, AuthService, SettingsService) {
-  var path = $location.path();
-  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path); // this property belongs to NavCtrl scope
-  $scope.active = AuthService.whatPageIsActive(path); // this property belongs to NavCtrl scope
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {

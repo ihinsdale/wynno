@@ -3,10 +3,14 @@
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
   $scope.activeRequest = true;
-  console.log('path is:', $location.path());
-  var path = $location.path();
-  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path);
-  $scope.active = AuthService.whatPageIsActive(path);
+
+  $scope.$on("$locationChangeStart", function(evt, next, current) {
+    var urlParsingNode = document.createElement('a');
+    urlParsingNode.href = next;
+    var nextPath = urlParsingNode.hash.slice(1)) // slicing at index 1 because 0th character is #
+    $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath) 
+    $scope.active = AuthService.whatPageIsActive(nextPath);
+  });
 
   $scope.refreshRequest = function() {
     $scope.activeRequest = true;
