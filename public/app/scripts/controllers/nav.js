@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $http, $location, TweetService) {
+.controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
   $scope.activeRequest = true;
+  $scope.currentPathNeedsAuth = false;
   console.log('path is:', $location.path());
   if ($location.path === '/in') {
     $scope.viewing = 'passing';

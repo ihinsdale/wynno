@@ -2,6 +2,7 @@
 
 angular.module('wynnoApp.controllers')
 .controller('SettingsCtrl', function($scope, SettingsService) {
+  $scope.currentPathNeedsAuth = true; // this property belongs to NavCtrl scope
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {

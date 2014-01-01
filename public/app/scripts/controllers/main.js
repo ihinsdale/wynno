@@ -2,6 +2,7 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
+  $scope.currentPathNeedsAuth = true; // this property belongs to NavCtrl scope
   $scope.busy = false;
 
   $scope.initialLoad = function() {
