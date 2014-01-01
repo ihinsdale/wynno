@@ -31,7 +31,7 @@ angular.module('wynnoApp.controllers')
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
     TweetService.getOldTweets(TweetService.oldestTweetId)
     .then(function(tweets) {
-      $scope.renderInOrOut(tweets);
+      $scope.renderInOrOut();
       $scope.getNewTweets();
     });
   };
@@ -41,7 +41,7 @@ angular.module('wynnoApp.controllers')
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
     TweetService.getOldTweets(TweetService.oldestTweetId)
     .then(function(tweets) {
-      $scope.renderInOrOut(tweets);
+      $scope.renderInOrOut();
     })
   };
 
@@ -49,7 +49,7 @@ angular.module('wynnoApp.controllers')
     console.log('getNewTweets firing');
     TweetService.getNewTweets()
     .then(function(tweets) {
-      $scope.renderInOrOut(tweets);
+      $scope.renderInOrOut();
       $scope.$emit('refreshRequestCompleted');
     }, function(reason) {
       console.log('error getting new tweets:', reason);
@@ -59,12 +59,11 @@ angular.module('wynnoApp.controllers')
 
   $scope.getAlreadyGotten = function() {
     console.log('getAlreadyGotten firing');
-    $scope.renderInOrOut(TweetService.currentTweets);
+    $scope.renderInOrOut();
   };
 
-  $scope.renderInOrOut = function(tweets) {
+  $scope.renderInOrOut = function() {
     // TODO: I don't think this setting of $scope.tweets here is necessary
-    $scope.tweets = tweets;
     $scope.threshold = 0.5;
     if ($location.path() === '/in') {
       $scope.displayPassing($scope.threshold);
