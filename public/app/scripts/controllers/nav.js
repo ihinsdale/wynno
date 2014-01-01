@@ -7,8 +7,8 @@ angular.module('wynnoApp.controllers')
   $scope.$on("$locationChangeStart", function(evt, next, current) {
     var urlParsingNode = document.createElement('a');
     urlParsingNode.href = next;
-    var nextPath = urlParsingNode.hash.slice(1)) // slicing at index 1 because 0th character is #
-    $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath) 
+    var nextPath = urlParsingNode.hash.slice(1); // slicing at index 1 because 0th character is #
+    $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath);
     $scope.active = AuthService.whatPageIsActive(nextPath);
   });
 
