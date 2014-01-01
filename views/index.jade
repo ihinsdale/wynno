@@ -14,21 +14,22 @@ block nav
         .biggern n
         .smallern n
         .o o
-      a(href='/auth/twitter').signInContainer.pull-right
+      a(href='/auth/twitter', ng-if="").signInContainer.pull-right
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
+      .username(ng-if="")
       // Everything you want hidden at 940px or less, place within here 
       .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
         // .nav, .navbar-search, .navbar-form, etc 
         ul.nav.pull-left.wynnoButtons
-          li.passing(ng-click='viewPassing()', ng-class='{active: active[0]}')
+          li.passing(ng-class='{active: active[0]}')
             a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='1000')
               span.icomoon-filter2
-          li.failing(ng-click='viewFailing()', ng-class='{active: active[1]}')
+          li.failing(ng-class='{active: active[1]}')
             a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='1000')
               span.icomoon-filter2
-          li(ng-click='viewSettings()', ng-class='{active: active[2]}')
+          li(ng-class='{active: active[2]}')
             a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='1000')
               span.icomoon-cogs
         ul.nav.pull-right

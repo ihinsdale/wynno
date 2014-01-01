@@ -25,8 +25,9 @@ exports.checkin = function(req, res) {
     profile_image_url: req.user.tw_profile_image_url
   }));
   // can also check here whether user has just signed up, in which case, redirect them to terms and conditions
+  // ...
   // else
-  res.redirect('#/clientcheckin');
+  res.redirect('#/in');
 };
 
 exports.old = function(req, res) {

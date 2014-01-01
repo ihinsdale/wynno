@@ -2,9 +2,19 @@
 
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $http, $location, TweetService) {
-  $scope.viewing = 'passing';
-  $scope.active = [true, false, false];
   $scope.activeRequest = true;
+  console.log('path is:', $location.path());
+  if ($location.path === '/in') {
+    $scope.viewing = 'passing';
+    $scope.active = [true, false, false];
+  } else if ($location.path === '/out') {
+    $scope.viewing = 'failing';
+    $scope.active = [false, true, false];
+  } else if ($location.path === '/settings') {
+    $scope.viewing = 'settings';
+    $scope.active = [false, false, true];
+  }
+
   $scope.viewPassing = function() {
     if ($scope.viewing !== 'passing') {
       $scope.viewing = 'passing';
@@ -22,20 +32,6 @@ angular.module('wynnoApp.controllers')
       $scope.viewing = 'settings';
       $scope.active = [false, false, true];
     }
-  };
-  $scope.signIn = function() {
-    $http.get('/auth/twitter')
-    // .then(function(resp) {
-    //   // user should be redirected;
-    // });
-    .success(function(data, status, headers, config) {
-      console.log('successful token request:', data);
-      console.log('now redirecting if necessary');
-      window.location.replace('https://twitter.com/oauth/authorize?oauth_token='+data.oauth_token);
-    })
-    .error(function(data, status) {
-      console.log('error requesting token:', data);
-    });
   };
 
   $scope.refreshRequest = function() {

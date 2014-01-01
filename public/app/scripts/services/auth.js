@@ -1,12 +1,14 @@
 angular.module('wynnoApp.services')
 .factory('AuthService', ['$q', '$http', '$cookieStore', function($q, $http, $cookieStore) {
   var service = {
-    currentUser: $cookieStore.get('user'),
+    getCurrentUser: function() {
+      return $cookieStore.get('user');
+    },
     isAuthenticated: function() {
-      return !!service.currentUser;
+      console.log('cookieStore get looks like:', $cookieStore.get('user'));
+      return !!service.getCurrentUser();
     },
     setAuthenticated: function() {
-      service.currentUser = $cookieStore.get('user');
       console.log('currentUser is now:', service.currentUser);
     },
     logout: function() {
