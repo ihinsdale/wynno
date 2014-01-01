@@ -4,8 +4,9 @@ angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
   $scope.activeRequest = true;
   console.log('path is:', $location.path());
-  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth();
-  $scope.active = AuthService.whatPageIsActive();
+  var path = $location.path();
+  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path);
+  $scope.active = AuthService.whatPageIsActive(path);
 
   $scope.refreshRequest = function() {
     $scope.activeRequest = true;

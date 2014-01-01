@@ -2,10 +2,11 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, AuthService, TweetService, SettingsService, VoteService) {
-  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(); // this property belongs to NavCtrl scope
-  $scope.active = AuthService.whatPageIsActive(); // this property belongs to NavCtrl scope
+  var path = $location.path();
+  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path); // this property belongs to NavCtrl scope
+  $scope.active = AuthService.whatPageIsActive(path); // this property belongs to NavCtrl scope
   $scope.busy = false;
-  
+
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
     if (!TweetService.timeOfLastFetch) {

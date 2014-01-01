@@ -2,7 +2,8 @@
 
 angular.module('wynnoApp.controllers')
 .controller('CheckinCtrl', function($scope, $location, AuthService) {
-  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(); // this property belongs to NavCtrl scope
-  $scope.active = AuthService.whatPageIsActive(); // this property belongs to NavCtrl scope
+  var path = $location.path();
+  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path); // this property belongs to NavCtrl scope
+  $scope.active = AuthService.whatPageIsActive(path); // this property belongs to NavCtrl scope
   $location.path('/in');
 });

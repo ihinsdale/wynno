@@ -24,8 +24,8 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
-    doesCurrentPathNeedAuth: function() {
-      switch($location.path()) {
+    doesCurrentPathNeedAuth: function(path) {
+      switch(path) {
         case '':
           return false;
         case '/':
@@ -45,8 +45,8 @@ angular.module('wynnoApp.services')
           return false;
       }
     },
-    whatPageIsActive: function() {
-      switch($location.path()) {
+    whatPageIsActive: function(path) {
+      switch(path) {
         case '':
           return [false, false, false];
         case '/':
