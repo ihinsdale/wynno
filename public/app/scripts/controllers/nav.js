@@ -3,8 +3,11 @@
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
   $scope.activeRequest = true;
+  $scope.currentPathNeedsAuth = false;
+  console.log('navctrl line evaluated');
 
-  $scope.$on("$locationChangeStart", function(evt, next, current) {
+  $scope.$on("$locationChangeSuccess", function(evt, next, current) {
+    console.log('locationchangesuccess listener in navctrl evaluated');
     var urlParsingNode = document.createElement('a');
     urlParsingNode.href = next;
     var nextPath = urlParsingNode.hash.slice(1); // slicing at index 1 because 0th character is #
