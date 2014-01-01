@@ -26,6 +26,8 @@ angular.module('wynnoApp.services')
     },
     doesCurrentPathNeedAuth: function() {
       switch($location.path) {
+        case '':
+          return false;
         case '/':
           return false;
         case '/signinwithtwitter':
@@ -45,6 +47,8 @@ angular.module('wynnoApp.services')
     },
     whatPageIsActive: function() {
       switch($location.path) {
+        case '':
+          return [false, false, false];
         case '/':
           return [false, false, false];
         case '/signinwithtwitter':
