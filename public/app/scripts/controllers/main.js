@@ -4,6 +4,7 @@ angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, AuthService, TweetService, SettingsService, VoteService) {
   var path = $location.path();
   $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(path); // this property belongs to NavCtrl scope
+  console.log('currentPathNeedsAuth, from inside MainCtrl:', $scope.currentPathNeedsAuth);
   $scope.active = AuthService.whatPageIsActive(path); // this property belongs to NavCtrl scope
   $scope.busy = false;
 
@@ -62,11 +63,12 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.renderInOrOut = function(tweets) {
+    // TODO: I don't think this setting of $scope.tweets here is necessary
     $scope.tweets = tweets;
     $scope.threshold = 0.5;
-    if ($location.path === '/in') {
+    if ($location.path() === '/in') {
       $scope.displayPassing($scope.threshold);
-    } else if ($location.path === '/out') {
+    } else if ($location.path() === '/out') {
       $scope.displayFailing($scope.threshold);
     }
     $scope.busy = false;
