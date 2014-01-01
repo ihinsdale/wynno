@@ -28,7 +28,7 @@ module.exports = function(app) {
   );
   // GET request to /logout
   app.get('/logout', function(req, res) {
-    req.logOut() = null; // passport.js provides a logout method on the req object which removes req.user and clears the session
+    req.logout(); // passport.js provides a logout method on the req object which removes req.user and clears the session
     res.send('logged out');
   });
 };
