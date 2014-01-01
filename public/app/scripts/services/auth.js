@@ -30,15 +30,15 @@ angular.module('wynnoApp.services')
           return false;
         case '/':
           return false;
-        case '/signinwithtwitter':
+        case '#/signinwithtwitter':
           return false;
-        case '/firsttimesignin':
+        case '#/firsttimesignin':
           return true;
-        case '/in':
+        case '#/in':
           return true;
-        case '/out':
+        case '#/out':
           return true;
-        case '/settings':
+        case '#/settings':
           return true;
         default:
           console.log('no matching case found in doesCurrentPathNeedAuth');
@@ -51,15 +51,15 @@ angular.module('wynnoApp.services')
           return [false, false, false];
         case '/':
           return [false, false, false];
-        case '/signinwithtwitter':
+        case '#/signinwithtwitter':
           return [false, false, false];
-        case '/firsttimesignin':
+        case '#/firsttimesignin':
           return [false, false, false];
-        case '/in':
+        case '#/in':
           return [true, false, false];
-        case '/out':
+        case '#/out':
           return [false, true, false];
-        case '/settings':
+        case '#/settings':
           return [false, false, true];
         default:
           console.log('no matching case found in whatPageIsActive');

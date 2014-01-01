@@ -6,6 +6,9 @@ angular.module('wynnoApp.controllers')
   $scope.active = AuthService.whatPageIsActive(); // this property belongs to NavCtrl scope
   $scope.busy = false;
 
+  console.log('location.path === /in', $location.path === '/in');
+  console.log('location.path === #/in', $location.path === '#/in');
+
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
     if (!TweetService.timeOfLastFetch) {
