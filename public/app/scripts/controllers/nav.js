@@ -4,6 +4,7 @@ angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
   $scope.activeRequest = true;
   $scope.currentPathNeedsAuth = false;
+  $scope.username = '@' + AuthService.getCurrentUser().username;
   console.log('navctrl line evaluated');
 
   $scope.$on("$locationChangeSuccess", function(evt, next, current) {

@@ -316,8 +316,7 @@ a .nay {
 
 $twitterButtonRadius: 3px;
 
-.signInContainer {
-    background-color: #ffffff;
+.signInContainer, .username {
     //background-color: #C0DEED;
     border: 1px solid #1dcaff;
     border-radius: $twitterButtonRadius;
