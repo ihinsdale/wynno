@@ -47,7 +47,10 @@ angular.module('wynnoApp', [
   $rootScope.$on("$locationChangeStart", function(evt, next, current) {
     console.log('according to client-side, user is authenticated:', AuthService.isAuthenticated());
     console.log('next looks like:', next);
-    if (!AuthService.isAuthenticated() && next.controller !== "LandingCtrl") {
+    if (!AuthService.isAuthenticated()) {
+      var urlParsingNode = document.createElement('a');
+      urlParsingNode.href = next;
+      console.log('next path is:', urlParsingNode.pathname);
       ('redirecting to /signinwithtwitter because not authenticated');
       $location.path('/signinwithtwitter');
     }
