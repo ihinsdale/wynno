@@ -1,5 +1,5 @@
 angular.module('wynnoApp.services')
-.factory('AuthService', ['$q', '$http', '$cookieStore', function($q, $http, $cookieStore) {
+.factory('AuthService', ['$q', '$http', '$cookieStore', '$location', function($q, $http, $cookieStore, $location) {
   var service = {
     getCurrentUser: function() {
       return $cookieStore.get('user');
@@ -23,6 +23,44 @@ angular.module('wynnoApp.services')
         d.reject(data);
       });
       return d.promise;
+    },
+    doesCurrentPathNeedAuth: function() {
+      switch($location.path) {
+        case '/':
+          return false;
+        case '/signinwithtwitter':
+          return false;
+        case '/firsttimesignin':
+          return true;
+        case '/in':
+          return true;
+        case '/out':
+          return true;
+        case '/settings':
+          return true;
+        default:
+          console.log('no matching case found in doesCurrentPathNeedAuth');
+          return false;
+      }
+    },
+    whatPageIsActive: function() {
+      switch($location.path) {
+        case '/':
+          return [false, false, false];
+        case '/signinwithtwitter':
+          return [false, false, false];
+        case '/firsttimesignin':
+          return [false, false, false];
+        case '/in':
+          return [true, false, false];
+        case '/out':
+          return [false, true, false];
+        case '/settings':
+          return [false, false, true];
+        default:
+          console.log('no matching case found in whatPageIsActive');
+          return [false, false, false];
+      }
     }
   };
 

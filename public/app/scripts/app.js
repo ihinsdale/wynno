@@ -17,9 +17,10 @@ angular.module('wynnoApp', [
       controller: 'LandingCtrl'
     })
     .when('/signinwithtwitter', {
-      templateUrl: '/app/views/signinwithtwitter.html'
+      templateUrl: '/app/views/signinwithtwitter.html',
+      controller: 'LandingCtrl'
     })
-    .when('/clientcheckin', {
+    .when('/firsttimesignin', {
       templateUrl: '/app/views/checkingin.html',
       controller: 'CheckinCtrl'
     })
@@ -41,4 +42,12 @@ angular.module('wynnoApp', [
 })
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('wynnoInterceptor');
+})
+.run(function($rootScope, $location, AuthService) {
+  $rootScope.$on("$routeChangeStart", function(evt, next, current) {
+    console.log('according to client-side, user is authenticated:', AuthService.isAuthenticated());
+    if (!AuthService.isAuthenticated() && next.controller !== "LandingCtrl") {
+      $location.path('/');
+    }
+  });
 });

@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('MainCtrl', function($scope, TweetService, SettingsService, VoteService) {
-  $scope.currentPathNeedsAuth = true; // this property belongs to NavCtrl scope
+.controller('MainCtrl', function($scope, $location, AuthService, TweetService, SettingsService, VoteService) {
+  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(); // this property belongs to NavCtrl scope
+  $scope.active = AuthService.whatPageIsActive(); // this property belongs to NavCtrl scope
   $scope.busy = false;
 
   $scope.initialLoad = function() {
@@ -62,10 +63,9 @@ angular.module('wynnoApp.controllers')
   $scope.renderInOrOut = function(tweets) {
     $scope.tweets = tweets;
     $scope.threshold = 0.5;
-    console.log('rendering the', $scope.viewing, 'tweets');
-    if ($scope.viewing === 'passing') {
+    if ($location.path === '/in') {
       $scope.displayPassing($scope.threshold);
-    } else if ($scope.viewing === 'failing') {
+    } else if ($location.path === '/out') {
       $scope.displayFailing($scope.threshold);
     }
     $scope.busy = false;
@@ -124,9 +124,9 @@ angular.module('wynnoApp.controllers')
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
       tweet.__vote = newVote;
-      if ($scope.viewing === 'passing' && tweet.__vote === 0) {
+      if ($location.path === '/in' && tweet.__vote === 0) {
         $scope.tweets.splice(index, 1);
-      } else if ($scope.viewing === 'failing' && tweet.__vote === 1) {
+      } else if ($location.path === '/out' && tweet.__vote === 1) {
         $scope.tweets.splice(index, 1);
       }
     });

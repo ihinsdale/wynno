@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('SettingsCtrl', function($scope, SettingsService) {
-  $scope.currentPathNeedsAuth = true; // this property belongs to NavCtrl scope
+.controller('SettingsCtrl', function($scope, AuthService, SettingsService) {
+  $scope.currentPathNeedsAuth = AuthService.doesCurrentPathNeedAuth(); // this property belongs to NavCtrl scope
+  $scope.active = AuthService.whatPageIsActive(); // this property belongs to NavCtrl scope
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {
