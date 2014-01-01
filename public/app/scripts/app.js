@@ -50,9 +50,9 @@ angular.module('wynnoApp', [
     if (!AuthService.isAuthenticated()) {
       var urlParsingNode = document.createElement('a');
       urlParsingNode.href = next;
-      console.log('next path is:', urlParsingNode.pathname);
-      ('redirecting to /signinwithtwitter because not authenticated');
-      $location.path('/signinwithtwitter');
+      console.log('next path is:', urlParsingNode.pathname + urlParsingNode.hash); // note this will not correctly reflect path if query parameters added for example
+      //('redirecting to /signinwithtwitter because not authenticated');
+      //$location.path('/signinwithtwitter');
     }
   });
 });
