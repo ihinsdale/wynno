@@ -14,11 +14,11 @@ block nav
         .biggern n
         .smallern n
         .o o
-      a(href='/auth/twitter', ng-if="!currentPathNeedsAuth").signInContainer.pull-right
+      a(href='/auth/twitter', ng-show="!currentPathNeedsAuth").signInContainer.pull-right
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
-      .username.pull-right(ng-if="currentPathNeedsAuth") {{username}}
+      .username.pull-right(ng-show="currentPathNeedsAuth") {{username}}
       // Everything you want hidden at 940px or less, place within here 
       .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
         // .nav, .navbar-search, .navbar-form, etc 
