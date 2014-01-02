@@ -5,7 +5,7 @@ angular.module('wynnoApp.controllers')
   $scope.activeRequest = true;
   $scope.currentPathNeedsAuth = false;
   var currentUser = AuthService.getCurrentUser();
-  if currentUser {
+  if (currentUser) {
     $scope.username = '@' + currentUser.username;
   }
   console.log('navctrl line evaluated');
