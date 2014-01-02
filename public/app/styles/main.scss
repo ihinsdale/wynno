@@ -4,158 +4,175 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 @import "bootstrap-sass/lib/bootstrap";
 @import "bootstrap-sass/lib/responsive";
 
-/* Put your CSS here */
-html, body {
-  margin: 20px;
-}
-
-body {
-    background: #f0f0f0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
-    padding-top: 5px;
-}
-
 $color-scheme:  3321TvCw0w0w0;
 
-$tweet-border: 1px solid #e0e0e0;
+$tweet-border-dotted: 1px dotted #e0e0e0;
+$tweet-border-solid: 1px solid #e0e0e0;
+$background-color: #ffffff;
+$tweet-background-color: #ffffff;
+$tweet-background-hover-color: #f8f8f8;
+
+$vote-button-side-padding: 20px;
+$vote-button-vert-padding: 5px;
+$tweet-glyph-size: 30px;
+$deep-purple: #a166d5;
+$aye-green: #62d7a5;
+$nay-red: #ff9c74;
+$settings-gray: #777777;
+
+body {
+    background: $background-color;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
 
 .container {
-    width: 625px;
 }
 
 .tweet {
-    margin-left: auto;
-    margin-right: auto;
-    overflow: auto;
-    #background: #dbd4e1;
+    padding-bottom: 5px;
 }
 
 .tweetStuff {
-    background: #ffffff;
-    width: 458px;
+    background-color: $tweet-background-color;
+    min-height: 74px; // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
+    padding: 5px;
+    border-top: $tweet-border-dotted;
+    border-right: $tweet-border-dotted;
+    border-bottom: $tweet-border-dotted;
+    border-left: $tweet-border-dotted;
+    overflow: auto; //necessary to prevent badge from protruding outside of tweetStuff box
+}
+
+.leftColumn {
     height: 100%;
-    padding: 5px 10px 5px 10px;
-    border-left: $tweet-border;
-    border-bottom: $tweet-border;
-    border-right: $tweet-border;
-    display: inline;
     float: left;
 }
 
 .tweeterImage {
-    float: left;
-    padding: 4px 10px 6px 0px;
-    display: inline-block;
 }
 
-.tweetContent {
-    width: 400px;
+.tweeterImage > img {
+    vertical-align: inherit;
+}
+
+.rightColumn {
     height: 100%;
-    display: inline-block;
+    padding-left: 10px;
+    overflow: hidden;
 }
 
 .tweetMeta {
-    display: block;
+    width: 100%;
+    display: inline-block;
+}
+
+.tweeterName, .tweeterScreenName {
+    float: left;
+}
+
+.tweetTimestamp {
+    float: right;
 }
 
 .tweeterName {
     font-size: 14px;
     font-weight: bold;
-    display: inline;
     color: #000000;
 }
 
 .tweeterScreenName {
-    #font-size: 12px;
-    display: inline;
+    vertical-align: bottom;
+    color: #989898;
 }
 
-.pvalue {
-    display: inline;
-    float: right;
+.tweeterScreenName:hover {
+    text-decoration: underline;
 }
 
 .tweetTimestamp {
-    float: right;
-    display: inline;
     padding-left: 15px;
 }
 
+.pvalue {
+    padding-left: 8px;
+}
+
+.pvalue > .badge {
+    background-color: #c7a9e1;
+}
+
 .tweetText {
-    display: block;
+    font-size: 14px;
+    display: inline-block;
 }
 
 .tweetFooter {
-    width: 100%;
-    display: block;
+    color: #989898;
+    padding-top: 5px;
 }
 
 .retweetedStatus {
-    float: left;
-    display: inline;
-}
-
-.tweetLink {
-    float: right;
-    display: inline;
 }
 
 .tweetMeta, .tweetFooter {
-    color: #989898;
     font-size: 12px;
+    line-height: 14px;
+}
+
+.voteButtons {
+    background-color: $tweet-background-color;
+    border-right: $tweet-border-dotted;
+    border-bottom: $tweet-border-dotted;
+    border-left: $tweet-border-dotted;
+    display: inline-block;
+}
+
+.voteAye {
+    border-right: $tweet-border-dotted;
 }
 
 .voteAye, .voteNay {
-    height: 50px;
-    width: 50px;
-    display: inline;
-    float: left;
+    display: inline-block;
+    width: 49%;
 }
 
-$vote-button-side-padding: 20px;
-$vote-button-vert-padding: 20px;
-$tweet-glyph-size: 30px;
-
-.voteAye {
-    padding-right: $vote-button-side-padding;
-}
-
-.voteNay {
-    padding-left: $vote-button-side-padding;
+.aye, .nay {
+    margin: 0 auto;
 }
 
 .aye {
     width: $tweet-glyph-size;
     height: $tweet-glyph-size;
-    float: right;
     padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
 }
 
-.aye > a {
-    color: #62d7a5;
+a .aye {
+    color: $aye-green;
 }
 
 .nay {
     width: $tweet-glyph-size;
     height: $tweet-glyph-size;
-    float: left;
     padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
 }
 
-.nay > a {
-    color: #ff9c74;
+a .nay {
+    color: $nay-red;
 }
 
-.aye > a:hover, .nay > a:hover {
-    color: #b385db;
+// necessary to remove underline which appears in gap between voteButtons due to their 49% width
+.aVoteAye:hover, .aVoteNay:hover {
+    text-decoration: none;
+}
+
+.wynnoButtons {
 }
 
 .nav.wynnoButtons li a {
     font-size: 25px;
-    padding-right: 27px !important;
     text-shadow: none;
 }
 
@@ -171,15 +188,23 @@ $tweet-glyph-size: 30px;
 }
 
 .navbar .brand {
-    font-family: "Maven Pro", sans-serif;
-    padding-left: 40px;
+    //font-family: "Maven Pro", sans-serif;
+    //font-family: "Raleway Dots", sans-serif;
+    font-family: "Ubuntu", sans-serif;
+    padding-right: 0;
+    padding-left: 30px;
+    padding-bottom: 0;
     font-size: 32px;
-    font-weight: bold;
+    //font-weight: bold;
     line-height: 100%;
-    color: #a166d5;
+    color: $deep-purple;
     text-shadow: none;
-    padding-top: 4px;
-    padding-bottom: 3px;
+}
+
+.funnel {
+    display: inline;
+    font-size: 20px;
+    padding-right: 16px
 }
 
 .w, .y, .biggern, .smallern, .o {
@@ -192,38 +217,81 @@ $tweet-glyph-size: 30px;
 }
 
 .y {
-    font-size: 30px;
-    color: #62d7a5;
+    font-size: 36px;
+    color: $aye-green;
 }
 
 .biggern {
-    font-size: 30px;
+    font-size: 36px;
 }
 
 .smallern {
-    font-size: 30px;
-    color: #ff9c74;
+    font-size: 36px;
+    color: $nay-red;
 }
 
 .o {
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 36px;
+    //font-weight: bold;
+}
+
+.navbar-fixed-top .navbar-inner {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .navbar-inner {
-    background-color: #f0f0f0;
+    //background-color: #f0f0f0;
+    background-color: #ffffff;
     background-image: none;
     background-image: no-repeat;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .navbar .nav > .passing > a,
 .navbar .nav > .passing > a:hover {
-    color: #62d7a5;
+    color: $aye-green;
 }
 
 .navbar .nav > .failing > a,
 .navbar .nav > .failing > a:hover {
-    color: #ff9c74;
+    color: $nay-red;
+}
+
+.navbar .btn-navbar {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    background-image: none;
+    text-shadow: none;
+    border-color: $deep-purple;
+    background-color: whitesmoke;
+    margin-right: 15px; //necessary because body margin shrunk to 10px from 20px
+}
+
+.navbar .btn-navbar:hover {
+    background-color: whitesmoke;
+}
+
+.navbar .btn-navbar:focus {
+    background-color: #e6e6e6;
+}
+
+.navbar .btn-navbar .icon-bar {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.navbar .btn-navbar .icon-bar.firstBar {
+    background-color: $aye-green;
+}
+
+.navbar .btn-navbar .icon-bar.secondBar {
+    background-color: $nay-red;
+}
+
+.navbar .btn-navbar .icon-bar.thirdBar {
+    background-color: $aye-green;
 }
 
 .protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
@@ -248,23 +316,22 @@ $tweet-glyph-size: 30px;
 
 $twitterButtonRadius: 3px;
 
-.signInContainer {
-    width: 153px;
-    height: 28px;
-    margin: 9px 15px 8px 15px;
-    padding: 0 !important;
+.signInContainer, .username {
+    //background-color: #C0DEED;
+    border: 1px solid #1dcaff;
+    border-radius: $twitterButtonRadius;
+    padding: 3px 3px 4px 3px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.twitterBird {
+    display: inline-block;
 }
 
 .signIn {
-    width: 141px;
-    min-height: 16px;
-    background-image: url('../images/sign-in-with-twitter-link.png');
-    background-color: #C0DEED;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: 1px solid #1dcaff;
-    border-radius: $twitterButtonRadius;
-    padding: 5px;
+    display: inline-block;
+    font-size: 12px;
 }
 
 .signIn:hover {
@@ -272,32 +339,107 @@ $twitterButtonRadius: 3px;
 }
 
 .refreshSpinnerContainer {
-    width: 28px;
-    height: 28px;
-    margin: 9px 0 8px 0;
-    padding: 0 !important;
-}
-
-.refreshSpinner, .refreshSpinner:hover {
+    display: inline-block;
     border: 1px solid #1dcaff;
     border-radius: $twitterButtonRadius;
-    background-color: #ffffff;
-    width: 20px;
-    height: 20px;
+    margin-bottom: 10px;
     padding: 3px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20px 20px;
 }
 
-.refreshSpinner {
-    background-image: url('../images/3-128-ltgray.png');
+.spinner {
+    display: inline-block;
+    line-height: 1;
+    animation: anim-rotate 2s infinite linear;
+    -webkit-animation: anim-rotate 2s infinite linear;
 }
 
-.refreshSpinner:hover {
-    background-image: url('../images/3-128-darkgray.png');
+@keyframes anim-rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.refreshSpinner.spinning {
-    background-image: url('../images/3-128-white.gif');
+@-webkit-keyframes anim-rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 979px) {
+    .navbar-fixed-top .navbar-inner {
+        padding: 0;
+    }
+    .navbar .brand {
+        padding-top: 0px;
+        padding-bottom: 3px; //necessary to prevent bottom of y from being clipped by nav dropdown
+    }
+}
+
+@media (min-width: 980px) {
+    .container {
+        padding-top: 66px;
+    }
+
+    .navbar .brand {
+        padding-top: 3px;
+        padding-right: 40px;
+    }
+
+    .signInContainer, .username {
+        margin-top: 9px;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .tweet {
+        padding-bottom: 0;
+    }
+
+    .voteButtons {
+        margin-top: 1px; // because 'perfect' alignment of voteButtons and tweet actually makes voteButtons look higher
+        border-top: $tweet-border-dotted;
+    }
+
+    .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
+        background-color: $tweet-background-hover-color !important;
+    }
+
+    .tweetStuff {
+        border-top: $tweet-border-solid;
+        border-left: $tweet-border-solid;
+        border-right: $tweet-border-solid;
+        border-bottom: 0;
+    }
+
+    .voteAye, .voteNay {
+        display: block;
+        width: 100%;
+    }
+
+    .voteAye {
+        border-right: 0;
+        border-bottom: $tweet-border-dotted;
+    }
+
+    a:hover > .voteAye, a:hover > .voteNay,
+    a:focus > .voteAye, a:focus > .voteNay {
+        background-color: #e4d8ed;
+    }
+
+    .signIn {
+        font-size: 14px;
+    }
 }

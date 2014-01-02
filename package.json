@@ -15,7 +15,9 @@
     "async": "",
     "underscore": "",
     "zerorpc": "",
-    "oauth": ""
+    "oauth": "",
+    "passport-twitter": "~1.0.2",
+    "passport": "~0.1.17"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -41,7 +43,8 @@
     "grunt-ngmin": "~0.0.2",
     "time-grunt": "~0.1.0",
     "expect.js": "~0.2.0",
-    "superagent": "~0.15.7"
+    "superagent": "~0.15.7",
+    "nodemon": "*"
   },
   "engines": {
     "node": ">=0.8.0"

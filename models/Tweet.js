@@ -1,48 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// var tweeterSchema = new Schema({
-//   id: Number,
-//   id_str: String,
-//   name: String,
-//   screen_name: String,
-//   location: String,
-//   description: String,
-//   url: String,
-//   entities: Schema.Types.Mixed,
-//   protected: Boolean,
-//   followers_count: Number,
-//   friends_count: Number,
-//   listed_count: Number,
-//   created_at: String, // UTC time
-//   favourites_count: Number,
-//   utc_offset: Number,
-//   time_zone: String,
-//   geo_enabled: Boolean,
-//   verified: Boolean,
-//   statuses_count: Number,
-//   lang: String,
-//   contributors_enabled: Boolean,
-//   is_translator: Boolean,
-//   profile_background_color: String,
-//   profile_background_image_url: String,
-//   profile_background_image_url_https: String,
-//   profile_background_tile: Boolean,
-//   profile_image_url: String,
-//   profile_image_url_https: String,
-//   profile_banner_url: String,
-//   profile_link_color: String,
-//   profile_sidebar_border_color: String,
-//   profile_sidebar_fill_color: String,
-//   profile_text_color: String,
-//   profile_use_background_image: Boolean,
-//   default_profile: Boolean,
-//   default_profile_image: Boolean,
-//   following: Boolean,
-//   follow_request_sent: Boolean,
-//   notifications: Boolean
-// });
-
 exports.tweetSchema = tweetSchema = new Schema({
   __user_id: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   __p: Number,

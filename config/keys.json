@@ -8,5 +8,10 @@
     "port": 27017,
     "username": "Ian",
     "password": "gHz32KplsW5241431fdsa234234aiwieqiwue"
-  }
+  },
+  "secrets": {
+    "cookieParser": "in the middle of a shave 234234235",
+    "session": "oh yoko 239239r8131"
+  },
+  "publicDNS": "ec2-54-201-54-173.us-west-2.compute.amazonaws.com"
 }

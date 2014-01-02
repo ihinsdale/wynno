@@ -3,41 +3,41 @@ extends layout
 block nav
   .navbar.navbar-fixed-top
     .navbar-inner
-      .navContainer
-        // .btn-navbar is used as the toggle for collapsed navbar content 
-        a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        // Be sure to leave the brand out there if you want it shown 
-        a.brand.pull-left(href='#')
-          .w w
-          .y y
-          .biggern n
-          .smallern n
-          .o o
-        // Everything you want hidden at 940px or less, place within here 
-        .nav-collapse.collapse
-          // .nav, .navbar-search, .navbar-form, etc 
-          ul.nav.pull-left.wynnoButtons
-            li.passing(ng-click='viewPassing()', ng-class='{active: active[0]}')
-              a(href='#/in')
-                span.icon-smiley
-            li.failing(ng-click='viewFailing()', ng-class='{active: active[1]}')
-              a(href='#/out')
-                span.icon-neutral
-            li(ng-click='viewSettings()', ng-class='{active: active[2]}')
-              a(href='#/settings')
-                span.icon-cogs
-          ul.nav.pull-right
-            li(ng-click='refreshRequest()')
-              a(href='').refreshSpinnerContainer
-                .refreshSpinner(ng-class='{spinning: activeRequest}')
-            li(ng-click='signIn()')
-              a(href='').signInContainer
-                .signIn
-
-
+      // .btn-navbar is used as the toggle for collapsed navbar content 
+      a.btn.btn-navbar(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+        span.icon-bar.firstBar
+        span.icon-bar.secondBar
+        span.icon-bar.thirdBar
+      a.brand.pull-left(href='#')
+        .w w
+        .y y
+        .biggern n
+        .smallern n
+        .o o
+      a(href='/auth/twitter', ng-show="!currentPathNeedsAuth").signInContainer.pull-right
+        .twitterBird
+          img(ng-src="/app/images/twitter-bird.png")
+        .signIn Sign in with Twitter
+      .username.pull-right.dropdown(ng-show="currentPathNeedsAuth")
+        a.dropdown-toggle(href='', ng-bind="username")
+        ul.dropdown-menu
+          li
+            a(ng-click="logout()")
+              span.icomoon-exit
+              span Sign out
+      // Everything you want hidden at 940px or less, place within here 
+      .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
+        // .nav, .navbar-search, .navbar-form, etc 
+        ul.nav.pull-left.wynnoButtons
+          li.passing(ng-class='{active: active[0]}')
+            a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='1000')
+              span.icomoon-filter
+          li.failing(ng-class='{active: active[1]}')
+            a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='1000')
+              span.icomoon-filter
+          li(ng-class='{active: active[2]}')
+            a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='1000')
+              span.icomoon-cogs
 
 block content
   .container(ng-view='')
@@ -54,29 +54,22 @@ block content
   script(src='/app/bower_components/angular-route/angular-route.min.js')
   script(src='/app/bower_components/ngInfiniteScroll/ng-infinite-scroll.js')
 
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-affix.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-alert.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-dropdown.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-tooltip.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-modal.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-transition.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-button.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-popover.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-typeahead.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-carousel.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-scrollspy.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-collapse.js')
-  script(src='/app/bower_components/bootstrap-sass/js/bootstrap-tab.js')
-
   script(src='/app/bower_components/angular-resource/angular-resource.js')
   script(src='/app/bower_components/angular-cookies/angular-cookies.js')
   script(src='/app/bower_components/angular-sanitize/angular-sanitize.js')
   script(src='/app/bower_components/angular-bootstrap/ui-bootstrap.js')
+  script(src='/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
 
   script(src='/app/scripts/app.js')
   script(src='/app/scripts/controllers/init.js')
   script(src='/app/scripts/controllers/main.js')
+  script(src='/app/scripts/controllers/settings.js')
+  script(src='/app/scripts/controllers/nav.js')
+  script(src='/app/scripts/controllers/landing.js')
+  script(src='/app/scripts/controllers/checkin.js')
   script(src='/app/scripts/services/init.js')
   script(src='/app/scripts/services/tweet.js')
   script(src='/app/scripts/services/settings.js')
   script(src='/app/scripts/services/vote.js')
+  script(src='/app/scripts/services/auth.js')
+  script(src='/app/scripts/services/interceptor.js')

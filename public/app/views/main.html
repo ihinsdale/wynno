@@ -1,36 +1,53 @@
-<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
-  <div class="tweet" ng-repeat="tweet in tweets">
-    <div ng-click="vote(tweet, 1, $index)" class="voteAye">
-      <div class="aye" ng-hide="hideVoteButtons(tweet)">
-        <a href=''><span class="icon-checkmark-circle"></span></a>
-      </div>
+<div class="row">
+  <div class="span12 text-center">
+    <div class="refreshSpinnerContainer">
+      <a href="" ng-click="refreshRequest()"><span class="icomoon-spinner" ng-class="{spinner: activeRequest}"></span></a>
     </div>
-    <div class="tweetStuff">
-      <div class="tweeterImage">
-        <img ng-src='{{tweet.__user.profile_image_url}}'>
+  </div>
+</div>
+<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
+  <div class="tweet row" ng-repeat="tweet in tweets">
+    <div class="tweetStuff span5 offset3">
+      <div class="leftColumn">
+        <div class="tweeterImage">
+          <img ng-src="{{tweet.__user.profile_image_url}}">
+        </div>
+        <div class="pvalue" ng-if="tweet.__p!=null">
+          <span class="badge">{{tweet.__pScore}}</span>
+        </div>
       </div>
-      <div class="tweetContent">
+      <div class="rightColumn">
         <div class="tweetMeta">
-          <div class="tweeterName">{{tweet.__user.name}}</div>
-          <div class="tweeterScreenName">@{{tweet.__user.screen_name}}</div>
-          <div class="tweetTimestamp">{{tweet.__elegant_time}}</div>
-          <div class="pvalue">p = {{tweet.__p}}</div>
+          <a href="https://twitter.com/{{tweet.__user.screen_name}}">
+            <span class="tweeterName">{{tweet.__user.name}}&nbsp;</span>
+            <span class="tweeterScreenName">@{{tweet.__user.screen_name}}</span>
+          </a>
+            <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></span>
         </div>
-        <div class="tweetText" ng-bind-html="tweet.__text">
-        </div>
+        <div class="tweetText" ng-bind-html="tweet.__text"></div>
         <div class="tweetFooter">
           <div ng-if="tweet.__retweeter" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>
-          <div class="tweetLink">
-            <a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">Link</a>
-          </div>
         </div>
       </div>
     </div>
-    <div ng-click="vote(tweet, 0, $index)" class="voteNay">
-      <div class="nay" ng-hide="hideVoteButtons(tweet)">
-        <a href=''><span class="icon-cancel-circle"></span></a>
-      </div>
+    <div class="voteButtons span1" ng-if="!hideVoteButtons(tweet)">
+      <a href='' class="aVoteAye">
+        <div ng-click="vote(tweet, 1, $index)" class="voteAye">
+          <div class="aye">
+            <span class="icomoon-checkmark-circle"></span>
+          </div>
+        </div>
+      </a>
+      <a href='' class="aVoteNay">
+        <div ng-click="vote(tweet, 0, $index)" class="voteNay">
+          <div class="nay">
+            <span class="icomoon-cancel-circle"></span>
+          </div>
+        </div>
+      </a>
     </div>
+
+
   </div>
   <div ng-show='busy'>Loading earlier tweets...</div>
 </div>

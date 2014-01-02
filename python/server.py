@@ -1,3 +1,4 @@
+import logging
 import pymongo
 import zerorpc
 import nltk
@@ -6,8 +7,11 @@ import math
 import json
 import os.path
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 
 from pymongo import MongoClient
+
+logging.basicConfig();
 
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
 client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@127.0.0.1:27017/wynno-dev')
@@ -72,18 +76,21 @@ def crunch(votedTweets, nonvotedTweets):
 def save_guesses(guesses):
   for pair in guesses:
     result = db.tweets.update({"_id": pair[0]}, {"$set": {"__p": pair[1]}})
-    if result['err']:
+    if result['err']: # is this test formulated correctly?
       raise SaveError('there was an error saving the prediction')
   #return guesses
   return
 
 class RPC(object):
-  def predict(self):
-    print 'Tweets voted on: ' + str(tweets.find({"__vote": {"$gte": 0}}).count())
-    print 'Out of ' + str(tweets.find().count()) + ' total tweets'
-    votedTweets = tweets.find( { "__vote": { "$nin": [None] } } )
-    nonvotedTweets = tweets.find( {"__vote": None})
-    save_guesses(crunch(votedTweets, nonvotedTweets))
+  def predict(self, user_id):
+    # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
+    user_id = ObjectId(user_id) 
+    print 'Tweets voted on: ' + str(tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } }).count())
+    print 'Out of ' + str(tweets.find({ "__user_id": user_id }).count()) + ' total tweets'
+    votedTweets = tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } })
+    nonvotedTweets = tweets.find({ "__user_id": user_id, "__vote": None })
+    if votedTweets.count():
+      save_guesses(crunch(votedTweets, nonvotedTweets))
     return 'success'
     # this will return the p's for all nonvoted tweets which have just been crunched
     # requires save_guesses to return the guesses

@@ -14,7 +14,9 @@ angular.module('wynnoApp.services')
       .success(function(data, status) {
         console.log('success getting old tweets, they look like:', data);
         service.currentTweets = service.currentTweets.concat(data);
-        service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1]._id;
+        if (data.length) {
+          service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1]._id;
+        }
         console.log('oldestTweetId after getting batch of tweets is:', service.oldestTweetId);
         d.resolve(service.currentTweets);
       })
@@ -111,7 +113,7 @@ angular.module('wynnoApp.services')
             } else if (tweet.__isMuted) {
               //do nothing
             } else {
-              if (tweet.__p >= threshold) {
+              if (tweet.__p >= threshold || tweet.__p === null) {
                 tweetsToDisplay.push(tweet);
               } else {
                 //do nothing
@@ -142,7 +144,7 @@ angular.module('wynnoApp.services')
             } else if (tweet.__isMuted) {
               tweetsToDisplay.push(tweet);
             } else {
-              if (tweet.__p >= threshold) {
+              if (tweet.__p >= threshold || tweet.__p === null) {
                 //do nothing
               } else {
                 tweetsToDisplay.push(tweet);
