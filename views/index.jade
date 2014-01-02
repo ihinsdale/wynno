@@ -31,17 +31,18 @@ block nav
         ul.nav.pull-left.wynnoButtons
           li.passing(ng-class='{active: active[0]}')
             a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='1000')
-              span.icomoon-filter2
+              span.icomoon-filter
           li.failing(ng-class='{active: active[1]}')
             a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='1000')
-              span.icomoon-filter2
+              span.icomoon-filter
           li(ng-class='{active: active[2]}')
             a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='1000')
               span.icomoon-cogs
         ul.nav.pull-right
           li(ng-click='refreshRequest()')
             a(href='').refreshSpinnerContainer
-              .refreshSpinner(ng-class='{spinning: activeRequest}')
+              span.icomoon-spinner
+              //.refreshSpinner(ng-class='{spinning: activeRequest}')
 
 block content
   .container(ng-view='')
