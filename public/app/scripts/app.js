@@ -2,6 +2,7 @@
 
 angular.module('wynnoApp', [
   'ngCookies',
+  'ngAnimate',
   'ngResource',
   'ngSanitize',
   'ui.bootstrap',

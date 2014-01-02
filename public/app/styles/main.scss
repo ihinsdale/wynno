@@ -346,13 +346,6 @@ $twitterButtonRadius: 3px;
     padding: 3px;
 }
 
-.spinner {
-    display: inline-block;
-    line-height: 1;
-    animation: anim-rotate 2s infinite linear;
-    -webkit-animation: anim-rotate 2s infinite linear;
-}
-
 @keyframes anim-rotate {
     0% {
         transform: rotate(0);
@@ -363,13 +356,26 @@ $twitterButtonRadius: 3px;
 }
 
 @-webkit-keyframes anim-rotate {
-    0% {
+    from {
         transform: rotate(0);
     }
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
+
+.spinner {
+    display: inline-block;
+    line-height: 1;
+}
+
+.spinner-add, .spinner-add-active {
+    animation: anim-rotate 2s infinite linear;
+    -webkit-animation: anim-rotate 2s infinite linear;
+    -moz-animation: anim-rotate 2s infinite linear;
+    -o-animation: anim-rotate 2s infinite linear;
+}
+
 
 @media (max-width: 979px) {
     .navbar-fixed-top .navbar-inner {
