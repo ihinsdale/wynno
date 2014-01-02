@@ -349,18 +349,20 @@ $twitterButtonRadius: 3px;
 @keyframes anim-rotate {
     from {
         transform: rotate(0);
+        -ms-transform:rotate(0);
     }
     to {
         transform: rotate(360deg);
+        -ms-transform:rotate(360deg);
     }
 }
 
 @-webkit-keyframes anim-rotate {
     from {
-        transform: rotate(0);
+        -webkit-transform:rotate(0);
     }
     to {
-        transform: rotate(360deg);
+        -webkit-transform:rotate(360deg);
     }
 }
 
@@ -368,13 +370,6 @@ $twitterButtonRadius: 3px;
     display: inline-block;
     line-height: 1;
     background-color: red;
-    animation: 2s anim-rotate;
-    -webkit-animation: 2s anim-rotate;
-    -moz-animation: 2s anim-rotate;
-    -o-animation: 2s anim-rotate;
-}
-
-.spinner-add {
     animation: 2s anim-rotate;
     -webkit-animation: 2s anim-rotate;
     -moz-animation: 2s anim-rotate;

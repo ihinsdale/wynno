@@ -8662,27 +8662,29 @@ a .nay {
   /* line 350, main.scss */
   from {
     transform: rotate(0);
+    -ms-transform: rotate(0);
   }
 
-  /* line 353, main.scss */
+  /* line 354, main.scss */
   to {
     transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
   }
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 359, main.scss */
+  /* line 361, main.scss */
   from {
-    transform: rotate(0);
+    -webkit-transform: rotate(0);
   }
 
-  /* line 362, main.scss */
+  /* line 364, main.scss */
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
   }
 }
 
-/* line 367, main.scss */
+/* line 369, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8693,68 +8695,60 @@ a .nay {
   -o-animation: 2s anim-rotate;
 }
 
-/* line 377, main.scss */
-.spinner-add {
-  animation: 2s anim-rotate;
-  -webkit-animation: 2s anim-rotate;
-  -moz-animation: 2s anim-rotate;
-  -o-animation: 2s anim-rotate;
-}
-
 @media (max-width: 979px) {
-  /* line 385, main.scss */
+  /* line 380, main.scss */
   .navbar-fixed-top .navbar-inner {
     padding: 0;
   }
 
-  /* line 388, main.scss */
+  /* line 383, main.scss */
   .navbar .brand {
     padding-top: 0px;
     padding-bottom: 3px;
   }
 }
 @media (min-width: 980px) {
-  /* line 395, main.scss */
+  /* line 390, main.scss */
   .container {
     padding-top: 66px;
   }
 
-  /* line 399, main.scss */
+  /* line 394, main.scss */
   .navbar .brand {
     padding-top: 3px;
     padding-right: 40px;
   }
 
-  /* line 404, main.scss */
+  /* line 399, main.scss */
   .signInContainer, .username {
     margin-top: 9px;
   }
 }
 @media (max-width: 767px) {
-  /* line 410, main.scss */
+  /* line 405, main.scss */
   body {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 @media (min-width: 768px) {
-  /* line 417, main.scss */
+  /* line 412, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 421, main.scss */
+  /* line 416, main.scss */
   .voteButtons {
     margin-top: 1px;
     border-top: 1px dotted #e0e0e0;
   }
 
-  /* line 426, main.scss */
+  /* line 421, main.scss */
   .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
-  /* line 430, main.scss */
+  /* line 425, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8762,25 +8756,25 @@ a .nay {
     border-bottom: 0;
   }
 
-  /* line 437, main.scss */
+  /* line 432, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 442, main.scss */
+  /* line 437, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 448, main.scss */
+  /* line 443, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 452, main.scss */
+  /* line 447, main.scss */
   .signIn {
     font-size: 14px;
   }
