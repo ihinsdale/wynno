@@ -27,8 +27,8 @@ module.exports = function(app) {
                                      failureRedirect: '#/signinwithtwitter' })
   );
   // GET request to /logout
-  app.get('/logout', function(req, res) {
+  app.get('/logout', ensureAuthenticated, function(req, res) {
     req.logout(); // passport.js provides a logout method on the req object which removes req.user and clears the session
-    res.send('logged out');
+    res.send('Logged out of wynno.');
   });
 };
