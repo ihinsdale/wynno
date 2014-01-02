@@ -368,6 +368,7 @@ $twitterButtonRadius: 3px;
     display: inline-block;
     line-height: 1;
     animation: anim-rotate 2s infinite linear;
+    -webkit-animation: anim-rotate 2s infinite linear;
 }
 
 @media (max-width: 979px) {
