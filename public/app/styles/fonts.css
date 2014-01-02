@@ -2,14 +2,14 @@
 	font-family: 'icomoon';
 	src:url('fonts/icomoon.eot');
 	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.ttf') format('truetype'),
 		url('fonts/icomoon.woff') format('woff'),
+		url('fonts/icomoon.ttf') format('truetype'),
 		url('fonts/icomoon.svg#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
-[class*="icomoon-"] {
+[class^="icomoon-"], [class*=" icomoon-"] {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -23,87 +23,33 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icomoon-cog:before {
+.icomoon-cogs:before {
 	content: "\e600";
 }
-.icomoon-cogs:before {
+.icomoon-wrench:before {
 	content: "\e601";
 }
-.icomoon-cog2:before {
+.icomoon-cancel-circle:before {
 	content: "\e602";
 }
-.icomoon-checkmark:before {
+.icomoon-checkmark-circle:before {
 	content: "\e603";
 }
-.icomoon-checkmark2:before {
+.icomoon-exit:before {
 	content: "\e604";
 }
-.icomoon-close:before {
+.icomoon-filter:before {
 	content: "\e605";
 }
-.icomoon-cancel-circle:before {
+.icomoon-twitter:before {
 	content: "\e606";
 }
-.icomoon-checkmark-circle:before {
+.icomoon-remove:before {
 	content: "\e607";
 }
-.icomoon-filter:before {
+.icomoon-remove2:before {
 	content: "\e608";
 }
-.icomoon-filter2:before {
+.icomoon-spinner:before {
 	content: "\e609";
-}
-.icomoon-thumbs-up:before {
-	content: "\e60a";
-}
-.icomoon-thumbs-up2:before {
-	content: "\e60b";
-}
-.icomoon-remove:before {
-	content: "\e60c";
-}
-.icomoon-eye-blocked:before {
-	content: "\e60d";
-}
-.icomoon-eye:before {
-	content: "\e60e";
-}
-.icomoon-equalizer:before {
-	content: "\e60f";
-}
-.icomoon-happy:before {
-	content: "\e610";
-}
-.icomoon-neutral:before {
-	content: "\e611";
-}
-.icomoon-sad:before {
-	content: "\e612";
-}
-.icomoon-smiley:before {
-	content: "\e613";
-}
-.icomoon-drawer:before {
-	content: "\e614";
-}
-.icomoon-heart:before {
-	content: "\e615";
-}
-.icomoon-remove:before {
-	content: "\e617";
-}
-.icomoon-settings:before {
-	content: "\e616";
-}
-.icomoon-trash:before {
-	content: "\e618";
-}
-.icomoon-heart:before {
-	content: "\e619";
-}
-.icomoon-params:before {
-	content: "\e61a";
-}
-.icomoon-stack:before {
-	content: "\e61b";
 }
