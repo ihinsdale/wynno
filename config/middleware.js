@@ -31,7 +31,7 @@ exports.init = function(app) {
       callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
       //callbackURL: "http://127.0.0.1:" + app.get('port') + "/auth/twitter/callback",
       //userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
-      userAuthorizationURL: 'https://api.twitter.com//oauth/authenticate'
+      userAuthorizationURL: 'https://api.twitter.com//oauth/authenticate',
       passReqToCallback: true
     },
     function(req, token, tokenSecret, profile, done) {
