@@ -342,7 +342,7 @@ $twitterButtonRadius: 3px;
     display: inline-block;
     border: 1px solid #1dcaff;
     border-radius: $twitterButtonRadius;
-    margin: 0 auto;
+    margin-bottom: 10px;
     padding: 3px;
 }
 
@@ -355,10 +355,17 @@ $twitterButtonRadius: 3px;
     }
 }
 
+@-webkit-keyframes anim-rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .spinner {
     display: inline-block;
-    font-size:4em;
-    height: 1em;
     line-height: 1;
     animation: anim-rotate 2s infinite linear;
 }
@@ -381,6 +388,10 @@ $twitterButtonRadius: 3px;
     .navbar .brand {
         padding-top: 3px;
         padding-right: 40px;
+    }
+
+    .signInContainer, .username {
+        margin-top: 9px;
     }
 }
 
@@ -425,10 +436,6 @@ $twitterButtonRadius: 3px;
     a:hover > .voteAye, a:hover > .voteNay,
     a:focus > .voteAye, a:focus > .voteNay {
         background-color: #e4d8ed;
-    }
-
-    .signInContainer, .username {
-        margin-top: 9px;
     }
 
     .signIn {
