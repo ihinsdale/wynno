@@ -2,7 +2,6 @@
 
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
-  $scope.activeRequest = true;
   $scope.currentPathNeedsAuth = false;
   var currentUser = AuthService.getCurrentUser();
   if (currentUser) {
@@ -19,16 +18,6 @@ angular.module('wynnoApp.controllers')
     $scope.active = AuthService.whatPageIsActive(nextPath);
   });
 
-  $scope.refreshRequest = function() {
-    $scope.activeRequest = true;
-    $scope.$broadcast('refreshRequest');
-    console.log('refreshRequest event emitted');
-  };
-
-  $scope.endSpinning = function() {
-    $scope.activeRequest = false;
-  };
-
   $scope.logout = function() {
     AuthService.logout()
     .then(function(data){
@@ -42,7 +31,4 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.$on('refreshRequestCompleted', function(event, args) {
-    $scope.endSpinning();
-  })
 });
