@@ -339,34 +339,28 @@ $twitterButtonRadius: 3px;
 }
 
 .refreshSpinnerContainer {
-    width: 28px;
-    height: 28px;
-    margin: 9px 0 8px 0;
-    padding: 0 !important;
-}
-
-.refreshSpinner, .refreshSpinner:hover {
     border: 1px solid #1dcaff;
     border-radius: $twitterButtonRadius;
-    background-color: #ffffff;
-    width: 20px;
-    height: 20px;
+    margin: 0 auto;
     padding: 3px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20px 20px;
 }
 
-.refreshSpinner {
-    background-image: url('../images/3-128-ltgray.png');
+@keyframes anim-rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.refreshSpinner:hover {
-    background-image: url('../images/3-128-darkgray.png');
-}
-
-.refreshSpinner.spinning {
-    background-image: url('../images/3-128-white.gif');
+.spinner {
+    display: inline-block;
+    font-size:4em;
+    height: 1em;
+    line-height: 1;
+    animation: anim-rotate 2s infinite linear;
+    color: #fff;
 }
 
 @media (max-width: 979px) {

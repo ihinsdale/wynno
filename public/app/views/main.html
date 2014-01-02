@@ -1,3 +1,10 @@
+<div class="row">
+  <div class="span12">
+    <div class="refreshSpinnerContainer">
+      <a href="" ng-click="refreshRequest()"><span class="icomoon-spinner" ng-class="{spinner: activeRequest}"></span></a>
+    </div>
+  </div>
+</div>
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
     <div class="tweetStuff span5 offset3">

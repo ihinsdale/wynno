@@ -38,11 +38,6 @@ block nav
           li(ng-class='{active: active[2]}')
             a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='1000')
               span.icomoon-cogs
-        ul.nav.pull-right
-          li(ng-click='refreshRequest()')
-            a(href='').refreshSpinnerContainer
-              span.icomoon-spinner
-              //.refreshSpinner(ng-class='{spinning: activeRequest}')
 
 block content
   .container(ng-view='')
