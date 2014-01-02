@@ -339,6 +339,7 @@ $twitterButtonRadius: 3px;
 }
 
 .refreshSpinnerContainer {
+    display: inline-block;
     border: 1px solid #1dcaff;
     border-radius: $twitterButtonRadius;
     margin: 0 auto;
