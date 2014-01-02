@@ -347,10 +347,10 @@ $twitterButtonRadius: 3px;
 }
 
 @keyframes anim-rotate {
-    0% {
+    from {
         transform: rotate(0);
     }
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
@@ -369,13 +369,12 @@ $twitterButtonRadius: 3px;
     line-height: 1;
 }
 
-.spinner-add, .spinner-add-active {
+.spinner-add {
     animation: anim-rotate 2s infinite linear;
     -webkit-animation: anim-rotate 2s infinite linear;
     -moz-animation: anim-rotate 2s infinite linear;
     -o-animation: anim-rotate 2s infinite linear;
 }
-
 
 @media (max-width: 979px) {
     .navbar-fixed-top .navbar-inner {
