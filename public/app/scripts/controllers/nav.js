@@ -32,7 +32,7 @@ angular.module('wynnoApp.controllers')
       console.log(data);
       console.log('is authenticated still:', AuthService.isAuthenticated());
       console.log('current user:', AuthService.getCurrentUser());
-      window.location('https://twitter.com/logout'); // redirect user to Twitter where they can logout
+      $location.replace('https://twitter.com/logout'); // redirect user to Twitter where they can logout
       //$location.path('/');
     }, function(err){
       console.log('failed to logout:', err);
