@@ -8658,14 +8658,37 @@ a .nay {
   padding: 3px;
 }
 
+/* line 349, main.scss */
+.footerNavLeft {
+  float: left;
+  background-color: light-gray;
+}
+
+/* line 354, main.scss */
+.footerNavRight {
+  float: right;
+}
+
+/* line 358, main.scss */
+.footerEntity {
+  font-size: 12px;
+  display: inline-block;
+  padding: 5px 0 5px 15px;
+}
+
+/* line 364, main.scss */
+.feedback {
+  background-color: black;
+}
+
 @keyframes anim-rotate {
-  /* line 350, main.scss */
+  /* line 369, main.scss */
   from {
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 354, main.scss */
+  /* line 373, main.scss */
   to {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
@@ -8673,18 +8696,18 @@ a .nay {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 361, main.scss */
+  /* line 380, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 364, main.scss */
+  /* line 383, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
-/* line 369, main.scss */
+/* line 388, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8695,59 +8718,59 @@ a .nay {
 }
 
 @media (max-width: 979px) {
-  /* line 379, main.scss */
+  /* line 398, main.scss */
   .navbar-fixed-top .navbar-inner {
     padding: 0;
   }
 
-  /* line 382, main.scss */
+  /* line 401, main.scss */
   .navbar .brand {
     padding-top: 0px;
     padding-bottom: 3px;
   }
 }
 @media (min-width: 980px) {
-  /* line 389, main.scss */
+  /* line 408, main.scss */
   .container {
     padding-top: 66px;
   }
 
-  /* line 393, main.scss */
+  /* line 412, main.scss */
   .navbar .brand {
     padding-top: 3px;
     padding-right: 40px;
   }
 
-  /* line 398, main.scss */
+  /* line 417, main.scss */
   .signInContainer, .username {
     margin-top: 9px;
   }
 }
 @media (max-width: 767px) {
-  /* line 404, main.scss */
+  /* line 423, main.scss */
   body {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 @media (min-width: 768px) {
-  /* line 411, main.scss */
+  /* line 430, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 415, main.scss */
+  /* line 434, main.scss */
   .voteButtons {
     margin-top: 1px;
     border-top: 1px dotted #e0e0e0;
   }
 
-  /* line 420, main.scss */
+  /* line 439, main.scss */
   .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
-  /* line 424, main.scss */
+  /* line 443, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8755,25 +8778,25 @@ a .nay {
     border-bottom: 0;
   }
 
-  /* line 431, main.scss */
+  /* line 450, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 436, main.scss */
+  /* line 455, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 442, main.scss */
+  /* line 461, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 446, main.scss */
+  /* line 465, main.scss */
   .signIn {
     font-size: 14px;
   }

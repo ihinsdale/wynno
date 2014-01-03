@@ -346,6 +346,25 @@ $twitterButtonRadius: 3px;
     padding: 3px;
 }
 
+.footerNavLeft {
+  float: left;
+  background-color: light-gray;
+}
+
+.footerNavRight {
+  float: right;
+}
+
+.footerEntity {
+  font-size: 12px;
+  display: inline-block;
+  padding: 5px 0 5px 15px;
+}
+
+.feedback {
+    background-color: black;
+}
+
 @keyframes anim-rotate {
     from {
         transform: rotate(0);
