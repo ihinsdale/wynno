@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $http, $location, TweetService, AuthService) {
+.controller('NavCtrl', function($scope, $http, $location, $modal, TweetService, AuthService) {
   $scope.currentPathNeedsAuth = false;
   var currentUser = AuthService.getCurrentUser();
   if (currentUser) {
@@ -31,4 +31,31 @@ angular.module('wynnoApp.controllers')
     });
   };
 
+  $scope.open = function() {
+    var modalInstance = $modal.open({
+      templateUrl: 'feedback.html',
+      controller: feedbackModalInstanceCtrl
+    });
+    modalInstance.result.then(function(feedback, email) {
+      // send back to server, including username if authenticated
+    }, function(reason) {
+      console.log('feedback canceled');
+    });
+  };
+})
+.controller('feedbackModalInstanceCtrl', function($scope, $modalInstance) {
+  $scope.feedback = null; // not sure if setting these as null is necessary or not, hopefully it doesn't remove the placeholder
+  $scope.email = null;
+  $scope.submit = function() {
+    // allow the user to submit invalid email address, because email address is optional
+    var validEmail = $scope.feedback_form.email.$error.email ? null : $scope.email;
+    $modalInstance.close($scope.feedback, validEmail);
+  }
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
 });
+
+
+

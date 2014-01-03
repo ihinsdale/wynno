@@ -365,7 +365,8 @@ $twitterButtonRadius: 3px;
 }
 
 .feedback {
-    padding-left: 2px;
+    padding-left: 6px;
+    display: none;
 }
 
 @keyframes anim-rotate {
@@ -470,6 +471,6 @@ $twitterButtonRadius: 3px;
     }
 
     .feedback {
-        display: none;
+        display: visible;
     }
 }

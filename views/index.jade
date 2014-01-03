@@ -50,7 +50,18 @@ block content
     ga('send', 'pageview');
 
 block footer
-  .feedbackContainer
+  script#feedback.html(novalidate, type="text/ng-template")
+    form(name="feedback_form", ng-submit="submit()")
+      fieldset
+        legend
+          | Feedback
+        .modal-body
+          button.close(title="Close", ng-click="cancel()") ×
+          textarea(required, name="feedback", placeholder="Send us your comments or suggestions...", ng-model="feedback")
+          input(type="email", name="email", placeholder="Your email address (optional)", ng-model="email")
+        .modal-footer
+          button.btn.btn-primary(type="submit", ng-disabled="feedback_form.feedback.$invalid") Send
+  .feedbackContainer(ng-click="open()")
     span.icomoon-bullhorn
     span.feedback Feedback  
 
