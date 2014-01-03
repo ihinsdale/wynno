@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $http, $location, $modal, TweetService, AuthService) {
+.controller('NavCtrl', function($scope, $location, $modal, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
   var currentUser = AuthService.getCurrentUser();
   if (currentUser) {
@@ -37,7 +37,13 @@ angular.module('wynnoApp.controllers')
       controller: feedbackModalInstanceCtrl
     });
     modalInstance.result.then(function(feedback, email) {
-      // send back to server, including username if authenticated
+      // send feedback to server
+      FeedbackService.sendFeedback(feedback, email)
+      .then(function(feedback) {
+        console.log('successfully saved feedback:', feedback);
+      }, function(reason) {
+        console.log('error saving feedback:', reason);
+      });
     }, function(reason) {
       console.log('feedback canceled');
     });
@@ -50,7 +56,7 @@ angular.module('wynnoApp.controllers')
     // allow the user to submit invalid email address, because email address is optional
     var validEmail = $scope.feedback_form.email.$error.email ? null : $scope.email;
     $modalInstance.close($scope.feedback, validEmail);
-  }
+  };
 
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');

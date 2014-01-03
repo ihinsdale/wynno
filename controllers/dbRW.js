@@ -1,5 +1,6 @@
 var Tweet = require('../models/Tweet.js').Tweet;
 var User = require('../models/User.js').User;
+var Feedback = require('../models/Feedback.js').Feedback;
 var _ = require('../node_modules/underscore/underscore-min.js')
 
 // function to save a tweet to the db
@@ -25,8 +26,8 @@ exports.saveTweet = function(user_id, tweet, callback) {
 
 // defines fields on tweet which are used in rendering the tweet
 // also unescapes tweet text like &amp;
-processTweet = function(user_id, tweet) {
-  tweet.__user_id = user_id;
+var processTweet = function(user_id, tweet) {
+  tweet.user_id = user_id;
   tweet.__p = null;
   tweet.__vote = null;
   // if the text is a retweet, the tweet rendered to the user
@@ -82,7 +83,7 @@ exports.lastTweetId = function(user_id, callback) {
 
   // TODO: refactor this so that last tweet id is stored as a field in the User schema
   //       so that we don't have to sort through all user's tweets just to find the last one
-  Tweet.find({ __user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, docs) {
+  Tweet.find({ user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, docs) {
     var id;
     var _id;
     if (err) {
@@ -109,7 +110,7 @@ var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter
 
 exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
   // *_id must be a db record id, i.e. _id, not a Twitter API id
-  var criteria = { __user_id: user_id };
+  var criteria = { user_id: user_id };
   if (tweet_id !== '0') {
     criteria._id = {$lt: tweet_id};
   }
@@ -127,7 +128,7 @@ exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
   if (tweet_id === null) {
     callback(null, []);
   } else if (tweet_id) {
-    var criteria = { __user_id: user_id, _id: {$gt: tweet_id} };
+    var criteria = { user_id: user_id, _id: {$gt: tweet_id} };
     Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
       if (err) {
         console.log('error grabbing tweets:', err);
@@ -144,7 +145,7 @@ exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
 exports.saveVote = function(user_id, tweet_id, vote, callback) {
   // *_id must be a db record id, i.e. _id, not a Twitter API id
 
-  // querying by __user_id not necessary
+  // querying by user_id not necessary
   Tweet.update({ _id: tweet_id }, { __vote: vote }, {}, function (err, numberAffected, raw) {
     if (err) {
       console.log('error updating tweet', tweet_id);
@@ -303,6 +304,19 @@ exports.getSettings = function(user_id, callback) {
     } else {
       console.log('user settings look like', doc);
       callback(null, doc);
+    }
+  });
+};
+
+exports.saveFeedback = function(user_id, feedback, email, callback) {
+  var feedbackDoc = new Feedback({ user_id: user_id, feedback: feedback, email: email });
+  feedbackDoc.save(function(error, feedbackDoc) {
+    if (error) {
+      console.log('Error saving feedback to db');
+      callback('Error saving feedback to db');
+    } else {
+      console.log('Saved feedback to db');
+      callback(null);
     }
   });
 };

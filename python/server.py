@@ -85,10 +85,10 @@ class RPC(object):
   def predict(self, user_id):
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
     user_id = ObjectId(user_id) 
-    print 'Tweets voted on: ' + str(tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } }).count())
-    print 'Out of ' + str(tweets.find({ "__user_id": user_id }).count()) + ' total tweets'
-    votedTweets = tweets.find({ "__user_id": user_id, "__vote": { "$nin": [None] } })
-    nonvotedTweets = tweets.find({ "__user_id": user_id, "__vote": None })
+    print 'Tweets voted on: ' + str(tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }).count())
+    print 'Out of ' + str(tweets.find({ "user_id": user_id }).count()) + ' total tweets'
+    votedTweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
+    nonvotedTweets = tweets.find({ "user_id": user_id, "__vote": None })
     if votedTweets.count():
       save_guesses(crunch(votedTweets, nonvotedTweets))
     return 'success'

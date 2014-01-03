@@ -1,10 +1,6 @@
-/*
- * GET home page.
- */
 var async = require('async');
 var twitter = require('./twitter.js');
 var db = require('./dbRW.js');
-var Tweet = require('../models/Tweet.js').Tweet;
 var algo = require('./algo.js');
 var rendering = require('./rendering.js');
 
@@ -28,6 +24,11 @@ exports.checkin = function(req, res) {
   // ...
   // else
   res.redirect('#/in');
+};
+
+exports.logout = function(req, res) {
+  req.logout(); // passport.js provides a logout method on the req object which removes req.user and clears the session
+  res.send('Logged out of wynno.');
 };
 
 exports.old = function(req, res) {
@@ -152,11 +153,20 @@ exports.getSettings = function(req, res) {
   });
 };
 
-exports.signIn = function(req, res) {
-  twitter.getRequestToken(req, res);
+exports.processFeedback = function(req, res) {
+  var user_id = req.user._id ? req.user._id : null;
+  var data = req.body;
+  async.series([
+    function(callback) {
+      db.saveFeedback(user_id, data.feedback, data.email, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully recorded your feedback. Thanks!');
+    }
+  });
 };
 
-exports.signInSuccessCallback = function(req, res, next) {
-  console.log('inside signInSuccessCallback');
-  twitter.successCallback(req, res, next);
-};
