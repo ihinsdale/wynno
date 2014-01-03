@@ -8805,6 +8805,6 @@ a .nay {
 
   /* line 473, main.scss */
   .feedback {
-    display: visible;
+    display: inline;
   }
 }

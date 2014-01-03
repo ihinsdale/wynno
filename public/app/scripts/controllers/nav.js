@@ -34,7 +34,7 @@ angular.module('wynnoApp.controllers')
   $scope.open = function() {
     var modalInstance = $modal.open({
       templateUrl: 'feedback.html',
-      controller: feedbackModalInstanceCtrl
+      controller: 'FeedbackModalInstanceCtrl'
     });
     modalInstance.result.then(function(feedback, email) {
       // send feedback to server
@@ -49,7 +49,7 @@ angular.module('wynnoApp.controllers')
     });
   };
 })
-.controller('feedbackModalInstanceCtrl', function($scope, $modalInstance) {
+.controller('FeedbackModalInstanceCtrl', function($scope, $modalInstance) {
   $scope.feedback = null; // not sure if setting these as null is necessary or not, hopefully it doesn't remove the placeholder
   $scope.email = null;
   $scope.submit = function() {
