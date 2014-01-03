@@ -33,7 +33,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.open = function() {
     var modalInstance = $modal.open({
-      templateUrl: 'feedback.html',
+      templateUrl: '/app/views/feedback.html',
       controller: 'FeedbackModalInstanceCtrl'
     });
     modalInstance.result.then(function(feedback, email) {
