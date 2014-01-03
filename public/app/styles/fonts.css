@@ -53,3 +53,24 @@
 .icomoon-spinner:before {
 	content: "\e609";
 }
+.icomoon-bullhorn:before {
+	content: "\e60a";
+}
+.icomoon-bubble:before {
+	content: "\e60b";
+}
+.icomoon-bubble2:before {
+	content: "\e60c";
+}
+.icomoon-loop:before {
+	content: "\e60d";
+}
+.icomoon-loop2:before {
+	content: "\e60e";
+}
+.icomoon-keyboard:before {
+	content: "\e60f";
+}
+.icomoon-bubble3:before {
+	content: "\e610";
+}
