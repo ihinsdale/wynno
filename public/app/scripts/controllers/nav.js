@@ -52,9 +52,9 @@ angular.module('wynnoApp.controllers')
 .controller('FeedbackModalInstanceCtrl', function($scope, $modalInstance) {
   $scope.feedback = null; // not sure if setting these as null is necessary or not, hopefully it doesn't remove the placeholder
   $scope.email = null;
-  $scope.submit = function() {
+  $scope.submit = function(isEmailInvalid) {
     // allow the user to submit invalid email address, because email address is optional
-    var validEmail = $scope.feedback_form.email.$error.email ? null : $scope.email;
+    var validEmail = isEmailInvalid ? null : $scope.email;
     $modalInstance.close($scope.feedback, validEmail);
   };
 
