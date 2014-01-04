@@ -398,16 +398,33 @@ $twitterButtonRadius: 3px;
     -o-animation: anim-rotate 2s infinite linear;
 }
 
-.feedfackForm {
+.feedbackWrapper {
     padding: 0 20px;
 }
 
-.cancelFeedback {
-    font-size: 18px;
+legend {
+    margin-bottom: 10px;
 }
 
-.feedbackArea, .feedbackEmail, .sendButton {
+.cancelFeedback {
+    position: absolute;
+    font-size: 28px;
+    right: 20px;
+    top: 10px;
+}
+
+.feedbackArea, input.feedbackEmail {
+    width: 97%;
+    display: block;
+}
+
+.sendButton {
     width: 100%;
+
+}
+
+.feedbackArea {
+    height: 80px;
 }
 
 

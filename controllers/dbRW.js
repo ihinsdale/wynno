@@ -309,6 +309,9 @@ exports.getSettings = function(user_id, callback) {
 };
 
 exports.saveFeedback = function(user_id, feedback, email, callback) {
+  if (!feedback) {
+    callback('No feedback to save to the db provided.');
+  }
   var feedbackDoc = new Feedback({ user_id: user_id, feedback: feedback, email: email });
   feedbackDoc.save(function(error, feedbackDoc) {
     if (error) {
