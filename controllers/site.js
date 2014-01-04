@@ -154,7 +154,7 @@ exports.getSettings = function(req, res) {
 };
 
 exports.processFeedback = function(req, res) {
-  var user_id = req.user._id ? req.user._id : null;
+  var user_id = req.user ? req.user._id : null;
   var data = req.body;
   async.series([
     function(callback) {
