@@ -1,2 +1,0 @@
-- that after fetching tweets from Twitter API, those tweets show up in the correct order in the DOM
-- that trying to fetch tweets from the Twitter API more than once in a 61 second period gets an error

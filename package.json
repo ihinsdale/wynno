@@ -17,7 +17,8 @@
     "zerorpc": "",
     "oauth": "",
     "passport-twitter": "~1.0.2",
-    "passport": "~0.1.17"
+    "passport": "~0.1.17",
+    "express-validator": "~1.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

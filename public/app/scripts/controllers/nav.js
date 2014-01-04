@@ -36,9 +36,10 @@ angular.module('wynnoApp.controllers')
       templateUrl: '/app/views/feedback.html',
       controller: 'FeedbackModalInstanceCtrl'
     });
-    modalInstance.result.then(function(feedback, email) {
+    modalInstance.result.then(function(modalResult) {
+      console.log('sending feedback', modalResult.feedback, 'and email', modalResult.email);
       // send feedback to server
-      FeedbackService.sendFeedback(feedback, email)
+      FeedbackService.sendFeedback(modalResult.feedback, modalResult.email)
       .then(function(result) {
         console.log(result);
       }, function(reason) {
@@ -50,10 +51,14 @@ angular.module('wynnoApp.controllers')
   };
 })
 .controller('FeedbackModalInstanceCtrl', function($scope, $modalInstance) {
-  $scope.submit = function(isEmailInvalid) {
-    // allow the user to submit invalid email address, because email address is optional
-    var validEmail = isEmailInvalid ? null : $scope.email;
-    $modalInstance.close($scope.feedback, validEmail);
+  $scope.form = {};
+  $scope.submit = function() {
+    // if no email provided, set the value to null
+    // if email is not null, it will be validated on server before storing to db
+    // reason for not using Angular's validation of email is I don't like the red border that appears while mid-typing
+    // and can't find out how to switch it to blue
+    var email = $scope.form.email || null;
+    $modalInstance.close({ feedback: $scope.form.feedback, email: email} );
   };
 
   $scope.cancel = function() {

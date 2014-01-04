@@ -1,7 +1,9 @@
+'use strict';
+
 var Tweet = require('../models/Tweet.js').Tweet;
 var User = require('../models/User.js').User;
 var Feedback = require('../models/Feedback.js').Feedback;
-var _ = require('../node_modules/underscore/underscore-min.js')
+var _ = require('../node_modules/underscore/underscore-min.js');
 
 // function to save a tweet to the db
 exports.saveTweet = function(user_id, tweet, callback) {

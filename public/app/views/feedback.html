@@ -1,10 +1,10 @@
 <div class="feedbackWrapper">
-  <form name="feedback_form" novalidate ng-submit="submit(feedback_form.email.$invalid)">
+  <form name="feedback_form" novalidate ng-submit="submit()">
     <fieldset>
       <button class="close cancelFeedback" title="Close" ng-click="cancel()">×</button>
       <legend>Feedback</legend>
-      <textarea class="feedbackArea" required name="feedback" placeholder="Send us your comments or suggestions..." ng-model="feedback"></textarea>
-      <input class="feedbackEmail" type="email" name="email" placeholder="Your email address (optional)" ng-model="email"></input>
+      <textarea class="feedbackArea" required name="feedback" placeholder="Send us your comments or suggestions..." ng-model="form.feedback"></textarea>
+      <input class="feedbackEmail" name="email" placeholder="Your email address (optional)" ng-model="form.email"></input>
       <div class="modal-footer">
           <button class="btn btn-primary sendButton" type="submit" ng-disabled="feedback_form.feedback.$invalid">Send</button>
       </div>

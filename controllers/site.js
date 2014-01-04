@@ -4,6 +4,7 @@ var db = require('./dbRW.js');
 var algo = require('./algo.js');
 var rendering = require('./rendering.js');
 
+
 exports.index = function(req, res) {
   if (req.user) {
     res.cookie('user', JSON.stringify({
@@ -156,14 +157,37 @@ exports.getSettings = function(req, res) {
 exports.processFeedback = function(req, res) {
   var user_id = req.user ? req.user._id : null;
   var data = req.body;
-  async.series([
+  var validatedEmail = req.body.email;
+  async.waterfall([
+    // validate the received input
     function(callback) {
-      db.saveFeedback(user_id, data.feedback, data.email, callback)
+      req.checkBody('feedback', 'Feedback must not be empty.').notEmpty();
+      req.checkBody('email', 'Not a valid email').isEmail();
+      var errors = req.validationErrors();
+      console.log('errors:', errors);
+      // if there's an error with feedback, send back 400. otherwise, e.g. if email is invalid, that's okay because email is optional
+      if (errors && errors[0].param === 'feedback') {
+        callback(errors[0].msg);
+      } else {
+        // if email is invalid, use null
+        if (errors && errors[0].param === 'email') {
+          validatedEmail = null;
+        }
+        callback(null, validatedEmail);
+      }
+    },
+    // then save to the db
+    function(validatedEmail, callback) {
+      db.saveFeedback(user_id, data.feedback, validatedEmail, callback)
     }
   ], function(error) {
     if (error) {
       console.log(error);
-      res.send(500);
+      if (error === 'Feedback must not be empty.') {
+        res.send(400, error);
+      } else {
+        res.send(500);
+      }
     } else {
       res.send('Successfully recorded your feedback. Thanks!');
     }
