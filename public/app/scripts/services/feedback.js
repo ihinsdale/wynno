@@ -6,6 +6,7 @@ angular.module('wynnoApp.services')
       $http({ method: 'POST', url: '/feedback', data: { feedback: feedback, email: email } })
       .success(function(data, status, headers, config) {
         console.log('success sending feedback');
+        console.log('data look like:', data);
         d.resolve(feedback);
       })
       .error(function(reason, status) {

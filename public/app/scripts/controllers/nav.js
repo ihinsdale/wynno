@@ -39,8 +39,8 @@ angular.module('wynnoApp.controllers')
     modalInstance.result.then(function(feedback, email) {
       // send feedback to server
       FeedbackService.sendFeedback(feedback, email)
-      .then(function(feedback) {
-        console.log('successfully saved feedback:', feedback);
+      .then(function(result) {
+        console.log('successfully saved feedback;', result);
       }, function(reason) {
         console.log('error saving feedback:', reason);
       });
