@@ -398,6 +398,19 @@ $twitterButtonRadius: 3px;
     -o-animation: anim-rotate 2s infinite linear;
 }
 
+.feedfackForm {
+    padding: 0 20px;
+}
+
+.cancelFeedback {
+    font-size: 18px;
+}
+
+.feedbackArea, .feedbackEmail, .sendButton {
+    width: 100%;
+}
+
+
 @media (max-width: 979px) {
     .navbar-fixed-top .navbar-inner {
         padding: 0;

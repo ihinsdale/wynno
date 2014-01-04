@@ -8719,60 +8719,75 @@ a .nay {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
+/* line 401, main.scss */
+.feedfackForm {
+  padding: 0 20px;
+}
+
+/* line 405, main.scss */
+.cancelFeedback {
+  font-size: 18px;
+}
+
+/* line 409, main.scss */
+.feedbackArea, .feedbackEmail, .sendButton {
+  width: 100%;
+}
+
 @media (max-width: 979px) {
-  /* line 402, main.scss */
+  /* line 415, main.scss */
   .navbar-fixed-top .navbar-inner {
     padding: 0;
   }
 
-  /* line 405, main.scss */
+  /* line 418, main.scss */
   .navbar .brand {
     padding-top: 0px;
     padding-bottom: 3px;
   }
 }
 @media (min-width: 980px) {
-  /* line 412, main.scss */
+  /* line 425, main.scss */
   .container {
     padding-top: 66px;
   }
 
-  /* line 416, main.scss */
+  /* line 429, main.scss */
   .navbar .brand {
     padding-top: 3px;
     padding-right: 40px;
   }
 
-  /* line 421, main.scss */
+  /* line 434, main.scss */
   .signInContainer, .username {
     margin-top: 9px;
   }
 }
 @media (max-width: 767px) {
-  /* line 427, main.scss */
+  /* line 440, main.scss */
   body {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 @media (min-width: 768px) {
-  /* line 434, main.scss */
+  /* line 447, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 438, main.scss */
+  /* line 451, main.scss */
   .voteButtons {
     margin-top: 1px;
     border-top: 1px dotted #e0e0e0;
   }
 
-  /* line 443, main.scss */
+  /* line 456, main.scss */
   .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
-  /* line 447, main.scss */
+  /* line 460, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8780,30 +8795,30 @@ a .nay {
     border-bottom: 0;
   }
 
-  /* line 454, main.scss */
+  /* line 467, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 459, main.scss */
+  /* line 472, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 465, main.scss */
+  /* line 478, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 469, main.scss */
+  /* line 482, main.scss */
   .signIn {
     font-size: 14px;
   }
 
-  /* line 473, main.scss */
+  /* line 486, main.scss */
   .feedback {
     display: inline;
   }
