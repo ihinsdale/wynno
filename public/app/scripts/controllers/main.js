@@ -128,14 +128,17 @@ angular.module('wynnoApp.controllers')
 
   // function to record user's votes
   $scope.vote = function(tweet, vote, index) {
+    var origVote = tweet.__vote;
+    tweet.__vote = vote;
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
-      tweet.__vote = newVote;
       if ($location.path === '/in' && tweet.__vote === 0) {
         $scope.tweets.splice(index, 1);
       } else if ($location.path === '/out' && tweet.__vote === 1) {
         $scope.tweets.splice(index, 1);
       }
+    }, function(error) {
+      tweet.__vote = origVote;
     });
   };
 
