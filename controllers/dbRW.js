@@ -127,10 +127,13 @@ exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
 
 exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
   // *_id must be a db record id, i.e. _id, not a Twitter API id
-  if (tweet_id === null) {
-    callback(null, []);
-  } else if (tweet_id) {
-    var criteria = { user_id: user_id, _id: {$gt: tweet_id} };
+  var criteria = {user_id: user_id};
+  if (tweet_id !== undefined) {
+    // if tweet_id is not null, we restrict to tweets since it
+    // if it is null that means user has never stored tweets in db before, so we grab all tweets for user
+    if (tweet_id) { 
+      criteria._id = {$gt: tweet_id};
+    }
     Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
       if (err) {
         console.log('error grabbing tweets:', err);
@@ -140,7 +143,7 @@ exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
       }
     });
   } else {
-    callback('improper tweet_id provided');
+    callback('No tweet_id provided');
   }
 };
 
