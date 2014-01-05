@@ -1,0 +1,15 @@
+- that after fetching tweets from Twitter API, those tweets show up in the correct order in the DOM
+- that trying to fetch tweets from the Twitter API more than once in a 61 second period gets an error
+
+- test feedback route
+ - from client
+  - no feedback - shouldn't be able to submit
+  - valid feedback, no email
+  - valid feedback, invalid email
+  - valid feedback, valid email
+- direct to server
+ - no feedback
+ - valid feedback, no email
+ - valid feedback, invalid email
+ - valid feedback, valid email
+ 

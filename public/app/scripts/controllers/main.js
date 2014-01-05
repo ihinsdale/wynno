@@ -2,7 +2,12 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, AuthService, TweetService, SettingsService, VoteService) {
-  $scope.busy = false;
+  $scope.activeTwitterRequest = false; // used by spinner, to keep track of an active request to the Twitter API
+  $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
+
+  $scope.refreshRequest = function() {
+    $scope.getNewTweets();
+  };
 
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
@@ -38,18 +43,24 @@ angular.module('wynnoApp.controllers')
     TweetService.getOldTweets(TweetService.oldestTweetId)
     .then(function(tweets) {
       $scope.renderInOrOut();
+    }, function(reason) {
+      console.log('error getting more old tweets:', reason);
+      $scope.busy = false;
     })
   };
 
   $scope.getNewTweets = function() {
     console.log('getNewTweets firing');
+    $scope.activeTwitterRequest = true;
     TweetService.getNewTweets()
     .then(function(tweets) {
       $scope.renderInOrOut();
-      $scope.$emit('refreshRequestCompleted');
+      $scope.activeTwitterRequest = false; // to stop the spinner
+      // note we don't want to set activeTwitterRequest to false inside .renderInOrOut() or .display(),
+      // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
     }, function(reason) {
       console.log('error getting new tweets:', reason);
-      $scope.$emit('refreshRequestCompleted');
+      $scope.activeTwitterRequest = false; // to stop the spinner
     })
   };
 
@@ -58,34 +69,32 @@ angular.module('wynnoApp.controllers')
     $scope.renderInOrOut();
   };
 
+  $scope.threshold = 0.5;
+
   $scope.renderInOrOut = function() {
-    // TODO: I don't think this setting of $scope.tweets here is necessary
-    $scope.threshold = 0.5;
     if ($location.path() === '/in') {
-      $scope.displayPassing($scope.threshold);
+      TweetService.getPassingTweets($scope.threshold)
+      .then(function(tweets) {
+        $scope.display(tweets);
+      }, function(reason) {
+
+      });
     } else if ($location.path() === '/out') {
-      $scope.displayFailing($scope.threshold);
+      TweetService.getFailingTweets($scope.threshold)
+      .then(function(tweets) {
+        $scope.display(tweets);
+      });
     }
+  };
+
+  $scope.display = function(tweets) {
+    $scope.elegantize(tweets, new Date().getTime());
+    $scope.tweets = tweets;
+    console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
   };
 
-  $scope.displayPassing = function(threshold) {
-    TweetService.getPassingTweets(threshold)
-    .then(function(tweets) {
-      $scope.elegantize(tweets, new Date().getTime());
-      $scope.tweets = tweets;
-      console.log('displaying tweets:', $scope.tweets);
-    });
-  };
-
-  $scope.displayFailing = function(threshold) {
-    TweetService.getFailingTweets(threshold)
-    .then(function(tweets) {
-      $scope.elegantize(tweets, new Date().getTime());
-      $scope.tweets = tweets;
-      console.log('displaying tweets:', $scope.tweets);
-    })
-  };
+  $
 
   $scope.elegantize = function(tweets, presentTime) {
     var elegantizeTimestamp = function(UTCtimestamp) {
@@ -140,8 +149,5 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.initialLoad();
-  $scope.$on('refreshRequest', function(event, args) {
-    $scope.getNewTweets();
-  });
 
 });

@@ -5,10 +5,12 @@ var passport = require('passport')
 var TwitterStrategy = require('passport-twitter').Strategy;
 var User = require('../models/User.js').User;
 var db = require('../controllers/dbRW.js');
+var expressValidator = require('express-validator')
 
 exports.init = function(app) {
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(expressValidator());
   app.use(express.methodOverride());
   app.use(express.cookieParser(credentials.secrets.cookieParser));
   app.use(express.session({ secret: credentials.secrets.session }));

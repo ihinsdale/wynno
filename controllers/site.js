@@ -1,12 +1,9 @@
-/*
- * GET home page.
- */
 var async = require('async');
 var twitter = require('./twitter.js');
 var db = require('./dbRW.js');
-var Tweet = require('../models/Tweet.js').Tweet;
 var algo = require('./algo.js');
 var rendering = require('./rendering.js');
+
 
 exports.index = function(req, res) {
   if (req.user) {
@@ -28,6 +25,11 @@ exports.checkin = function(req, res) {
   // ...
   // else
   res.redirect('#/in');
+};
+
+exports.logout = function(req, res) {
+  req.logout(); // passport.js provides a logout method on the req object which removes req.user and clears the session
+  res.send('Logged out of wynno.');
 };
 
 exports.old = function(req, res) {
@@ -152,11 +154,43 @@ exports.getSettings = function(req, res) {
   });
 };
 
-exports.signIn = function(req, res) {
-  twitter.getRequestToken(req, res);
+exports.processFeedback = function(req, res) {
+  var user_id = req.user ? req.user._id : null;
+  var data = req.body;
+  var validatedEmail = req.body.email;
+  async.waterfall([
+    // validate the received input
+    function(callback) {
+      req.checkBody('feedback', 'Feedback must not be empty.').notEmpty();
+      req.checkBody('email', 'Not a valid email').isEmail();
+      var errors = req.validationErrors();
+      console.log('errors:', errors);
+      // if there's an error with feedback, send back 400. otherwise, e.g. if email is invalid, that's okay because email is optional
+      if (errors && errors[0].param === 'feedback') {
+        callback(errors[0].msg);
+      } else {
+        // if email is invalid, use null
+        if (errors && errors[0].param === 'email') {
+          validatedEmail = null;
+        }
+        callback(null, validatedEmail);
+      }
+    },
+    // then save to the db
+    function(validatedEmail, callback) {
+      db.saveFeedback(user_id, data.feedback, validatedEmail, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      if (error === 'Feedback must not be empty.') {
+        res.send(400, error);
+      } else {
+        res.send(500);
+      }
+    } else {
+      res.send('Successfully recorded your feedback. Thanks!');
+    }
+  });
 };
 
-exports.signInSuccessCallback = function(req, res, next) {
-  console.log('inside signInSuccessCallback');
-  twitter.successCallback(req, res, next);
-};

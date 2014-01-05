@@ -30,13 +30,13 @@ block nav
         // .nav, .navbar-search, .navbar-form, etc 
         ul.nav.pull-left.wynnoButtons
           li.passing(ng-class='{active: active[0]}')
-            a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='1000')
+            a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='500')
               span.icomoon-filter
           li.failing(ng-class='{active: active[1]}')
-            a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='1000')
+            a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='500')
               span.icomoon-filter
           li(ng-class='{active: active[2]}')
-            a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='1000')
+            a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
               span.icomoon-cogs
 
 block content
@@ -49,16 +49,22 @@ block content
     ga('create', 'UA-XXXXX-X');
     ga('send', 'pageview');
 
+block footer
+  .feedbackContainer(ng-click="open()")
+    span.icomoon-bullhorn
+    span.feedback Feedback  
+
   script(src='/app/bower_components/jquery/jquery.js')
   script(src='/app/bower_components/angular/angular.min.js')
+  script(src='/app/bower_components/angular-animate/angular-animate.min.js')
   script(src='/app/bower_components/angular-route/angular-route.min.js')
-  script(src='/app/bower_components/ngInfiniteScroll/ng-infinite-scroll.js')
-
-  script(src='/app/bower_components/angular-resource/angular-resource.js')
   script(src='/app/bower_components/angular-cookies/angular-cookies.js')
-  script(src='/app/bower_components/angular-sanitize/angular-sanitize.js')
+  script(src='/app/bower_components/ngInfiniteScroll/ng-infinite-scroll.js')
   script(src='/app/bower_components/angular-bootstrap/ui-bootstrap.js')
   script(src='/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
+
+  script(src='/app/bower_components/angular-resource/angular-resource.js')
+  script(src='/app/bower_components/angular-sanitize/angular-sanitize.js')
 
   script(src='/app/scripts/app.js')
   script(src='/app/scripts/controllers/init.js')
@@ -73,3 +79,5 @@ block content
   script(src='/app/scripts/services/vote.js')
   script(src='/app/scripts/services/auth.js')
   script(src='/app/scripts/services/interceptor.js')
+  script(src='/app/scripts/services/feedback.js')
+

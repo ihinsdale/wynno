@@ -346,30 +346,87 @@ $twitterButtonRadius: 3px;
     padding: 3px;
 }
 
+.feedbackContainer {
+    position: fixed;
+    visibility: visible!important;
+    cursor: pointer;
+    bottom: 0;
+    right: 2%;
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    background: #383838;
+    color: #FFFFFF;
+    padding: 10px 10px;
+    margin: 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.feedback {
+    padding-left: 6px;
+    display: none;
+}
+
+@keyframes anim-rotate {
+    from {
+        transform: rotate(0);
+        -ms-transform:rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+        -ms-transform:rotate(360deg);
+    }
+}
+
+@-webkit-keyframes anim-rotate {
+    from {
+        -webkit-transform:rotate(0);
+    }
+    to {
+        -webkit-transform:rotate(360deg);
+    }
+}
+
 .spinner {
     display: inline-block;
     line-height: 1;
     animation: anim-rotate 2s infinite linear;
     -webkit-animation: anim-rotate 2s infinite linear;
+    -moz-animation: anim-rotate 2s infinite linear;
+    -o-animation: anim-rotate 2s infinite linear;
 }
 
-@keyframes anim-rotate {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+.feedbackWrapper {
+    padding: 0 20px;
 }
 
-@-webkit-keyframes anim-rotate {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+legend {
+    margin-bottom: 10px;
 }
+
+.cancelFeedback {
+    position: absolute;
+    font-size: 28px;
+    right: 20px;
+    top: 10px;
+}
+
+.feedbackArea, input.feedbackEmail {
+    width: 97%;
+    display: block;
+}
+
+.sendButton {
+    width: 100%;
+
+}
+
+.feedbackArea {
+    height: 80px;
+}
+
 
 @media (max-width: 979px) {
     .navbar-fixed-top .navbar-inner {
@@ -441,5 +498,9 @@ $twitterButtonRadius: 3px;
 
     .signIn {
         font-size: 14px;
+    }
+
+    .feedback {
+        display: inline;
     }
 }
