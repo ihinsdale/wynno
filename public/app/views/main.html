@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="voteButtons span1" ng-if="!hideVoteButtons(tweet)">
+    <div class="voteButtons span1" ng-if="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
       <a href='' class="aVoteAye">
         <div ng-click="vote(tweet, 1, $index)" class="voteAye">
           <div class="aye">
