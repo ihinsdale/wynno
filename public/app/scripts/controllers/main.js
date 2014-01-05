@@ -128,6 +128,10 @@ angular.module('wynnoApp.controllers')
 
   // function to record user's votes
   $scope.vote = function(tweet, vote, index) {
+    // setting the new vote value before making the AJAX call to the server
+    // crucial for rendering in Safari (desktop and mobile)
+    // in Chrome and firefox it worked fine not to set the new vote value until inside
+    // the success callback, but that was creating an extremely long delay (minutes) in Safari
     var origVote = tweet.__vote;
     tweet.__vote = vote;
     VoteService.vote(tweet, vote)
