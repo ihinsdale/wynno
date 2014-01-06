@@ -125,27 +125,34 @@ angular.module('wynnoApp.controllers')
   };
 
   // function to record user's votes
+  // TODO: move this to logic to the VoteService
   $scope.vote = function(tweet, vote, index) {
     // setting the new vote value before making the AJAX call to the server
-    // crucial for rendering in Safari (desktop and mobile)
-    // in Chrome and firefox it worked fine not to set the new vote value until inside
-    // the success callback, but that was creating an extremely long delay (minutes) in Safari
+    // and removing the tweet in light of the vote, if appropriate
+    // is crucial for rendering quickly in Safari (desktop and mobile).
+    // in Chrome and firefox it worked fine not to do that until inside
+    // the success callback, but in Safari that created an extremely long delay (minutes)
     var origVote = tweet.__vote;
+    var origTweets = $scope.tweets.slice();
+
     // setting the vote value here like this changes the original tweet object in TweetService.currentTweets
     // because tweet is a reference to the item in that original array
     // hence all subsequent uses of TweetService.currentTweets will reflect this vote
     tweet.__vote = vote;
+    // remove tweet from those being displayed if vote was contrary
+    if ($location.path() === '/in' && vote === 0) {
+      console.log('removing a nayed tweet from the passing tweets');
+      $scope.tweets.splice(index, 1);
+    } else if ($location.path() === '/out' && vote === 1) {
+      console.log('removing a yeaed tweet from the failing tweets');
+      $scope.tweets.splice(index, 1);
+    }
+    // now pass the vote on to the server
     VoteService.vote(tweet, vote)
-    .then(function(newVote) {
-      console.log('inside the vote success callback');
-      if ($location.path() === '/in' && vote === 0) {
-        console.log('removing a nayed tweet from the passing tweets');
-        $scope.tweets.splice(index, 1);
-      } else if ($location.path() === '/out' && vote === 1) {
-        console.log('removing a yeaed tweet from the failing tweets');
-        $scope.tweets.splice(index, 1);
-      }
-    }, function(error) {
+    .then(function(newVote) {}, function(error) {
+      // restore the original tweet
+      $scope.tweets = origTweets;
+      // and restore the original vote
       tweet.__vote = origVote;
     });
   };
