@@ -138,10 +138,10 @@ angular.module('wynnoApp.controllers')
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
       console.log('inside the vote success callback');
-      if ($location.path === '/in' && vote === 0) {
+      if ($location.path() === '/in' && vote === 0) {
         console.log('removing a nayed tweet from the passing tweets');
         $scope.tweets.splice(index, 1);
-      } else if ($location.path === '/out' && vote === 1) {
+      } else if ($location.path() === '/out' && vote === 1) {
         console.log('removing a yeaed tweet from the failing tweets');
         $scope.tweets.splice(index, 1);
       }
