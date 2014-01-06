@@ -105,6 +105,8 @@ angular.module('wynnoApp.services')
         var d = $q.defer();
         var tweetsToDisplay = [];
         angular.forEach(service.currentTweets, function(tweet) {
+          // reset this property to false, so it is only made true by a new contrary vote
+          tweet.hideGivenNewContraryVote = false;
           if (tweet.__vote === null) {
             service.tweetIsProtected(tweet);
             service.tweetIsMuted(tweet);
@@ -136,6 +138,8 @@ angular.module('wynnoApp.services')
         var d = $q.defer();
         var tweetsToDisplay = [];
         angular.forEach(service.currentTweets, function(tweet) {
+          // reset this property to false, so it is only made true by a new contrary vote
+          tweet.hideGivenNewContraryVote = false;
           if (tweet.__vote === null) {
             service.tweetIsProtected(tweet);
             service.tweetIsMuted(tweet);

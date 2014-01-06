@@ -142,10 +142,13 @@ angular.module('wynnoApp.controllers')
     // remove tweet from those being displayed if vote was contrary
     if ($location.path() === '/in' && vote === 0) {
       console.log('removing a nayed tweet from the passing tweets');
-      $scope.tweets.splice(index, 1);
+      // $scope.tweets.splice(index, 1); // can't do this because it triggers $locationChangeStart
+      // angular seems to think because the DOM is changing that the browser location is being changed
+      tweet.hideGivenNewContraryVote = true; 
     } else if ($location.path() === '/out' && vote === 1) {
       console.log('removing a yeaed tweet from the failing tweets');
-      $scope.tweets.splice(index, 1);
+      // $scope.tweets.splice(index, 1); // can't do this, see above
+      tweet.hideGivenNewContraryVote = true;
     }
     // now pass the vote on to the server
     VoteService.vote(tweet, vote)
