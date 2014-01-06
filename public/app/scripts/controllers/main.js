@@ -94,8 +94,6 @@ angular.module('wynnoApp.controllers')
     $scope.busy = false;
   };
 
-  $
-
   $scope.elegantize = function(tweets, presentTime) {
     var elegantizeTimestamp = function(UTCtimestamp) {
       var numMilliseconds = presentTime - Date.parse(UTCtimestamp); 
@@ -133,12 +131,18 @@ angular.module('wynnoApp.controllers')
     // in Chrome and firefox it worked fine not to set the new vote value until inside
     // the success callback, but that was creating an extremely long delay (minutes) in Safari
     var origVote = tweet.__vote;
+    // setting the vote value here like this changes the original tweet object in TweetService.currentTweets
+    // because tweet is a reference to the item in that original array
+    // hence all subsequent uses of TweetService.currentTweets will reflect this vote
     tweet.__vote = vote;
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
-      if ($location.path === '/in' && tweet.__vote === 0) {
+      console.log('inside the vote success callback');
+      if ($location.path === '/in' && vote === 0) {
+        console.log('removing a nayed tweet from the passing tweets');
         $scope.tweets.splice(index, 1);
-      } else if ($location.path === '/out' && tweet.__vote === 1) {
+      } else if ($location.path === '/out' && vote === 1) {
+        console.log('removing a yeaed tweet from the failing tweets');
         $scope.tweets.splice(index, 1);
       }
     }, function(error) {
