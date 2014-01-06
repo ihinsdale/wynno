@@ -149,7 +149,9 @@ angular.module('wynnoApp.controllers')
     }
     // now pass the vote on to the server
     VoteService.vote(tweet, vote)
-    .then(function(newVote) {}, function(error) {
+    .then(function(newVote) {
+      console.log("vote recorded, don't need to do anything more");
+    }, function(error) {
       // restore the original tweet
       $scope.tweets = origTweets;
       // and restore the original vote
