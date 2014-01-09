@@ -176,15 +176,20 @@ a .nay {
     text-shadow: none;
 }
 
-.nav.wynnoButtons li a:hover {
+.navbar .nav > li > a:hover {
     background-color: #f8f8f8;
 }
 
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
-    background-color: #ffffff;
+    background-color: $background-color;
+    border-bottom: 4px solid $deep-purple;
     box-shadow: none;
+}
+
+.navbar .nav > li.active > a {
+    padding-bottom: 6px;
 }
 
 .navbar .brand {
