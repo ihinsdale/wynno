@@ -404,7 +404,10 @@ $twitterButtonRadius: 3px;
 }
 
 .backwardSpinner {
-    transform: rotateY(180deg);
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
     display: inline-block;
     line-height: 1;
     animation: anim-rotate 2s infinite linear;
