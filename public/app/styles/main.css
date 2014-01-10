@@ -8821,29 +8821,34 @@ legend {
   }
 
   /* line 489, main.scss */
+  .lastTweet {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  /* line 493, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 494, main.scss */
+  /* line 498, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 500, main.scss */
+  /* line 504, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 504, main.scss */
+  /* line 508, main.scss */
   .signIn {
     font-size: 14px;
   }
 
-  /* line 508, main.scss */
+  /* line 512, main.scss */
   .feedback {
     display: inline;
   }

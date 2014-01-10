@@ -486,6 +486,10 @@ legend {
         border-bottom: 0;
     }
 
+    .lastTweet {
+        border-bottom: $tweet-border-solid;
+    }
+
     .voteAye, .voteNay {
         display: block;
         width: 100%;
