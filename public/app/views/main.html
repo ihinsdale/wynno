@@ -47,5 +47,11 @@
       </a>
     </div>
   </div>
-  <div ng-show='busy'>Loading earlier tweets...</div>
+  <div class="row" ng-show="busy">
+    <div class="span12 text-center">
+      <div class="refreshSpinnerContainer">
+        <a href="" ng-click="nextPage()"><span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span></a>
+      </div>
+    </div>
+  </div>
 </div>
