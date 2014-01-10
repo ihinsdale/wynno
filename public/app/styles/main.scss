@@ -394,6 +394,26 @@ $twitterButtonRadius: 3px;
     }
 }
 
+@keyframes anim-rotate-backward {
+    from {
+        transform: rotate(360deg);
+        -ms-transform:rotate(360deg);
+    }
+    to {
+        transform: rotate(0);
+        -ms-transform:rotate(0);
+    }
+}
+
+@-webkit-keyframes anim-rotate-backward {
+    from {
+        -webkit-transform:rotate(360deg);
+    }
+    to {
+        -webkit-transform:rotate(0);
+    }
+}
+
 .spinner {
     display: inline-block;
     line-height: 1;
@@ -403,21 +423,13 @@ $twitterButtonRadius: 3px;
     -o-animation: anim-rotate 2s infinite linear;
 }
 
-.flipped {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-}
-
 .backwardSpinner {
-
     display: inline-block;
     line-height: 1;
-    animation: anim-rotate 2s infinite linear;
-    -webkit-animation: anim-rotate 2s infinite linear;
-    -moz-animation: anim-rotate 2s infinite linear;
-    -o-animation: anim-rotate 2s infinite linear;
+    animation: anim-rotate-backward 2s infinite linear;
+    -webkit-animation: anim-rotate-backward 2s infinite linear;
+    -moz-animation: anim-rotate-backward 2s infinite linear;
+    -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
 .feedbackWrapper {
