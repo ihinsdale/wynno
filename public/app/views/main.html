@@ -66,14 +66,16 @@
   </div>
   <div class="row">
     <div class="tweetColPadding span7 offset2 text-center">
-      <div class="refreshSpinnerContainer earlier">
-        <a href="" ng-click="nextPage()">
-          <span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span>
-          <span class="loadingText">
-            <span ng-show="!busy">Load earlier tweets</span>
-            <span ng-show="busy">Loading...</span>
-          </span>
-        </a>
+      <div class="earlier">
+        <div class="refreshSpinnerContainer">
+          <a href="" ng-click="nextPage()">
+            <span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span>
+            <span class="loadingText">
+              <span ng-show="!busy">Load earlier tweets</span>
+              <span ng-show="busy">Loading...</span>
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
