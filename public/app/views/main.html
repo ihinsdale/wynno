@@ -9,14 +9,14 @@
 </div>
 <div class="row" ng-show="mustWait">
   <div class="span8 offset2 text-center">
-    <div class="alert">
+    <div class="alert refreshAlert">
       <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
 <div class="row" ng-show="twitterError">
   <div class="span8 offset2 text-center">
-    <div class="alert alert-error">
+    <div class="alert alert-error refreshAlert">
       <button type="button" class="close" data-dismiss="alert" ng-click="dismissAlert('error')">&times;</button>
       <strong>Error fetching new tweets from Twitter.</strong>
     </div>
