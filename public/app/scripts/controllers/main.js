@@ -82,6 +82,7 @@ angular.module('wynnoApp.controllers')
         next();
       } else {
         remaining--;
+        console.log('Time remaining:', remaining);
         $timeout($scope.decr, 1000);
       }
     }
