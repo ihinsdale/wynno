@@ -1,7 +1,13 @@
 <div class="row">
   <div class="span12 text-center">
     <div class="refreshSpinnerContainer">
-      <a href="" ng-click="refreshRequest()"><span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span></a>
+      <a href="" ng-click="refreshRequest()">
+        <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
+        <span class="loadingText">
+          <span ng-show="!busy">Load new tweets</span>
+          <span ng-show="busy">Loading...</span>
+        </span>
+      </a>
     </div>
   </div>
 </div>
@@ -50,7 +56,13 @@
   <div class="row">
     <div class="span12 text-center">
       <div class="refreshSpinnerContainer">
-        <a href="" ng-click="nextPage()"><span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span></a><span>Loading earlier tweets...</span>
+        <a href="" ng-click="nextPage()">
+          <span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span>
+          <span class="loadingText">
+            <span ng-show="!busy">Load earlier tweets</span>
+            <span ng-show="busy">Loading...</span>
+          </span>
+        </a>
       </div>
     </div>
   </div>
