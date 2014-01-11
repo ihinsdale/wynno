@@ -64,7 +64,7 @@ angular.module('wynnoApp.controllers')
       $scope.mustWait = false;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
-      if (reason.slice(0,20 === 'Please try again in ')) {
+      if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait = true;
         $scope.wait = parseInt(reason.slice(20,22));
         $scope.countdownTimer($scope.wait, $scope.getNewTweets);
