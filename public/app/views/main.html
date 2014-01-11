@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span12 text-center">
+  <div class="span7 offset2 text-center">
     <div class="refreshSpinnerContainer">
       <a href="" ng-click="refreshRequest()">
         <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
@@ -8,21 +8,21 @@
   </div>
 </div>
 <div class="row" ng-show="mustWait">
-  <div class="span8 offset2 text-center">
+  <div class="span7 offset2 text-center">
     <div class="alert refreshAlert">
       <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
 <div class="row" ng-show="twitterError">
-  <div class="span8 offset2 text-center">
+  <div class="span7 offset2 text-center">
     <div class="alert alert-error refreshAlert">
       <button type="button" class="close" data-dismiss="alert" ng-click="dismissAlert('error')">&times;</button>
       <strong>Error fetching new tweets from Twitter.</strong>
     </div>
   </div>
 </div>
-<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0.5' infinite-scroll-immediate-check='false'>
+<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets" ng-hide="tweet.hideGivenNewContraryVote">
     <div class="tweetStuff span7 offset2" ng-class="{lastTweet: $last}">
       <div class="leftColumn">
