@@ -8671,11 +8671,16 @@ a .nay {
 }
 
 /* line 362, main.scss */
+.refreshSpinnerContainer.earlier {
+  padding-top: 10px;
+}
+
+/* line 366, main.scss */
 .refreshSpinnerContainer > a:hover {
   text-decoration: none;
 }
 
-/* line 366, main.scss */
+/* line 370, main.scss */
 .feedbackContainer {
   position: fixed;
   visibility: visible !important;
@@ -8694,20 +8699,20 @@ a .nay {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 384, main.scss */
+/* line 388, main.scss */
 .feedback {
   padding-left: 6px;
   display: none;
 }
 
 @keyframes anim-rotate {
-  /* line 390, main.scss */
+  /* line 394, main.scss */
   from {
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 394, main.scss */
+  /* line 398, main.scss */
   to {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
@@ -8715,25 +8720,25 @@ a .nay {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 401, main.scss */
+  /* line 405, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 404, main.scss */
+  /* line 408, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes anim-rotate-backward {
-  /* line 410, main.scss */
+  /* line 414, main.scss */
   from {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
   }
 
-  /* line 414, main.scss */
+  /* line 418, main.scss */
   to {
     transform: rotate(0);
     -ms-transform: rotate(0);
@@ -8741,18 +8746,18 @@ a .nay {
 }
 
 @-webkit-keyframes anim-rotate-backward {
-  /* line 421, main.scss */
+  /* line 425, main.scss */
   from {
     -webkit-transform: rotate(360deg);
   }
 
-  /* line 424, main.scss */
+  /* line 428, main.scss */
   to {
     -webkit-transform: rotate(0);
   }
 }
 
-/* line 429, main.scss */
+/* line 433, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8762,7 +8767,7 @@ a .nay {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
-/* line 438, main.scss */
+/* line 442, main.scss */
 .backwardSpinner {
   display: inline-block;
   line-height: 1;
@@ -8772,22 +8777,22 @@ a .nay {
   -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
-/* line 447, main.scss */
+/* line 451, main.scss */
 .loadingText {
   padding-left: 4px;
 }
 
-/* line 451, main.scss */
+/* line 455, main.scss */
 .feedbackWrapper {
   padding: 0 20px;
 }
 
-/* line 455, main.scss */
+/* line 459, main.scss */
 legend {
   margin-bottom: 10px;
 }
 
-/* line 459, main.scss */
+/* line 463, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8795,76 +8800,76 @@ legend {
   top: 10px;
 }
 
-/* line 466, main.scss */
+/* line 470, main.scss */
 .feedbackArea, input.feedbackEmail {
   width: 97%;
   display: block;
 }
 
-/* line 471, main.scss */
+/* line 475, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 476, main.scss */
+/* line 480, main.scss */
 .feedbackArea {
   height: 80px;
 }
 
 @media (max-width: 979px) {
-  /* line 482, main.scss */
+  /* line 486, main.scss */
   .navbar-fixed-top .navbar-inner {
     padding: 0;
   }
 
-  /* line 485, main.scss */
+  /* line 489, main.scss */
   .navbar .brand {
     padding-top: 0px;
     padding-bottom: 3px;
   }
 }
 @media (min-width: 980px) {
-  /* line 492, main.scss */
+  /* line 496, main.scss */
   .container {
     padding-top: 66px;
   }
 
-  /* line 496, main.scss */
+  /* line 500, main.scss */
   .navbar .brand {
     padding-top: 3px;
     padding-right: 40px;
   }
 
-  /* line 501, main.scss */
+  /* line 505, main.scss */
   .signInContainer, .username {
     margin-top: 9px;
   }
 }
 @media (max-width: 767px) {
-  /* line 507, main.scss */
+  /* line 511, main.scss */
   body {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 @media (min-width: 768px) {
-  /* line 514, main.scss */
+  /* line 518, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 518, main.scss */
+  /* line 522, main.scss */
   .voteButtons {
     margin-top: 1px;
     border-top: 1px dotted #e0e0e0;
   }
 
-  /* line 523, main.scss */
+  /* line 527, main.scss */
   .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
-  /* line 527, main.scss */
+  /* line 531, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8872,35 +8877,35 @@ legend {
     border-bottom: 0;
   }
 
-  /* line 534, main.scss */
+  /* line 538, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 538, main.scss */
+  /* line 542, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 543, main.scss */
+  /* line 547, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 549, main.scss */
+  /* line 553, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 553, main.scss */
+  /* line 557, main.scss */
   .signIn {
     font-size: 14px;
   }
 
-  /* line 557, main.scss */
+  /* line 561, main.scss */
   .feedback {
     display: inline;
   }
