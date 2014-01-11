@@ -3,15 +3,27 @@
     <div class="refreshSpinnerContainer">
       <a href="" ng-click="refreshRequest()">
         <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
-        <span class="loadingText">
-          <span ng-show="!busy">{{loadNewText}}</span>
-          <span ng-show="busy">Loading...</span>
-        </span>
       </a>
     </div>
   </div>
 </div>
-<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0' infinite-scroll-immediate-check='false'>
+<div class="row" ng-show="mustWait">
+  <div class="span12 text-center">
+    <div class="alert">
+      <button type="button" class="close" data-dismiss="alert" ng-click="dismissAlert('wait')">&times;</button>
+      <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
+    </div>
+  </div>
+</div>
+<div class="row" ng-show="twitterError">
+  <div class="span12 text-center">
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert" ng-click="dismissAlert('error')">&times;</button>
+      <strong>Error fetching new tweets from Twitter.</strong>
+    </div>
+  </div>
+</div>
+<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0.15' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets" ng-hide="tweet.hideGivenNewContraryVote">
     <div class="tweetStuff span7 offset2" ng-class="{lastTweet: $last}">
       <div class="leftColumn">
