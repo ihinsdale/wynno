@@ -6,8 +6,9 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 $color-scheme:  3321TvCw0w0w0;
 
-$tweet-border-dotted: 1px dotted #e0e0e0;
-$tweet-border-solid: 1px solid #e0e0e0;
+$tweet-border-width: 1px;
+$tweet-border-dotted: $tweet-border-width dotted #e0e0e0;
+$tweet-border-solid: $tweet-border-width solid #e0e0e0;
 $background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
@@ -19,6 +20,8 @@ $deep-purple: #a166d5;
 $aye-green: #62d7a5;
 $nay-red: #ff9c74;
 $settings-gray: #777777;
+$tweet-padding: 5px;
+$nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
 body {
     background: $background-color;
@@ -33,10 +36,15 @@ body {
     padding-bottom: 5px;
 }
 
+.tweetColPadding {
+    padding-left: $nontweet-tweet-column-padding;
+    padding-right: $nontweet-tweet-column-padding;
+}
+
 .tweetStuff {
     background-color: $tweet-background-color;
     min-height: 74px; // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
-    padding: 5px;
+    padding: $tweet-padding;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
     border-bottom: $tweet-border-dotted;
@@ -351,6 +359,14 @@ $twitterButtonRadius: 3px;
     padding: 3px;
 }
 
+.earlier {
+    padding-top: 10px;
+}
+
+.refreshSpinnerContainer > a:hover {
+    text-decoration: none;
+}
+
 .feedbackContainer {
     position: fixed;
     visibility: visible!important;
@@ -394,6 +410,26 @@ $twitterButtonRadius: 3px;
     }
 }
 
+@keyframes anim-rotate-backward {
+    from {
+        transform: rotate(360deg);
+        -ms-transform:rotate(360deg);
+    }
+    to {
+        transform: rotate(0);
+        -ms-transform:rotate(0);
+    }
+}
+
+@-webkit-keyframes anim-rotate-backward {
+    from {
+        -webkit-transform:rotate(360deg);
+    }
+    to {
+        -webkit-transform:rotate(0);
+    }
+}
+
 .spinner {
     display: inline-block;
     line-height: 1;
@@ -401,6 +437,19 @@ $twitterButtonRadius: 3px;
     -webkit-animation: anim-rotate 2s infinite linear;
     -moz-animation: anim-rotate 2s infinite linear;
     -o-animation: anim-rotate 2s infinite linear;
+}
+
+.backwardSpinner {
+    display: inline-block;
+    line-height: 1;
+    animation: anim-rotate-backward 2s infinite linear;
+    -webkit-animation: anim-rotate-backward 2s infinite linear;
+    -moz-animation: anim-rotate-backward 2s infinite linear;
+    -o-animation: anim-rotate-backward 2s infinite linear;
+}
+
+.loadingText {
+    padding-left: 4px;
 }
 
 .feedbackWrapper {
@@ -484,6 +533,10 @@ legend {
         border-left: $tweet-border-solid;
         border-right: $tweet-border-solid;
         border-bottom: 0;
+    }
+
+    .lastTweet {
+        border-bottom: $tweet-border-solid;
     }
 
     .voteAye, .voteNay {

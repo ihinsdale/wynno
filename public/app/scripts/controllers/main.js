@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('MainCtrl', function($scope, $location, AuthService, TweetService, SettingsService, VoteService) {
+.controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService) {
   $scope.activeTwitterRequest = false; // used by spinner, to keep track of an active request to the Twitter API
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
+  $scope.loadNewText = 'Load new';
 
   $scope.refreshRequest = function() {
-    $scope.getNewTweets();
+    if (!$scope.activeTwitterRequest) {
+      $scope.getNewTweets();
+    }
   };
 
   $scope.initialLoad = function() {
@@ -58,10 +61,40 @@ angular.module('wynnoApp.controllers')
       $scope.activeTwitterRequest = false; // to stop the spinner
       // note we don't want to set activeTwitterRequest to false inside .renderInOrOut() or .display(),
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
+      $scope.mustWait = false;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
-      $scope.activeTwitterRequest = false; // to stop the spinner
+      if (reason.slice(0,20) === 'Please try again in ') {
+        $scope.mustWait = true;
+        $scope.wait = parseInt(reason.slice(20,22));
+        $scope.countdownTimer($scope.wait, $scope.getNewTweets);
+      } else {
+        $scope.activeTwitterRequest = false; // to stop the spinner
+        $scope.twitterError = true;
+      }
     })
+  };
+
+  $scope.countdownTimer = function(wait, next) {
+    console.log()
+    $scope.remaining = wait;
+    $scope.decr = function() {
+      if ($scope.remaining === 0) {
+        next();
+      } else {
+        $scope.remaining--;
+        $timeout($scope.decr, 1000);
+      }
+    };
+    $timeout($scope.decr, 1000);
+  };
+
+  $scope.dismissAlert = function(wait_or_error) {
+    if (wait_or_error === 'wait') {
+      $scope.mustWait = false;
+    } else if (wait_or_error === 'error') {
+      $scope.twitterError = false;
+    }
   };
 
   $scope.getAlreadyGotten = function() {
