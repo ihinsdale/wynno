@@ -76,16 +76,16 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.countdownTimer = function(wait, next) {
+    console.log()
     $scope.remaining = wait;
-    $scope.decr = function(remaining) {
-      if (remaining === 0) {
+    $scope.decr = function() {
+      if ($scope.remaining === 0) {
         next();
       } else {
-        remaining--;
-        console.log('Time remaining:', remaining);
+        $scope.remaining--;
         $timeout($scope.decr, 1000);
       }
-    }
+    };
     $timeout($scope.decr, 1000);
   };
 
