@@ -8298,7 +8298,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 /* line 26, main.scss */
 body {
   background: white;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Muli", sans-serif;
   color: #333;
 }
 
