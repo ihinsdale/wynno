@@ -24,7 +24,7 @@
 </div>
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets" ng-hide="tweet.hideGivenNewContraryVote">
-    <div class="tweetStuff tweetColPadding span7 offset2" ng-class="{lastTweet: $last}">
+    <div class="tweetStuff span7 offset2" ng-class="{lastTweet: $last}">
       <div class="leftColumn">
         <div class="tweeterImage">
           <img ng-src="{{tweet.__user.profile_image_url}}">
