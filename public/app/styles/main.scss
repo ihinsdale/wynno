@@ -351,6 +351,10 @@ $twitterButtonRadius: 3px;
     padding: 3px;
 }
 
+.refreshSpinnerContainer > a:hover {
+    text-decoration: none;
+}
+
 .feedbackContainer {
     position: fixed;
     visibility: visible!important;
@@ -433,7 +437,7 @@ $twitterButtonRadius: 3px;
 }
 
 .loadingText {
-    padding-left: 5px;
+    padding-left: 4px;
 }
 
 .feedbackWrapper {

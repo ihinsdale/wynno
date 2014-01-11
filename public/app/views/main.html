@@ -4,7 +4,7 @@
       <a href="" ng-click="refreshRequest()">
         <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
         <span class="loadingText">
-          <span ng-show="!busy">Load new tweets</span>
+          <span ng-show="!busy">{{loadNewText}}</span>
           <span ng-show="busy">Loading...</span>
         </span>
       </a>
