@@ -4,7 +4,9 @@
       <div class="innerSettingsBlock">
         <h3 class="settingHeader">Protected Users</h3>
         <div class="protectedUser" ng-repeat="user in settings.protectedUsers">
-          <button class="close" ng-click="updateSetting('remove','user','protect', user)">&times;</button>
+          <button class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
+            <span class="icomoon-cancel-circle"></span>
+          </button>
           <div class="user">{{user}}</div>
         </div>
         <div class="settingInputContainer">

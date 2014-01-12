@@ -347,6 +347,8 @@ a .nay {
     display: inline;
     font-size: 16px;
     color: #777777;
+    background: transparent;
+    border: 0;
 }
 
 .removeSetting:hover {
@@ -354,7 +356,8 @@ a .nay {
 }
 
 .settingInputContainer {
-    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 $twitterButtonRadius: 3px;
