@@ -309,16 +309,28 @@ a .nay {
     background-color: $aye-green;
 }
 
-.protectedUsers, .protectedWords {
+.settingHeader {
+    color: #ffffff;
+}
+
+.protectedUsers > .settingHeader, .protectedWords > .settingHeader {
     background-color: $light-aye-green;
 }
 
-.mutedUsers, .mutedWords {
+.mutedUsers > .settingHeader, .mutedWords > .settingHeader {
     background-color: $light-nay-red;
 }
 
-.settingHeader {
-    color: #ffffff;
+.protectedUsers, .protectedWords {
+    border-left: 2px solid $aye-green;
+}
+
+.mutedUsers, .mutedWords {
+    border-left: 2px solid $nay-red;
+}
+
+.innerSettingsBlock {
+    margin-left: 5px;
 }
 
 .user, .word {
