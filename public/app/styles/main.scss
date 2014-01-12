@@ -18,14 +18,16 @@ $vote-button-vert-padding: 5px;
 $tweet-glyph-size: 30px;
 $deep-purple: #a166d5;
 $aye-green: #62d7a5;
+$light-aye-green: #a5ebcd;
 $nay-red: #ff9c74;
+$light-nay-red: #ffc8b3;
 $settings-gray: #777777;
 $tweet-padding: 5px;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
 body {
     background: $background-color;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans", sans-serif;
     color: #333;
 }
 
@@ -307,12 +309,33 @@ a .nay {
     background-color: $aye-green;
 }
 
-.protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
-    width: 280px;
+.settingHeader {
+    color: #ffffff;
+    padding-left: 5px;
 }
 
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
-    width: 100%;
+    padding-left: 10px;
+}
+
+.protectedUsers .settingHeader, .protectedWords .settingHeader {
+    background-color: $light-aye-green;
+}
+
+.mutedUsers .settingHeader, .mutedWords .settingHeader {
+    background-color: $light-nay-red;
+}
+
+.protectedUsers, .protectedWords {
+    border-left: 2px solid $aye-green;
+}
+
+.mutedUsers, .mutedWords {
+    border-left: 2px solid $nay-red;
+}
+
+.innerSettingsBlock {
+    margin-left: 10px;
 }
 
 .user, .word {
@@ -322,9 +345,19 @@ a .nay {
 
 .removeSetting {
     display: inline;
-    width: 16px;
-    padding-left: 4px;
     font-size: 16px;
+    color: #777777;
+    background: transparent;
+    border: 0;
+}
+
+.removeSetting:hover {
+    color: #555555;
+}
+
+.settingInputContainer {
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 $twitterButtonRadius: 3px;
