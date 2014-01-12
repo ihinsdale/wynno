@@ -7825,7 +7825,7 @@ a .nay {
 }
 
 /* line 204, main.scss */
-.navbar .brand {
+.navbar .navbar-brand {
   font-family: "Ubuntu", sans-serif;
   padding-right: 0;
   padding-left: 30px;
@@ -7904,7 +7904,7 @@ a .nay {
 }
 
 /* line 276, main.scss */
-.navbar .btn-navbar {
+.navbar .navbar-btn {
   box-shadow: none;
   -webkit-box-shadow: none;
   background-image: none;
@@ -7915,33 +7915,33 @@ a .nay {
 }
 
 /* line 286, main.scss */
-.navbar .btn-navbar:hover {
+.navbar .navbar-btn:hover {
   background-color: whitesmoke;
 }
 
 /* line 290, main.scss */
-.navbar .btn-navbar:focus {
+.navbar .navbar-btn:focus {
   background-color: #e6e6e6;
 }
 
 /* line 294, main.scss */
-.navbar .btn-navbar .icon-bar {
+.navbar .navbar-btn .icon-bar {
   box-shadow: none;
   -webkit-box-shadow: none;
 }
 
 /* line 299, main.scss */
-.navbar .btn-navbar .icon-bar.firstBar {
+.navbar .navbar-btn .icon-bar.firstBar {
   background-color: #62d7a5;
 }
 
 /* line 303, main.scss */
-.navbar .btn-navbar .icon-bar.secondBar {
+.navbar .navbar-btn .icon-bar.secondBar {
   background-color: #ff9c74;
 }
 
 /* line 307, main.scss */
-.navbar .btn-navbar .icon-bar.thirdBar {
+.navbar .navbar-btn .icon-bar.thirdBar {
   background-color: #62d7a5;
 }
 
