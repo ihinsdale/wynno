@@ -313,11 +313,11 @@ a .nay {
     color: #ffffff;
 }
 
-.protectedUsers > .settingHeader, .protectedWords > .settingHeader {
+.protectedUsers .settingHeader, .protectedWords .settingHeader {
     background-color: $light-aye-green;
 }
 
-.mutedUsers > .settingHeader, .mutedWords > .settingHeader {
+.mutedUsers .settingHeader, .mutedWords .settingHeader {
     background-color: $light-nay-red;
 }
 
@@ -330,7 +330,7 @@ a .nay {
 }
 
 .innerSettingsBlock {
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .user, .word {
@@ -343,6 +343,11 @@ a .nay {
     width: 16px;
     padding-left: 4px;
     font-size: 16px;
+    color: #777777;
+}
+
+.removeSetting:hover {
+    color: #555555;
 }
 
 $twitterButtonRadius: 3px;

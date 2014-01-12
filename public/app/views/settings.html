@@ -4,15 +4,15 @@
       <div class="innerSettingsBlock">
         <h3 class="settingHeader">Protected Users</h3>
         <div class="protectedUser" ng-repeat="user in settings.protectedUsers">
-          <div class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
+          <button class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
             <span class="icomoon-cancel-circle"></span>
-          </div>
+          </button>
           <div class="user">{{user}}</div>
         </div>
         <div class="">
           <div class="input-prepend input-append">
             <span class="add-on">@</span>
-            <input class="span2" id="prependedInput" type="text" placeholder="Username" ng-model="protectedUserInput" ng-minlength="1">
+            <input class="span2" id="prependedInput" type="text" placeholder="Enter a username" ng-model="protectedUserInput" ng-minlength="1">
             <button class="btn" ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
           </div>
         </div>
@@ -24,9 +24,9 @@
       <div class="innerSettingsBlock">
         <h3 class="settingHeader">Protected Words</h3>
         <div class="protectedWord" ng-repeat="word in settings.protectedWords">
-          <div class="removeSetting" ng-click="updateSetting('remove','word','protect', word)">
+          <button class="removeSetting" ng-click="updateSetting('remove','word','protect', word)">
             <span class="icomoon-cancel-circle"></span>
-          </div>
+          </button>
           <div class="word">{{word}}</div>
         </div>
         <div class="">
@@ -45,9 +45,9 @@
       <div class="innerSettingsBlocks">
         <h3 class="settingHeader">Muted Users</h3>
         <div class="mutedUser" ng-repeat="user in settings.mutedUsers">
-          <div class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
+          <button class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
             <span class="icomoon-cancel-circle"></span>
-          </div>
+          </button>
           <div class="user">{{user}}</div>
         </div>
         <div class="">
@@ -65,9 +65,9 @@
       <div class="innerSettingsBlock">
         <h3 class="settingHeader">Muted Words</h3>
         <div class="mutedWord" ng-repeat="word in settings.mutedWords">
-          <div class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
+          <button class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
             <span class="icomoon-cancel-circle"></span>
-          </div>
+          </button>
           <div class="word">{{word}}</div>
         </div>
         <div class="">
