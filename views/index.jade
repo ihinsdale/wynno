@@ -15,12 +15,12 @@ block nav
         .smallern n
         .o o
 
-    a.navbar-btn.signInContainer.navbar-right(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+    a.navbar-btn.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
       .twitterBird
         img(ng-src="/app/images/twitter-bird.png")
       .signIn Sign in with Twitter
-    .username.navbar-right.dropdown(ng-show="currentPathNeedsAuth")
-      a.dropdown-toggle(href='', ng-bind="username")
+    a.navbar-btn.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+      a.dropdown-toggle
       ul.dropdown-menu
         li
           a(ng-click="logout()")
