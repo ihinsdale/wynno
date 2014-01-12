@@ -1,42 +1,66 @@
-<div class="lists">
-  <div class="protectedUsers"> Protected Users
-    <input type="text" ng-model="protectedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
-    <button ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
-    <div class="protectedUser" ng-repeat="user in settings.protectedUsers">
-      <div class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
-        <span class="icomoon-cancel-circle"></span>
+<div class="row">
+  <div class="span3 offset2">
+    <div class="protectedUsers"> Protected Users
+      <div class="row protectedUser" ng-repeat="user in settings.protectedUsers">
+        <div class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
+          <span class="icomoon-cancel-circle"></span>
+        </div>
+        <div class="user">{{user}}</div>
       </div>
-      <div class="user">{{user}}</div>
+      <div class="row">
+        <div class="input-prepend">
+          <span class="add-on">@</span>
+          <input class="span2" id="prependedInput" type="text" placeholder="Username" ng-model="protectedUserInput" ng-minlength="1">
+          <button class="btn" ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="protectedWords"> Protected Words
-    <input type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-    <button ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
-    <div class="protectedWord" ng-repeat="word in settings.protectedWords">
-      <div class="removeSetting" ng-click="updateSetting('remove','word','protect', word)">
-        <span class="icomoon-cancel-circle"></span>
+  <div class="span3 offset2">
+    <div class="protectedWords"> Protected Words
+      <div class="row protectedWord" ng-repeat="word in settings.protectedWords">
+        <div class="removeSetting" ng-click="updateSetting('remove','word','protect', word)">
+          <span class="icomoon-cancel-circle"></span>
+        </div>
+        <div class="word">{{word}}</div>
       </div>
-      <div class="word">{{word}}</div>
+      <div class="row">
+        <input class="span2" type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+        <button class="btn" ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
+      </div>
     </div>
   </div>
-  <div class="mutedUsers"> Muted Users
-    <input type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
-    <button ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
-    <div class="mutedUser" ng-repeat="user in settings.mutedUsers">
-      <div class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
-        <span class="icomoon-cancel-circle"></span>
+</div>
+<div class="row">
+  <div class="span3 offset2">
+    <div class="mutedUsers"> Muted Users
+      <div class="row mutedUser" ng-repeat="user in settings.mutedUsers">
+        <div class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
+          <span class="icomoon-cancel-circle"></span>
+        </div>
+        <div class="user">{{user}}</div>
       </div>
-      <div class="user">{{user}}</div>
+      <div class="row">
+        <div class="input-prepend">
+          <span class="add-on">@</span>
+          <input type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
+          <button class="btn" ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="mutedWords"> Muted Words
-    <input type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-    <button ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
-    <div class="mutedWord" ng-repeat="word in settings.mutedWords">
-      <div class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
-        <span class="icomoon-cancel-circle"></span>
+  <div class="span3 offset2">
+    <div class="mutedWords"> Muted Words
+      <div class="row mutedWord" ng-repeat="word in settings.mutedWords">
+        <div class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
+          <span class="icomoon-cancel-circle"></span>
+        </div>
+        <div class="word">{{word}}</div>
       </div>
-      <div class="word">{{word}}</div>
+      <div class="row">
+        <input type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+        <button class="btn" ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
+      </div>
     </div>
   </div>
 </div>
