@@ -1,6 +1,7 @@
 <div class="row">
   <div class="span3 offset2">
-    <div class="protectedUsers"> Protected Users
+    <div class="protectedUsers"> 
+      <h3>Protected Users</h3>
       <div class="row protectedUser" ng-repeat="user in settings.protectedUsers">
         <div class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
           <span class="icomoon-cancel-circle"></span>
@@ -8,7 +9,7 @@
         <div class="user">{{user}}</div>
       </div>
       <div class="row">
-        <div class="input-prepend">
+        <div class="input-prepend input-append">
           <span class="add-on">@</span>
           <input class="span2" id="prependedInput" type="text" placeholder="Username" ng-model="protectedUserInput" ng-minlength="1">
           <button class="btn" ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
@@ -17,7 +18,8 @@
     </div>
   </div>
   <div class="span3 offset2">
-    <div class="protectedWords"> Protected Words
+    <div class="protectedWords"> 
+      <h3>Protected Words</h3>
       <div class="row protectedWord" ng-repeat="word in settings.protectedWords">
         <div class="removeSetting" ng-click="updateSetting('remove','word','protect', word)">
           <span class="icomoon-cancel-circle"></span>
@@ -25,15 +27,18 @@
         <div class="word">{{word}}</div>
       </div>
       <div class="row">
-        <input class="span2" type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-        <button class="btn" ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
+        <div class="input-append">
+          <input class="span2" type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+          <button class="btn" ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="span3 offset2">
-    <div class="mutedUsers"> Muted Users
+    <div class="mutedUsers">
+      <h3>Muted Users</h3>
       <div class="row mutedUser" ng-repeat="user in settings.mutedUsers">
         <div class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
           <span class="icomoon-cancel-circle"></span>
@@ -41,16 +46,17 @@
         <div class="user">{{user}}</div>
       </div>
       <div class="row">
-        <div class="input-prepend">
+        <div class="input-prepend input-append">
           <span class="add-on">@</span>
-          <input type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
+          <input class="span2" type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
           <button class="btn" ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
         </div>
       </div>
     </div>
   </div>
   <div class="span3 offset2">
-    <div class="mutedWords"> Muted Words
+    <div class="mutedWords">
+      <h3>Muted Words</h3>
       <div class="row mutedWord" ng-repeat="word in settings.mutedWords">
         <div class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
           <span class="icomoon-cancel-circle"></span>
@@ -58,7 +64,7 @@
         <div class="word">{{word}}</div>
       </div>
       <div class="row">
-        <input type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+        <input class="span2" type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
         <button class="btn" ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
       </div>
     </div>

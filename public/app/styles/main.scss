@@ -18,7 +18,9 @@ $vote-button-vert-padding: 5px;
 $tweet-glyph-size: 30px;
 $deep-purple: #a166d5;
 $aye-green: #62d7a5;
+$light-aye-green: #a5ebcd;
 $nay-red: #ff9c74;
+$light-nay-red: #ffc8b3;
 $settings-gray: #777777;
 $tweet-padding: 5px;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
@@ -307,12 +309,16 @@ a .nay {
     background-color: $aye-green;
 }
 
-.protectedUsers, .protectedWords, .mutedUsers, .mutedWords {
-    width: 280px;
+.protectedUsers, .protectedWords {
+    background-color: $light-aye-green;
+}
+
+.mutedUsers, .mutedWords {
+    background-color: $light-nay-red;
 }
 
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
-    width: 100%;
+    
 }
 
 .user, .word {
