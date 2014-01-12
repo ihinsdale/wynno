@@ -8622,6 +8622,11 @@ a .nay {
   background-color: #ffc8b3;
 }
 
+/* line 320, main.scss */
+.settingHeader {
+  color: #ffffff;
+}
+
 /* line 324, main.scss */
 .user, .word {
   display: inline;
