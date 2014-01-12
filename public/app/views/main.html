@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="tweetColPadding span7 offset2 text-center">
+  <div class="tweetColPadding col-md-7 offset2 text-center">
     <div class="refreshSpinnerContainer">
       <a href="" ng-click="refreshRequest()">
         <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
@@ -8,14 +8,14 @@
   </div>
 </div>
 <div class="row" ng-show="mustWait">
-  <div class="tweetColPadding span7 offset2 text-center">
+  <div class="tweetColPadding col-md-7 offset2 text-center">
     <div class="alert refreshAlert">
       <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
 <div class="row" ng-show="twitterError">
-  <div class="tweetColPadding span7 offset2 text-center">
+  <div class="tweetColPadding col-md-7 offset2 text-center">
     <div class="alert alert-error refreshAlert">
       <button type="button" class="close" data-dismiss="alert" ng-click="dismissAlert('error')">&times;</button>
       <strong>Error fetching new tweets from Twitter.</strong>
@@ -24,7 +24,7 @@
 </div>
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets" ng-hide="tweet.hideGivenNewContraryVote">
-    <div class="tweetStuff span7 offset2" ng-class="{lastTweet: $last}">
+    <div class="tweetStuff col-md-7 offset2" ng-class="{lastTweet: $last}">
       <div class="leftColumn">
         <div class="tweeterImage">
           <img ng-src="{{tweet.__user.profile_image_url}}">
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="voteButtons span1" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
+    <div class="voteButtons col-md-1" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
       <a href='' class="aVoteAye">
         <div ng-click="vote(tweet, 1, $index)" class="voteAye">
           <div class="aye">
@@ -65,7 +65,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="tweetColPadding span7 offset2 text-center">
+    <div class="tweetColPadding col-md-7 offset2 text-center">
       <div class="earlier">
         <div class="refreshSpinnerContainer">
           <a href="" ng-click="nextPage()">
