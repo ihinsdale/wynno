@@ -4,12 +4,10 @@
       <div class="innerSettingsBlock">
         <h3 class="settingHeader">Protected Users</h3>
         <div class="protectedUser" ng-repeat="user in settings.protectedUsers">
-          <button class="removeSetting" ng-click="updateSetting('remove','user','protect', user)">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
+          <button class="close" ng-click="updateSetting('remove','user','protect', user)">&times;</button>
           <div class="user">{{user}}</div>
         </div>
-        <div class="">
+        <div class="settingInputContainer">
           <div class="input-prepend input-append">
             <span class="add-on">@</span>
             <input class="span2" id="prependedInput" type="text" placeholder="Enter a username" ng-model="protectedUserInput" ng-minlength="1">
@@ -29,7 +27,7 @@
           </button>
           <div class="word">{{word}}</div>
         </div>
-        <div class="">
+        <div class="settingInputContainer">
           <div class="input-append">
             <input class="span2" type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
             <button class="btn" ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
@@ -42,7 +40,7 @@
 <div class="row">
   <div class="span4 offset1">
     <div class="mutedUsers">
-      <div class="innerSettingsBlocks">
+      <div class="innerSettingsBlock">
         <h3 class="settingHeader">Muted Users</h3>
         <div class="mutedUser" ng-repeat="user in settings.mutedUsers">
           <button class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
@@ -50,7 +48,7 @@
           </button>
           <div class="user">{{user}}</div>
         </div>
-        <div class="">
+        <div class="settingInputContainer">
           <div class="input-prepend input-append">
             <span class="add-on">@</span>
             <input class="span2" type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
@@ -70,7 +68,7 @@
           </button>
           <div class="word">{{word}}</div>
         </div>
-        <div class="">
+        <div class="settingInputContainer">
           <div class="input-append">
             <input class="span2" type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
             <button class="btn" ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>

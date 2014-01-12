@@ -311,6 +311,11 @@ a .nay {
 
 .settingHeader {
     color: #ffffff;
+    padding-left: 5px;
+}
+
+.protectedUser, .protectedWord, .mutedUser, .mutedWord {
+    padding-left: 10px;
 }
 
 .protectedUsers .settingHeader, .protectedWords .settingHeader {
@@ -340,14 +345,16 @@ a .nay {
 
 .removeSetting {
     display: inline;
-    width: 16px;
-    padding-left: 4px;
     font-size: 16px;
     color: #777777;
 }
 
 .removeSetting:hover {
     color: #555555;
+}
+
+.settingInputContainer {
+    margin-top: 10px;
 }
 
 $twitterButtonRadius: 3px;
