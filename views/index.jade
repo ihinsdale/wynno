@@ -3,6 +3,12 @@ extends layout
 block nav
   .navbar.navbar-default.navbar-fixed-top(role="navigation")
     .navbar-header
+      a.navbar-brand.navbar-left(href='#')
+        .w w
+        .y y
+        .biggern n
+        .smallern n
+        .o o
       a.navbar-btn.navbar-right.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
@@ -19,12 +25,6 @@ block nav
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      a.navbar-brand.navbar-left(href='#')
-        .w w
-        .y y
-        .biggern n
-        .smallern n
-        .o o
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
