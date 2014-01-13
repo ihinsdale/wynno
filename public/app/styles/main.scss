@@ -177,9 +177,6 @@ a .nay {
     text-decoration: none;
 }
 
-.wynnoButtons {
-}
-
 .nav.wynnoButtons li a {
     font-size: 25px;
     text-shadow: none;
@@ -193,26 +190,17 @@ a .nay {
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
     background-color: $background-color;
-    border-bottom: 4px solid $deep-purple;
+    //border-bottom: 4px solid $deep-purple;
     box-shadow: none;
 }
 
 .navbar .nav > li.active > a {
-    padding-bottom: 6px;
+    //padding-bottom: 6px;
 }
 
 .navbar .navbar-brand {
-    //font-family: "Maven Pro", sans-serif;
-    //font-family: "Raleway Dots", sans-serif;
     font-family: "Ubuntu", sans-serif;
-    padding-right: 0;
-    padding-left: 30px;
-    padding-bottom: 0;
-    font-size: 32px;
-    //font-weight: bold;
-    line-height: 100%;
     color: $deep-purple;
-    text-shadow: none;
 }
 
 .funnel {
@@ -222,7 +210,6 @@ a .nay {
 }
 
 .w, .y, .biggern, .smallern, .o {
-    background-color: #FFFFFF;
     display: inline
 }
 
@@ -249,20 +236,6 @@ a .nay {
     //font-weight: bold;
 }
 
-.navbar-fixed-top .navbar-inner {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.navbar-inner {
-    //background-color: #f0f0f0;
-    background-color: #ffffff;
-    background-image: none;
-    background-image: no-repeat;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
 .navbar .nav > .passing > a,
 .navbar .nav > .passing > a:hover {
     color: $aye-green;
@@ -274,13 +247,9 @@ a .nay {
 }
 
 .navbar .navbar-btn {
-    box-shadow: none;
-    -webkit-box-shadow: none;
     background-image: none;
-    text-shadow: none;
     border-color: $deep-purple;
     background-color: whitesmoke;
-    margin-right: 15px; //necessary because body margin shrunk to 10px from 20px
 }
 
 .navbar .navbar-btn:hover {
@@ -292,8 +261,6 @@ a .nay {
 }
 
 .navbar .navbar-btn .icon-bar {
-    box-shadow: none;
-    -webkit-box-shadow: none;
 }
 
 .navbar .navbar-btn .icon-bar.firstBar {
