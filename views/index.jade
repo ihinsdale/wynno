@@ -2,14 +2,14 @@ extends layout
 
 block nav
   .navbar.navbar-default.navbar-fixed-top(role="navigation")
-    .pull-left
+    .navbar-left
       a.navbar-brand(href='#')
         span.w w
         span.y y
         span.biggern n
         span.smallern n
         span.o o
-    .pull-right
+    .navbar-right
       a.navbar-btn.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
