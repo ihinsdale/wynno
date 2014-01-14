@@ -18,8 +18,8 @@ block nav
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
-      .dropdown(ng-show="currentPathNeedsAuth")
-        a.navbar-toggle.dropdown-toggle(href='', ng-bind="username")
+      .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
+        a.dropdown-toggle(href='', ng-bind="username")
         ul.dropdown-menu
           li
             a(ng-click="logout()")
