@@ -28,6 +28,7 @@ body {
     background: $background-color;
     font-family: "Open Sans", sans-serif;
     color: #333;
+    padding-top: 70px;
 }
 
 .container {
@@ -481,12 +482,7 @@ legend {
 }
 
 @media (min-width: 980px) {
-    .container {
-        padding-top: 70px;
-    }
 
-    .signInContainer, .username {
-    }
 }
 
 @media (max-width: 767px) {
