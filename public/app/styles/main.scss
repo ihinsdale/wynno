@@ -182,6 +182,10 @@ a .nay {
     text-shadow: none;
 }
 
+.wynnoButtons {
+    padding-left: 40px;
+}
+
 .navbar .nav > li > a:hover {
     background-color: #f8f8f8;
 }
@@ -478,23 +482,12 @@ legend {
 
 
 @media (max-width: 979px) {
-    .navbar-fixed-top .navbar-inner {
-        padding: 0;
-    }
-    .navbar .brand {
-        padding-top: 0px;
-        padding-bottom: 3px; //necessary to prevent bottom of y from being clipped by nav dropdown
-    }
+
 }
 
 @media (min-width: 980px) {
     .container {
-        padding-top: 66px;
-    }
-
-    .navbar .brand {
-        padding-top: 3px;
-        padding-right: 40px;
+        padding-top: 70px;
     }
 
     .signInContainer, .username {
