@@ -7958,12 +7958,6 @@ a .nay {
   padding-left: 10px;
 }
 
-/* line 331, main.scss */
-.signInContainer, .username {
-  border: 1px solid #1dcaff;
-  border-radius: 3px;
-}
-
 /* line 336, main.scss */
 .twitterBird {
   display: inline-block;

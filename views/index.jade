@@ -14,11 +14,11 @@ block nav
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      a.navbar-toggle.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+      a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
-      a.navbar-toggle.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+      a.navbar-toggle.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
         a.dropdown-toggle
         ul.dropdown-menu
           li
@@ -38,6 +38,18 @@ block nav
         li(ng-class='{active: active[2]}')
           a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
             span.icomoon-cogs
+      ul.nav.navbar-nav.navbar-right.hidden-xs
+        a.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+          .twitterBird
+            img(ng-src="/app/images/twitter-bird.png")
+          .signIn Sign in with Twitter
+        a.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+          a.dropdown-toggle
+          ul.dropdown-menu
+            li
+              a(ng-click="logout()")
+                span.icomoon-exit
+                span Sign out
 
 block content
   .container(ng-view='')
