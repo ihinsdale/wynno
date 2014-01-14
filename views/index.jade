@@ -2,30 +2,31 @@ extends layout
 
 block nav
   .navbar.navbar-default.navbar-fixed-top(role="navigation")
-    .pull-left
-      a.navbar-brand(href='#')
-        span.w w
-        span.y y
-        span.biggern n
-        span.smallern n
-        span.o o
-    .pull-right
-      a.navbar-link.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
-        .twitterBird
-          img(ng-src="/app/images/twitter-bird.png")
-        .signIn Sign in with Twitter
-      a.navbar-link.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
-        a.dropdown-toggle
-        ul.dropdown-menu
-          li
-            a(ng-click="logout()")
-              span.icomoon-exit
-              span Sign out
-      button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
-        span.sr-only Toggle navigation
-        span.icon-bar.firstBar
-        span.icon-bar.secondBar
-        span.icon-bar.thirdBar
+    .navbar-header
+      .pull-left
+        a.navbar-brand(href='#')
+          span.w w
+          span.y y
+          span.biggern n
+          span.smallern n
+          span.o o
+      .pull-right
+        a.navbar-link.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+          .twitterBird
+            img(ng-src="/app/images/twitter-bird.png")
+          .signIn Sign in with Twitter
+        a.navbar-link.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+          a.dropdown-toggle
+          ul.dropdown-menu
+            li
+              a(ng-click="logout()")
+                span.icomoon-exit
+                span Sign out
+        button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+          span.sr-only Toggle navigation
+          span.icon-bar.firstBar
+          span.icon-bar.secondBar
+          span.icon-bar.thirdBar
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
