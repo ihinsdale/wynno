@@ -14,14 +14,14 @@ block nav
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      ul
+      ul.navbar-toggle
         li
-          a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+          a(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
             .twitterBird
               img(ng-src="/app/images/twitter-bird.png")
             .signIn Sign in with Twitter
         li.dropdown
-          a.navbar-toggle.dropdown-toggle(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+          a.dropdown-toggle(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu
             li
               a(ng-click="logout()")
