@@ -14,19 +14,17 @@ block nav
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      ul.navbar-toggle
-        li
-          a(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
-            .twitterBird
-              img(ng-src="/app/images/twitter-bird.png")
-            .signIn Sign in with Twitter
-        li.dropdown
-          a.dropdown-toggle(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
-          ul.dropdown-menu
-            li
-              a(ng-click="logout()")
-                span.icomoon-exit
-                span Sign out
+      a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+        .twitterBird
+          img(ng-src="/app/images/twitter-bird.png")
+        .signIn Sign in with Twitter
+      .test.navbar-toggle.dropdown
+        a.dropdown-toggle(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+        ul.dropdown-menu
+          li
+            a(ng-click="logout()")
+              span.icomoon-exit
+              span Sign out
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
