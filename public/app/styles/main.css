@@ -7819,23 +7819,23 @@ a .nay {
   box-shadow: none;
 }
 
-/* line 205, main.scss */
-.navbar .navbar-brand {
+/* line 206, main.scss */
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
   font-family: "Ubuntu", sans-serif;
   color: #a166d5;
 }
 
-/* line 210, main.scss */
+/* line 211, main.scss */
 .funnel {
   display: inline;
   font-size: 20px;
   padding-right: 16px;
 }
 
-/* line 216, main.scss */
+/* line 217, main.scss */
 .navbar-brand {
   font-size: 36px;
-  line-height: 14px;
 }
 
 /* line 224, main.scss */
@@ -8137,28 +8137,23 @@ legend {
   }
 }
 @media (min-width: 768px) {
-  /* line 496, main.scss */
-  .navbar-brand {
-    line-height: 18px;
-  }
-
-  /* line 500, main.scss */
+  /* line 499, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 504, main.scss */
+  /* line 503, main.scss */
   .voteButtons {
     margin-top: 1px;
     border-top: 1px dotted #e0e0e0;
   }
 
-  /* line 509, main.scss */
+  /* line 508, main.scss */
   .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
-  /* line 513, main.scss */
+  /* line 512, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8166,30 +8161,30 @@ legend {
     border-bottom: 0;
   }
 
-  /* line 520, main.scss */
+  /* line 519, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 524, main.scss */
+  /* line 523, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 529, main.scss */
+  /* line 528, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 535, main.scss */
+  /* line 534, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 542, main.scss */
+  /* line 541, main.scss */
   .feedback {
     display: inline;
   }
