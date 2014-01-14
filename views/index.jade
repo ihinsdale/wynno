@@ -40,12 +40,12 @@ block nav
             span.icomoon-cogs
       ul.nav.navbar-nav.navbar-right.hidden-xs
         li
-          button.btn.btn-default.navbar-btn.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+          a.signInContainer(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
             .twitterBird
               img(ng-src="/app/images/twitter-bird.png")
             .signIn Sign in with Twitter
         li
-          button.btn.btn-default.navbar-btn.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
+          a.username.dropdown(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
             a.dropdown-toggle
             ul.dropdown-menu
               li
