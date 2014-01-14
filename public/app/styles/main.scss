@@ -202,7 +202,8 @@ a .nay {
     //padding-bottom: 6px;
 }
 
-.navbar .navbar-brand {
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
     font-family: "Ubuntu", sans-serif;
     color: $deep-purple;
 }
@@ -215,7 +216,6 @@ a .nay {
 
 .navbar-brand {
     font-size: 36px;
-    line-height: 14px;
 }
 
 .w {
@@ -494,7 +494,6 @@ legend {
 
 @media (min-width: 768px) {
     .navbar-brand {
-        line-height: 18px;
     }
 
     .tweet {
