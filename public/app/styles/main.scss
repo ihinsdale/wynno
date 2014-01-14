@@ -215,6 +215,7 @@ a .nay {
 
 .navbar-brand {
     font-size: 36px;
+    line-height: 14px;
 }
 
 .w {
@@ -497,6 +498,10 @@ legend {
 }
 
 @media (min-width: 768px) {
+    .navbar-brand {
+        line-height: 18px;
+    }
+
     .tweet {
         padding-bottom: 0;
     }
