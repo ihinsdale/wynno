@@ -213,25 +213,21 @@ a .nay {
     padding-right: 16px
 }
 
-.w, .y, .biggern, .smallern, .o {
-    display: inline
+.navbar-brand {
+    font-size: 36px;
 }
 
 .w {
-    font-size: 36px;
 }
 
 .y {
-    font-size: 36px;
     color: $aye-green;
 }
 
 .biggern {
-    font-size: 36px;
 }
 
 .smallern {
-    font-size: 36px;
     color: $nay-red;
 }
 
