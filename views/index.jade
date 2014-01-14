@@ -46,11 +46,11 @@ block nav
             .signIn Sign in with Twitter
         li.dropdown
           a.username.dropdown-toggle(ng-show="currentPathNeedsAuth", href='', ng-bind="username")
-            ul.dropdown-menu
-              li
-                a(ng-click="logout()")
-                  span.icomoon-exit
-                  span Sign out
+          ul.dropdown-menu
+            li
+              a(ng-click="logout()")
+                span.icomoon-exit
+                span Sign out
 
 block content
   .container(ng-view='')
