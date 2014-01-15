@@ -7807,16 +7807,18 @@ a .nay {
 
 /* line 185, main.scss */
 .nav.wynnoButtons li a {
-  font-size: 25px;
-  text-shadow: none;
+  font-size: 24px;
+  line-height: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
-/* line 193, main.scss */
+/* line 195, main.scss */
 .navbar .nav > li > a:hover {
   background-color: #f8f8f8;
 }
 
-/* line 199, main.scss */
+/* line 201, main.scss */
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
@@ -7824,122 +7826,122 @@ a .nay {
   box-shadow: none;
 }
 
-/* line 210, main.scss */
+/* line 212, main.scss */
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
   font-family: "Ubuntu", sans-serif;
   color: #a166d5;
 }
 
-/* line 215, main.scss */
+/* line 217, main.scss */
 .funnel {
   display: inline;
   font-size: 20px;
   padding-right: 16px;
 }
 
-/* line 221, main.scss */
+/* line 223, main.scss */
 .navbar-brand {
   font-size: 36px;
 }
 
-/* line 228, main.scss */
+/* line 230, main.scss */
 .y {
   color: #62d7a5;
 }
 
-/* line 235, main.scss */
+/* line 237, main.scss */
 .smallern {
   color: #ff9c74;
 }
 
-/* line 244, main.scss */
+/* line 246, main.scss */
 .navbar .nav > .passing > a,
 .navbar .nav > .passing > a:hover {
   color: #62d7a5;
 }
 
-/* line 249, main.scss */
+/* line 251, main.scss */
 .navbar .nav > .failing > a,
 .navbar .nav > .failing > a:hover {
   color: #ff9c74;
 }
 
-/* line 253, main.scss */
+/* line 255, main.scss */
 .navbar .navbar-btn {
   background-image: none;
   border-color: #a166d5;
   background-color: whitesmoke;
 }
 
-/* line 259, main.scss */
+/* line 261, main.scss */
 .navbar .navbar-btn:hover {
   background-color: whitesmoke;
 }
 
-/* line 263, main.scss */
+/* line 265, main.scss */
 .navbar .navbar-btn:focus {
   background-color: #e6e6e6;
 }
 
-/* line 270, main.scss */
+/* line 272, main.scss */
 .navbar .navbar-btn .icon-bar.firstBar {
   background-color: #62d7a5;
 }
 
-/* line 274, main.scss */
+/* line 276, main.scss */
 .navbar .navbar-btn .icon-bar.secondBar {
   background-color: #ff9c74;
 }
 
-/* line 278, main.scss */
+/* line 280, main.scss */
 .navbar .navbar-btn .icon-bar.thirdBar {
   background-color: #62d7a5;
 }
 
-/* line 282, main.scss */
+/* line 284, main.scss */
 .settingHeader {
   color: #ffffff;
   padding-left: 5px;
 }
 
-/* line 287, main.scss */
+/* line 289, main.scss */
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
   padding-left: 10px;
 }
 
-/* line 291, main.scss */
+/* line 293, main.scss */
 .protectedUsers .settingHeader, .protectedWords .settingHeader {
   background-color: #a5ebcd;
 }
 
-/* line 295, main.scss */
+/* line 297, main.scss */
 .mutedUsers .settingHeader, .mutedWords .settingHeader {
   background-color: #ffc8b3;
 }
 
-/* line 299, main.scss */
+/* line 301, main.scss */
 .protectedUsers, .protectedWords {
   border-left: 2px solid #62d7a5;
 }
 
-/* line 303, main.scss */
+/* line 305, main.scss */
 .mutedUsers, .mutedWords {
   border-left: 2px solid #ff9c74;
 }
 
-/* line 307, main.scss */
+/* line 309, main.scss */
 .innerSettingsBlock {
   margin-left: 10px;
 }
 
-/* line 311, main.scss */
+/* line 313, main.scss */
 .user, .word {
   display: inline;
   width: 180px;
 }
 
-/* line 316, main.scss */
+/* line 318, main.scss */
 .removeSetting {
   display: inline;
   font-size: 16px;
@@ -7948,33 +7950,33 @@ a .nay {
   border: 0;
 }
 
-/* line 324, main.scss */
+/* line 326, main.scss */
 .removeSetting:hover {
   color: #555555;
 }
 
-/* line 328, main.scss */
+/* line 330, main.scss */
 .settingInputContainer {
   padding-top: 10px;
   padding-left: 10px;
 }
 
-/* line 340, main.scss */
+/* line 342, main.scss */
 .twitterBird {
   display: inline-block;
 }
 
-/* line 344, main.scss */
+/* line 346, main.scss */
 .signIn {
   display: inline-block;
 }
 
-/* line 348, main.scss */
+/* line 350, main.scss */
 .signIn:hover {
   background-color: #FFFFFF;
 }
 
-/* line 352, main.scss */
+/* line 354, main.scss */
 .refreshSpinnerContainer {
   display: inline-block;
   border: 1px solid #1dcaff;
@@ -7983,17 +7985,17 @@ a .nay {
   padding: 3px;
 }
 
-/* line 360, main.scss */
+/* line 362, main.scss */
 .earlier {
   padding-top: 10px;
 }
 
-/* line 364, main.scss */
+/* line 366, main.scss */
 .refreshSpinnerContainer > a:hover {
   text-decoration: none;
 }
 
-/* line 368, main.scss */
+/* line 370, main.scss */
 .feedbackContainer {
   position: fixed;
   visibility: visible !important;
@@ -8012,20 +8014,20 @@ a .nay {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 386, main.scss */
+/* line 388, main.scss */
 .feedback {
   padding-left: 6px;
   display: none;
 }
 
 @keyframes anim-rotate {
-  /* line 392, main.scss */
+  /* line 394, main.scss */
   from {
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 396, main.scss */
+  /* line 398, main.scss */
   to {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
@@ -8033,25 +8035,25 @@ a .nay {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 403, main.scss */
+  /* line 405, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 406, main.scss */
+  /* line 408, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes anim-rotate-backward {
-  /* line 412, main.scss */
+  /* line 414, main.scss */
   from {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
   }
 
-  /* line 416, main.scss */
+  /* line 418, main.scss */
   to {
     transform: rotate(0);
     -ms-transform: rotate(0);
@@ -8059,18 +8061,18 @@ a .nay {
 }
 
 @-webkit-keyframes anim-rotate-backward {
-  /* line 423, main.scss */
+  /* line 425, main.scss */
   from {
     -webkit-transform: rotate(360deg);
   }
 
-  /* line 426, main.scss */
+  /* line 428, main.scss */
   to {
     -webkit-transform: rotate(0);
   }
 }
 
-/* line 431, main.scss */
+/* line 433, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8080,7 +8082,7 @@ a .nay {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
-/* line 440, main.scss */
+/* line 442, main.scss */
 .backwardSpinner {
   display: inline-block;
   line-height: 1;
@@ -8090,22 +8092,22 @@ a .nay {
   -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
-/* line 449, main.scss */
+/* line 451, main.scss */
 .loadingText {
   padding-left: 4px;
 }
 
-/* line 453, main.scss */
+/* line 455, main.scss */
 .feedbackWrapper {
   padding: 0 20px;
 }
 
-/* line 457, main.scss */
+/* line 459, main.scss */
 legend {
   margin-bottom: 10px;
 }
 
-/* line 461, main.scss */
+/* line 463, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8113,47 +8115,47 @@ legend {
   top: 10px;
 }
 
-/* line 468, main.scss */
+/* line 470, main.scss */
 .feedbackArea, input.feedbackEmail {
   width: 97%;
   display: block;
 }
 
-/* line 473, main.scss */
+/* line 475, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 478, main.scss */
+/* line 480, main.scss */
 .feedbackArea {
   height: 80px;
 }
 
 @media (max-width: 767px) {
-  /* line 492, main.scss */
+  /* line 494, main.scss */
   body {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 @media (min-width: 768px) {
-  /* line 502, main.scss */
+  /* line 504, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 506, main.scss */
+  /* line 508, main.scss */
   .voteButtons {
     margin-top: 1px;
     border-top: 1px dotted #e0e0e0;
   }
 
-  /* line 511, main.scss */
+  /* line 513, main.scss */
   .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
-  /* line 515, main.scss */
+  /* line 517, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8161,30 +8163,30 @@ legend {
     border-bottom: 0;
   }
 
-  /* line 522, main.scss */
+  /* line 524, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 526, main.scss */
+  /* line 528, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 531, main.scss */
+  /* line 533, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 537, main.scss */
+  /* line 539, main.scss */
   a:hover > .voteAye, a:hover > .voteNay,
   a:focus > .voteAye, a:focus > .voteNay {
     background-color: #e4d8ed;
   }
 
-  /* line 544, main.scss */
+  /* line 546, main.scss */
   .feedback {
     display: inline;
   }
