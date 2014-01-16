@@ -9,8 +9,9 @@ html
     link(rel='stylesheet', media='screen', href='http://fonts.googleapis.com/css?family=Ubuntu|Open+Sans')
     link(rel='stylesheet', href='app/styles/main.css')
     link(rel='stylesheet', href='app/styles/fonts.css')
+    // loading angular here (in head) for sake of ng-cloak
     script(src='/app/bower_components/jquery/jquery.js')
-    script(src='/app/bower_components/angular/angular.min.js') // loading here (in head) for sake of ng-cloak
+    script(src='/app/bower_components/angular/angular.min.js') 
 
   body(ng-app='wynnoApp',ng-controller='NavCtrl')
     block nav
