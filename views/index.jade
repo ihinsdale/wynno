@@ -14,7 +14,7 @@ block nav
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+      a.navbar-toggle(ng-init="currentPathNeedsAuth = false", href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in
@@ -38,7 +38,7 @@ block nav
         li(ng-class='{active: active[2]}')
           a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
             span.icomoon-cogs
-      a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.signInContainer(href='/auth/twitter', ng-if="!currentPathNeedsAuth", ng-cloak)
+      a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
