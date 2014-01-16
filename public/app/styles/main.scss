@@ -50,7 +50,7 @@ body {
 
 .tweetStuff {
     background-color: $tweet-background-color;
-    min-height: 74px; // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
+    min-height: 87px;
     padding: $tweet-padding;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
@@ -500,7 +500,7 @@ legend {
         //border-top: $tweet-border-dotted;
     }
 
-    .tweet:hover .btn-group-vertical, .tweet:hover > .tweetStuff {
+    .tweet:hover > .voteButtons > .btn-group-vertical, .tweet:hover > .tweetStuff {
         background-color: $tweet-background-hover-color !important;
     }
 

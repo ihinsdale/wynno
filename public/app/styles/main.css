@@ -7655,7 +7655,7 @@ body {
 /* line 51, main.scss */
 .tweetStuff {
   background-color: white;
-  min-height: 74px;
+  min-height: 87px;
   padding: 5px;
   border-top: 1px dotted #e0e0e0;
   border-right: 1px dotted #e0e0e0;
@@ -8127,7 +8127,7 @@ legend {
   }
 
   /* line 503, main.scss */
-  .tweet:hover .btn-group-vertical, .tweet:hover > .tweetStuff {
+  .tweet:hover > .voteButtons > .btn-group-vertical, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8 !important;
   }
 
