@@ -10,10 +10,12 @@
           <div class="user">{{user}}</div>
         </div>
         <div class="settingInputContainer">
-          <div class="input-prepend input-append">
-            <span class="add-on">@</span>
-            <input class="col-md-2" id="prependedInput" type="text" placeholder="Enter a username" ng-model="protectedUserInput" ng-minlength="1">
-            <button class="btn btn-default" ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input class="col-md-2 form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="protectedUserInput" ng-minlength="1">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="updateSetting('add','user','protect',protectedUserInput)" value="Add">Add</button>
+            </span>
           </div>
         </div>
       </div>
@@ -30,9 +32,11 @@
           <div class="word">{{word}}</div>
         </div>
         <div class="settingInputContainer">
-          <div class="input-append">
-            <input class="col-md-2" type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-            <button class="btn btn-default" ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
+          <div class="input-group">
+            <input class="col-md-2 form-control" type="text" ng-model="protectedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="updateSetting('add','word','protect',protectedWordInput)" value="Add">Add</button>
+            </span>
           </div>
         </div>
       </div>
@@ -51,10 +55,12 @@
           <div class="user">{{user}}</div>
         </div>
         <div class="settingInputContainer">
-          <div class="input-prepend input-append">
-            <span class="add-on">@</span>
-            <input class="col-md-2" type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
-            <button class="btn btn-default" ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input class="col-md-2 form-control" type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
+            </span>
           </div>
         </div>
       </div>
@@ -71,9 +77,11 @@
           <div class="word">{{word}}</div>
         </div>
         <div class="settingInputContainer">
-          <div class="input-append">
-            <input class="col-md-2" type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-            <button class="btn btn-default" ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
+          <div class="input-group">
+            <input class="col-md-2 form-control" type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
+            </span>
           </div>
         </div>
       </div>
