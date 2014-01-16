@@ -38,12 +38,12 @@ block nav
         li(ng-class='{active: active[2]}')
           a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
             span.icomoon-cogs
-      a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.signInContainer(href='/auth/twitter', ng-if="!currentPathNeedsAuth")
+      a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.signInContainer(href='/auth/twitter', ng-if="!currentPathNeedsAuth", ng-cloak)
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in with Twitter
       .dropdown
-        a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.username.dropdown-toggle(ng-if="currentPathNeedsAuth", href='', ng-bind="username")
+        a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
         ul.dropdown-menu
           li
             a(ng-click="logout()")
@@ -65,8 +65,6 @@ block footer
     span.icomoon-bullhorn
     span.feedback Feedback  
 
-  script(src='/app/bower_components/jquery/jquery.js')
-  script(src='/app/bower_components/angular/angular.min.js')
   script(src='/app/bower_components/angular-animate/angular-animate.min.js')
   script(src='/app/bower_components/angular-route/angular-route.min.js')
   script(src='/app/bower_components/angular-cookies/angular-cookies.js')
