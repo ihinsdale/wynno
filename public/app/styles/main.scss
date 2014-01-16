@@ -23,6 +23,7 @@ $nay-red: #ff9c74;
 $light-nay-red: #ffc8b3;
 $settings-gray: #777777;
 $tweet-padding: 5px;
+$light-purple: #e4d8ed;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
 body {
@@ -504,6 +505,10 @@ legend {
         background-color: $tweet-background-hover-color !important;
     }
 
+    .voteButtons .btn:hover {
+        background-color: $light-purple;
+    }
+
     .tweetStuff {
         border-top: $tweet-border-solid;
         border-left: $tweet-border-solid;
@@ -523,11 +528,6 @@ legend {
     .voteAye {
         border-right: 0;
         border-bottom: $tweet-border-dotted;
-    }
-
-    a:hover > .voteAye, a:hover > .voteNay,
-    a:focus > .voteAye, a:focus > .voteNay {
-        background-color: #e4d8ed;
     }
 
     .signIn {
