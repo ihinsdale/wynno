@@ -38,17 +38,18 @@ block nav
         li(ng-class='{active: active[2]}')
           a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
             span.icomoon-cogs
-      a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
-        .twitterBird
-          img(ng-src="/app/images/twitter-bird.png")
-        .signIn Sign in with Twitter
-      .dropdown
-        a.btn.btn-default.navbar-btn.navbar-right.hidden-xs.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
-        ul.dropdown-menu
-          li
-            a(ng-click="logout()")
-              span.icomoon-exit
-              span Sign out
+      .userButtons.navbar-right.hidden-xs
+        a.btn.btn-default.navbar-btn.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
+          .twitterBird
+            img(ng-src="/app/images/twitter-bird.png")
+          .signIn Sign in with Twitter
+        .dropdown
+          a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
+          ul.dropdown-menu
+            li
+              a(ng-click="logout()")
+                span.icomoon-exit
+                span Sign out
 
 block content
   .container(ng-view='')
