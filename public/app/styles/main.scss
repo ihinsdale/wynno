@@ -23,7 +23,8 @@ $nay-red: #ff9c74;
 $light-nay-red: #ffc8b3;
 $settings-gray: #777777;
 $tweet-padding: 5px;
-$light-purple: #e4d8ed;
+$light-purple: #efe6f6;
+$badge-purple: #c7a9e1;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
 body {
@@ -115,7 +116,7 @@ body {
 }
 
 .pvalue > .badge {
-    background-color: #c7a9e1;
+    background-color: $badge-purple;
 }
 
 .tweetText {
