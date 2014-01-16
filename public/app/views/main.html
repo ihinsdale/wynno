@@ -3,6 +3,10 @@
     <div class="refreshSpinnerContainer">
       <a href="" ng-click="refreshRequest()">
         <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
+        <span class="loadingText">
+          <span ng-show="!activeTwitterRequest">Fetch new</span>
+          <span ng-show="activeTwitterRequest">Fetching...</span>
+        </span>
       </a>
     </div>
   </div>
@@ -47,22 +51,23 @@
         </div>
       </div>
     </div>
-    <div class="voteButtons col-md-1" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
-      <a href='' class="aVoteAye">
-        <div ng-click="vote(tweet, 1, $index)" class="voteAye">
-          <div class="aye">
-            <span class="icomoon-checkmark-circle"></span>
-          </div>
-        </div>
-      </a>
-      <a href='' class="aVoteNay">
-        <div ng-click="vote(tweet, 0, $index)" class="voteNay">
-          <div class="nay">
-            <span class="icomoon-cancel-circle"></span>
-          </div>
-        </div>
-      </a>
+
+    <div class="col-md-1" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
+      <div class="btn-group-vertical">
+          <button type="button" class="btn btn-default" ng-click="vote(tweet, 1, $index)">
+            <div class="aye">
+              <span class="icomoon-checkmark-circle"></span>
+            </div>
+          </button>
+          <button type="button" class="btn btn-default" ng-click="vote(tweet, 0, $index)">
+            <div class="nay">
+              <span class="icomoon-cancel-circle"></span>
+            </div>
+          </button>
+      </div>
     </div>
+
+
   </div>
   <div class="row">
     <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">

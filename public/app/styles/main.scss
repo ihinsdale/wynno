@@ -147,18 +147,18 @@ body {
 }
 
 .voteAye, .voteNay {
-    display: inline-block;
-    width: 49%;
+    // display: inline-block;
+    // width: 49%;
 }
 
 .aye, .nay {
-    margin: 0 auto;
+    //margin: 0 auto;
 }
 
 .aye {
     width: $tweet-glyph-size;
     height: $tweet-glyph-size;
-    padding: $vote-button-vert-padding 0;
+    //padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
 }
 
@@ -169,17 +169,12 @@ a .aye {
 .nay {
     width: $tweet-glyph-size;
     height: $tweet-glyph-size;
-    padding: $vote-button-vert-padding 0;
+    //padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
 }
 
 a .nay {
     color: $nay-red;
-}
-
-// necessary to remove underline which appears in gap between voteButtons due to their 49% width
-.aVoteAye:hover, .aVoteNay:hover {
-    text-decoration: none;
 }
 
 .nav.wynnoButtons li a {
