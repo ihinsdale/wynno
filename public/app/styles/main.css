@@ -8128,7 +8128,7 @@ legend {
 
   /* line 504, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover > .tweetStuff {
-    background-color: #f8f8f8 !important;
+    background-color: #f8f8f8;
   }
 
   /* line 508, main.scss */

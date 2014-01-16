@@ -502,7 +502,7 @@ legend {
     }
 
     .tweet:hover .btn-group-vertical > .btn, .tweet:hover > .tweetStuff {
-        background-color: $tweet-background-hover-color !important;
+        background-color: $tweet-background-hover-color;
     }
 
     .voteButtons > .btn-group-vertical > .btn:hover {
