@@ -29,15 +29,30 @@ block nav
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
       ul.nav.navbar-nav.navbar-left.wynnoButtons
-        li.passing(ng-class='{active: active[0]}')
-          a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='500')
+        // these items displayed on mobile
+        li.passing.visible-xs(ng-class='{active: active[0]}')
+          a(href='#/in')
             span.icomoon-filter
-        li.failing(ng-class='{active: active[1]}')
-          a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='500')
+            span.navbar-text The Good Stuff
+        li.failing.visible-xs(ng-class='{active: active[1]}')
+          a(href='#/out')
             span.icomoon-filter
-        li(ng-class='{active: active[2]}')
-          a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
+            span.navbar-text The Rest
+        li.visible-xs(ng-class='{active: active[2]}')
+          a(href='#/settings')
             span.icomoon-cogs
+            span.navbar-text Settings
+        // these items displayed on not-mobile
+        li.passing.hidden-xs(ng-class='{active: active[0]}')
+          a(href='#/in', tooltip-placement="bottom",tooltip="The Good Stuff", tooltip-popup-delay='400')
+            span.icomoon-filter
+        li.failing.hidden-xs(ng-class='{active: active[1]}')
+          a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='400')
+            span.icomoon-filter
+        li.hidden-xs(ng-class='{active: active[2]}')
+          a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='400')
+            span.icomoon-cogs
+
       .userButtons.navbar-right.hidden-xs
         a.btn.btn-default.navbar-btn.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
           .twitterBird
