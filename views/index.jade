@@ -32,16 +32,13 @@ block nav
         // these items displayed on mobile
         li.passing.visible-xs(ng-class='{active: active[0]}')
           a(href='#/in')
-            span.icomoon-filter
-            span The Good Stuff
+            span.icomoon-filter The Good Stuff
         li.failing.visible-xs(ng-class='{active: active[1]}')
           a(href='#/out')
-            span.icomoon-filter
-            span The Rest
+            span.icomoon-filter The Rest
         li.visible-xs(ng-class='{active: active[2]}')
           a(href='#/settings')
-            span.icomoon-cogs
-            span Settings
+            span.icomoon-cogs Settings
         // these items displayed on not-mobile
         li.passing.hidden-xs(ng-class='{active: active[0]}')
           a(href='#/in', tooltip-placement="bottom",tooltip="The Good Stuff", tooltip-popup-delay='400')
