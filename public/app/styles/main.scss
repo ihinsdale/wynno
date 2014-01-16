@@ -6,8 +6,9 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 $color-scheme:  3321TvCw0w0w0;
 
 $tweet-border-width: 1px;
-$tweet-border-dotted: $tweet-border-width dotted #e0e0e0;
-$tweet-border-solid: $tweet-border-width solid #e0e0e0;
+$tweet-border-color: #e0e0e0;
+$tweet-border-dotted: $tweet-border-width dotted $tweet-border-color;
+$tweet-border-solid: $tweet-border-width solid $tweet-border-color;
 $background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
@@ -135,11 +136,19 @@ body {
 }
 
 .voteButtons {
-    background-color: $tweet-background-color;
-    border-right: $tweet-border-dotted;
-    border-bottom: $tweet-border-dotted;
-    border-left: $tweet-border-dotted;
-    display: inline-block;
+    // background-color: $tweet-background-color;
+    // border-right: $tweet-border-dotted;
+    // border-bottom: $tweet-border-dotted;
+    // border-left: $tweet-border-dotted;
+    // display: inline-block;
+}
+
+.voteButtons .btn {
+    padding: 2px
+}
+
+.voteButtons .btn-default {
+    border-color: $tweet-border-color;
 }
 
 .voteAye {
@@ -488,7 +497,7 @@ legend {
 
     .voteButtons {
         margin-top: 1px; // because 'perfect' alignment of voteButtons and tweet actually makes voteButtons look higher
-        border-top: $tweet-border-dotted;
+        //border-top: $tweet-border-dotted;
     }
 
     .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
