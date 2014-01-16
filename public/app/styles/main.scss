@@ -190,6 +190,7 @@ a .nay {
 }
 
 .wynnoButtons {
+    padding-left: 60px;
 }
 
 .navbar .nav > li > a:hover {
@@ -222,6 +223,7 @@ a .nay {
 
 .navbar-brand {
     font-size: 36px;
+    line-height: 18px;
 }
 
 .w {
@@ -498,6 +500,7 @@ legend {
 
 @media (min-width: 768px) {
     .navbar-brand {
+        line-height: 12px;
     }
 
     .tweet {
