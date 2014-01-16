@@ -14,7 +14,7 @@ $tweet-background-hover-color: #f8f8f8;
 
 $vote-button-side-padding: 20px;
 $vote-button-vert-padding: 5px;
-$tweet-glyph-size: 30px;
+$tweet-glyph-size: 24px;
 $deep-purple: #a166d5;
 $aye-green: #62d7a5;
 $light-aye-green: #a5ebcd;
@@ -151,29 +151,13 @@ body {
     // width: 49%;
 }
 
-.aye, .nay {
-    //margin: 0 auto;
-}
-
 .aye {
-    width: $tweet-glyph-size;
-    height: $tweet-glyph-size;
-    //padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
-}
-
-a .aye {
     color: $aye-green;
 }
 
 .nay {
-    width: $tweet-glyph-size;
-    height: $tweet-glyph-size;
-    //padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
-}
-
-a .nay {
     color: $nay-red;
 }
 
