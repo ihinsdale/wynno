@@ -18,7 +18,7 @@ block nav
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
         .signIn Sign in
-      .navbar-toggle.dropdown(ng-init="currentPathNeedsAuth = false", ng-show="currentPathNeedsAuth")
+      .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
         a.dropdown-toggle(href='', ng-bind="username")
         ul.dropdown-menu
           li
@@ -65,28 +65,5 @@ block footer
     span.icomoon-bullhorn
     span.feedback Feedback  
 
-  script(src='/app/bower_components/angular-animate/angular-animate.min.js')
-  script(src='/app/bower_components/angular-route/angular-route.min.js')
-  script(src='/app/bower_components/angular-cookies/angular-cookies.js')
-  script(src='/app/bower_components/ngInfiniteScroll/ng-infinite-scroll.js')
-  script(src='/app/bower_components/angular-bootstrap/ui-bootstrap.js')
-  script(src='/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
 
-  script(src='/app/bower_components/angular-resource/angular-resource.js')
-  script(src='/app/bower_components/angular-sanitize/angular-sanitize.js')
-
-  script(src='/app/scripts/app.js')
-  script(src='/app/scripts/controllers/init.js')
-  script(src='/app/scripts/controllers/main.js')
-  script(src='/app/scripts/controllers/settings.js')
-  script(src='/app/scripts/controllers/nav.js')
-  script(src='/app/scripts/controllers/landing.js')
-  script(src='/app/scripts/controllers/checkin.js')
-  script(src='/app/scripts/services/init.js')
-  script(src='/app/scripts/services/tweet.js')
-  script(src='/app/scripts/services/settings.js')
-  script(src='/app/scripts/services/vote.js')
-  script(src='/app/scripts/services/auth.js')
-  script(src='/app/scripts/services/interceptor.js')
-  script(src='/app/scripts/services/feedback.js')
 
