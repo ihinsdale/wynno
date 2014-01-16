@@ -505,7 +505,7 @@ legend {
         background-color: $tweet-background-hover-color !important;
     }
 
-    .voteButtons .btn:hover {
+    .voteButtons > .btn-group-vertical > .btn:hover {
         background-color: $light-purple;
     }
 

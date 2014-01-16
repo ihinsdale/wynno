@@ -8132,7 +8132,7 @@ legend {
   }
 
   /* line 508, main.scss */
-  .voteButtons .btn:hover {
+  .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #e4d8ed;
   }
 
