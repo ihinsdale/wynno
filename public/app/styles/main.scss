@@ -144,7 +144,7 @@ body {
 }
 
 .voteButtons .btn {
-    padding: 2px
+    padding: 2px 12px;
 }
 
 .voteButtons .btn-default {
@@ -500,7 +500,7 @@ legend {
         //border-top: $tweet-border-dotted;
     }
 
-    .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
+    .tweet:hover > .voteButtons > .btn-group-vertical, .tweet:hover > .tweetStuff {
         background-color: $tweet-background-hover-color !important;
     }
 
