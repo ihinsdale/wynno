@@ -180,6 +180,7 @@ body {
 }
 
 .wynnoButtonDesc {
+    font-family: "Ubuntu", sans-serif;
     padding-left: 10px;
 }
 
@@ -342,16 +343,12 @@ $twitterButtonRadius: 3px;
 .signIn:hover {
 }
 
-.refreshSpinnerContainer {
-    display: inline-block;
-    border: 1px solid #1dcaff;
-    border-radius: $twitterButtonRadius;
+.fetchNew {
     margin-bottom: 10px;
-    padding: 3px;
 }
 
-.earlier {
-    padding-top: 10px;
+.loadEarlier {
+    margin-top: 10px;
 }
 
 .refreshSpinnerContainer > a:hover {
