@@ -179,8 +179,8 @@ body {
     padding-bottom: 12px;
 }
 
-.wynnoButtons {
-    padding-left: 60px;
+.wynnoButtonDesc {
+    padding-left: 10px;
 }
 
 .navbar .nav > li > a:hover {
@@ -491,6 +491,10 @@ legend {
 @media (min-width: 768px) {
     .navbar-brand {
         line-height: 12px;
+    }
+
+    .wynnoButtons {
+        padding-left: 60px;
     }
 
     .tweet {

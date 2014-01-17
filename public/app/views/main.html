@@ -1,13 +1,13 @@
 <div class="row">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
-    <div class="refreshSpinnerContainer">
-      <a href="" ng-click="refreshRequest()">
+    <div class="">
+      <button class="btn btn-default" href="" ng-click="refreshRequest()">
         <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
         <span class="loadingText">
           <span ng-show="!activeTwitterRequest">Fetch new</span>
           <span ng-show="activeTwitterRequest">Fetching...</span>
         </span>
-      </a>
+      </button>
     </div>
   </div>
 </div>
