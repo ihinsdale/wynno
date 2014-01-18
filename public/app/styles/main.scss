@@ -189,6 +189,18 @@ body {
     width: 50%;
 }
 
+.left, .right {
+    border-top: 0;
+}
+
+.left {
+    border-top-left-radius: 0;
+}
+
+.right {
+    border-top-right-radius: 0;
+}
+
 .noVoteAlertAbove {
     margin-top: 20px;
 }
@@ -365,6 +377,7 @@ $twitterButtonRadius: 3px;
     vertical-align: top;
     position: relative;
     top: 8px;
+    padding-left: 10px;
     color: #808080;
 }
 
