@@ -7971,8 +7971,8 @@ body {
 }
 
 /* line 364, main.scss */
-.refreshSpinnerContainer > a:hover {
-  text-decoration: none;
+.lastUpdateTime {
+  color: #777777;
 }
 
 /* line 368, main.scss */
