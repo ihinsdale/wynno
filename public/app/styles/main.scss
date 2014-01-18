@@ -189,6 +189,10 @@ body {
     width: 50%;
 }
 
+.noVoteAlertAbove {
+    margin-top: 20px;
+}
+
 .navbar .nav > li > a:hover {
     background-color: #f8f8f8;
 }
@@ -523,11 +527,6 @@ legend {
 
     .tweetBelowHiddenGivenVote {
         border-bottom: $tweet-border-solid;
-    }
-
-    .noVoteAlertAbove {
-        padding-top: 20px; // using padding and not margin because there was some kind
-        // of margin collapsing going on in mobile
     }
 
     .lastTweet {
