@@ -69,6 +69,8 @@ angular.module('wynnoApp.controllers')
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
       $scope.mustWait = false;
       $scope.twitterError = false;
+      // update timeOfLastFetch
+      $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
