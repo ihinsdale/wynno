@@ -7972,10 +7972,11 @@ body {
 
 /* line 364, main.scss */
 .lastUpdateTime {
-  color: #777777;
+  padding-left: 10px;
+  color: #cccccc;
 }
 
-/* line 368, main.scss */
+/* line 369, main.scss */
 .feedbackContainer {
   position: fixed;
   visibility: visible !important;
@@ -7994,20 +7995,20 @@ body {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 386, main.scss */
+/* line 387, main.scss */
 .feedback {
   padding-left: 6px;
   display: none;
 }
 
 @keyframes anim-rotate {
-  /* line 392, main.scss */
+  /* line 393, main.scss */
   from {
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 396, main.scss */
+  /* line 397, main.scss */
   to {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
@@ -8015,25 +8016,25 @@ body {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 403, main.scss */
+  /* line 404, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 406, main.scss */
+  /* line 407, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes anim-rotate-backward {
-  /* line 412, main.scss */
+  /* line 413, main.scss */
   from {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
   }
 
-  /* line 416, main.scss */
+  /* line 417, main.scss */
   to {
     transform: rotate(0);
     -ms-transform: rotate(0);
@@ -8041,18 +8042,18 @@ body {
 }
 
 @-webkit-keyframes anim-rotate-backward {
-  /* line 423, main.scss */
+  /* line 424, main.scss */
   from {
     -webkit-transform: rotate(360deg);
   }
 
-  /* line 426, main.scss */
+  /* line 427, main.scss */
   to {
     -webkit-transform: rotate(0);
   }
 }
 
-/* line 431, main.scss */
+/* line 432, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8062,7 +8063,7 @@ body {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
-/* line 440, main.scss */
+/* line 441, main.scss */
 .backwardSpinner {
   display: inline-block;
   line-height: 1;
@@ -8072,22 +8073,22 @@ body {
   -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
-/* line 449, main.scss */
+/* line 450, main.scss */
 .loadingText {
   padding-left: 4px;
 }
 
-/* line 453, main.scss */
+/* line 454, main.scss */
 .feedbackWrapper {
   padding: 0 20px;
 }
 
-/* line 457, main.scss */
+/* line 458, main.scss */
 legend {
   margin-bottom: 10px;
 }
 
-/* line 461, main.scss */
+/* line 462, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8095,54 +8096,54 @@ legend {
   top: 10px;
 }
 
-/* line 468, main.scss */
+/* line 469, main.scss */
 .feedbackArea, input.feedbackEmail {
   width: 97%;
   display: block;
 }
 
-/* line 473, main.scss */
+/* line 474, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 478, main.scss */
+/* line 479, main.scss */
 .feedbackArea {
   height: 80px;
 }
 
 @media (min-width: 768px) {
-  /* line 496, main.scss */
+  /* line 497, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 500, main.scss */
+  /* line 501, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 504, main.scss */
+  /* line 505, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 508, main.scss */
+  /* line 509, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 513, main.scss */
+  /* line 514, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 517, main.scss */
+  /* line 518, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 521, main.scss */
+  /* line 522, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8150,29 +8151,29 @@ legend {
     border-bottom: 0;
   }
 
-  /* line 528, main.scss */
+  /* line 529, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 532, main.scss */
+  /* line 533, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 536, main.scss */
+  /* line 537, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 541, main.scss */
+  /* line 542, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 549, main.scss */
+  /* line 550, main.scss */
   .feedback {
     display: inline;
   }
