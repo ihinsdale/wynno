@@ -362,8 +362,10 @@ $twitterButtonRadius: 3px;
 }
 
 .lastUpdateTime {
-    padding-left: 10px;
-    color: #989898;
+    vertical-align: top;
+    position: relative;
+    top: 8px;
+    color: #808080;
 }
 
 .feedbackContainer {
