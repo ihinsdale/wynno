@@ -8152,7 +8152,7 @@ legend {
   }
 
   /* line 529, main.scss */
-  .tweet:hover .btn-group-vertical > .btn, .tweet:hover > .tweetStuff {
+  .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
