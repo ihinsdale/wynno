@@ -27,7 +27,7 @@
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
     <div class="shownTweetWrapper" ng-hide="tweet.hideGivenNewContraryVote">
-      <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{lastTweet: $last}">
+      <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, lastTweet: $last}">
         <div class="leftColumn">
           <div class="tweeterImage">
             <img ng-src="{{tweet.__user.profile_image_url}}">
@@ -78,9 +78,8 @@
       </div>
     </div>
     <div class="col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote">
-      <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Thanks for voting!</strong> That tweet has been moved to {{oppositeStream}}. Better filtering is on the way!
+      <div class="alert alert-info">
+        <strong>Better filtering is on the way!</strong> Tweet moved to {{oppositeStream}}. 
       </div>
     </div>
   </div>

@@ -485,10 +485,7 @@ legend {
 }
 
 @media (max-width: 767px) {
-    body {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+
 }
 
 @media (min-width: 768px) {
@@ -522,6 +519,10 @@ legend {
         border-left: $tweet-border-solid;
         border-right: $tweet-border-solid;
         border-bottom: 0;
+    }
+
+    .tweetBelowHiddenGivenVote {
+        border-bottom: $tweet-border-solid;
     }
 
     .lastTweet {

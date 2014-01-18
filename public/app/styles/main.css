@@ -8106,45 +8106,38 @@ legend {
   height: 80px;
 }
 
-@media (max-width: 767px) {
-  /* line 488, main.scss */
-  body {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
 @media (min-width: 768px) {
-  /* line 495, main.scss */
+  /* line 492, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 499, main.scss */
+  /* line 496, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 503, main.scss */
+  /* line 500, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 507, main.scss */
+  /* line 504, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 512, main.scss */
+  /* line 509, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover > .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 516, main.scss */
+  /* line 513, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 520, main.scss */
+  /* line 517, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8152,24 +8145,29 @@ legend {
     border-bottom: 0;
   }
 
-  /* line 527, main.scss */
+  /* line 524, main.scss */
+  .tweetBelowHiddenGivenVote {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  /* line 528, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 531, main.scss */
+  /* line 532, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 536, main.scss */
+  /* line 537, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 544, main.scss */
+  /* line 545, main.scss */
   .feedback {
     display: inline;
   }
