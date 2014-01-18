@@ -77,8 +77,8 @@
         </div>
       </div>
     </div>
-    <div class="col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
-      <div class="alert alert-info">
+    <div class="col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote">
+      <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
         <strong>Better filtering is on the way!</strong> Tweet moved to {{oppositeStream}}. 
       </div>
     </div>
