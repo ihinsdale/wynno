@@ -526,7 +526,8 @@ legend {
     }
 
     .noVoteAlertAbove {
-        margin-top: 20px !important;
+        padding-top: 20px; // using padding and not margin because there was some kind
+        // of margin collapsing going on in mobile
     }
 
     .lastTweet {

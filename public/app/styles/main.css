@@ -8152,27 +8152,27 @@ legend {
 
   /* line 528, main.scss */
   .noVoteAlertAbove {
-    margin-top: 20px !important;
+    padding-top: 20px;
   }
 
-  /* line 532, main.scss */
+  /* line 533, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 536, main.scss */
+  /* line 537, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 541, main.scss */
+  /* line 542, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 549, main.scss */
+  /* line 550, main.scss */
   .feedback {
     display: inline;
   }
