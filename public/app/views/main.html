@@ -7,7 +7,7 @@
         <span ng-show="activeTwitterRequest">Fetching...</span>
       </span>
     </button>
-    <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'shortTime' }}</span>
+    <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
   </div>
 </div>
 <div class="row" ng-show="mustWait">
