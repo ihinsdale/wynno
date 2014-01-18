@@ -75,6 +75,14 @@
           </button>
       </div>
     </div>
+
+    <div class="voteAlert col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote">
+      <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Thanks for voting!</strong> That tweet has been moved to {{oppositeStream}}. Better filtering is on the way!
+      </div>
+    </div>
+
   </div>
   <div class="row">
     <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
