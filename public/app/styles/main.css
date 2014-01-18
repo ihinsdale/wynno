@@ -8152,7 +8152,7 @@ legend {
 
   /* line 528, main.scss */
   .noVoteAlertAbove {
-    margin-top: 20px;
+    margin-top: 20px !important;
   }
 
   /* line 532, main.scss */
