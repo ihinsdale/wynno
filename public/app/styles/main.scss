@@ -3,6 +3,7 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
 
+
 $color-scheme:  3321TvCw0w0w0;
 
 $tweet-border-width: 1px;
@@ -52,7 +53,7 @@ body {
 
 .tweetStuff {
     background-color: $tweet-background-color;
-    min-height: 87px;
+    min-height: 90px;
     padding: $tweet-padding;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
@@ -182,6 +183,10 @@ body {
 .wynnoButtonDesc {
     font-family: "Ubuntu", sans-serif;
     padding-left: 10px;
+}
+
+.wideVoteButton {
+    width: 50%;
 }
 
 .navbar .nav > li > a:hover {
@@ -349,6 +354,7 @@ $twitterButtonRadius: 3px;
 
 .loadEarlier {
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .refreshSpinnerContainer > a:hover {
