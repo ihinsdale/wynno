@@ -68,6 +68,7 @@ angular.module('wynnoApp.controllers')
       // note we don't want to set activeTwitterRequest to false inside .renderInOrOut() or .display(),
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
       $scope.mustWait = false;
+      $scope.twitterError = false;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {

@@ -8151,23 +8151,28 @@ legend {
   }
 
   /* line 528, main.scss */
+  .noVoteAlertAbove {
+    margin-top: 20px;
+  }
+
+  /* line 532, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 532, main.scss */
+  /* line 536, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 537, main.scss */
+  /* line 541, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 545, main.scss */
+  /* line 549, main.scss */
   .feedback {
     display: inline;
   }
