@@ -109,7 +109,6 @@ body {
 }
 
 .tweetTimestamp {
-    padding-left: 15px;
 }
 
 .pvalue {
@@ -508,13 +507,15 @@ legend {
 
 }
 
+@media (min-width: 768px) {
+    .wynnoButtons {
+        padding-left: 60px;
+    }
+}
+
 @media (min-width: 992px) {
     .navbar-brand {
         line-height: 12px;
-    }
-
-    .wynnoButtons {
-        padding-left: 60px;
     }
 
     .tweet {
