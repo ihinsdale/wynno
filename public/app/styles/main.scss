@@ -222,8 +222,7 @@ body {
 
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
-    font-family: "Ubuntu", sans-serif;
-    color: $deep-purple;
+
 }
 
 .funnel {
@@ -237,22 +236,17 @@ body {
     line-height: 18px;
 }
 
-.w {
+.wynno {
+    font-family: "Ubuntu", sans-serif;
+    color: $deep-purple;
 }
 
 .y {
     color: $aye-green;
 }
 
-.biggern {
-}
-
-.smallern {
+.n {
     color: $nay-red;
-}
-
-.o {
-    //font-weight: bold;
 }
 
 .navbar .nav > .passing > a,
