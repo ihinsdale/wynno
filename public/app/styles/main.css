@@ -8091,11 +8091,6 @@ body {
   padding-left: 4px;
 }
 
-/* line 468, main.scss */
-.feedbackWrapper {
-  padding: 0 20px;
-}
-
 /* line 472, main.scss */
 legend {
   margin-bottom: 10px;
@@ -8109,34 +8104,23 @@ legend {
   top: 10px;
 }
 
-/* line 483, main.scss */
-.feedbackArea, input.feedbackEmail {
-  width: 97%;
-  display: block;
-}
-
 /* line 488, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 493, main.scss */
-.feedbackArea {
-  height: 80px;
-}
-
 @media (min-width: 768px) {
   /* line 511, main.scss */
+  .navbar-brand {
+    line-height: 12px;
+  }
+
+  /* line 515, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 }
 @media (min-width: 992px) {
-  /* line 517, main.scss */
-  .navbar-brand {
-    line-height: 12px;
-  }
-
   /* line 521, main.scss */
   .tweet {
     padding-bottom: 0;

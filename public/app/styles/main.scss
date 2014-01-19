@@ -466,7 +466,7 @@ $twitterButtonRadius: 3px;
 }
 
 .feedbackWrapper {
-    padding: 0 20px;
+    //padding: 0 20px;
 }
 
 legend {
@@ -481,8 +481,8 @@ legend {
 }
 
 .feedbackArea, input.feedbackEmail {
-    width: 97%;
-    display: block;
+    //width: 97%;
+    //display: block;
 }
 
 .sendButton {
@@ -491,7 +491,7 @@ legend {
 }
 
 .feedbackArea {
-    height: 80px;
+    //height: 80px;
 }
 
 
@@ -508,16 +508,16 @@ legend {
 }
 
 @media (min-width: 768px) {
+    .navbar-brand {
+        line-height: 12px;
+    }
+
     .wynnoButtons {
         padding-left: 60px;
     }
 }
 
 @media (min-width: 992px) {
-    .navbar-brand {
-        line-height: 12px;
-    }
-
     .tweet {
         padding-bottom: 0;
     }
