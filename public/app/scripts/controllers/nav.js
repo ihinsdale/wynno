@@ -19,8 +19,8 @@ angular.module('wynnoApp.controllers')
   });
 
   $scope.doCollapse = function() {
-    $scope.isCollapsed = true;
-  }
+    $scope.navCollapsed = true;
+  };
 
   $scope.logout = function() {
     AuthService.logout()
