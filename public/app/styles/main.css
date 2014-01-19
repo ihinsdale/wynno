@@ -8130,7 +8130,7 @@ legend {
   height: 80px;
 }
 
-@media (min-width: 893px) {
+@media (min-width: 992px) {
   /* line 512, main.scss */
   .navbar-brand {
     line-height: 12px;
