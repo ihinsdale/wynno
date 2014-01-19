@@ -148,7 +148,7 @@ angular.module('wynnoApp.controllers')
         var timeOfEventArray = UTCtimestamp.split(' ');
         var date = timeOfEventArray[2];
         date = date[0] === '0' ? date[1] : date;
-        approx = timeOfEventArray[1] + ' ' + timeOfEventArray[2];
+        approx = timeOfEventArray[1] + ' ' + date;
       } else if (numHours >= 1 && numHours < 24) {
         approx = Math.round(numHours).toString() + 'h';
       } else if (numMinutes >= 1 && numHours < 1) {
