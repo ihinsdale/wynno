@@ -31,15 +31,15 @@ block nav
       ul.nav.navbar-nav.navbar-left.wynnoButtons
         // these items displayed on mobile
         li.passing.visible-xs(ng-class='{active: active[0]}')
-          a(href='#/in')
+          a(href='#/in', ng-click='doCollapse()')
             span.icomoon-filter
             span.wynnoButtonDesc The Good Stuff
         li.failing.visible-xs(ng-class='{active: active[1]}')
-          a(href='#/out')
+          a(href='#/out', ng-click='doCollapse()')
             span.icomoon-filter
             span.wynnoButtonDesc The Rest
         li.visible-xs(ng-class='{active: active[2]}')
-          a(href='#/settings')
+          a(href='#/settings', ng-click='doCollapse()')
             span.icomoon-cogs
             span.wynnoButtonDesc Settings
         // these items displayed on not-mobile

@@ -18,6 +18,10 @@ angular.module('wynnoApp.controllers')
     $scope.active = AuthService.whatPageIsActive(nextPath);
   });
 
+  $scope.doCollapse = function() {
+    $scope.isCollapsed = true;
+  }
+
   $scope.logout = function() {
     AuthService.logout()
     .then(function(data){
