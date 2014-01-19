@@ -486,7 +486,7 @@ $twitterButtonRadius: 3px;
 }
 
 .bigBirdText {
-    font-size: 28px;
+    font-size: 26px;
     vertical-align: top;
 }
 
@@ -564,5 +564,9 @@ $twitterButtonRadius: 3px;
 
     .feedback {
         display: inline;
+    }
+
+    .bigBirdText {
+        font-size: 28px;
     }
 }

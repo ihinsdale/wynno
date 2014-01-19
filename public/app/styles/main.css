@@ -8117,7 +8117,7 @@ body {
 
 /* line 488, main.scss */
 .bigBirdText {
-  font-size: 28px;
+  font-size: 26px;
   vertical-align: top;
 }
 
@@ -8191,5 +8191,10 @@ body {
   /* line 565, main.scss */
   .feedback {
     display: inline;
+  }
+
+  /* line 569, main.scss */
+  .bigBirdText {
+    font-size: 28px;
   }
 }
