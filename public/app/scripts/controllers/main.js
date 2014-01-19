@@ -69,8 +69,6 @@ angular.module('wynnoApp.controllers')
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
       $scope.mustWait = false;
       $scope.twitterError = false;
-      // update timeOfLastFetch
-      $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
@@ -134,6 +132,9 @@ angular.module('wynnoApp.controllers')
     $scope.tweets = tweets;
     console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
+    // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
+    // so that it is displayed in both /in and /out streams
+    $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
   };
 
   $scope.elegantize = function(tweets, presentTime) {
