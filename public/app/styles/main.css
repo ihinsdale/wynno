@@ -8091,12 +8091,7 @@ body {
   padding-left: 4px;
 }
 
-/* line 472, main.scss */
-legend {
-  margin-bottom: 10px;
-}
-
-/* line 476, main.scss */
+/* line 468, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8104,44 +8099,49 @@ legend {
   top: 10px;
 }
 
-/* line 488, main.scss */
+/* line 475, main.scss */
 .sendButton {
   width: 100%;
 }
 
+/* line 479, main.scss */
+.modal-footer {
+  margin-top: 0;
+}
+
 @media (min-width: 768px) {
-  /* line 511, main.scss */
+  /* line 496, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 515, main.scss */
+  /* line 500, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 }
 @media (min-width: 992px) {
-  /* line 521, main.scss */
+  /* line 506, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 525, main.scss */
+  /* line 510, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 530, main.scss */
+  /* line 515, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 534, main.scss */
+  /* line 519, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 538, main.scss */
+  /* line 523, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8149,29 +8149,29 @@ legend {
     border-bottom: 0;
   }
 
-  /* line 545, main.scss */
+  /* line 530, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 549, main.scss */
+  /* line 534, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 553, main.scss */
+  /* line 538, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 558, main.scss */
+  /* line 543, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 566, main.scss */
+  /* line 551, main.scss */
   .feedback {
     display: inline;
   }
