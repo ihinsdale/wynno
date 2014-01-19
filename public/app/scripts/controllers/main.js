@@ -213,6 +213,7 @@ angular.module('wynnoApp.controllers')
     }
   };
 
+  window.scrollTo(0);
   $scope.initialLoad();
 
 });
