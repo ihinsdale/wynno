@@ -1,43 +1,70 @@
 extends layout
 
 block nav
-  .navbar.navbar-fixed-top
-    .navbar-inner
-      // .btn-navbar is used as the toggle for collapsed navbar content 
-      a.btn.btn-navbar(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+  .navbar.navbar-default.navbar-fixed-top(role="navigation")
+    .navbar-header
+      a.navbar-brand.wynno(href='#')
+        span w
+        span.y y
+        span n
+        span.n n
+        span o
+      button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+        span.sr-only Toggle navigation
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      a.brand.pull-left(href='#')
-        .w w
-        .y y
-        .biggern n
-        .smallern n
-        .o o
-      a(href='/auth/twitter', ng-show="!currentPathNeedsAuth").signInContainer.pull-right
+      a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           img(ng-src="/app/images/twitter-bird.png")
-        .signIn Sign in with Twitter
-      .username.pull-right.dropdown(ng-show="currentPathNeedsAuth")
+        .signIn Sign in
+      .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
         a.dropdown-toggle(href='', ng-bind="username")
         ul.dropdown-menu
           li
             a(ng-click="logout()")
               span.icomoon-exit
               span Sign out
-      // Everything you want hidden at 940px or less, place within here 
-      .nav-collapse.collapse.navbar-responsive-collapse(collapse="navCollapsed")
-        // .nav, .navbar-search, .navbar-form, etc 
-        ul.nav.pull-left.wynnoButtons
-          li.passing(ng-class='{active: active[0]}')
-            a(href='#/in', tooltip-placement="bottom",tooltip="The Good", tooltip-popup-delay='500')
-              span.icomoon-filter
-          li.failing(ng-class='{active: active[1]}')
-            a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='500')
-              span.icomoon-filter
-          li(ng-class='{active: active[2]}')
-            a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='500')
-              span.icomoon-cogs
+
+    // Collect the stuff that gets toggled hidden
+    .collapse.navbar-collapse(collapse="navCollapsed")
+      ul.nav.navbar-nav.navbar-left.wynnoButtons
+        // these items displayed on mobile
+        li.passing.visible-xs(ng-class='{active: active[0]}')
+          a(href='#/in', ng-click='doCollapse()')
+            span.icomoon-filter
+            span.wynnoButtonDesc The Good Stuff
+        li.failing.visible-xs(ng-class='{active: active[1]}')
+          a(href='#/out', ng-click='doCollapse()')
+            span.icomoon-filter
+            span.wynnoButtonDesc The Rest
+        li.visible-xs(ng-class='{active: active[2]}')
+          a(href='#/settings', ng-click='doCollapse()')
+            span.icomoon-cogs
+            span.wynnoButtonDesc Settings
+        // these items displayed on not-mobile
+        li.passing.hidden-xs(ng-class='{active: active[0]}')
+          a(href='#/in', tooltip-placement="bottom",tooltip="The Good Stuff", tooltip-popup-delay='400')
+            span.icomoon-filter
+        li.failing.hidden-xs(ng-class='{active: active[1]}')
+          a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='400')
+            span.icomoon-filter
+        li.hidden-xs(ng-class='{active: active[2]}')
+          a(href='#/settings', tooltip-placement="bottom", tooltip="Settings", tooltip-popup-delay='400')
+            span.icomoon-cogs
+
+      .userButtons.navbar-right.hidden-xs
+        a.btn.btn-default.navbar-btn.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
+          .twitterBird
+            img(ng-src="/app/images/twitter-bird.png")
+          .signIn Sign in with Twitter
+        .dropdown
+          a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
+          ul.dropdown-menu
+            li
+              a(ng-click="logout()")
+                span.icomoon-exit
+                span Sign out
 
 block content
   .container(ng-view='')
@@ -54,30 +81,5 @@ block footer
     span.icomoon-bullhorn
     span.feedback Feedback  
 
-  script(src='/app/bower_components/jquery/jquery.js')
-  script(src='/app/bower_components/angular/angular.min.js')
-  script(src='/app/bower_components/angular-animate/angular-animate.min.js')
-  script(src='/app/bower_components/angular-route/angular-route.min.js')
-  script(src='/app/bower_components/angular-cookies/angular-cookies.js')
-  script(src='/app/bower_components/ngInfiniteScroll/ng-infinite-scroll.js')
-  script(src='/app/bower_components/angular-bootstrap/ui-bootstrap.js')
-  script(src='/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
 
-  script(src='/app/bower_components/angular-resource/angular-resource.js')
-  script(src='/app/bower_components/angular-sanitize/angular-sanitize.js')
-
-  script(src='/app/scripts/app.js')
-  script(src='/app/scripts/controllers/init.js')
-  script(src='/app/scripts/controllers/main.js')
-  script(src='/app/scripts/controllers/settings.js')
-  script(src='/app/scripts/controllers/nav.js')
-  script(src='/app/scripts/controllers/landing.js')
-  script(src='/app/scripts/controllers/checkin.js')
-  script(src='/app/scripts/services/init.js')
-  script(src='/app/scripts/services/tweet.js')
-  script(src='/app/scripts/services/settings.js')
-  script(src='/app/scripts/services/vote.js')
-  script(src='/app/scripts/services/auth.js')
-  script(src='/app/scripts/services/interceptor.js')
-  script(src='/app/scripts/services/feedback.js')
 

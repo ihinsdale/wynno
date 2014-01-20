@@ -1,81 +1,99 @@
 <div class="row">
-  <div class="tweetColPadding span7 offset2 text-center">
-    <div class="refreshSpinnerContainer">
-      <a href="" ng-click="refreshRequest()">
-        <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
-      </a>
-    </div>
+  <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
+    <button class="btn btn-default fetchNew" ng-click="refreshRequest()">
+      <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
+      <span class="loadingText">
+        <span ng-show="!activeTwitterRequest">Fetch new</span>
+        <span ng-show="activeTwitterRequest">Fetching...</span>
+      </span>
+    </button>
+    <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
   </div>
 </div>
 <div class="row" ng-show="mustWait">
-  <div class="tweetColPadding span7 offset2 text-center">
-    <div class="alert refreshAlert">
+  <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
+    <div class="alert alert-warning refreshAlert">
       <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
 <div class="row" ng-show="twitterError">
-  <div class="tweetColPadding span7 offset2 text-center">
-    <div class="alert alert-error refreshAlert">
-      <button type="button" class="close" data-dismiss="alert" ng-click="dismissAlert('error')">&times;</button>
+  <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
+    <div class="alert alert-danger alert-dismissable refreshAlert">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissAlert('error')">&times;</button>
       <strong>Error fetching new tweets from Twitter.</strong>
     </div>
   </div>
 </div>
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
-  <div class="tweet row" ng-repeat="tweet in tweets" ng-hide="tweet.hideGivenNewContraryVote">
-    <div class="tweetStuff span7 offset2" ng-class="{lastTweet: $last}">
-      <div class="leftColumn">
-        <div class="tweeterImage">
-          <img ng-src="{{tweet.__user.profile_image_url}}">
+  <div class="tweet row" ng-repeat="tweet in tweets">
+    <div class="shownTweetWrapper" ng-hide="tweet.hideGivenNewContraryVote">
+      <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, lastTweet: $last}">
+        <div class="leftColumn">
+          <div class="tweeterImage">
+            <img ng-src="{{tweet.__user.profile_image_url}}">
+          </div>
+          <div class="pvalue" ng-if="tweet.__p!=null">
+            <span class="badge">{{tweet.__pScore}}</span>
+          </div>
         </div>
-        <div class="pvalue" ng-if="tweet.__p!=null">
-          <span class="badge">{{tweet.__pScore}}</span>
+        <div class="rightColumn">
+          <div class="tweetMeta">
+            <a href="https://twitter.com/{{tweet.__user.screen_name}}">
+              <span class="tweeterName">{{tweet.__user.name}}&nbsp;</span>
+              <span class="tweeterScreenName">@{{tweet.__user.screen_name}}</span>
+            </a>
+              <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></span>
+          </div>
+          <div class="tweetText" ng-bind-html="tweet.__text"></div>
+          <div class="tweetFooter">
+            <div ng-if="tweet.__retweeter" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>
+          </div>
         </div>
       </div>
-      <div class="rightColumn">
-        <div class="tweetMeta">
-          <a href="https://twitter.com/{{tweet.__user.screen_name}}">
-            <span class="tweeterName">{{tweet.__user.name}}&nbsp;</span>
-            <span class="tweeterScreenName">@{{tweet.__user.screen_name}}</span>
-          </a>
-            <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></span>
+      <div class="col-md-1 voteButtons" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
+        <div class="btn-group-vertical hidden-xs hidden-sm">
+            <button type="button" class="btn btn-default" ng-click="vote(tweet, 1, $index)">
+              <div class="aye">
+                <span class="icomoon-checkmark-circle"></span>
+              </div>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="vote(tweet, 0, $index)">
+              <div class="nay">
+                <span class="icomoon-cancel-circle"></span>
+              </div>
+            </button>
         </div>
-        <div class="tweetText" ng-bind-html="tweet.__text"></div>
-        <div class="tweetFooter">
-          <div ng-if="tweet.__retweeter" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>
+        <div class="btn-group visible-xs visible-sm">
+            <button type="button" class="btn btn-default wideVoteButton left" ng-click="vote(tweet, 1, $index)">
+              <div class="aye">
+                <span class="icomoon-checkmark-circle"></span>
+              </div>
+            </button>
+            <button type="button" class="btn btn-default wideVoteButton right" ng-click="vote(tweet, 0, $index)">
+              <div class="nay">
+                <span class="icomoon-cancel-circle"></span>
+              </div>
+            </button>
         </div>
       </div>
     </div>
-    <div class="voteButtons span1" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
-      <a href='' class="aVoteAye">
-        <div ng-click="vote(tweet, 1, $index)" class="voteAye">
-          <div class="aye">
-            <span class="icomoon-checkmark-circle"></span>
-          </div>
-        </div>
-      </a>
-      <a href='' class="aVoteNay">
-        <div ng-click="vote(tweet, 0, $index)" class="voteNay">
-          <div class="nay">
-            <span class="icomoon-cancel-circle"></span>
-          </div>
-        </div>
-      </a>
+    <div class="col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote">
+      <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
+        <strong>Better filtering is on the way!</strong> Tweet moved to {{oppositeStream}}. 
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="tweetColPadding span7 offset2 text-center">
+    <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
       <div class="earlier">
-        <div class="refreshSpinnerContainer">
-          <a href="" ng-click="nextPage()">
-            <span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span>
-            <span class="loadingText">
-              <span ng-show="!busy">Load earlier tweets</span>
-              <span ng-show="busy">Loading...</span>
-            </span>
-          </a>
-        </div>
+        <button class="btn btn-default loadEarlier" ng-click="nextPage()">
+          <span class="icomoon-spinner" ng-class="{backwardSpinner: busy}"></span>
+          <span class="loadingText">
+            <span ng-show="!busy">Load earlier tweets</span>
+            <span ng-show="busy">Loading...</span>
+          </span>
+        </button>
       </div>
     </div>
   </div>

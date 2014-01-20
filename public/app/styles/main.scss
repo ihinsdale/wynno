@@ -2,20 +2,21 @@ $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
-@import "bootstrap-sass/lib/responsive";
+
 
 $color-scheme:  3321TvCw0w0w0;
 
 $tweet-border-width: 1px;
-$tweet-border-dotted: $tweet-border-width dotted #e0e0e0;
-$tweet-border-solid: $tweet-border-width solid #e0e0e0;
+$tweet-border-color: #e0e0e0;
+$tweet-border-dotted: $tweet-border-width dotted $tweet-border-color;
+$tweet-border-solid: $tweet-border-width solid $tweet-border-color;
 $background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
 
 $vote-button-side-padding: 20px;
 $vote-button-vert-padding: 5px;
-$tweet-glyph-size: 30px;
+$tweet-glyph-size: 24px;
 $deep-purple: #a166d5;
 $aye-green: #62d7a5;
 $light-aye-green: #a5ebcd;
@@ -23,15 +24,22 @@ $nay-red: #ff9c74;
 $light-nay-red: #ffc8b3;
 $settings-gray: #777777;
 $tweet-padding: 5px;
+$light-purple: #efe6f6;
+$badge-purple: #c7a9e1;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
 body {
     background: $background-color;
     font-family: "Open Sans", sans-serif;
     color: #333;
+    padding-top: 70px;
 }
 
 .container {
+}
+
+.navbar-default {
+    background-color: #e6f1f6;
 }
 
 .tweet {
@@ -45,7 +53,7 @@ body {
 
 .tweetStuff {
     background-color: $tweet-background-color;
-    min-height: 74px; // voteButtons with their margin are 85, so 85 - 5 - 5 (top and bottom padding) - 1 (top border) = 74
+    min-height: 90px;
     padding: $tweet-padding;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
@@ -101,7 +109,6 @@ body {
 }
 
 .tweetTimestamp {
-    padding-left: 15px;
 }
 
 .pvalue {
@@ -109,7 +116,7 @@ body {
 }
 
 .pvalue > .badge {
-    background-color: #c7a9e1;
+    background-color: $badge-purple;
 }
 
 .tweetText {
@@ -131,11 +138,19 @@ body {
 }
 
 .voteButtons {
-    background-color: $tweet-background-color;
-    border-right: $tweet-border-dotted;
-    border-bottom: $tweet-border-dotted;
-    border-left: $tweet-border-dotted;
-    display: inline-block;
+    // background-color: $tweet-background-color;
+    // border-right: $tweet-border-dotted;
+    // border-bottom: $tweet-border-dotted;
+    // border-left: $tweet-border-dotted;
+    // display: inline-block;
+}
+
+.voteButtons .btn {
+    padding: 3px 12px;
+}
+
+.voteButtons .btn-default {
+    border-color: $tweet-border-color;
 }
 
 .voteAye {
@@ -143,47 +158,50 @@ body {
 }
 
 .voteAye, .voteNay {
-    display: inline-block;
-    width: 49%;
-}
-
-.aye, .nay {
-    margin: 0 auto;
+    // display: inline-block;
+    // width: 49%;
 }
 
 .aye {
-    width: $tweet-glyph-size;
-    height: $tweet-glyph-size;
-    padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
-}
-
-a .aye {
     color: $aye-green;
 }
 
 .nay {
-    width: $tweet-glyph-size;
-    height: $tweet-glyph-size;
-    padding: $vote-button-vert-padding 0;
     font-size: $tweet-glyph-size;
-}
-
-a .nay {
     color: $nay-red;
 }
 
-// necessary to remove underline which appears in gap between voteButtons due to their 49% width
-.aVoteAye:hover, .aVoteNay:hover {
-    text-decoration: none;
-}
-
-.wynnoButtons {
-}
-
 .nav.wynnoButtons li a {
-    font-size: 25px;
-    text-shadow: none;
+    font-size: 24px;
+    line-height: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.wynnoButtonDesc {
+    font-family: "Ubuntu", sans-serif;
+    padding-left: 10px;
+}
+
+.wideVoteButton {
+    width: 50%;
+}
+
+.left, .right {
+    border-top: 0;
+}
+
+.left {
+    border-top-left-radius: 0;
+}
+
+.right {
+    border-top-right-radius: 0;
+}
+
+.noVoteAlertAbove {
+    margin-top: 20px;
 }
 
 .navbar .nav > li > a:hover {
@@ -194,26 +212,17 @@ a .nay {
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
     background-color: $background-color;
-    border-bottom: 4px solid $deep-purple;
+    //border-bottom: 4px solid $deep-purple;
     box-shadow: none;
 }
 
 .navbar .nav > li.active > a {
-    padding-bottom: 6px;
+    //padding-bottom: 6px;
 }
 
-.navbar .brand {
-    //font-family: "Maven Pro", sans-serif;
-    //font-family: "Raleway Dots", sans-serif;
-    font-family: "Ubuntu", sans-serif;
-    padding-right: 0;
-    padding-left: 30px;
-    padding-bottom: 0;
-    font-size: 32px;
-    //font-weight: bold;
-    line-height: 100%;
-    color: $deep-purple;
-    text-shadow: none;
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+
 }
 
 .funnel {
@@ -222,46 +231,24 @@ a .nay {
     padding-right: 16px
 }
 
-.w, .y, .biggern, .smallern, .o {
-    background-color: #FFFFFF;
-    display: inline
+.navbar-brand {
+    font-size: 36px;
+    line-height: 18px;
 }
 
-.w {
-    font-size: 36px;
+.wynno, 
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+    font-family: "Ubuntu", sans-serif;
+    color: $deep-purple;
 }
 
 .y {
-    font-size: 36px;
     color: $aye-green;
 }
 
-.biggern {
-    font-size: 36px;
-}
-
-.smallern {
-    font-size: 36px;
+.n {
     color: $nay-red;
-}
-
-.o {
-    font-size: 36px;
-    //font-weight: bold;
-}
-
-.navbar-fixed-top .navbar-inner {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.navbar-inner {
-    //background-color: #f0f0f0;
-    background-color: #ffffff;
-    background-image: none;
-    background-image: no-repeat;
-    -webkit-box-shadow: none;
-    box-shadow: none;
 }
 
 .navbar .nav > .passing > a,
@@ -274,38 +261,32 @@ a .nay {
     color: $nay-red;
 }
 
-.navbar .btn-navbar {
-    box-shadow: none;
-    -webkit-box-shadow: none;
+.navbar .navbar-btn {
     background-image: none;
-    text-shadow: none;
     border-color: $deep-purple;
     background-color: whitesmoke;
-    margin-right: 15px; //necessary because body margin shrunk to 10px from 20px
 }
 
-.navbar .btn-navbar:hover {
+.navbar .navbar-btn:hover {
     background-color: whitesmoke;
 }
 
-.navbar .btn-navbar:focus {
+.navbar .navbar-btn:focus {
     background-color: #e6e6e6;
 }
 
-.navbar .btn-navbar .icon-bar {
-    box-shadow: none;
-    -webkit-box-shadow: none;
+.navbar .navbar-btn .icon-bar {
 }
 
-.navbar .btn-navbar .icon-bar.firstBar {
+.navbar .navbar-btn .icon-bar.firstBar {
     background-color: $aye-green;
 }
 
-.navbar .btn-navbar .icon-bar.secondBar {
+.navbar .navbar-btn .icon-bar.secondBar {
     background-color: $nay-red;
 }
 
-.navbar .btn-navbar .icon-bar.thirdBar {
+.navbar .navbar-btn .icon-bar.thirdBar {
     background-color: $aye-green;
 }
 
@@ -363,12 +344,8 @@ a .nay {
 $twitterButtonRadius: 3px;
 
 .signInContainer, .username {
-    //background-color: #C0DEED;
-    border: 1px solid #1dcaff;
-    border-radius: $twitterButtonRadius;
-    padding: 3px 3px 4px 3px;
-    margin-top: 5px;
-    margin-right: 5px;
+    //border: 1px solid #1dcaff;
+    //border-radius: $twitterButtonRadius;
 }
 
 .twitterBird {
@@ -377,27 +354,26 @@ $twitterButtonRadius: 3px;
 
 .signIn {
     display: inline-block;
-    font-size: 12px;
 }
 
 .signIn:hover {
-    background-color: #FFFFFF;
 }
 
-.refreshSpinnerContainer {
-    display: inline-block;
-    border: 1px solid #1dcaff;
-    border-radius: $twitterButtonRadius;
+.fetchNew {
     margin-bottom: 10px;
-    padding: 3px;
 }
 
-.earlier {
-    padding-top: 10px;
+.loadEarlier {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.refreshSpinnerContainer > a:hover {
-    text-decoration: none;
+.lastUpdateTime {
+    vertical-align: top;
+    position: relative;
+    top: 8px;
+    padding-left: 10px;
+    color: #808080;
 }
 
 .feedbackContainer {
@@ -485,14 +461,6 @@ $twitterButtonRadius: 3px;
     padding-left: 4px;
 }
 
-.feedbackWrapper {
-    padding: 0 20px;
-}
-
-legend {
-    margin-bottom: 10px;
-}
-
 .cancelFeedback {
     position: absolute;
     font-size: 28px;
@@ -500,65 +468,70 @@ legend {
     top: 10px;
 }
 
-.feedbackArea, input.feedbackEmail {
-    width: 97%;
-    display: block;
-}
-
 .sendButton {
     width: 100%;
-
 }
 
-.feedbackArea {
-    height: 80px;
+.modal-footer {
+    margin-top: 0;
 }
 
+.bigBird {
+    color: #55acee;
+    font-size: 2em;
+}
+
+.bigBirdText {
+    font-size: 24px;
+    vertical-align: bottom;
+}
+
+.size20 {
+    font-size: 20px;
+}
+
+.oops {
+    margin-bottom: 16px;
+}
 
 @media (max-width: 979px) {
-    .navbar-fixed-top .navbar-inner {
-        padding: 0;
-    }
-    .navbar .brand {
-        padding-top: 0px;
-        padding-bottom: 3px; //necessary to prevent bottom of y from being clipped by nav dropdown
-    }
+
 }
 
 @media (min-width: 980px) {
-    .container {
-        padding-top: 66px;
-    }
 
-    .navbar .brand {
-        padding-top: 3px;
-        padding-right: 40px;
-    }
-
-    .signInContainer, .username {
-        margin-top: 9px;
-    }
 }
 
 @media (max-width: 767px) {
-    body {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+
 }
 
 @media (min-width: 768px) {
+    .navbar-brand {
+        line-height: 12px;
+    }
+
+    .wynnoButtons {
+        padding-left: 60px;
+    }
+}
+
+@media (min-width: 992px) {
     .tweet {
         padding-bottom: 0;
     }
 
     .voteButtons {
         margin-top: 1px; // because 'perfect' alignment of voteButtons and tweet actually makes voteButtons look higher
-        border-top: $tweet-border-dotted;
+        //border-top: $tweet-border-dotted;
     }
 
-    .tweet:hover > .voteButtons, .tweet:hover > .tweetStuff {
-        background-color: $tweet-background-hover-color !important;
+    .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
+        background-color: $tweet-background-hover-color;
+    }
+
+    .voteButtons > .btn-group-vertical > .btn:hover {
+        background-color: $light-purple;
     }
 
     .tweetStuff {
@@ -566,6 +539,10 @@ legend {
         border-left: $tweet-border-solid;
         border-right: $tweet-border-solid;
         border-bottom: 0;
+    }
+
+    .tweetBelowHiddenGivenVote {
+        border-bottom: $tweet-border-solid;
     }
 
     .lastTweet {
@@ -582,16 +559,14 @@ legend {
         border-bottom: $tweet-border-dotted;
     }
 
-    a:hover > .voteAye, a:hover > .voteNay,
-    a:focus > .voteAye, a:focus > .voteNay {
-        background-color: #e4d8ed;
-    }
-
     .signIn {
-        font-size: 14px;
     }
 
     .feedback {
         display: inline;
+    }
+
+    .bigBirdText {
+        font-size: 28px;
     }
 }

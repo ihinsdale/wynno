@@ -1,7 +1,6 @@
 angular.module('wynnoApp.services')
 .factory('TweetService', ['$q', '$http', 'SettingsService', function($q, $http, SettingsService) {
   var service = {
-    // store oauth token in here
     timeOfLastFetch: null,
     currentTweets: [],
     oldestTweetId: 0,
@@ -29,7 +28,7 @@ angular.module('wynnoApp.services')
     getNewTweets: function() {
       var d = $q.defer();
       if (service.timeOfLastFetch) {
-        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch;
+        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
       }
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
         d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
@@ -38,7 +37,7 @@ angular.module('wynnoApp.services')
         .success(function(data, status) {
           console.log('success getting new tweets, they look like:', data);
           service.currentTweets = data.concat(service.currentTweets);
-          service.timeOfLastFetch = new Date().getTime();
+          service.timeOfLastFetch = new Date();
           d.resolve(service.currentTweets);
         })
         .error(function(reason, status) {

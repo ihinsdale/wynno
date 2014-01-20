@@ -4,7 +4,13 @@ angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService) {
   $scope.activeTwitterRequest = false; // used by spinner, to keep track of an active request to the Twitter API
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
-  $scope.loadNewText = 'Load new';
+  if ($location.path() === '/in') {
+    $scope.currentStream = "The Good Stuff";
+    $scope.oppositeStream = "The Rest";
+  } else if ($location.path() === '/out') {
+    $scope.currentStream = "The Rest";
+    $scope.oppositeStream = "The Good Stuff";
+  }
 
   $scope.refreshRequest = function() {
     if (!$scope.activeTwitterRequest) {
@@ -62,6 +68,7 @@ angular.module('wynnoApp.controllers')
       // note we don't want to set activeTwitterRequest to false inside .renderInOrOut() or .display(),
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
       $scope.mustWait = false;
+      $scope.twitterError = false;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
@@ -125,6 +132,9 @@ angular.module('wynnoApp.controllers')
     $scope.tweets = tweets;
     console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
+    // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
+    // so that it is displayed in both /in and /out streams
+    $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
   };
 
   $scope.elegantize = function(tweets, presentTime) {
@@ -136,7 +146,9 @@ angular.module('wynnoApp.controllers')
       var approx = '';
       if (numHours >= 24) {
         var timeOfEventArray = UTCtimestamp.split(' ');
-        approx = timeOfEventArray[1] + ' ' + timeOfEventArray[2];
+        var date = timeOfEventArray[2];
+        date = date[0] === '0' ? date[1] : date;
+        approx = timeOfEventArray[1] + ' ' + date;
       } else if (numHours >= 1 && numHours < 24) {
         approx = Math.round(numHours).toString() + 'h';
       } else if (numMinutes >= 1 && numHours < 1) {
@@ -204,6 +216,7 @@ angular.module('wynnoApp.controllers')
     }
   };
 
+  window.scrollTo(0);
   $scope.initialLoad();
 
 });
