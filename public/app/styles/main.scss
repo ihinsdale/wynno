@@ -27,7 +27,28 @@ $tweet-padding: 5px;
 $light-purple: #efe6f6;
 $badge-purple: #c7a9e1;
 $twitter-blue: #55acee;
+$gray: #777777;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
+
+.ayeGreen {
+    color: $aye-green;
+}
+
+.nayRed {
+    color: $nay-red;
+}
+
+.twitterBlue {
+    color: $twitter-blue;
+}
+
+.wynnoPurple {
+    color: $deep-purple;
+}
+
+.gray {
+    color: $gray;
+}
 
 body {
     background: $background-color;
@@ -292,16 +313,13 @@ body {
 }
 
 .landingMainBig {
-    font-size: 6em;
+    font-size: 8em;
 }
 
 .landingMainSmall {
     font-size: 5em;
-    vertical-align: 10px;
-}
-
-.landingMainSmallPadding {
-    padding-top: 15px;
+    vertical-align: 18px;
+    padding-right: 38px;
 }
 
 .landingBird {
@@ -316,8 +334,39 @@ body {
     color: $aye-green;
 }
 
+.landingBird.icomoon-twitter:before,
+.landingFilter.icomoon-filter:before,
+.landingGrin.icomoon-grin:before {
+    background-color: #f0f0f0;
+}
+
 .landingFeature {
-    font-size: 8em;
+    font-size: 6em;
+}
+
+.tryItContainer {
+    padding-top: 30px;
+    width: 100%;
+}
+
+.tryIt, .tryIt:hover {
+    background-color: #ff6a32;
+}
+
+.trainGlyph {
+    display: inline-block;
+}
+
+.beaker {
+    padding-top: 10px;
+}
+
+.landingCopy {
+    font-size: 16px;
+}
+
+.page-header {
+    border-color: $deep-purple;
 }
 
 .settingHeader {
@@ -357,7 +406,7 @@ body {
 .removeSetting {
     display: inline;
     font-size: 16px;
-    color: #777777;
+    color: $settings-gray;
     background: transparent;
     border: 0;
 }
@@ -543,6 +592,10 @@ $twitterButtonRadius: 3px;
 
     .wynnoButtons {
         padding-left: 60px;
+    }
+
+    .landingMainSmall.hidden-xs{
+        display: inline !important;
     }
 }
 
