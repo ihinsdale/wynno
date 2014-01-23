@@ -7930,112 +7930,127 @@ body {
 
 /* line 319, main.scss */
 .landingMainSmall {
+  position: relative;
+  left: -20px;
   font-size: 5em;
-  vertical-align: 18px;
-  padding-right: 38px;
+  vertical-align: 22px;
 }
 
-/* line 325, main.scss */
+/* line 326, main.scss */
+.landingFeatureSmall {
+  font-size: 5em;
+  vertical-align: 18px;
+}
+
+/* line 331, main.scss */
 .landingBird {
   color: #55acee;
 }
 
-/* line 329, main.scss */
+/* line 335, main.scss */
 .landingFilter {
-  color: #a166d5;
-}
-
-/* line 333, main.scss */
-.landingGrin {
   color: #62d7a5;
 }
 
 /* line 339, main.scss */
-.landingBird.icomoon-twitter:before,
-.landingFilter.icomoon-filter:before,
-.landingGrin.icomoon-grin:before {
-  background-color: #f0f0f0;
+.landingGrin {
+  color: #a166d5;
 }
 
 /* line 343, main.scss */
+.landingBannerBackground {
+  background-color: moccasin;
+}
+
+/* line 347, main.scss */
+.buzzword {
+  color: orangered;
+}
+
+/* line 351, main.scss */
+.topAndBottomPadding {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+/* line 356, main.scss */
 .landingFeature {
   font-size: 6em;
 }
 
-/* line 347, main.scss */
+/* line 360, main.scss */
 .tryItContainer {
   padding-top: 30px;
-  width: 100%;
 }
 
-/* line 352, main.scss */
+/* line 364, main.scss */
 .tryIt, .tryIt:hover {
-  background-color: #ff6a32;
+  background-color: #a166d5;
 }
 
-/* line 356, main.scss */
+/* line 369, main.scss */
 .trainGlyph {
   display: inline-block;
 }
 
-/* line 360, main.scss */
+/* line 373, main.scss */
 .beaker {
   padding-top: 10px;
 }
 
-/* line 364, main.scss */
+/* line 377, main.scss */
 .landingCopy {
   font-size: 16px;
 }
 
-/* line 368, main.scss */
+/* line 381, main.scss */
 .page-header {
   border-color: #a166d5;
 }
 
-/* line 372, main.scss */
+/* line 385, main.scss */
 .settingHeader {
   color: #ffffff;
   padding-left: 5px;
 }
 
-/* line 377, main.scss */
+/* line 390, main.scss */
 .protectedUser, .protectedWord, .mutedUser, .mutedWord {
   padding-left: 10px;
 }
 
-/* line 381, main.scss */
+/* line 394, main.scss */
 .protectedUsers .settingHeader, .protectedWords .settingHeader {
   background-color: #a5ebcd;
 }
 
-/* line 385, main.scss */
+/* line 398, main.scss */
 .mutedUsers .settingHeader, .mutedWords .settingHeader {
   background-color: #ffc8b3;
 }
 
-/* line 389, main.scss */
+/* line 402, main.scss */
 .protectedUsers, .protectedWords {
   border-left: 2px solid #62d7a5;
 }
 
-/* line 393, main.scss */
+/* line 406, main.scss */
 .mutedUsers, .mutedWords {
   border-left: 2px solid #ff9c74;
 }
 
-/* line 397, main.scss */
+/* line 410, main.scss */
 .innerSettingsBlock {
   margin-left: 10px;
 }
 
-/* line 401, main.scss */
+/* line 414, main.scss */
 .user, .word {
   display: inline;
   width: 180px;
 }
 
-/* line 406, main.scss */
+/* line 419, main.scss */
 .removeSetting {
   display: inline;
   font-size: 16px;
@@ -8044,39 +8059,41 @@ body {
   border: 0;
 }
 
-/* line 414, main.scss */
+/* line 427, main.scss */
 .removeSetting:hover {
   color: #555555;
 }
 
-/* line 418, main.scss */
+/* line 431, main.scss */
 .settingInputContainer {
   padding-top: 10px;
   padding-left: 10px;
 }
 
-/* line 430, main.scss */
+/* line 443, main.scss */
 .twitterBird {
   display: inline-block;
+  font-size: 14px;
+  padding-right: 5px;
 }
 
-/* line 434, main.scss */
+/* line 449, main.scss */
 .signIn {
   display: inline-block;
 }
 
-/* line 441, main.scss */
+/* line 456, main.scss */
 .fetchNew {
   margin-bottom: 10px;
 }
 
-/* line 445, main.scss */
+/* line 460, main.scss */
 .loadEarlier {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-/* line 450, main.scss */
+/* line 465, main.scss */
 .lastUpdateTime {
   vertical-align: top;
   position: relative;
@@ -8085,7 +8102,7 @@ body {
   color: #808080;
 }
 
-/* line 458, main.scss */
+/* line 473, main.scss */
 .feedbackContainer {
   position: fixed;
   visibility: visible !important;
@@ -8104,20 +8121,20 @@ body {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 476, main.scss */
+/* line 491, main.scss */
 .feedback {
   padding-left: 6px;
   display: none;
 }
 
 @keyframes anim-rotate {
-  /* line 482, main.scss */
+  /* line 497, main.scss */
   from {
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 486, main.scss */
+  /* line 501, main.scss */
   to {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
@@ -8125,25 +8142,25 @@ body {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 493, main.scss */
+  /* line 508, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 496, main.scss */
+  /* line 511, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes anim-rotate-backward {
-  /* line 502, main.scss */
+  /* line 517, main.scss */
   from {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
   }
 
-  /* line 506, main.scss */
+  /* line 521, main.scss */
   to {
     transform: rotate(0);
     -ms-transform: rotate(0);
@@ -8151,18 +8168,18 @@ body {
 }
 
 @-webkit-keyframes anim-rotate-backward {
-  /* line 513, main.scss */
+  /* line 528, main.scss */
   from {
     -webkit-transform: rotate(360deg);
   }
 
-  /* line 516, main.scss */
+  /* line 531, main.scss */
   to {
     -webkit-transform: rotate(0);
   }
 }
 
-/* line 521, main.scss */
+/* line 536, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8172,7 +8189,7 @@ body {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
-/* line 530, main.scss */
+/* line 545, main.scss */
 .backwardSpinner {
   display: inline-block;
   line-height: 1;
@@ -8182,12 +8199,12 @@ body {
   -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
-/* line 539, main.scss */
+/* line 554, main.scss */
 .loadingText {
   padding-left: 4px;
 }
 
-/* line 543, main.scss */
+/* line 558, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8195,76 +8212,76 @@ body {
   top: 10px;
 }
 
-/* line 550, main.scss */
+/* line 565, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 554, main.scss */
+/* line 569, main.scss */
 .modal-footer {
   margin-top: 0;
 }
 
-/* line 558, main.scss */
+/* line 573, main.scss */
 .bigBird {
   color: #55acee;
   font-size: 2em;
 }
 
-/* line 563, main.scss */
+/* line 578, main.scss */
 .bigBirdText {
   font-size: 24px;
   vertical-align: bottom;
 }
 
-/* line 568, main.scss */
+/* line 583, main.scss */
 .size20 {
   font-size: 20px;
 }
 
-/* line 572, main.scss */
+/* line 587, main.scss */
 .oops {
   margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
-  /* line 589, main.scss */
+  /* line 604, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 593, main.scss */
+  /* line 608, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 597, main.scss */
-  .landingMainSmall.hidden-xs {
+  /* line 612, main.scss */
+  .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 }
 @media (min-width: 992px) {
-  /* line 603, main.scss */
+  /* line 618, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 607, main.scss */
+  /* line 622, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 612, main.scss */
+  /* line 627, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 616, main.scss */
+  /* line 631, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 620, main.scss */
+  /* line 635, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8272,34 +8289,34 @@ body {
     border-bottom: 0;
   }
 
-  /* line 627, main.scss */
+  /* line 642, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 631, main.scss */
+  /* line 646, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 635, main.scss */
+  /* line 650, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 640, main.scss */
+  /* line 655, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 648, main.scss */
+  /* line 663, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 652, main.scss */
+  /* line 667, main.scss */
   .bigBirdText {
     font-size: 28px;
   }

@@ -16,7 +16,7 @@ block nav
         span.icon-bar.thirdBar
       a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
-          img(ng-src="/app/images/twitter-bird.png")
+          span.icomoon-twitter.twitterBlue
         .signIn Sign in
       .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
         a.dropdown-toggle(href='', ng-bind="username")
@@ -56,7 +56,7 @@ block nav
       .userButtons.navbar-right.hidden-xs
         a.btn.btn-default.navbar-btn.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
           .twitterBird
-            img(ng-src="/app/images/twitter-bird.png")
+            span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
         .dropdown
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")

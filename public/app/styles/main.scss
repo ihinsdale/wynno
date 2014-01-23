@@ -317,9 +317,15 @@ body {
 }
 
 .landingMainSmall {
+    position: relative;
+    left: -20px;
+    font-size: 5em;
+    vertical-align: 22px;
+}
+
+.landingFeatureSmall {
     font-size: 5em;
     vertical-align: 18px;
-    padding-right: 38px;
 }
 
 .landingBird {
@@ -327,17 +333,24 @@ body {
 }
 
 .landingFilter {
-    color: $deep-purple;
-}
-
-.landingGrin {
     color: $aye-green;
 }
 
-.landingBird.icomoon-twitter:before,
-.landingFilter.icomoon-filter:before,
-.landingGrin.icomoon-grin:before {
-    background-color: #f0f0f0;
+.landingGrin {
+    color: $deep-purple;
+}
+
+.landingBannerBackground {
+    background-color: moccasin;
+}
+
+.buzzword {
+    color: orangered;
+}
+
+.topAndBottomPadding {
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 .landingFeature {
@@ -346,11 +359,11 @@ body {
 
 .tryItContainer {
     padding-top: 30px;
-    width: 100%;
 }
 
 .tryIt, .tryIt:hover {
-    background-color: #ff6a32;
+    //background-color: #ff6a32;
+    background-color: $deep-purple;
 }
 
 .trainGlyph {
@@ -429,6 +442,8 @@ $twitterButtonRadius: 3px;
 
 .twitterBird {
     display: inline-block;
+    font-size: 14px;
+    padding-right: 5px;
 }
 
 .signIn {
@@ -594,7 +609,7 @@ $twitterButtonRadius: 3px;
         padding-left: 60px;
     }
 
-    .landingMainSmall.hidden-xs{
+    .landingFeatureSmall.hidden-xs{
         display: inline !important;
     }
 }
