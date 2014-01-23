@@ -26,7 +26,29 @@ $settings-gray: #777777;
 $tweet-padding: 5px;
 $light-purple: #efe6f6;
 $badge-purple: #c7a9e1;
+$twitter-blue: #55acee;
+$gray: #777777;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
+
+.ayeGreen {
+    color: $aye-green;
+}
+
+.nayRed {
+    color: $nay-red;
+}
+
+.twitterBlue {
+    color: $twitter-blue;
+}
+
+.wynnoPurple {
+    color: $deep-purple;
+}
+
+.gray {
+    color: $gray;
+}
 
 body {
     background: $background-color;
@@ -290,6 +312,76 @@ body {
     background-color: $aye-green;
 }
 
+.landingMainBig {
+    font-size: 8em;
+}
+
+.landingMainSmall {
+    position: relative;
+    left: -20px;
+    font-size: 5em;
+    vertical-align: 22px;
+}
+
+.landingFeatureSmall {
+    font-size: 5em;
+    vertical-align: 18px;
+}
+
+.landingBird {
+    color: $twitter-blue;
+}
+
+.landingFilter {
+    color: $aye-green;
+}
+
+.landingGrin {
+    color: $deep-purple;
+}
+
+.landingBannerBackground {
+    background-color: moccasin;
+}
+
+.buzzword {
+    color: orangered;
+}
+
+.topAndBottomPadding {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.landingFeature {
+    font-size: 6em;
+}
+
+.tryItContainer {
+    padding-top: 30px;
+}
+
+.tryIt, .tryIt:hover {
+    //background-color: #ff6a32;
+    background-color: $deep-purple;
+}
+
+.trainGlyph {
+    display: inline-block;
+}
+
+.beaker {
+    padding-top: 10px;
+}
+
+.landingCopy {
+    font-size: 16px;
+}
+
+.page-header {
+    border-color: $deep-purple;
+}
+
 .settingHeader {
     color: #ffffff;
     padding-left: 5px;
@@ -327,7 +419,7 @@ body {
 .removeSetting {
     display: inline;
     font-size: 16px;
-    color: #777777;
+    color: $settings-gray;
     background: transparent;
     border: 0;
 }
@@ -350,6 +442,8 @@ $twitterButtonRadius: 3px;
 
 .twitterBird {
     display: inline-block;
+    font-size: 14px;
+    padding-right: 5px;
 }
 
 .signIn {
@@ -477,13 +571,12 @@ $twitterButtonRadius: 3px;
 }
 
 .bigBird {
-    color: #55acee;
+    color: $twitter-blue;
     font-size: 2em;
 }
 
 .bigBirdText {
     font-size: 24px;
-    vertical-align: bottom;
 }
 
 .size20 {
@@ -513,6 +606,10 @@ $twitterButtonRadius: 3px;
 
     .wynnoButtons {
         padding-left: 60px;
+    }
+
+    .landingFeatureSmall.hidden-xs{
+        display: inline !important;
     }
 }
 

@@ -23,54 +23,114 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icomoon-cogs:before {
+.icomoon-bullhorn:before {
 	content: "\e600";
 }
-.icomoon-wrench:before {
+.icomoon-spinner:before {
 	content: "\e601";
 }
-.icomoon-cancel-circle:before {
+.icomoon-grin:before {
 	content: "\e602";
 }
-.icomoon-checkmark-circle:before {
+.icomoon-happy:before {
 	content: "\e603";
 }
-.icomoon-exit:before {
+.icomoon-plus:before {
 	content: "\e604";
 }
-.icomoon-filter:before {
+.icomoon-arrow-right:before {
 	content: "\e605";
 }
-.icomoon-twitter:before {
+.icomoon-arrow-right2:before {
 	content: "\e606";
 }
-.icomoon-remove:before {
+.icomoon-arrow-right3:before {
 	content: "\e607";
 }
-.icomoon-remove2:before {
+.icomoon-filter:before {
 	content: "\e608";
 }
-.icomoon-spinner:before {
+.icomoon-volume-mute:before {
 	content: "\e609";
 }
-.icomoon-bullhorn:before {
+.icomoon-loop:before {
 	content: "\e60a";
 }
-.icomoon-bubble:before {
+.icomoon-loop2:before {
 	content: "\e60b";
 }
-.icomoon-bubble2:before {
+.icomoon-twitter:before {
 	content: "\e60c";
 }
-.icomoon-loop:before {
+.icomoon-twitter2:before {
 	content: "\e60d";
 }
-.icomoon-loop2:before {
+.icomoon-eye-blocked:before {
 	content: "\e60e";
 }
-.icomoon-keyboard:before {
+.icomoon-cogs:before {
 	content: "\e60f";
 }
-.icomoon-bubble3:before {
+.icomoon-wrench:before {
 	content: "\e610";
+}
+.icomoon-settings:before {
+	content: "\e611";
+}
+.icomoon-stats:before {
+	content: "\e612";
+}
+.icomoon-rocket:before {
+	content: "\e613";
+}
+.icomoon-signup:before {
+	content: "\e614";
+}
+.icomoon-tree:before {
+	content: "\e615";
+}
+.icomoon-volume-high:before {
+	content: "\e616";
+}
+.icomoon-volume-medium:before {
+	content: "\e617";
+}
+.icomoon-calculate:before {
+	content: "\e618";
+}
+.icomoon-menu:before {
+	content: "\e619";
+}
+.icomoon-share:before {
+	content: "\e61a";
+}
+.icomoon-calculator:before {
+	content: "\e61b";
+}
+.icomoon-lab:before {
+	content: "\e61c";
+}
+.icomoon-volume-mute2:before {
+	content: "\e61d";
+}
+.icomoon-sound:before {
+	content: "\e61e";
+}
+.icomoon-sound-off:before {
+	content: "\e61f";
+}
+.icomoon-cancel-circle:before {
+	content: "\e621";
+}
+.icomoon-checkmark-circle:before {
+	content: "\e622";
+}
+.icomoon-heart:before {
+	content: "\e623";
+}
+.icomoon-heart2:before {
+	content: "\e624";
+}
+.icomoon-params:before {
+	content: "\e620";
 }
