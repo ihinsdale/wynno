@@ -14,7 +14,9 @@ exports.userSchema = userSchema = new Schema({
   mutedUsers: [],
   mutedWords: [],
   tw_access_token: String,
-  tw_access_secret: String
+  tw_access_secret: String,
+  joined_at: {type: Date, default: Date.now},
+  agreed_terms: Date
 });
 
 exports.User = mongoose.model('User', userSchema);

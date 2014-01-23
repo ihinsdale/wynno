@@ -21,6 +21,8 @@ exports.checkin = function(req, res) {
     username: req.user.tw_screen_name,
     profile_image_url: req.user.tw_profile_image_url
   }));
+  console.log('joined_at:', req.user.joined_at)
+  //if req.user.joined_at - new Date().getTime()
   // can also check here whether user has just signed up, in which case, redirect them to terms and conditions
   // ...
   // else
