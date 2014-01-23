@@ -21,10 +21,6 @@ angular.module('wynnoApp', [
       templateUrl: '/app/views/signinwithtwitter.html',
       controller: 'LandingCtrl'
     })
-    .when('/firsttimesignin', {
-      templateUrl: '/app/views/checkingin.html',
-      controller: 'CheckinCtrl'
-    })
     .when('/in', {
       templateUrl: '/app/views/main.html',
       controller: 'MainCtrl'
@@ -46,6 +42,7 @@ angular.module('wynnoApp', [
 })
 .run(function($rootScope, $location, AuthService) {
   $rootScope.$on("$locationChangeStart", function(evt, next, current) {
+    console.log("$locationChangeStart event fired");
     console.log('according to client-side, user is authenticated:', AuthService.isAuthenticated());
     console.log('next looks like:', next);
     if (!AuthService.isAuthenticated()) {

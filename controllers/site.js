@@ -15,18 +15,14 @@ exports.index = function(req, res) {
   res.render('index', { title: 'wynno' });
 };
 
+// a function for checking in a user after a successful signin
 exports.checkin = function(req, res) {
   // send cookie to client containing user info
   res.cookie('user', JSON.stringify({
     username: req.user.tw_screen_name,
-    profile_image_url: req.user.tw_profile_image_url
+    profile_image_url: req.user.tw_profile_image_url,
+    agreed_terms: req.user.agreed_terms
   }));
-  console.log('joined_at:', req.user.joined_at);
-  console.log('current time is:', new Date());
-  //if req.user.joined_at - new Date().getTime()
-  // can also check here whether user has just signed up, in which case, redirect them to terms and conditions
-  // ...
-  // else
   res.redirect('#/in');
 };
 

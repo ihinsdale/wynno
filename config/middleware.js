@@ -76,3 +76,8 @@ exports.ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.send(401);
 };
+
+exports.ensureAgreedTerms = function (req, res, next) {
+  if (req.user.agreed_terms) { return next(); }
+  res.send(401, "User must first agree to Terms of Service.");
+};

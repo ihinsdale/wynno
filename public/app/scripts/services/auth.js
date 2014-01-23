@@ -30,8 +30,6 @@ angular.module('wynnoApp.services')
           return false;
         case '/signinwithtwitter':
           return false;
-        case '/firsttimesignin':
-          return true;
         case '/in':
           return true;
         case '/out':
@@ -50,8 +48,6 @@ angular.module('wynnoApp.services')
         case '/':
           return [false, false, false];
         case '/signinwithtwitter':
-          return [false, false, false];
-        case '/firsttimesignin':
           return [false, false, false];
         case '/in':
           return [true, false, false];

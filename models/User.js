@@ -16,7 +16,8 @@ exports.userSchema = userSchema = new Schema({
   tw_access_token: String,
   tw_access_secret: String,
   joined_at: {type: Date, default: Date.now},
-  agreed_terms: Date
+  agreed_terms: {type: Boolean, default: false},
+  agreed_terms_at: {type: Date, default: null}
 });
 
 exports.User = mongoose.model('User', userSchema);
