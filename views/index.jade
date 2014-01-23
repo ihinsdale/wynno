@@ -77,6 +77,10 @@ block content
     ga('send', 'pageview');
 
 block footer
+  .footer(ng-show="!currentPathNeedsAuth")
+    span.footerItem.footerBrand &copy; 2014 wynno
+    span.footerItem <a>Terms</a>
+    span.footerItem <a>Privacy</a>
   .feedbackContainer(ng-click="open()")
     span.icomoon-bullhorn
     span.feedback Feedback  
