@@ -71,9 +71,9 @@ angular.module('wynnoApp.controllers')
       controller: 'WelcomeModalInstanceCtrl'
     });
     modalInstance.result.then(function(modalResult) {
-      console.log('sending feedback', modalResult.feedback, 'and email', modalResult.email);
+      console.log('sending agreement to ToS', modalResult.agreement);
       // send agreement to ToS back to server
-      AuthService.sendAgreement()
+      AuthService.sendAgreement(modalResult.agreement)
       .then(function(result) {
         console.log(result);
       }, function(reason) {
@@ -82,7 +82,7 @@ angular.module('wynnoApp.controllers')
     }, function(reason) {
       console.log('User did not agree to Terms of Service.');
     });
-  }
+  };
 })
 .controller('FeedbackModalInstanceCtrl', function($scope, $modalInstance) {
   $scope.form = {};
@@ -102,6 +102,7 @@ angular.module('wynnoApp.controllers')
 .controller('WelcomeModalInstanceCtrl', function($scope, $modalInstance) {
   $scope.form = {};
   $scope.submit = function() {
+    $modalInstance.close({ agreement: $scope.form.agreement});
   };
 
   $scope.cancel = function() {

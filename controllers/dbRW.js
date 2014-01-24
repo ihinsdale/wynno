@@ -328,3 +328,16 @@ exports.saveFeedback = function(user_id, feedback, email, callback) {
     }
   });
 };
+
+exports.saveAgreement = function(user_id, agreement, callback) {
+  // agreement should always be true, because default value saved in user is false
+  User.findByIdAndUpdate(user_id, { agreed_terms: agreement, agreed_terms_at: Date.now }, function(err, doc) {
+    if (err) {
+      console.log('Error saving agreement to db');
+      callback(err);
+    } else {
+      console.log('Saved agreement to db.');
+      callback(null);
+    }
+  });
+}

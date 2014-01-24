@@ -192,4 +192,20 @@ exports.processFeedback = function(req, res) {
     }
   });
 };
-
+exports.processAgreement = function(req, res) {
+  if (req.body.agreement !== true) {
+    res.send(400, 'Route only accepts agreement value of true, indicating ToS agreed to.');
+  }
+  async.series([
+    function(callback) {
+      db.saveAgreement(req.user._id, req.body.agreement, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send("Successfully saved user's agreement to Terms of Service.");
+    }
+  });
+};

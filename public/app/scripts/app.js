@@ -33,6 +33,10 @@ angular.module('wynnoApp', [
       templateUrl: '/app/views/settings.html',
       controller: 'SettingsCtrl'
     })
+    .when('/termsofservice', {
+      templateUrl:'/app/views/termsofservice.html',
+      controller: 'LandingCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });

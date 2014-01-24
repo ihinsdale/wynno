@@ -30,7 +30,7 @@ angular.module('wynnoApp.services')
     updateSetting: function(add_or_remove, user_or_word, mute_or_protect, input) {
       var d = $q.defer();
       $http({method: 'POST', url: '/settings',
-        data: {user_id: '52783164c5d992a75e000001', add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_protect: mute_or_protect, input: input}})
+        data: {add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_protect: mute_or_protect, input: input}})
       .success(function(data, status) {
         console.log('success updating settings to', add_or_remove, input, 'as a', mute_or_protect, user_or_word);
         // could optimize this by updating service.settings with the particular

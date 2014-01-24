@@ -1,1 +1,19 @@
-<div>checking you in...</div>
+<div class="feedbackWrapper">
+  <div class="modal-header">
+    <button class="close cancelFeedback" title="Close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h1>Welcome!</h1>
+  </div>
+  <div class="modal-body">
+      <div>TAKE A TOUR OF THE APP</div>
+  </div>
+  <div class="modal-footer">
+    <form name="agreement_form" role="form" novalidate ng-submit="submit()">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" required ng-model="form.agreement" name="agreement"> I have read and agree to the <a href="#/termsofservice">Terms of Service</a>.
+        </label>
+      </div>
+      <button class="btn btn-primary" type="submit" ng-disabled="agreement_form.agreement.$invalid">Get started!</button>
+    </form>
+  </div>
+</div>

@@ -31,4 +31,6 @@ module.exports = function(app) {
   app.get('/logout', ensureAuthenticated, site.logout);
   // POST request to /feedback records feedback in the database
   app.post('/feedback', site.processFeedback);
+  // POST request to /agreed
+  app.post('/agreed', ensureAuthenticated, site.processAgreement)
 };
