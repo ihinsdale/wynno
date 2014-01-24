@@ -23,6 +23,7 @@ angular.module('wynnoApp.services')
         console.log('error saving agreement to Terms of Service:', reason);
         d.reject(reason);
       });
+      return d.promise;
     },
     logout: function() {
       var d = $q.defer();
