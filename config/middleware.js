@@ -79,5 +79,7 @@ exports.ensureAuthenticated = function (req, res, next) {
 
 exports.ensureAgreedTerms = function (req, res, next) {
   if (req.user.agreed_terms) { return next(); }
-  res.send(401, "User must first agree to Terms of Service.");
+  // can't use 401 code because that gets caught by angular interceptor and
+  // redirects user to sign in page
+  res.send(402, "User must first agree to Terms of Service.");
 };
