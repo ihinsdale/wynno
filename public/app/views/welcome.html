@@ -12,7 +12,9 @@
         <label>
           <input class="tosCheckbox" type="checkbox" required ng-model="form.agreement" name="agreement"> I have read and agree to the <a href="#/termsofservice" target="_blank">Terms of Service</a>.
         </label>
-        <button class="btn btn-primary" type="submit" ng-disabled="agreement_form.agreement.$invalid">Get started!</button>
+      </div>
+      <div class="centeredText">
+        <button class="btn btn-primary btn-lg" type="submit" ng-disabled="agreement_form.agreement.$invalid">Get started!</button>
       </div>
     </form>
   </div>
