@@ -284,7 +284,7 @@ exports.findUser = function(user_id, callback) {
 
 exports.registerUser = function(user, callback) {
   // following passport.js signature: http://passportjs.org/guide/twitter/
-  console.log('user inside findOrCreateUser looks like:', user);
+  console.log('user inside registerUser looks like:', user);
   User.findOneAndUpdate({ tw_id: user.tw_id }, { 
     tw_name: user.tw_name,
     tw_screen_name: user.tw_screen_name,
@@ -303,13 +303,13 @@ exports.registerUser = function(user, callback) {
         tw_profile_image_url: user.tw_profile_image_url,
         tw_access_token: user.tw_access_token,
         tw_access_secret: user.tw_access_secret
-      }).save(function(err, doc) {
+      }).save(function(err2, doc2) {
         if (err) {
           console.log('Error creating user.');
-          callback(err);
+          callback(err2);
         } else {
-          console.log('User is:', doc); // don't need to send whole doc, should limit results sent to the fields necessary
-          callback(null, doc); // as prescribed by passport.js
+          console.log('New user is:', doc2); // don't need to send whole doc, should limit results sent to the fields necessary
+          callback(null, doc2); // as prescribed by passport.js
         }
       });
     } else {
