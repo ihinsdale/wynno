@@ -35,7 +35,7 @@ angular.module('wynnoApp', [
     })
     .when('/termsofservice', {
       templateUrl:'/app/views/termsofservice.html',
-      controller: 'LandingCtrl'
+      controller: 'StaticCtrl'
     })
     .otherwise({
       redirectTo: '/'

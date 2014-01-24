@@ -8244,61 +8244,73 @@ body {
 }
 
 /* line 591, main.scss */
+.centeredText {
+  text-align: center;
+}
+
+/* line 595, main.scss */
+.tosCheckbox {
+  margin: 0;
+  position: relative;
+  bottom: 1px;
+}
+
+/* line 601, main.scss */
 .footer {
   padding: 5px 0;
   width: 100%;
   background-color: #e6f1f6;
 }
 
-/* line 597, main.scss */
+/* line 607, main.scss */
 .footerItem {
   padding-right: 6px;
   color: #777777;
 }
 
-/* line 602, main.scss */
+/* line 612, main.scss */
 .footerBrand {
   padding-left: 6px;
 }
 
 @media (min-width: 768px) {
-  /* line 619, main.scss */
+  /* line 629, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 623, main.scss */
+  /* line 633, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 627, main.scss */
+  /* line 637, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 }
 @media (min-width: 992px) {
-  /* line 633, main.scss */
+  /* line 643, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 637, main.scss */
+  /* line 647, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 642, main.scss */
+  /* line 652, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 646, main.scss */
+  /* line 656, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 650, main.scss */
+  /* line 660, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8306,34 +8318,34 @@ body {
     border-bottom: 0;
   }
 
-  /* line 657, main.scss */
+  /* line 667, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 661, main.scss */
+  /* line 671, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 665, main.scss */
+  /* line 675, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 670, main.scss */
+  /* line 680, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 678, main.scss */
+  /* line 688, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 682, main.scss */
+  /* line 692, main.scss */
   .bigBirdText {
     font-size: 28px;
   }
