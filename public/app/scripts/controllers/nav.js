@@ -28,7 +28,9 @@ angular.module('wynnoApp.controllers')
 
     // if the user hasn't agreed to ToS, and the view requires authentication,
     // open Welcome modal where they can agree to ToS
-    if (AuthService.getCurrentUser() && !AuthService.getCurrentUser().agreed_terms && $scope.currentPathNeedsAuth) {
+    var currentUser = AuthService.getCurrentUser();
+    console.log('inside locationChangeSuccess listener, currentUser looks like:', currentUser);
+    if (currentUser && !currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
       $scope.openWelcome();
     }
   });

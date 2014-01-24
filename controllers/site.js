@@ -6,10 +6,13 @@ var rendering = require('./rendering.js');
 
 
 exports.index = function(req, res) {
+  // if user is already in session, send them the cookie again
+  // [WHY??]
   if (req.user) {
     res.cookie('user', JSON.stringify({
-      username: req.user.tw_screen_name,
-      profile_image_url: req.user.tw_profile_image_url
+      username: '@' + req.user.tw_screen_name,
+      profile_image_url: req.user.tw_profile_image_url,
+      agreed_terms: req.user.agreed_terms
     }));
   }
   res.render('index', { title: 'wynno' });
