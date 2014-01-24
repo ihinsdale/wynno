@@ -39,14 +39,17 @@ angular.module('wynnoApp.controllers')
     $scope.navCollapsed = true;
   };
 
-  $scope.logout = function() {
+  $scope.logout = function(redirectDestination) {
     AuthService.logout()
     .then(function(data){
       console.log(data);
       console.log('is authenticated still:', AuthService.isAuthenticated());
       console.log('current user:', AuthService.getCurrentUser());
-      window.location = 'http://twitter.com/logout'; // redirect user to Twitter where they can logout
-      //$location.path('/');
+      if (redirectDestination === 'twitter') {
+        window.location = 'http://twitter.com/logout'; // redirect user to Twitter where they can logout
+      } else {
+        $location.path('/')
+      }
     }, function(err){
       console.log('failed to logout:', err);
     });
@@ -98,6 +101,9 @@ angular.module('wynnoApp.controllers')
       });
     }, function(reason) {
       console.log('User did not agree to Terms of Service.');
+      if (reason === 'cancel') {
+        $scope.logout();
+      }
     });
   };
 })
