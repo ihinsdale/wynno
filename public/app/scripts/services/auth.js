@@ -12,6 +12,7 @@ angular.module('wynnoApp.services')
       console.log('currentUser is now:', service.currentUser);
     },
     sendAgreement: function(consent) {
+      var d = $q.defer();
       $http({method: 'POST', url: '/agreed',
         data: { agreement: consent }})
       .success(function(data, status) {
