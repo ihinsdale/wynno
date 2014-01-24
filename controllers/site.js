@@ -128,7 +128,7 @@ exports.processSetting = function(req, res) {
   console.log('request data look like', data)
   async.waterfall([
     function(callback) {
-      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_protect, data.input, callback);
+      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_hear, data.input, callback);
     },
     // TODO: this step of getting the updated settings could be removed if logic on the client-side updates the settings
     //       model/view upon success message from server

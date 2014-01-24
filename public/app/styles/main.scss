@@ -598,6 +598,11 @@ $twitterButtonRadius: 3px;
     bottom: 1px;
 }
 
+.disagree:hover {
+    // to disable the hover gray background on the Cancel button
+    background-color: #ffffff;
+}
+
 .footer {
     padding: 5px 0;
     width: 100%;

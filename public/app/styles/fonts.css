@@ -131,6 +131,21 @@
 .icomoon-heart2:before {
 	content: "\e624";
 }
+.icomoon-question:before {
+	content: "\e625";
+}
+.icomoon-question2:before {
+	content: "\e626";
+}
+.icomoon-info:before {
+	content: "\e627";
+}
+.icomoon-info2:before {
+	content: "\e628";
+}
+.icomoon-heart3:before {
+	content: "\e629";
+}
 .icomoon-params:before {
 	content: "\e620";
 }
