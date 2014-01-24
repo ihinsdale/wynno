@@ -291,9 +291,27 @@ exports.registerUser = function(user, callback) {
     tw_profile_image_url: user.tw_profile_image_url,
     tw_access_token: user.tw_access_token,
     tw_access_secret: user.tw_access_secret
-  }, { upsert: true }, function(err, doc) {
+  }, {}, function(err, doc) {
     if (err) {
-      callback(err);
+      // if user not found, create a new one
+      // we don't want to use the upsert option in findOneAndUpdate to do this, because
+      // that does not create the default values for joined_at, etc.
+      new User({
+        tw_id: user.tw_id,
+        tw_name: user.tw_name,
+        tw_screen_name: user.tw_screen_name,
+        tw_profile_image_url: user.tw_profile_image_url,
+        tw_access_token: user.tw_access_token,
+        tw_access_secret: user.tw_access_secret
+      }).save(function(err, doc) {
+        if (err) {
+          console.log('Error creating user.');
+          callback(err);
+        } else {
+          console.log('User is:', doc); // don't need to send whole doc, should limit results sent to the fields necessary
+          callback(null, doc); // as prescribed by passport.js
+        }
+      });
     } else {
       console.log('User is:', doc); // don't need to send whole doc, should limit results sent to the fields necessary
       callback(null, doc); // as prescribed by passport.js
@@ -331,7 +349,7 @@ exports.saveFeedback = function(user_id, feedback, email, callback) {
 
 exports.saveAgreement = function(user_id, agreement, callback) {
   // agreement should always be true, because default value saved in user is false
-  User.findByIdAndUpdate(user_id, { agreed_terms: agreement, agreed_terms_at: Date.now }, function(err, doc) {
+  User.findByIdAndUpdate(user_id, { agreed_terms: agreement, agreed_terms_at: new Date() }, function(err, doc) {
     if (err) {
       console.log('Error saving agreement to db');
       callback(err);
