@@ -78,10 +78,10 @@ angular.module('wynnoApp.services')
       return service.hasWordInList(text, service.settings.mutedWords);
     },
     isProtectedUser: function(tweeter, retweeter) {
-      return service.hasUserInList(tweeter, retweeter, service.settings.protectedUsers);
+      return service.hasUserInList(tweeter, retweeter, service.settings.heardUsers);
     },
     hasProtectedWord: function(text) {
-      return service.hasWordInList(text, service.settings.protectedWords);
+      return service.hasWordInList(text, service.settings.heardWords);
     },
     tweetIsProtected: function(tweet) {
       var retweeter;
