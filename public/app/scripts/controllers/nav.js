@@ -3,9 +3,10 @@
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
-  $scope.currentUser = AuthService.getCurrentUser();
-  if ($scope.currentUser) {
-    $scope.username = '@' + $scope.currentUser.username;
+
+  // if there is a current user, set the value of username in the scope
+  if (AuthService.getCurrentUser()) {
+    $scope.username = '@' + AuthService.getCurrentUser().username;
   }
   console.log('navctrl line evaluated');
 
@@ -17,14 +18,18 @@ angular.module('wynnoApp.controllers')
   // it appears this listener does get set up before the success event of the initial page is fired.
   $scope.$on("$locationChangeSuccess", function(evt, next, current) {
     console.log('locationchangesuccess listener in navctrl evaluated');
+
+    // update which view is active and whether that view requires authentication
     var urlParsingNode = document.createElement('a');
     urlParsingNode.href = next;
     var nextPath = urlParsingNode.hash.slice(1); // slicing at index 1 because 0th character is #
     $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath);
     $scope.active = AuthService.whatPageIsActive(nextPath);
-    // if the user hasn't agreed to ToS, and the page requires authentication,
+
+    // if the user hasn't agreed to ToS, and the view requires authentication,
     // open Welcome modal where they can agree to ToS
-    if ($scope.currentUser && !$scope.currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
+    var currentUser = AuthService.getCurrentUser();
+    if (currentUser && !currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
       $scope.openWelcome();
     }
   });
@@ -86,6 +91,7 @@ angular.module('wynnoApp.controllers')
         var user = AuthService.getCurrentUser();
         user.agreed_terms = true;
         $cookieStore.put('user', user);
+        console.log('after rewriting cookie, user looks like:', AuthService.getCurrentUser());
       }, function(reason) {
         console.log('error saving agreement:', reason);
       });

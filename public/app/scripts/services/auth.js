@@ -8,9 +8,6 @@ angular.module('wynnoApp.services')
       console.log('cookieStore get looks like:', $cookieStore.get('user'));
       return !!service.getCurrentUser();
     },
-    setAuthenticated: function() {
-      console.log('currentUser is now:', service.currentUser);
-    },
     sendAgreement: function(consent) {
       var d = $q.defer();
       $http({method: 'POST', url: '/agreed',

@@ -19,7 +19,7 @@ exports.index = function(req, res) {
 exports.checkin = function(req, res) {
   // send cookie to client containing user info
   res.cookie('user', JSON.stringify({
-    username: req.user.tw_screen_name,
+    username: '@' + req.user.tw_screen_name,
     profile_image_url: req.user.tw_profile_image_url,
     agreed_terms: req.user.agreed_terms
   }));
