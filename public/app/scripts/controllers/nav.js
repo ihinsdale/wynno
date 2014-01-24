@@ -24,7 +24,7 @@ angular.module('wynnoApp.controllers')
     $scope.active = AuthService.whatPageIsActive(nextPath);
     // if the user hasn't agreed to ToS, and the page requires authentication,
     // open Welcome modal where they can agree to ToS
-    if (currentUser && !currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
+    if ($scope.currentUser && !$scope.currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
       $scope.openWelcome();
     }
   });
