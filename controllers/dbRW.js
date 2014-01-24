@@ -291,19 +291,19 @@ exports.registerUser = function(user, callback) {
     tw_profile_image_url: user.tw_profile_image_url,
     tw_access_token: user.tw_access_token,
     tw_access_secret: user.tw_access_secret
-  }, {}, function(err, doc) {
+  }, function(err, doc) {
     if (err) {
       // if user not found, create a new one
       // we don't want to use the upsert option in findOneAndUpdate to do this, because
       // that does not create the default values for joined_at, etc.
-      new User({
+      User.create({
         tw_id: user.tw_id,
         tw_name: user.tw_name,
         tw_screen_name: user.tw_screen_name,
         tw_profile_image_url: user.tw_profile_image_url,
         tw_access_token: user.tw_access_token,
         tw_access_secret: user.tw_access_secret
-      }).save(function(err2, doc2) {
+      }, function(err2, doc2) {
         if (err) {
           console.log('Error creating user.');
           callback(err2);
