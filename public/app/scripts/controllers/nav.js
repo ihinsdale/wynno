@@ -72,10 +72,16 @@ angular.module('wynnoApp.controllers')
     });
     modalInstance.result.then(function(modalResult) {
       console.log('sending agreement to ToS', modalResult.agreement);
+      // broadcast event that agreement is being sent. this will be heard in
+      // MainCtrl, which will start spinners
+      $scope.$broadcast("sendingAgreement");
       // send agreement to ToS back to server
       AuthService.sendAgreement(modalResult.agreement)
       .then(function(result) {
         console.log(result);
+        // broadcast event that agreement has been saved, so that loading of
+        // content can actually be kicked off
+        $scope.$broadcast("agreementSaved");
       }, function(reason) {
         console.log('error saving agreement:', reason);
       });

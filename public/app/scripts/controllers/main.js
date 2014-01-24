@@ -219,4 +219,13 @@ angular.module('wynnoApp.controllers')
   window.scrollTo(0);
   $scope.initialLoad();
 
+  $scope.on("sendingAgreement", function() {
+    $scope.activeTwitterRequest = true;
+    $scope.busy = true;
+  });
+
+  $scope.on("agreementSaved", function() {
+    $scope.initialLoad();
+  });
+
 });

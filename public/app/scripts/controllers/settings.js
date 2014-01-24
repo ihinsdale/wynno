@@ -18,5 +18,9 @@ angular.module('wynnoApp.controllers')
 
   window.scrollTo(0);
   $scope.injectSettings();
+
+  $scope.on("agreementSaved", function() {
+    $scope.injectSettings();
+  });
 });
   
