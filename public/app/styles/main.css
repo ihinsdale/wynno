@@ -8015,12 +8015,12 @@ body {
 }
 
 /* line 391, main.scss */
-.protectedUser, .protectedWord, .mutedUser, .mutedWord {
+.heardUser, .heardWord, .mutedUser, .mutedWord {
   padding-left: 10px;
 }
 
 /* line 395, main.scss */
-.protectedUsers .settingHeader, .protectedWords .settingHeader {
+.heardUsers .settingHeader, .heardWords .settingHeader {
   background-color: #a5ebcd;
 }
 
@@ -8030,7 +8030,7 @@ body {
 }
 
 /* line 403, main.scss */
-.protectedUsers, .protectedWords {
+.heardUsers, .heardWords {
   border-left: 2px solid #62d7a5;
 }
 

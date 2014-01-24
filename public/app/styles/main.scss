@@ -388,11 +388,11 @@ body {
     padding-left: 5px;
 }
 
-.protectedUser, .protectedWord, .mutedUser, .mutedWord {
+.heardUser, .heardWord, .mutedUser, .mutedWord {
     padding-left: 10px;
 }
 
-.protectedUsers .settingHeader, .protectedWords .settingHeader {
+.heardUsers .settingHeader, .heardWords .settingHeader {
     background-color: $light-aye-green;
 }
 
@@ -400,7 +400,7 @@ body {
     background-color: $light-nay-red;
 }
 
-.protectedUsers, .protectedWords {
+.heardUsers, .heardWords {
     border-left: 2px solid $aye-green;
 }
 
