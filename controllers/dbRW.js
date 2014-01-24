@@ -293,6 +293,9 @@ exports.registerUser = function(user, callback) {
     tw_access_secret: user.tw_access_secret
   }, function(err, doc) {
     if (err) {
+      console.log('Error finding user.');
+      callback(err);
+    } else if (doc === null) {
       // if user not found, create a new one
       // we don't want to use the upsert option in findOneAndUpdate to do this, because
       // that does not create the default values for joined_at, etc.
@@ -304,7 +307,7 @@ exports.registerUser = function(user, callback) {
         tw_access_token: user.tw_access_token,
         tw_access_secret: user.tw_access_secret
       }, function(err2, doc2) {
-        if (err) {
+        if (err2) {
           console.log('Error creating user.');
           callback(err2);
         } else {
