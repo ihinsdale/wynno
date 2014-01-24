@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $location, $modal, TweetService, AuthService, FeedbackService) {
+.controller('NavCtrl', function($scope, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
   $scope.currentUser = AuthService.getCurrentUser();
   if ($scope.currentUser) {
@@ -82,6 +82,10 @@ angular.module('wynnoApp.controllers')
         // broadcast event that agreement has been saved, so that loading of
         // content can actually be kicked off
         $scope.$broadcast("agreementSaved");
+        // update cookie accordingly
+        var user = AuthService.getCurrentUser();
+        user.agreed_terms = true;
+        $cookieStore.put('user', user);
       }, function(reason) {
         console.log('error saving agreement:', reason);
       });
