@@ -117,17 +117,9 @@ angular.module('wynnoApp.controllers')
 
   $scope.renderInOrOut = function() {
     if ($location.path() === '/in') {
-      TweetService.getPassingTweets($scope.threshold)
-      .then(function(tweets) {
-        $scope.display(tweets);
-      }, function(reason) {
-
-      });
+      $scope.display(TweetService.getPassingTweets($scope.threshold));
     } else if ($location.path() === '/out') {
-      TweetService.getFailingTweets($scope.threshold)
-      .then(function(tweets) {
-        $scope.display(tweets);
-      });
+      $scope.display(TweetService.getFailingTweets($scope.threshold));
     }
   };
 
