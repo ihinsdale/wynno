@@ -41,7 +41,7 @@ angular.module('wynnoApp.services')
         // settings object again from the server
         service.settings = data;
         // apply these new settings to currentTweets
-        FilterService.applyFilterRules(TweetService.currentTweets);
+        FilterService.applyFilterRules(TweetService.currentTweets, service.settings);
 
         d.resolve(service.settings);
       })

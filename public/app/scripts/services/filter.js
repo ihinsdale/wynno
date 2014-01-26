@@ -1,5 +1,5 @@
 angular.module('wynnoApp.services')
-.factory('FilterService', ['SettingsService', 'TweetService', function(SettingsService, TweetService) {
+.factory('FilterService', [function() {
   var service = {
     hasWordInList: function(text, list) {
       var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
@@ -50,14 +50,14 @@ angular.module('wynnoApp.services')
       }
       tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
     },
-    applyFilterRules: function(tweets) {
-      service.currentSettings = SettingsService.settings;
+    applyFilterRules: function(tweets, settings) {
+      service.currentSettings = settings;
       angular.forEach(tweets, function(tweet) {
         service.tweetIsHeard(tweet);
         service.tweetIsMuted(tweet);
       });
     }
-  }
+  };
 
   return service;
 }]);

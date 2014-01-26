@@ -21,7 +21,7 @@ angular.module('wynnoApp.services')
         // save settings in SettingsService
         SettingsService.settings = data.settings;
         // apply filtering rules to the tweets
-        FilterService.applyFilterRules(data.tweets);
+        FilterService.applyFilterRules(data.tweets, SettingsService.settings);
         // now add the tweets to currentTweets
         service.currentTweets = service.currentTweets.concat(data.tweets);
         // update oldestTweetId, if any tweets were received
@@ -49,7 +49,7 @@ angular.module('wynnoApp.services')
         .success(function(tweets, status) {
           console.log('success getting new tweets, they look like:', tweets);
           // apply filtering rules to the tweets
-          FilterService.applyFilterRules(tweets);
+          FilterService.applyFilterRules(tweets, SettingsService.settings);
           // now add the tweets to currentTweets
           service.currentTweets = tweets.concat(service.currentTweets);
           // update timeOfLastFetch
