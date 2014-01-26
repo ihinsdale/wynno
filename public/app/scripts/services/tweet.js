@@ -1,27 +1,22 @@
 angular.module('wynnoApp.services')
-.factory('TweetService', ['$q', '$http', 'SettingsService', 'FilterService', function($q, $http, SettingsService, FilterService) {
+.factory('TweetService', ['$q', '$http', 'FilterService', function($q, $http, FilterService) {
   var service = {
     timeOfLastFetch: null,
     currentTweets: [],
     oldestTweetId: 0,
-    getOldTweetsAndSettings: function(oldestTweetId, andSettings) {
-      // for the first load of MainCtrl, andSettings should be true,
-      // because we want to get old tweets and the user's filtering rules to
-      // apply to all tweets
+    getOldTweets: function(oldestTweetId) {
       oldestTweetId = oldestTweetId || 0;
       var d = $q.defer();
       $http.get('/old', {
         params: {
           oldestTweetId: oldestTweetId,
-          settings: andSettings
+          settings: false
         }
       })
       .success(function(data, status) {
-        console.log('success getting old tweets', andSettings ? 'and settings' : '', ':', data);
-        // save settings in SettingsService
-        SettingsService.settings = data.settings;
-        // apply filtering rules to the tweets
-        FilterService.applyFilterRules(data.tweets, SettingsService.settings);
+        console.log('success getting old tweets:', data);
+        // apply filtering rules to the tweets using whatever settings are current in the FilterService
+        FilterService.applyFilterRules(data.tweets);
         // now add the tweets to currentTweets
         service.currentTweets = service.currentTweets.concat(data.tweets);
         // update oldestTweetId, if any tweets were received

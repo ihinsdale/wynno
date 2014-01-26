@@ -51,7 +51,10 @@ angular.module('wynnoApp.services')
       tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
     },
     applyFilterRules: function(tweets, settings) {
-      service.currentSettings = settings;
+      // if settings are provided, set those as the current settings
+      if (settings) {
+        service.currentSettings = settings;
+      }
       angular.forEach(tweets, function(tweet) {
         service.tweetIsHeard(tweet);
         service.tweetIsMuted(tweet);

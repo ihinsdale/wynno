@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService) {
+.controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetandSettingsService) {
   $scope.activeTwitterRequest = false; // used by spinner, to keep track of an active request to the Twitter API
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
   if ($location.path() === '/in') {
@@ -39,7 +39,10 @@ angular.module('wynnoApp.controllers')
   $scope.firstGet = function() {
     console.log('firstGet firing');
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
-    TweetService.getOldTweetsAndSettings(TweetService.oldestTweetId, true)
+    // set $scope.busy to true so that no additional requests for old tweets are triggered
+    // until this first one is finished
+    $scope.busy = true;
+    InitialTweetsandSettingsService.getInitialOldTweetsAndSettings(TweetService.oldestTweetId)
     .then(function(tweets) {
       $scope.renderInOrOut();
       $scope.getNewTweets();
@@ -52,8 +55,7 @@ angular.module('wynnoApp.controllers')
   $scope.getMoreOldTweets = function() {
     console.log('getMoreOlder firing');
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
-    TweetService.getOldTweetsAndSettings(TweetService.oldestTweetId, false)
-    // we got settings earlier, so the parameter this time is false
+    TweetService.getOldTweets(TweetService.oldestTweetId)
     .then(function(tweets) {
       $scope.renderInOrOut();
     }, function(reason) {
