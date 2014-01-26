@@ -1,5 +1,5 @@
 angular.module('wynnoApp.services')
-.factory('FilterService', ['SettingsService', function(SettingsService) {
+.factory('FilterService', ['SettingsService', 'TweetService', function(SettingsService, TweetService) {
   var service = {
     hasWordInList: function(text, list) {
       var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
