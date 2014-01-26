@@ -4,19 +4,20 @@ module.exports = function(app) {
   var user = require('../controllers/user.js');
   var passport = require('passport');
   var ensureAuthenticated = require('./middleware.js').ensureAuthenticated;
+  var ensureAgreedTerms = require('./middleware.js').ensureAgreedTerms;
 
   // GET request to homepage
   app.get('/', site.index);
   // GET request to /old grabs old tweets from database
-  app.get('/old', ensureAuthenticated, site.old)
+  app.get('/old', ensureAuthenticated, ensureAgreedTerms, site.old)
   // GET request to /new initiates request to Twitter API, saves tweets to database, send to client
-  app.get('/new', ensureAuthenticated, site.fresh);
+  app.get('/new', ensureAuthenticated, ensureAgreedTerms, site.fresh);
   // POST request to /vote saves vote in the database
-  app.post('/vote', ensureAuthenticated, site.processVote);
+  app.post('/vote', ensureAuthenticated, ensureAgreedTerms, site.processVote);
   // POST request to /settings saves new filter setting in the database
-  app.post('/settings', ensureAuthenticated, site.processSetting);
+  app.post('/settings', ensureAuthenticated, ensureAgreedTerms, site.processSetting);
   // GET request to /settings
-  app.get('/settings', ensureAuthenticated, site.getSettings);
+  app.get('/settings', ensureAuthenticated, ensureAgreedTerms, site.getSettings);
   // GET request to /checkin after authenticating with Twitter
   app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
@@ -30,4 +31,6 @@ module.exports = function(app) {
   app.get('/logout', ensureAuthenticated, site.logout);
   // POST request to /feedback records feedback in the database
   app.post('/feedback', site.processFeedback);
+  // POST request to /agreed
+  app.post('/agreed', ensureAuthenticated, site.processAgreement)
 };

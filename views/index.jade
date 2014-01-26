@@ -22,7 +22,7 @@ block nav
         a.dropdown-toggle(href='', ng-bind="username")
         ul.dropdown-menu
           li
-            a(ng-click="logout()")
+            a(ng-click="logout('twitter')")
               span.icomoon-exit
               span Sign out
 
@@ -62,7 +62,7 @@ block nav
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu
             li
-              a(ng-click="logout()")
+              a(ng-click="logout('twitter')")
                 span.icomoon-exit
                 span Sign out
 
@@ -81,7 +81,7 @@ block footer
     span.footerItem.footerBrand &copy; 2014 wynno
     span.footerItem <a>Terms</a>
     span.footerItem <a>Privacy</a>
-  .feedbackContainer(ng-click="open()")
+  .feedbackContainer(ng-click="openFeedback()")
     span.icomoon-bullhorn
     span.feedback Feedback  
 

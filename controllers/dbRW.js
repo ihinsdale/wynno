@@ -163,11 +163,11 @@ exports.saveVote = function(user_id, tweet_id, vote, callback) {
   });
 };
 
-exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_protect, input, callback) {
+exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_hear, input, callback) {
   var addToList = function(list) {
     User.findById(user_id, list, function(err, doc) {
       if (err) {
-        console.log('error adding', input, 'as a', mute_or_protect, user_or_word);
+        console.log('error adding', input, 'as a', mute_or_hear, user_or_word);
       } else {
         // if user/word isn't already in list, add him
         if (doc[list].indexOf(input) === -1) {
@@ -175,7 +175,7 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
           what[list] = input;
           doc.update({$push: what}, function(err, numberAffected, raw) {
             if (err) {
-              console.log('error adding', input, 'as a', mute_or_protect, user_or_word);
+              console.log('error adding', input, 'as a', mute_or_hear, user_or_word);
               callback(err);
             } else {
               console.log('The number of updated documents was %d', numberAffected);
@@ -195,7 +195,7 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
   var removeFromList = function(list) {
     User.findById(user_id, list, function(err, doc) {
       if (err) {
-        console.log('error removing', input, 'as a', mute_or_protect, user_or_word);
+        console.log('error removing', input, 'as a', mute_or_hear, user_or_word);
       } else {
         var location = doc[list].indexOf(input)
         // if user/word isn't in list, don't need to do anything
@@ -206,7 +206,7 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
           what[list] = doc[list].slice(0,location).concat(doc[list].slice(location + 1));
           doc.update(what, function(err, numberAffected, raw) {
             if (err) {
-              console.log('error removing', input, 'as a', mute_or_protect, user_or_word);
+              console.log('error removing', input, 'as a', mute_or_hear, user_or_word);
               callback(err);
             } else {
               console.log('The number of updated documents was %d', numberAffected);
@@ -221,24 +221,24 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
 
   // TODO: change this if/else branching to switch style
   //       can also remove the $-escaping check in next line
-  if (add_or_remove.indexOf('$') !== -1 || user_or_word.indexOf('$') !== -1 || mute_or_protect.indexOf('$') !== -1) {
+  if (add_or_remove.indexOf('$') !== -1 || user_or_word.indexOf('$') !== -1 || mute_or_hear.indexOf('$') !== -1) {
     callback('invalid input');
     // ALSO CHECK THAT USER_ID IS THE CURRENTLY LOGGED IN USER
   } else {
     if (add_or_remove === 'add') {
       if (user_or_word === 'user') {
-        if (mute_or_protect === 'mute') {
+        if (mute_or_hear === 'mute') {
           addToList('mutedUsers');
-        } else if (mute_or_protect === 'protect') {
-          addToList('protectedUsers');
+        } else if (mute_or_hear === 'hear') {
+          addToList('heardUsers');
         } else {
           callback('improperly specified request');
         }
       } else if (user_or_word === 'word') {
-        if (mute_or_protect === 'mute') {
+        if (mute_or_hear === 'mute') {
           addToList('mutedWords');
-        } else if (mute_or_protect === 'protect') {
-          addToList('protectedWords');
+        } else if (mute_or_hear === 'hear') {
+          addToList('heardWords');
         } else {
           callback('improperly specified request');
         }
@@ -247,18 +247,18 @@ exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_pro
       }
     } else if (add_or_remove === 'remove') {
       if (user_or_word === 'user') {
-        if (mute_or_protect === 'mute') {
+        if (mute_or_hear === 'mute') {
           removeFromList('mutedUsers');
-        } else if (mute_or_protect === 'protect') {
-          removeFromList('protectedUsers');
+        } else if (mute_or_hear === 'hear') {
+          removeFromList('heardUsers');
         } else {
           callback('improperly specified request');
         }
       } else if (user_or_word === 'word') {
-        if (mute_or_protect === 'mute') {
+        if (mute_or_hear === 'mute') {
           removeFromList('mutedWords');
-        } else if (mute_or_protect === 'protect') {
-          removeFromList('protectedWords');
+        } else if (mute_or_hear === 'hear') {
+          removeFromList('heardWords');
         } else {
           callback('improperly specified request');
         }
@@ -284,16 +284,37 @@ exports.findUser = function(user_id, callback) {
 
 exports.registerUser = function(user, callback) {
   // following passport.js signature: http://passportjs.org/guide/twitter/
-  console.log('user inside findOrCreateUser looks like:', user);
+  console.log('user inside registerUser looks like:', user);
   User.findOneAndUpdate({ tw_id: user.tw_id }, { 
     tw_name: user.tw_name,
     tw_screen_name: user.tw_screen_name,
     tw_profile_image_url: user.tw_profile_image_url,
     tw_access_token: user.tw_access_token,
     tw_access_secret: user.tw_access_secret
-  }, { upsert: true }, function(err, doc) {
+  }, function(err, doc) {
     if (err) {
+      console.log('Error finding user.');
       callback(err);
+    } else if (doc === null) {
+      // if user not found, create a new one
+      // we don't want to use the upsert option in findOneAndUpdate to do this, because
+      // that does not create the default values for joined_at, etc.
+      User.create({
+        tw_id: user.tw_id,
+        tw_name: user.tw_name,
+        tw_screen_name: user.tw_screen_name,
+        tw_profile_image_url: user.tw_profile_image_url,
+        tw_access_token: user.tw_access_token,
+        tw_access_secret: user.tw_access_secret
+      }, function(err2, doc2) {
+        if (err2) {
+          console.log('Error creating user.');
+          callback(err2);
+        } else {
+          console.log('New user is:', doc2); // don't need to send whole doc, should limit results sent to the fields necessary
+          callback(null, doc2); // as prescribed by passport.js
+        }
+      });
     } else {
       console.log('User is:', doc); // don't need to send whole doc, should limit results sent to the fields necessary
       callback(null, doc); // as prescribed by passport.js
@@ -302,7 +323,7 @@ exports.registerUser = function(user, callback) {
 };
 
 exports.getSettings = function(user_id, callback) {
-  User.findById(user_id, 'mutedUsers protectedUsers mutedWords protectedWords', function(err, doc) {
+  User.findById(user_id, 'mutedUsers heardUsers mutedWords heardWords', function(err, doc) {
     if (err) {
       console.log('error finding user', user_id, 'settings');
       callback(err);
@@ -328,3 +349,16 @@ exports.saveFeedback = function(user_id, feedback, email, callback) {
     }
   });
 };
+
+exports.saveAgreement = function(user_id, agreement, callback) {
+  // agreement should always be true, because default value saved in user is false
+  User.findByIdAndUpdate(user_id, { agreed_terms: agreement, agreed_terms_at: new Date() }, function(err, doc) {
+    if (err) {
+      console.log('Error saving agreement to db');
+      callback(err);
+    } else {
+      console.log('Saved agreement to db.');
+      callback(null);
+    }
+  });
+}

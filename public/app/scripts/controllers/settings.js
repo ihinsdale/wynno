@@ -9,8 +9,8 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_protect, input) {
-    SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_protect, input)
+  $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_hear, input) {
+    SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_hear, input)
     .then(function(settings) {
       $scope.settings = settings;
     });
@@ -18,5 +18,9 @@ angular.module('wynnoApp.controllers')
 
   window.scrollTo(0);
   $scope.injectSettings();
+
+  $scope.$on("agreementSaved", function() {
+    $scope.injectSettings();
+  });
 });
   

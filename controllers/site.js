@@ -6,24 +6,26 @@ var rendering = require('./rendering.js');
 
 
 exports.index = function(req, res) {
+  // if user is already in session, send them the cookie again
+  // [WHY??]
   if (req.user) {
     res.cookie('user', JSON.stringify({
-      username: req.user.tw_screen_name,
-      profile_image_url: req.user.tw_profile_image_url
+      username: '@' + req.user.tw_screen_name,
+      profile_image_url: req.user.tw_profile_image_url,
+      agreed_terms: req.user.agreed_terms
     }));
   }
   res.render('index', { title: 'wynno' });
 };
 
+// a function for checking in a user after a successful signin
 exports.checkin = function(req, res) {
   // send cookie to client containing user info
   res.cookie('user', JSON.stringify({
-    username: req.user.tw_screen_name,
-    profile_image_url: req.user.tw_profile_image_url
+    username: '@' + req.user.tw_screen_name,
+    profile_image_url: req.user.tw_profile_image_url,
+    agreed_terms: req.user.agreed_terms
   }));
-  // can also check here whether user has just signed up, in which case, redirect them to terms and conditions
-  // ...
-  // else
   res.redirect('#/in');
 };
 
@@ -126,7 +128,7 @@ exports.processSetting = function(req, res) {
   console.log('request data look like', data)
   async.waterfall([
     function(callback) {
-      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_protect, data.input, callback);
+      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_hear, data.input, callback);
     },
     // TODO: this step of getting the updated settings could be removed if logic on the client-side updates the settings
     //       model/view upon success message from server
@@ -193,4 +195,20 @@ exports.processFeedback = function(req, res) {
     }
   });
 };
-
+exports.processAgreement = function(req, res) {
+  if (req.body.agreement !== true) {
+    res.send(400, 'Route only accepts agreement value of true, indicating ToS agreed to.');
+  }
+  async.series([
+    function(callback) {
+      db.saveAgreement(req.user._id, req.body.agreement, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send("Successfully saved user's agreement to Terms of Service.");
+    }
+  });
+};
