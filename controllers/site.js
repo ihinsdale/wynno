@@ -44,7 +44,7 @@ exports.old = function(req, res) {
     rendering.renderLinksAndMentions,
     function(tweets, callback) {
       // if settings were requested too, get those
-      if (req.query.andSettings) {
+      if (req.query.settings) {
         db.getSettings(req.user._id, tweets, callback);
       } else {
         callback(null, tweets, null);
