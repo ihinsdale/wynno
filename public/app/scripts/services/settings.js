@@ -1,5 +1,5 @@
 angular.module('wynnoApp.services')
-.factory('SettingsService', ['$q', '$http', function($q, $http) {
+.factory('SettingsService', ['$q', '$http', 'FilterService', 'TweetService', function($q, $http, FilterService, TweetService) {
   var service = {
     settings: [],
     // (this function is obsolete now, because settings are got with the 
@@ -35,10 +35,14 @@ angular.module('wynnoApp.services')
         data: {add_or_remove: add_or_remove, user_or_word: user_or_word, mute_or_hear: mute_or_hear, input: input}})
       .success(function(data, status) {
         console.log('success updating settings to', add_or_remove, input, 'as a', mute_or_hear, user_or_word);
-        // could optimize this by updating service.settings with the particular
+        // save the new settings
+        // TODO: could optimize this by updating service.settings with the particular
         // setting that was changed, rather than receiving the whole
         // settings object again from the server
         service.settings = data;
+        // apply these new settings to currentTweets
+        FilterService.applyFilterRules(TweetService.currentTweets);
+
         d.resolve(service.settings);
       })
       .error(function(reason, status) {
