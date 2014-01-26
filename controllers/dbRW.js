@@ -322,14 +322,14 @@ exports.registerUser = function(user, callback) {
   });
 };
 
-exports.getSettings = function(user_id, callback) {
+exports.getSettings = function(user_id, tweetsToPassOn, callback) {
   User.findById(user_id, 'mutedUsers heardUsers mutedWords heardWords', function(err, doc) {
     if (err) {
       console.log('error finding user', user_id, 'settings');
       callback(err);
     } else {
       console.log('user settings look like', doc);
-      callback(null, doc);
+      callback(null, tweetsToPassOn, doc);
     }
   });
 };

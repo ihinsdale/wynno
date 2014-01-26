@@ -2,6 +2,8 @@ angular.module('wynnoApp.services')
 .factory('SettingsService', ['$q', '$http', function($q, $http) {
   var service = {
     settings: [],
+    // (this function is obsolete now, because settings are got with the 
+    // first request for old tweets)
     getSettingsFromDb: function() {
       var d = $q.defer();
       if (service.settings.length === 0) {

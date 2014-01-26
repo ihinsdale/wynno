@@ -7,7 +7,7 @@ var rendering = require('./rendering.js');
 
 exports.index = function(req, res) {
   // if user is already in session, send them the cookie again
-  // [WHY??]
+  // [WHY?? Just in case they had deleted the user cookie, and not the session one?]
   if (req.user) {
     res.cookie('user', JSON.stringify({
       username: '@' + req.user.tw_screen_name,
@@ -41,14 +41,26 @@ exports.old = function(req, res) {
     function(callback) {
       db.findTweetsBefore_id(req.user._id, oldestTweetId, callback);
     },
-    rendering.renderLinksAndMentions
-  ], function(error, tweets) {
+    rendering.renderLinksAndMentions,
+    function(tweets, callback) {
+      // if settings were requested too, get those
+      if (req.query.andSettings) {
+        db.getSettings(req.user._id, tweets, callback);
+      } else {
+        callback(null, tweets, null);
+      }
+    }
+  ], function(error, tweets, settings) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      console.log(tweets);
-      res.send(tweets);
+      var data = { tweets: tweets };
+      if (settings) {
+        data.settings = settings;
+      }
+      console.log('sending results for /old:', data);
+      res.send(data);
     }
   });
 };
@@ -146,7 +158,8 @@ exports.processSetting = function(req, res) {
 };
 
 exports.getSettings = function(req, res) {
-  db.getSettings(req.user._id, function(error, settings) {
+  db.getSettings(req.user._id, null, function(error, tweetsPassingOn, settings) {
+    // we are just grabbing settings, so tweetsPassingOn is null;
     if (error) {
       console.log(error);
       res.send(500);

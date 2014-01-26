@@ -39,17 +39,21 @@ angular.module('wynnoApp.controllers')
   $scope.firstGet = function() {
     console.log('firstGet firing');
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
-    TweetService.getOldTweets(TweetService.oldestTweetId)
+    TweetService.getOldTweetsAndSettings(TweetService.oldestTweetId, true)
     .then(function(tweets) {
       $scope.renderInOrOut();
       $scope.getNewTweets();
+    }, function(reason) {
+      console.log('error getting first batch of old tweets:', reason);
+      $scope.busy = false;
     });
   };
 
   $scope.getMoreOldTweets = function() {
     console.log('getMoreOlder firing');
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
-    TweetService.getOldTweets(TweetService.oldestTweetId)
+    TweetService.getOldTweetsAndSettings(TweetService.oldestTweetId, false)
+    // we got settings earlier, so the parameter this time is false
     .then(function(tweets) {
       $scope.renderInOrOut();
     }, function(reason) {
