@@ -145,9 +145,10 @@ exports.processSetting = function(req, res) {
     // TODO: this step of getting the updated settings could be removed if logic on the client-side updates the settings
     //       model/view upon success message from server
     function(callback) {
-      db.getSettings(req.user._id, callback);
+      db.getSettings(req.user._id, null, callback);
     }
-  ], function(error, settings) {
+  ], function(error, tweetsPassingOn, settings) {
+    // tweetsPassingOn is used by the /old route, it's irrelevant here
     if (error) {
       console.log(error);
       res.send(500);
