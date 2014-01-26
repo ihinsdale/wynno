@@ -12,7 +12,11 @@ angular.module('wynnoApp.services')
       })
       .success(function(data, status) {
         console.log('success getting old tweets, they look like:', data);
+        // apply filtering rules to the tweets
+        service.applyFilterRules(data);
+        // now add the tweets to currentTweets
         service.currentTweets = service.currentTweets.concat(data);
+        // update oldestTweetId, if any tweets were received
         if (data.length) {
           service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1]._id;
         }
@@ -36,7 +40,11 @@ angular.module('wynnoApp.services')
         $http.get('/new')
         .success(function(data, status) {
           console.log('success getting new tweets, they look like:', data);
+          // apply filtering rules to the tweets
+          service.applyFilterRules(data);
+          // now add the tweets to currentTweets
           service.currentTweets = data.concat(service.currentTweets);
+          // update timeOfLastFetch
           service.timeOfLastFetch = new Date();
           d.resolve(service.currentTweets);
         })
@@ -47,7 +55,6 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
-
     hasWordInList: function(text, list) {
       var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
       var noExtraSpaces = noPunctuation.replace(/\s{2,}/g," ");
@@ -97,7 +104,7 @@ angular.module('wynnoApp.services')
       }
       tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
     },
-    getPassingTweets: function(threshold) {
+    applyFilterRules: function(tweets) {
       return SettingsService.provideSettings()
       .then(function(settings) {
         service.settings = settings;
@@ -129,6 +136,33 @@ angular.module('wynnoApp.services')
         d.resolve(tweetsToDisplay);
         return d.promise;
       });
+    }
+
+    },
+    getPassingTweets: function(threshold) {
+      var tweetsToDisplay = [];
+      angular.forEach(service.currentTweets, function(tweet) {
+        // reset this property to false, so it is only made true by a new contrary vote
+        tweet.hideGivenNewContraryVote = false;
+        if (tweet.__vote === null) {
+          if (tweet.__isProtected) {
+            tweetsToDisplay.push(tweet);
+          } else if (tweet.__isMuted) {
+            //do nothing
+          } else {
+            if (tweet.__p >= threshold || tweet.__p === null) {
+              tweetsToDisplay.push(tweet);
+            } else {
+              //do nothing
+            }
+          }
+        } else {
+          if (!!tweet.__vote) {
+            tweetsToDisplay.push(tweet);
+          }
+        }
+      });
+      return tweetsToDisplay;
     },
     getFailingTweets: function(threshold) {
       return SettingsService.provideSettings()
