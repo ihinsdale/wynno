@@ -44,7 +44,7 @@ angular.module('wynnoApp.services')
         .success(function(tweets, status) {
           console.log('success getting new tweets, they look like:', tweets);
           // apply filtering rules to the tweets
-          FilterService.applyFilterRules(tweets, SettingsService.settings);
+          FilterService.applyFilterRules(tweets);
           // now add the tweets to currentTweets
           service.currentTweets = tweets.concat(service.currentTweets);
           // update timeOfLastFetch
