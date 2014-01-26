@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetsandSettingsService) {
+.controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetsAndSettingsService) {
   $scope.activeTwitterRequest = false; // used by spinner, to keep track of an active request to the Twitter API
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
   if ($location.path() === '/in') {
@@ -42,7 +42,7 @@ angular.module('wynnoApp.controllers')
     // set $scope.busy to true so that no additional requests for old tweets are triggered
     // until this first one is finished
     $scope.busy = true;
-    InitialTweetsandSettingsService.getInitialOldTweetsAndSettings(TweetService.oldestTweetId)
+    InitialTweetsAndSettingsService.getInitialOldTweetsAndSettings(TweetService.oldestTweetId)
     .then(function(tweets) {
       $scope.renderInOrOut();
       $scope.getNewTweets();
