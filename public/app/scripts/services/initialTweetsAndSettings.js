@@ -1,4 +1,4 @@
-bothTweetsAndSettings.jsangular.module('wynnoApp.services')
+angular.module('wynnoApp.services')
 .factory('InitialTweetsAndSettingsService', ['$q', '$http', 'FilterService', 'TweetService', 'SettingsService', function($q, $http, FilterService, TweetService, SettingsService) {
   // this service created to avoid circular dependency between Filter, Tweet, and Settings services that resulted
   // from trying to set initial settings using the TweetService
