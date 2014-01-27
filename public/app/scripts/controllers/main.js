@@ -53,7 +53,7 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.getMoreOldTweets = function() {
-    console.log('getMoreOlder firing');
+    console.log('getMoreOldTweets firing');
     console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
     TweetService.getOldTweets(TweetService.oldestTweetId)
     .then(function(tweets) {

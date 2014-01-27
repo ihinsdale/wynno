@@ -2,6 +2,8 @@
 
 angular.module('wynnoApp.controllers')
 .controller('SettingsCtrl', function($scope, $location, AuthService, SettingsService) {
+  $scope.builderIsCollapsed = false;
+
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {

@@ -1,4 +1,66 @@
 <div class="row">
+  <div class="col-md-8 col-md-offset2 text-center">
+    <button class="btn btn-default wynnoPurple" ng-click="builderIsCollapsed = !builderIsCollapsed">Add new filter</button>
+    <hr>
+    <div collapse="builderIsCollapsed">
+      <div class="well well-lg">
+        <ol>
+          <li>Choose filter type
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary ayeGreen" ng-model="draftType" btn-radio="'Hear'">Hear</button>
+              <button type="button" class="btn btn-primary nayRed" ng-model="draftType" btn-radio="'Mute'">Mute</button>
+            </div>
+          </li>
+          <li>Make the rules
+            <div class="btn-group">
+              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'All'">All</button>
+              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'Retweets'">Retweets</button>
+              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'Tweets'">Tweets</button>
+            </div>
+            <div class="draftRule" ng-repeat="draftRule in draftRules">
+              <div ng-if="$first">
+                <button type="button" class="btn btn-primary" ng-model="draftRule.by" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">by</button>
+                <div class="input-group" ng-show="draftRule.by">
+                  <span class="input-group-addon">@</span>
+                  <input type="text" class="form-control" placeholder="username" ng-model="draftRule.byUsers">
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" ng-model="draftRule.containing" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">containing</button>
+              <div class="btn-group" ng-show="draftRule.containing">
+                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'link'">a link to</button>
+                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'picture'">a picture</button>
+                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'quotation'">a quotation</button>
+                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'hashtag'">the hashtag</button>
+              </div>
+              <div class="input-group" ng-show="draftRule.critCat == 'link">
+                <span class="input-group-addon">domain</span>
+                <input type="text" class="form-control" placeholder="hashtag" ng-model="draftRule.hashtag">
+              </div>
+              <div class="input-group" ng-show="draftRule.critCat == 'hashtag">
+                <span class="input-group-addon">#</span>
+                <input type="text" class="form-control" placeholder="hashtag" ng-model="draftRule.hashtag">
+              </div>
+            </div>
+            <button type-"button" class="btn btn-primary" ng-click="newDraftContainingRule()" DISABLE IF !draftRule.containing >+ add</button>
+          </li>
+        </ol>
+      </div> 
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+
+  </div>
+</div>
+<div class="row" ng-repeat="filter in filters">
+  <div class="col-md-8 col-md-offset-2">
+  </div>
+</div>
+
+
+<div class="row">
   <div class="col-md-1 col-md-offset-1 text-center">
     <div><span class="icomoon-volume-medium landingFeature ayeGreen"></span></div>
     <div><h2 class="ayeGreen">Heard</h2></div>
