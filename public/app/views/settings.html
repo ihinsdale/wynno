@@ -13,63 +13,62 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset2">
+  <div class="col-md-8 col-md-offset-2">
     <button class="btn btn-default wynnoPurple" ng-click="builderIsCollapsed = !builderIsCollapsed">Add new filter</button>
     <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
         <ol>
-          <li>Hear or Mute?</li>
-            <div class="btn-group">
-              <button type="button" class="btn btn-default ayeGreen" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
-              <button type="button" class="btn btn-default nayRed" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
-            </div>
+          <li><h3>Hear or Mute?</h3></li>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default ayeGreen hear" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
+            <button type="button" class="btn btn-default nayRed mute" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
+          </div>
 
-          <li>Whose tweets?</li>
-            <div class="input-group">
-              <span class="input-group-addon">@</span>
-              <input class="col-md-2 form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
-              <span class="input-group-btn">
-                <button class="btn btn-default" ng-click="draftAddUser" value="Add">Add</button>
-              </span>
-            </div>
-            <div class="" ng-repeat="user in draftFilter.users">
-              <button class="" ng-click="">
-                <span class="icomoon-cancel-circle"></span>
-              </button>
-              <div class="user">{{user}}</div>
-            </div>
-          
-          <li>Containing what?</li>
-            <div class="" ng-repeat="condition in draftFilter.conditions">
-              <div ng-show="!$first">and</div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'link'">a link to</button>
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'picture'">a picture</button>
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
-              </div>
-              <div class="input-group" ng-show="condition.type == 'link">
-                <span class="input-group-addon">domain</span>
-                <input type="text" class="form-control" placeholder="e.g. buzzfeed" ng-model="condition.link">
-              </div>
-              <div class="input-group" ng-show="condition.type == 'hashtag">
-                <span class="input-group-addon">#</span>
-                <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
-              </div>
-            </div>
-            <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
-              <span class="icomoon-plus"></span>Add
+          <li><h3>Whose tweets?</h3></li>
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="draftAddUser" value="Add">Add</button>
+            </span>
+          </div>
+          <div class="" ng-repeat="user in draftFilter.users">
+            <button class="" ng-click="">
+              <span class="icomoon-cancel-circle"></span>
             </button>
+            <div class="user">{{user}}</div>
+          </div>
           
-          <li>More options</li>
-            <span>Filter applied to:</span>
+          <li><h3>Containing what?</h3></li>
+          <div class="" ng-repeat="condition in draftFilter.conditions">
+            <div ng-show="!$first">and</div>
             <div class="btn-group">
-              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'all'">Tweets + Retweets</button>
-              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'tweets'">Tweets only</button>
-              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'retweets'">Retweets only</button>
+              <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'link'">a link to</button>
+              <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'picture'">a picture</button>
+              <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
+              <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
             </div>
+            <div class="input-group" ng-show="condition.type == 'link">
+              <span class="input-group-addon">domain</span>
+              <input type="text" class="form-control" placeholder="e.g. buzzfeed" ng-model="condition.link">
+            </div>
+            <div class="input-group" ng-show="condition.type == 'hashtag">
+              <span class="input-group-addon">#</span>
+              <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
+            </div>
+          </div>
+          <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
+            <span class="icomoon-plus"></span>Add
+          </button>
           
+          <li><h3>More options</h3></li>
+          <span>Filter applied to:</span>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'all'">Tweets + Retweets</button>
+            <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'tweets'">Tweets only</button>
+            <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'retweets'">Retweets only</button>
+          </div>
         </ol>
         <button type="button" class="btn btn-primary" ng-click="saveFilter()">Save filter</button>
       </div> 

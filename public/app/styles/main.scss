@@ -31,6 +31,8 @@ $twitter-blue: #55acee;
 $gray: #777777;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
+// color utilities
+
 .ayeGreen {
     color: $aye-green;
 }
@@ -64,6 +66,8 @@ body {
 .navbar-default {
     background-color: $nav-background-color;
 }
+
+// tweet styling
 
 .tweet {
     padding-bottom: 5px;
@@ -159,6 +163,8 @@ body {
     font-size: 12px;
     line-height: 14px;
 }
+
+// vote button styling
 
 .voteButtons {
     // background-color: $tweet-background-color;
@@ -618,17 +624,18 @@ $twitterButtonRadius: 3px;
     padding-left: 6px;
 }
 
-@media (max-width: 979px) {
-
+// settings page styling
+.btn.active.hear {
+    background-color: $aye-green;
+    color: #ffffff;
 }
 
-@media (min-width: 980px) {
-
+.btn.active.mute {
+    background-color: $nay-red;
+    color: #ffffff;
 }
 
-@media (max-width: 767px) {
-
-}
+// media query-based styling
 
 @media (min-width: 768px) {
     .navbar-brand {
