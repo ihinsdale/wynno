@@ -42,26 +42,32 @@
           </div>
           
           <h3><li>Containing what?</li></h3>
-          <div class="" ng-repeat="condition in draftFilter.conditions">
-            <div ng-show="!$first">and</div>
-            <div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'link'">a link to</button>
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'picture'">a picture</button>
-                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
+          <ul>
+            <div class="" ng-repeat="condition in draftFilter.conditions">
+              <div ng-show="!$first">and</div>
+              <div>
+                <div>
+                  <li>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'link'">a link to</button>
+                      <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
+                      <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'picture'">a picture</button>
+                      <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
+                    </div>
+                  </li>
+                </div>
+                <div class="col-md-4 col-md-offset-1" ng-show="condition.type == 'link'">
+                  <input type="text" class="form-control" placeholder="example.com" ng-model="condition.link">
+                </div>
+                <div class="col-md-4 col-md-offset-1" ng-show="condition.type == 'hashtag'">
+                  <div class="input-group">
+                    <span class="input-group-addon">#</span>
+                    <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-2 col-md-offset-1" ng-show="condition.type == 'link'">
-              <input type="text" class="form-control" placeholder="example.com" ng-model="condition.link">
-            </div>
-            <div class="col-md-2 col-md-offset-1" ng-show="condition.type == 'hashtag'">
-              <div class="input-group">
-                <span class="input-group-addon">#</span>
-                <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
-              </div>
-            </div>
-          </div>
+          </ul>
           <div>
             <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
               <span class="icomoon-plus"></span>Add
