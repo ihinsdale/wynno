@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-8 col-md-offset-2 text-center">
     <h2>Your filters</h2>
   </div>
 </div>
@@ -13,19 +13,19 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset2 text-center">
+  <div class="col-md-8 col-md-offset2">
     <button class="btn btn-default wynnoPurple" ng-click="builderIsCollapsed = !builderIsCollapsed">Add new filter</button>
     <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
         <ol>
-          <li>Hear or Mute?
+          <li>Hear or Mute?</li>
             <div class="btn-group">
-              <button type="button" class="btn btn-primary ayeGreen" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
-              <button type="button" class="btn btn-primary nayRed" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
+              <button type="button" class="btn btn-default ayeGreen" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
+              <button type="button" class="btn btn-default nayRed" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
             </div>
-          </li>
-          <li>Whose tweets?
+
+          <li>Whose tweets?</li>
             <div class="input-group">
               <span class="input-group-addon">@</span>
               <input class="col-md-2 form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
@@ -39,8 +39,8 @@
               </button>
               <div class="user">{{user}}</div>
             </div>
-          </li>
-          <li>Containing what?
+          
+          <li>Containing what?</li>
             <div class="" ng-repeat="condition in draftFilter.conditions">
               <div ng-show="!$first">and</div>
               <div class="btn-group">
@@ -61,17 +61,17 @@
             <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
               <span class="icomoon-plus"></span>Add
             </button>
-          </li>
-          <li>More options
+          
+          <li>More options</li>
             <span>Filter applied to:</span>
             <div class="btn-group">
               <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'all'">Tweets + Retweets</button>
               <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'tweets'">Tweets only</button>
               <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'retweets'">Retweets only</button>
             </div>
-          </li>
+          
         </ol>
-        <button type="button" class="btn btn-default" ng-click="saveFilter()">Save filter</button>
+        <button type="button" class="btn btn-primary" ng-click="saveFilter()">Save filter</button>
       </div> 
     </div>
   </div>
