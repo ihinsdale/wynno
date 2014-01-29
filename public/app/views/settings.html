@@ -30,7 +30,7 @@
             <span class="input-group-addon">@</span>
             <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
             <span class="input-group-btn">
-              <button class="btn btn-primary" ng-click="draftAddUser" value="Add">Add</button>
+              <button class="btn btn-default" ng-click="draftAddUser" value="Add">Add</button>
             </span>
           </div>
           <div class="" ng-repeat="user in draftFilter.users">
@@ -65,12 +65,12 @@
           <h3><li>More options</li></h3>
           <span>Filter applied to:</span>
           <div class="btn-group">
-            <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'all'">Tweets + Retweets</button>
-            <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'tweets'">Tweets only</button>
-            <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'retweets'">Retweets only</button>
+            <button type="button" class="btn btn-default" ng-model="draftRule.scope" btn-radio="'all'">Tweets + Retweets</button>
+            <button type="button" class="btn btn-default" ng-model="draftRule.scope" btn-radio="'tweets'">Tweets only</button>
+            <button type="button" class="btn btn-default" ng-model="draftRule.scope" btn-radio="'retweets'">Retweets only</button>
           </div>
         </ol>
-        <button type="button" class="btn btn-primary" ng-click="saveFilter()">Save filter</button>
+        <button type="button" class="btn btn-primary saveFilter" ng-click="saveFilter()">Save filter</button>
       </div> 
     </div>
   </div>

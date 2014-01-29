@@ -8279,14 +8279,14 @@ body {
 }
 
 /* line 629, main.scss */
-.btn.addNewFilter, .btn.addNewFilter:hover {
+.btn.addNewFilter, .btn.saveFilter {
   background-color: #c7a9e1;
   color: #ffffff;
 }
 
 /* line 634, main.scss */
-.btn.addNewFilter:hover {
-  border-color: #a166d5;
+.btn.addNewFilter:hover, .btn.saveFilter:hover {
+  background-color: #a166d5;
 }
 
 /* line 638, main.scss */
