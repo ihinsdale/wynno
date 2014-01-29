@@ -1,160 +1,78 @@
 <div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Your filters</h2>
+  </div>
+</div>
+<div class="row" ng-repeat="filter in filters">
+  <div class="col-md-8 col-md-offset-2">
+    <button class="" ng-click="">
+      <span class="icomoon-cancel-circle"></span>
+    </button>
+    {{filter}}
+  </div>
+</div>
+
+<div class="row">
   <div class="col-md-8 col-md-offset2 text-center">
     <button class="btn btn-default wynnoPurple" ng-click="builderIsCollapsed = !builderIsCollapsed">Add new filter</button>
     <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
         <ol>
-          <li>Choose filter type
+          <li>Hear or Mute?
             <div class="btn-group">
-              <button type="button" class="btn btn-primary ayeGreen" ng-model="draftType" btn-radio="'Hear'">Hear</button>
-              <button type="button" class="btn btn-primary nayRed" ng-model="draftType" btn-radio="'Mute'">Mute</button>
+              <button type="button" class="btn btn-primary ayeGreen" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
+              <button type="button" class="btn btn-primary nayRed" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
             </div>
           </li>
-          <li>Make the rules
-            <div class="btn-group">
-              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'All'">All</button>
-              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'Retweets'">Retweets</button>
-              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'Tweets'">Tweets</button>
+          <li>Whose tweets?
+            <div class="input-group">
+              <span class="input-group-addon">@</span>
+              <input class="col-md-2 form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
+              <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="draftAddUser" value="Add">Add</button>
+              </span>
             </div>
-            <div class="draftRule" ng-repeat="draftRule in draftRules">
-              <div ng-if="$first">
-                <button type="button" class="btn btn-primary" ng-model="draftRule.by" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">by</button>
-                <div class="input-group" ng-show="draftRule.by">
-                  <span class="input-group-addon">@</span>
-                  <input type="text" class="form-control" placeholder="username" ng-model="draftRule.byUsers">
-                </div>
+            <div class="" ng-repeat="user in draftFilter.users">
+              <button class="" ng-click="">
+                <span class="icomoon-cancel-circle"></span>
+              </button>
+              <div class="user">{{user}}</div>
+            </div>
+          </li>
+          <li>Containing what?
+            <div class="" ng-repeat="condition in draftFilter.conditions">
+              <div ng-show="!$first">and</div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'link'">a link to</button>
+                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'picture'">a picture</button>
+                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
+                <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
               </div>
-              <button type="button" class="btn btn-primary" ng-model="draftRule.containing" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">containing</button>
-              <div class="btn-group" ng-show="draftRule.containing">
-                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'link'">a link to</button>
-                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'picture'">a picture</button>
-                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'quotation'">a quotation</button>
-                <button type="button" class="btn btn-default" ng-model="draftRule.critCat" btn-radio="'hashtag'">the hashtag</button>
-              </div>
-              <div class="input-group" ng-show="draftRule.critCat == 'link">
+              <div class="input-group" ng-show="condition.type == 'link">
                 <span class="input-group-addon">domain</span>
-                <input type="text" class="form-control" placeholder="hashtag" ng-model="draftRule.hashtag">
+                <input type="text" class="form-control" placeholder="e.g. buzzfeed" ng-model="condition.link">
               </div>
-              <div class="input-group" ng-show="draftRule.critCat == 'hashtag">
+              <div class="input-group" ng-show="condition.type == 'hashtag">
                 <span class="input-group-addon">#</span>
-                <input type="text" class="form-control" placeholder="hashtag" ng-model="draftRule.hashtag">
+                <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
               </div>
             </div>
-            <button type-"button" class="btn btn-primary" ng-click="newDraftContainingRule()" DISABLE IF !draftRule.containing >+ add</button>
+            <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
+              <span class="icomoon-plus"></span>Add
+            </button>
+          </li>
+          <li>More options
+            <span>Filter applied to:</span>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'all'">Tweets + Retweets</button>
+              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'tweets'">Tweets only</button>
+              <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'retweets'">Retweets only</button>
+            </div>
           </li>
         </ol>
+        <button type="button" class="btn btn-default" ng-click="saveFilter()">Save filter</button>
       </div> 
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-
-  </div>
-</div>
-<div class="row" ng-repeat="filter in filters">
-  <div class="col-md-8 col-md-offset-2">
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="col-md-1 col-md-offset-1 text-center">
-    <div><span class="icomoon-volume-medium landingFeature ayeGreen"></span></div>
-    <div><h2 class="ayeGreen">Heard</h2></div>
-  </div>
-  <div class="col-md-4 col-md-offset-1">
-    <div class="heardUsers"> 
-      <div class="innerSettingsBlock">
-        <h3 class="settingHeader">Users</h3>
-        <div class="heardUser" ng-repeat="user in settings.heardUsers">
-          <button class="removeSetting" ng-click="updateSetting('remove','user','hear', user)">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
-          <div class="user">{{user}}</div>
-        </div>
-        <div class="settingInputContainer">
-          <div class="input-group">
-            <span class="input-group-addon">@</span>
-            <input class="col-md-2 form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="heardUserInput" ng-minlength="1">
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="updateSetting('add','user','hear',heardUserInput)" value="Add">Add</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="heardWords"> 
-      <div class="innerSettingsBlock">
-        <h3 class="settingHeader">Words</h3>
-        <div class="heardWord" ng-repeat="word in settings.heardWords">
-          <button class="removeSetting" ng-click="updateSetting('remove','word','hear', word)">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
-          <div class="word">{{word}}</div>
-        </div>
-        <div class="settingInputContainer">
-          <div class="input-group">
-            <input class="col-md-2 form-control" type="text" ng-model="heardWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="updateSetting('add','word','hear',heardWordInput)" value="Add">Add</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-1 col-md-offset-1 text-center">
-    <div><span class="icomoon-volume-mute landingFeature nayRed"></span></div>
-    <div><h2 class="nayRed">Muted</h2></div>
-  </div>
-  <div class="col-md-4 col-md-offset-1">
-    <div class="mutedUsers">
-      <div class="innerSettingsBlock">
-        <h3 class="settingHeader">Users</h3>
-        <div class="mutedUser" ng-repeat="user in settings.mutedUsers">
-          <button class="removeSetting" ng-click="updateSetting('remove','user','mute', user)">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
-          <div class="user">{{user}}</div>
-        </div>
-        <div class="settingInputContainer">
-          <div class="input-group">
-            <span class="input-group-addon">@</span>
-            <input class="col-md-2 form-control" type="text" ng-model="mutedUserInput" ng-minlength="1" placeholder="Enter a username"></input>
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="updateSetting('add','user','mute', mutedUserInput)" value="Add">Add</button>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="mutedWords">
-      <div class="innerSettingsBlock">
-        <h3 class="settingHeader">Words</h3>
-        <div class="mutedWord" ng-repeat="word in settings.mutedWords">
-          <button class="removeSetting" ng-click="updateSetting('remove','word','mute', word)">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
-          <div class="word">{{word}}</div>
-        </div>
-        <div class="settingInputContainer">
-          <div class="input-group">
-            <input class="col-md-2 form-control" type="text" ng-model="mutedWordInput" ng-minlength="1" placeholder="Enter a word"></input>
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="updateSetting('add','word','mute',mutedWordInput)" value="Add">Add</button>
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
