@@ -2,7 +2,25 @@
 
 angular.module('wynnoApp.controllers')
 .controller('SettingsCtrl', function($scope, $location, AuthService, SettingsService) {
-  $scope.builderIsCollapsed = false;
+  // initial conditions
+  $scope.builderIsCollapsed = true;
+
+  $scope.newDraftFilter = function() {
+    // toggle collapse of the filter builder
+    $scope.builderIsCollapsed = !$scope.builderIsCollapsed;
+    // reset any editExistingFilterIndex value
+    $scope.editExistingFilterIndex = null;
+    // initialize new draft filter
+    $scope.draftFilter = { conditions: [{}] };
+  };
+
+  $scope.draftFilterAddUser = function(username) {
+    $scope.draftFilter.users.push(username);
+  };
+
+  $scope.draftFilterRemoveUser = function(userIndex) {
+    $scope.draftFilter.users.splice(userIndex);
+  };
 
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
