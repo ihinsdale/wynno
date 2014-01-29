@@ -654,7 +654,8 @@ $twitterButtonRadius: 3px;
 }
 
 .conditionSideBorder {
-    border-left: 2px solid $deep-purple;
+    border-left: 4px solid $deep-purple;
+    padding-right: 10px;
 }
 
 // media query-based styling
