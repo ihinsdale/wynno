@@ -625,6 +625,24 @@ $twitterButtonRadius: 3px;
 }
 
 // settings page styling
+
+.btn.addNewFilter, .btn.addNewFilter:hover {
+    background-color: $badge-purple;
+    color: #ffffff;
+}
+
+.btn.addNewFilter:hover {
+    border-color: $deep-purple;
+}
+
+.btn.hear, .btn.hear:hover {
+    color: $aye-green;
+}
+
+.btn.mute, .btn.mute:hover {
+    color: $nay-red;
+}
+
 .btn.active.hear {
     background-color: $aye-green;
     color: #ffffff;

@@ -14,23 +14,23 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <button class="btn btn-default wynnoPurple" ng-click="builderIsCollapsed = !builderIsCollapsed">Add new filter</button>
+    <button class="btn btn-default addNewFilter" ng-click="builderIsCollapsed = !builderIsCollapsed">Add new filter</button>
     <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
         <ol>
-          <li><h3>Hear or Mute?</h3></li>
+          <h3><li>Hear or Mute?</li></h3>
           <div class="btn-group">
-            <button type="button" class="btn btn-default ayeGreen hear" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
-            <button type="button" class="btn btn-default nayRed mute" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
+            <button type="button" class="btn btn-default hear" ng-model="draftFilter.type" btn-radio="'Hear'">Hear</button>
+            <button type="button" class="btn btn-default mute" ng-model="draftFilter.type" btn-radio="'Mute'">Mute</button>
           </div>
 
-          <li><h3>Whose tweets?</h3></li>
+          <h3><li>Whose tweets?</li></h3>
           <div class="input-group">
             <span class="input-group-addon">@</span>
             <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="draftAddUser" value="Add">Add</button>
+              <button class="btn btn-primary" ng-click="draftAddUser" value="Add">Add</button>
             </span>
           </div>
           <div class="" ng-repeat="user in draftFilter.users">
@@ -40,7 +40,7 @@
             <div class="user">{{user}}</div>
           </div>
           
-          <li><h3>Containing what?</h3></li>
+          <h3><li>Containing what?</li></h3>
           <div class="" ng-repeat="condition in draftFilter.conditions">
             <div ng-show="!$first">and</div>
             <div class="btn-group">
@@ -62,7 +62,7 @@
             <span class="icomoon-plus"></span>Add
           </button>
           
-          <li><h3>More options</h3></li>
+          <h3><li>More options</li></h3>
           <span>Filter applied to:</span>
           <div class="btn-group">
             <button type="button" class="btn btn-default" ng-model="draftRule.sweep" btn-radio="'all'">Tweets + Retweets</button>
