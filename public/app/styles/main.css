@@ -8311,44 +8311,49 @@ body {
   color: #ffffff;
 }
 
+/* line 656, main.scss */
+.conditionSideBorder {
+  border-left: 2px solid #a166d5;
+}
+
 @media (min-width: 768px) {
-  /* line 659, main.scss */
+  /* line 663, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 663, main.scss */
+  /* line 667, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 667, main.scss */
+  /* line 671, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 }
 @media (min-width: 992px) {
-  /* line 673, main.scss */
+  /* line 677, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 677, main.scss */
+  /* line 681, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 682, main.scss */
+  /* line 686, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 686, main.scss */
+  /* line 690, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 690, main.scss */
+  /* line 694, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8356,34 +8361,34 @@ body {
     border-bottom: 0;
   }
 
-  /* line 697, main.scss */
+  /* line 701, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 701, main.scss */
+  /* line 705, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 705, main.scss */
+  /* line 709, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 710, main.scss */
+  /* line 714, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 718, main.scss */
+  /* line 722, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 722, main.scss */
+  /* line 726, main.scss */
   .bigBirdText {
     font-size: 28px;
   }

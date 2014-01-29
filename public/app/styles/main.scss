@@ -653,6 +653,10 @@ $twitterButtonRadius: 3px;
     color: #ffffff;
 }
 
+.conditionSideBorder {
+    border-left: 2px solid $deep-purple;
+}
+
 // media query-based styling
 
 @media (min-width: 768px) {
