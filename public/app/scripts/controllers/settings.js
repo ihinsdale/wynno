@@ -11,7 +11,7 @@ angular.module('wynnoApp.controllers')
     // reset any editExistingFilterIndex value
     $scope.editExistingFilterIndex = null;
     // initialize new draft filter
-    $scope.draftFilter = { conditions: [{}] };
+    $scope.draftFilter = { conditions: [{}], users: [] };
   };
 
   $scope.draftFilterAddUser = function(username) {

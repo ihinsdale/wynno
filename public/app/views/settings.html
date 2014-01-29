@@ -46,17 +46,18 @@
             <div ng-show="!$first">and</div>
             <div class="btn-group">
               <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'link'">a link to</button>
+              <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
               <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'picture'">a picture</button>
               <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
-              <button type="button" class="btn btn-default" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
             </div>
-            <div class="input-group" ng-show="condition.type == 'link">
-              <span class="input-group-addon">domain</span>
-              <input type="text" class="form-control" placeholder="e.g. buzzfeed" ng-model="condition.link">
+            <div class="col-md-2 col-md-offset-1" ng-show="condition.type == 'link'">
+              <input type="text" class="form-control" placeholder="example.com" ng-model="condition.link">
             </div>
-            <div class="input-group" ng-show="condition.type == 'hashtag">
-              <span class="input-group-addon">#</span>
-              <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
+            <div class="col-md-2 col-md-offset-1" ng-show="condition.type == 'hashtag'">
+              <div class="input-group">
+                <span class="input-group-addon">#</span>
+                <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
+              </div>
             </div>
           </div>
           <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
