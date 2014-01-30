@@ -74,13 +74,15 @@
                     </div>
                   </div>
                   <div class="row conditionInputPaddingTop">
-                    <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1" ng-show="condition.type == 'link'">
-                      <input type="text" class="form-control" placeholder="example.com" ng-model="condition.link">
+                    <div class="col-md-12" ng-show="condition.type == 'link'">
+                      <span class="downRightArrow link">&#8627;<span>
+                      <input type="text" class="form-control" placeholder="Enter a domain like example.com" ng-model="condition.link">
                     </div>
-                    <div class="col-xs-11 col-xs-offset-1 col-md-4 col-md-offset-1" ng-show="condition.type == 'hashtag'">
+                    <div class="col-md-12" ng-show="condition.type == 'hashtag'">
+                      <span class="downRightArrow hashtag">&#8627;<span>
                       <div class="input-group">
                         <span class="input-group-addon">#</span>
-                        <input type="text" class="form-control" placeholder="hashtag" ng-model="condition.hashtag">
+                        <input type="text" class="form-control" placeholder="Enter a hashtag" ng-model="condition.hashtag">
                       </div>
                     </div>
                   </div>

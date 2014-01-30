@@ -667,6 +667,19 @@ $twitterButtonRadius: 3px;
     padding-top: 10px;
 }
 
+.downRightArrow {
+    font-size: 2em;
+    padding-right: 20px;
+}
+
+.downRightArrow.link {
+    padding-left: 20px;
+}
+
+.downRightArrow.hashtag {
+    padding-left: 20px;
+}
+
 // media query-based styling
 
 @media (min-width: 768px) {
