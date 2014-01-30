@@ -46,7 +46,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="" ng-repeat="user in draftFilter.users track by $index">
+                  <div class="" ng-repeat="user in draftFilter.users">
                     <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
                       <span class="icomoon-cancel-circle"></span>
                     </button>
@@ -74,7 +74,7 @@
                     </div>
                   </div>
                   <div class="row conditionInputPaddingTop">
-                    <div class="col-xs-11 col-xs-offset-1 col-md-4 col-md-offset-1" ng-show="condition.type == 'link'">
+                    <div class="col-xs-11 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1" ng-show="condition.type == 'link'">
                       <input type="text" class="form-control" placeholder="example.com" ng-model="condition.link">
                     </div>
                     <div class="col-xs-11 col-xs-offset-1 col-md-4 col-md-offset-1" ng-show="condition.type == 'hashtag'">
