@@ -39,12 +39,12 @@
                     <span class="input-group-addon">@</span>
                     <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
+                      <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
                     </span>
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row listOfUsers">
                 <div class="col-md-12">
                   <div class="" ng-repeat="user in draftFilter.users">
                     <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
@@ -61,7 +61,7 @@
             <div class="col-md-12">
               <h3><li>Containing what?</li></h3>
               <div class="" ng-repeat="condition in draftFilter.conditions">
-                <div ng-show="!$first">and</div>
+                <div class="andCondition" ng-show="!$first">and</div>
                 <div class="conditionSideBorder">
                   <div class="row">
                     <div class="col-md-12">
@@ -75,18 +75,12 @@
                   </div>
                   <div class="row conditionInputPaddingTop">
                     <div ng-show="condition.type == 'link'">
-                      <div class="col-md-1">
-                        <span class="downRightArrow link">&#8627;</span>
-                      </div>
-                      <div class="col-md-11">
+                      <div class="col-md-11 col-md-offset-1">
                         <input type="text" class="form-control" placeholder="Enter a domain like example.com" ng-model="condition.link">
                       </div>
                     </div>
                     <div ng-show="condition.type == 'hashtag'">
-                      <div class="col-md-1"> 
-                        <span class="downRightArrow hashtag">&#8627;</span>
-                      </div>
-                      <div class="col-md-11">
+                      <div class="col-md-11 col-md-offset-1">
                         <div class="input-group">
                           <span class="input-group-addon">#</span>
                           <input type="text" class="form-control" placeholder="Enter a hashtag" ng-model="condition.hashtag">
@@ -98,9 +92,9 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
-                  <span class="icomoon-plus"></span>Add
+              <div class="col-xs-11 col-md-11">
+                <button type-"button" class="btn btn-primary addCondition" ng-click="addAnotherCondition()">
+                  <span class="icomoon-plus plus"></span>Add another
                 </button>
               </div>
             </div>
@@ -119,7 +113,7 @@
             </div>
           </div>
         </ol>
-        <div class="row">
+        <div class="row paddingTop40">
           <div class="col-md-12 text-center">
             <button type="button" class="btn btn-primary btn-lg btn-block saveFilter" ng-click="saveFilter()">Save filter</button>
           </div>

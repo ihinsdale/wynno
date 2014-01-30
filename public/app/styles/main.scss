@@ -626,7 +626,7 @@ $twitterButtonRadius: 3px;
 
 // settings page styling
 
-.saveFilter {
+.paddingTop40 {
     padding-top: 40px;
 }
 
@@ -684,7 +684,23 @@ $twitterButtonRadius: 3px;
     padding-left: 20px;
 }
 
+.andCondition {
+    padding: 20px;
+    color: $deep-purple;
+    font-weight: bold;
+}
 
+.listOfUsers {
+    padding-top: 20px;
+}
+
+.addCondition {
+    float: right;
+}
+
+.plus {
+    padding-right: 20px;
+}
 
 // media query-based styling
 
