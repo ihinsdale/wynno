@@ -22,6 +22,10 @@ angular.module('wynnoApp.controllers')
     $scope.draftFilter.users.splice(userIndex);
   };
 
+  $scope.addAnotherCondition = function() {
+    $scope.draftFilter.conditions.push({});
+  }
+
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {
