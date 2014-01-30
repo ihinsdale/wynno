@@ -653,6 +653,11 @@ $twitterButtonRadius: 3px;
     color: #ffffff;
 }
 
+.btn.active.toggledPurple {
+    background-color: $badge-purple;
+    color: #ffffff;
+}
+
 .conditionSideBorder {
     border-left: 4px solid $deep-purple;
     padding-right: 10px;

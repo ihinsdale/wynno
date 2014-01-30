@@ -8312,49 +8312,55 @@ body {
 }
 
 /* line 656, main.scss */
+.btn.active.toggledPurple {
+  background-color: #c7a9e1;
+  color: #ffffff;
+}
+
+/* line 661, main.scss */
 .conditionSideBorder {
   border-left: 4px solid #a166d5;
   padding-right: 10px;
 }
 
 @media (min-width: 768px) {
-  /* line 664, main.scss */
+  /* line 669, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 668, main.scss */
+  /* line 673, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 672, main.scss */
+  /* line 677, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 }
 @media (min-width: 992px) {
-  /* line 678, main.scss */
+  /* line 683, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 682, main.scss */
+  /* line 687, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 687, main.scss */
+  /* line 692, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 691, main.scss */
+  /* line 696, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 695, main.scss */
+  /* line 700, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8362,34 +8368,34 @@ body {
     border-bottom: 0;
   }
 
-  /* line 702, main.scss */
+  /* line 707, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 706, main.scss */
+  /* line 711, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 710, main.scss */
+  /* line 715, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 715, main.scss */
+  /* line 720, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 723, main.scss */
+  /* line 728, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 727, main.scss */
+  /* line 732, main.scss */
   .bigBirdText {
     font-size: 28px;
   }
