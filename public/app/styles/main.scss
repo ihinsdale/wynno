@@ -626,6 +626,10 @@ $twitterButtonRadius: 3px;
 
 // settings page styling
 
+.saveFilter {
+    padding-top: 40px;
+}
+
 .btn.addNewFilter, .btn.saveFilter {
     background-color: $deep-purple;
     color: #ffffff;
@@ -679,6 +683,8 @@ $twitterButtonRadius: 3px;
 .downRightArrow.hashtag {
     padding-left: 20px;
 }
+
+
 
 // media query-based styling
 
