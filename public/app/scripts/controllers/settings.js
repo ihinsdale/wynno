@@ -40,8 +40,8 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.removeFilter = function(index) {
-    SettingsService.removeFilter(index)
+  $scope.disableFilter = function(index) {
+    SettingsService.disableFilter(index)
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
     });

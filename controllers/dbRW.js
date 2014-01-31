@@ -249,7 +249,7 @@ exports.registerUser = function(user, callback) {
 };
 
 exports.getSettings = function(user_id, tweetsToPassOn, callback) {
-  User.findById(user_id, 'mutedUsers heardUsers mutedWords heardWords', function(err, doc) {
+  User.findById(user_id, 'activeFilters disabledFilters', function(err, doc) {
     if (err) {
       console.log('error finding user', user_id, 'settings');
       callback(err);
