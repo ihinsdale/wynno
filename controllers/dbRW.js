@@ -163,112 +163,38 @@ exports.saveVote = function(user_id, tweet_id, vote, callback) {
   });
 };
 
-exports.saveSetting = function(user_id, add_or_remove, user_or_word, mute_or_hear, input, callback) {
-  var addToList = function(list) {
-    User.findById(user_id, list, function(err, doc) {
-      if (err) {
-        console.log('error adding', input, 'as a', mute_or_hear, user_or_word);
-      } else {
-        // if user/word isn't already in list, add him
-        if (doc[list].indexOf(input) === -1) {
-          var what = {};
-          what[list] = input;
-          doc.update({$push: what}, function(err, numberAffected, raw) {
-            if (err) {
-              console.log('error adding', input, 'as a', mute_or_hear, user_or_word);
-              callback(err);
-            } else {
-              console.log('The number of updated documents was %d', numberAffected);
-              console.log('The raw response from Mongo was ', raw);
-              callback(null);
-            }
-          });
-        // if user/word is already in list, don't need to do anything
-        } else {
-          console.log(user_or_word, 'already in list, didnt need to add');
-          callback(null);
-        }
-      }
-    });
-  };
-
-  var removeFromList = function(list) {
-    User.findById(user_id, list, function(err, doc) {
-      if (err) {
-        console.log('error removing', input, 'as a', mute_or_hear, user_or_word);
-      } else {
-        var location = doc[list].indexOf(input)
-        // if user/word isn't in list, don't need to do anything
-        if (doc[list].indexOf(input) === -1) {
-          callback(null);
-        } else {
-          var what = {};
-          what[list] = doc[list].slice(0,location).concat(doc[list].slice(location + 1));
-          doc.update(what, function(err, numberAffected, raw) {
-            if (err) {
-              console.log('error removing', input, 'as a', mute_or_hear, user_or_word);
-              callback(err);
-            } else {
-              console.log('The number of updated documents was %d', numberAffected);
-              console.log('The raw response from Mongo was ', raw);
-              callback(null);
-            }
-          });
-        }
-      }
-    });
-  };
-
-  // TODO: change this if/else branching to switch style
-  //       can also remove the $-escaping check in next line
-  if (add_or_remove.indexOf('$') !== -1 || user_or_word.indexOf('$') !== -1 || mute_or_hear.indexOf('$') !== -1) {
-    callback('invalid input');
-    // ALSO CHECK THAT USER_ID IS THE CURRENTLY LOGGED IN USER
-  } else {
-    if (add_or_remove === 'add') {
-      if (user_or_word === 'user') {
-        if (mute_or_hear === 'mute') {
-          addToList('mutedUsers');
-        } else if (mute_or_hear === 'hear') {
-          addToList('heardUsers');
-        } else {
-          callback('improperly specified request');
-        }
-      } else if (user_or_word === 'word') {
-        if (mute_or_hear === 'mute') {
-          addToList('mutedWords');
-        } else if (mute_or_hear === 'hear') {
-          addToList('heardWords');
-        } else {
-          callback('improperly specified request');
-        }
-      } else {
-        callback('improperly specified request');
-      }
-    } else if (add_or_remove === 'remove') {
-      if (user_or_word === 'user') {
-        if (mute_or_hear === 'mute') {
-          removeFromList('mutedUsers');
-        } else if (mute_or_hear === 'hear') {
-          removeFromList('heardUsers');
-        } else {
-          callback('improperly specified request');
-        }
-      } else if (user_or_word === 'word') {
-        if (mute_or_hear === 'mute') {
-          removeFromList('mutedWords');
-        } else if (mute_or_hear === 'hear') {
-          removeFromList('heardWords');
-        } else {
-          callback('improperly specified request');
-        }
-      } else {
-        callback('improperly specified request');
-      }
+exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
+  draftFilter.creator = user_id;
+  draftFilter.revision_of = revisionOf_id;
+  Filter.create(draftFilter, function(err, doc) {
+    if (err) {
+      console.log('Error saving filter to db.');
+      callback(err);
     } else {
-      callback('improperly specified request');
+      User.findByIdAndUpdate(user_id, { $push: { activeFilters: doc._id } }, function(err, user) {
+        if (err) {
+          console.log('Error finding user whose new filter this is.');
+          callback(err);
+        } else {
+          console.log('Successfully saved new filter for user.');
+          callback(null);
+        }
+      })
     }
-  }
+  });
+};
+
+exports.disableFilter = function(user_id, activeFiltersIndex, filter_id) {
+  User.findByIdAndUpdate(user_id, { $pull: { activeFilters: filter_id }, $push: { disabledFilters: filter_id } }, function(err, doc) {
+    if (err) {
+      console.log('Error finding user whose filter to disable.');
+      callback(err);
+    } else {
+      console.log("User's active filters now are:", doc.activeFilters);
+      console.log("User's disabled filters now are:", doc.disabledFilters);
+      callback(null);
+    }
+  });
 };
 
 exports.findUser = function(user_id, callback) {

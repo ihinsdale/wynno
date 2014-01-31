@@ -135,25 +135,36 @@ exports.processVote = function(req, res) {
   });
 };
 
-exports.processSetting = function(req, res) {
+exports.saveFilter = function(req, res) {
   var data = req.body;
-  console.log('request data look like', data)
+  console.log('/savefilter request data look like', data)
   async.waterfall([
     function(callback) {
-      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_hear, data.input, callback);
-    },
-    // TODO: this step of getting the updated settings could be removed if logic on the client-side updates the settings
-    //       model/view upon success message from server
-    function(callback) {
-      db.getSettings(req.user._id, null, callback);
+      db.saveFilter(req.user._id, data.draftFilter, data.revisionOf, callback);
     }
-  ], function(error, tweetsPassingOn, settings) {
-    // tweetsPassingOn is used by the /old route, it's irrelevant here
+  ], function(error) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      res.send(settings);
+      res.send('Success saving filter:', data.draftFilter, ', revision of filter:', data.revisionOf);
+    }
+  });
+};
+
+exports.disableFilter = function(req, res) {
+  var data = req.body;
+  console.log('/disablefilter request data look like', data)
+  async.waterfall([
+    function(callback) {
+      db.disableFilter(req.user._id, data.activeFiltersIndex, data.filter_id);
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully disabled filter.');
     }
   });
 };

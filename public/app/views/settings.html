@@ -3,7 +3,7 @@
     <h2>Your filters</h2>
   </div>
 </div>
-<div class="row" ng-repeat="filter in filters">
+<div class="row" ng-repeat="filter in activeFilters">
   <div class="col-md-8 col-md-offset-2">
     <button class="" ng-click="">
       <span class="icomoon-cancel-circle"></span>
@@ -33,6 +33,17 @@
           <div class="row">
             <div class="col-md-12">
               <h3><li>Whose tweets?</li></h3>
+              <div class="row listOfUsers">
+                <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
+                  <div class="" ng-repeat="user in draftFilter.users">
+                    <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+                      <span class="icomoon-cancel-circle"></span>
+                    </button>
+                    <div class="conditionSideBorder" ng-show="draftFilter.users.length == 0">All users (default)</div>
+                    <div class="user conditionSideBorder">@{{user}}</div>
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md- col-xs-12">
                   <div class="input-group">
@@ -41,16 +52,6 @@
                     <span class="input-group-btn">
                       <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
                     </span>
-                  </div>
-                </div>
-              </div>
-              <div class="row listOfUsers">
-                <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
-                  <div class="" ng-repeat="user in draftFilter.users">
-                    <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
-                      <span class="icomoon-cancel-circle"></span>
-                    </button>
-                    <div class="user">@{{user}}</div>
                   </div>
                 </div>
               </div>
@@ -79,6 +80,7 @@
                     <div ng-show="condition.type == 'link'">
                       <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
                         <input type="text" class="form-control" placeholder="Enter a domain: example.com" ng-model="condition.link">
+                        <p ng-show="condition.hashtag.length == 0">(Defaults to any domain.)</p>
                       </div>
                     </div>
                     <div ng-show="condition.type == 'hashtag'">
@@ -86,6 +88,7 @@
                         <div class="input-group">
                           <span class="input-group-addon">#</span>
                           <input type="text" class="form-control" placeholder="Enter a hashtag" ng-model="condition.hashtag">
+                          <p ng-show="condition.hashtag.length == 0">(Defaults to any hashtag.)</p>
                         </div>
                       </div>
                     </div>

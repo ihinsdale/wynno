@@ -19,7 +19,7 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.draftFilterRemoveUser = function(userIndex) {
-    $scope.draftFilter.users.splice(userIndex);
+    $scope.draftFilter.users.splice(userIndex, 1);
   };
 
   $scope.addAnotherCondition = function() {
@@ -29,14 +29,21 @@ angular.module('wynnoApp.controllers')
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {
-      $scope.settings = settings;
+      $scope.activeFilters = settings.activeFilters;
     });
   };
 
-  $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_hear, input) {
-    SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_hear, input)
+  $scope.saveFilter = function(draftFilter, originalIndex) {
+    SettingsService.saveFilter(draftFilter, originalIndex)
     .then(function(settings) {
-      $scope.settings = settings;
+      $scope.activeFilters = settings.activeFilters;
+    });
+  };
+
+  $scope.removeFilter = function(index) {
+    SettingsService.removeFilter(index)
+    .then(function(settings) {
+      $scope.activeFilters = settings.activeFilters;
     });
   };
 
