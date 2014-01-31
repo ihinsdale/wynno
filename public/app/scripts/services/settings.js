@@ -42,7 +42,7 @@ angular.module('wynnoApp.services')
         d.reject('At least one user or condition must be specified.');
       } else {
         // clean draftFilter of any unnecessary input created by switching condition types
-        for (var i = 0, i < draftFilter.conditions.length; i++) {
+        for (var i = 0; i < draftFilter.conditions.length; i++) {
           if (draftFilter.conditions[i].type === 'link') {
             delete draftFilter.conditions[i].hashtag;
           } else if (draftFilter.conditions[i].type === 'hashtag') {
