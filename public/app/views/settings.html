@@ -68,6 +68,7 @@
                     <div class="col-md-11">
                       <div class="btn-group">
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'link'">a link to</button>
+                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'word'">the word or phrase</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'picture'">a picture</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
@@ -82,6 +83,12 @@
                         <input type="text" class="form-control" placeholder="Enter a domain: example.com" ng-model="condition.link">
                         <p>Value of condition.link is: {{condition.link}}</p>
                         <p ng-show="condition.hashtag.length == 0">(Defaults to any domain.)</p>
+                      </div>
+                    </div>
+                    <div ng-show="condition.type == 'word'">
+                      <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
+                        <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+                        <p>Value of condition.word is: {{condition.word}}</p>
                       </div>
                     </div>
                     <div ng-show="condition.type == 'hashtag'">

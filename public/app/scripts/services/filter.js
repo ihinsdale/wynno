@@ -90,11 +90,19 @@ angular.module('wynnoApp.services')
           switch(filterCondition.type) {
             case 'link':
               var linkResult = false;
+              // if no domain specified and tweet contains any link, pass
               if (!filterCondition.link && tweet.__entities.urls.length) {
                 linkResult = true;
               }
-              // if tweet doesn't contain link to specified domain, fail
+              // if domain is specified and tweet doesn't link to it, fail
+              for (var m = 0; m < tweet.__entities.urls.length; m++) {
+                if (!linkResult) {
+                  // TODO
+                }
+              }
               tweet.__entities.urls display_url
+            case 'word':
+             // LOOK AT TWEET TEXT
             case 'hashtag':
               // if tweet doesn't contain specified hashtag, fail
               var hashtagResult = false;
@@ -122,6 +130,7 @@ angular.module('wynnoApp.services')
               break;
             case 'quotation':
               // if tweet contains two quotation marks or a quotation mark and ...
+              // TODO
           }
         }
       }

@@ -29,24 +29,47 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
+    hasInvalidConditions: function(draftFilter) {
+      var errors = [];
+      for (var j = 0; j < draftFilter.conditions.length; j++) {
+        // if user hasn't provided a word or phrase for the 'word' type of condition, invalid
+        if (draftFilter.conditions[j].type === 'word' && !draftFilter.conditions[i].word) {
+          errors.push('A word or phrase must be specified for condition ' + (j+1).toString());
+        }
+        // all other conditions are necessarily valid, because they have defaults in case of no user input
+      }
+      if (!errors.length) {
+        return null;
+      } else {
+        return errors;
+      }
+    },
     saveFilter: function(draftFilter, originalIndex) {
       var d = $q.defer();
-
+      var invalidConditions = hasInvalidConditions(draftFilter);
       // make sure draftFilter has necessary elements:
       // Hear or Mute must always be specified
       if (!draftFilter.type) {
         d.reject('Filter must hear or mute.');
       // at least one user or condition must be specified, and
       // filter cannot apply to all users without at least one condition
-      } else if (!draftFilter.users.length && !draftFilter.conditions[0].type) {
+      } else if (!draftFilter.users.length && !draftFilter.conditions.length) {
         d.reject('At least one user or condition must be specified.');
+      // must not have invalid conditions
+      } else if (invalidConditions) {
+        d.reject(invalidConditions);
       } else {
-        // clean draftFilter of any unnecessary input created by switching condition types
         for (var i = 0; i < draftFilter.conditions.length; i++) {
+          // clean draftFilter of any unnecessary input created by switching condition types
           if (draftFilter.conditions[i].type === 'link') {
+            delete draftFilter.conditions[i].hashtag;
+            delete draftFilter.conditions[i].word;
+          } else if (draftFilter.conditions[i].type === 'word') {
+            delete draftFilter.conditions[i].link;
             delete draftFilter.conditions[i].hashtag;
           } else if (draftFilter.conditions[i].type === 'hashtag') {
             delete draftFilter.conditions[i].link;
+            delete draftFilter.conditions[i].word;
           }
         }
 
