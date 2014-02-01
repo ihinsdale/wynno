@@ -35,7 +35,7 @@ angular.module('wynnoApp.services')
       // make sure draftFilter has necessary elements:
       // Hear or Mute must always be specified
       if (!draftFilter.type) {
-        d.reject('Filter must Hear or Mute.');
+        d.reject('Filter must hear or mute.');
       // at least one user or condition must be specified, and
       // filter cannot apply to all users without at least one condition
       } else if (!draftFilter.users.length && !draftFilter.conditions[0].type) {
