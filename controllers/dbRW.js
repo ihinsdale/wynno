@@ -3,6 +3,7 @@
 var Tweet = require('../models/Tweet.js').Tweet;
 var User = require('../models/User.js').User;
 var Feedback = require('../models/Feedback.js').Feedback;
+var Filter = require('../models/Filter.js').Filter;
 var _ = require('../node_modules/underscore/underscore-min.js');
 
 // function to save a tweet to the db
