@@ -22,7 +22,7 @@ def tweet_features(tweet):
   features = {}
   features['tweeter'] = tweet['__user']['screen_name']
 
-  if '__retweeter' in tweet:
+  if tweet['__retweeter'] is not None:
     features['retweeter'] = tweet['__retweeter']['screen_name']
   else:
     features['retweeter'] = ''
