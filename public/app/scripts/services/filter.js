@@ -139,6 +139,7 @@ angular.module('wynnoApp.services')
     },
     applyFilterRules: function(tweets, settings) {
       console.log('applying filter rules');
+      console.log('current filters are:', settings.currentSettings.activeFilters);
       // if settings are provided, set those as the current settings
       if (settings) {
         service.currentSettings = settings;

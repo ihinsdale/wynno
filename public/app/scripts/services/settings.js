@@ -114,7 +114,7 @@ angular.module('wynnoApp.services')
       // now POST the disable
       $http({ method: 'POST', url: '/disablefilter', data: {
         activeFiltersIndex: index,
-        filter_id: service.settings.activeFilters[index]._id
+        filter_id: service.settings.activeFilters[index].id
       } })
       .success(function(data, status) {
         console.log('Success disabling filter.');
