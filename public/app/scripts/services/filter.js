@@ -140,11 +140,14 @@ angular.module('wynnoApp.services')
     applyFilterRules: function(tweets, settings) {
       console.log('applying filter rules');
       // if settings are provided, set those as the current settings
+      if (settings) {
+        service.currentSettings = settings;
+      }
       angular.forEach(tweets, function(tweet) {
         // reset the values of tweet.__isHeard and tweet.__isMuted
         tweet.__isHeard = null;
         tweet.__isMuted = null;
-        angular.forEach(settings.activeFilters, function(filter) {
+        angular.forEach(service.currentSettings.activeFilters, function(filter) {
           // set up guard so that once a filter 'catches' a tweet, no subsequent filters are applied
           // this enables a prioritizing of filters
           if (!tweet.__isHeard && !tweet.__isMuted) {
