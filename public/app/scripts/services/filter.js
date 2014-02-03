@@ -138,10 +138,8 @@ angular.module('wynnoApp.services')
           }
     },
     applyFilterRules: function(tweets, settings) {
+      console.log('applying filter rules');
       // if settings are provided, set those as the current settings
-      if (settings) {
-        service.currentSettings = settings;
-      }
       angular.forEach(tweets, function(tweet) {
         // reset the values of tweet.__isHeard and tweet.__isMuted
         tweet.__isHeard = null;
