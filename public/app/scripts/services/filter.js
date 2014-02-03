@@ -1,55 +1,6 @@
 angular.module('wynnoApp.services')
 .factory('FilterService', [function() {
   var service = {
-    hasWordInList: function(text, list) {
-      var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-      var noExtraSpaces = noPunctuation.replace(/\s{2,}/g," ");
-      var words = noExtraSpaces.split(' ');
-      var wordsHash = {};
-      for (var i = 0; i < words.length; i++) {
-        wordsHash[words[i]] = true;
-      }
-      for (var j = 0; j < list.length; j++) {
-        if (wordsHash.hasOwnProperty(list[j])) {
-          return true;
-        }
-      }
-      return false;
-    },
-    hasUserInList: function(user1, user2, list) {
-      for (var i = 0; i < list.length; i++) {
-        if (user1 === list[i] || user2 === list[i]) {
-          return true;
-        }
-      }
-      return false;
-    },
-    isMutedUser: function(tweeter, retweeter) {
-      return service.hasUserInList(tweeter, retweeter, service.currentSettings.mutedUsers);
-    },
-    hasMutedWord: function(text) {
-      return service.hasWordInList(text, service.currentSettings.mutedWords);
-    },
-    isHeardUser: function(tweeter, retweeter) {
-      return service.hasUserInList(tweeter, retweeter, service.currentSettings.heardUsers);
-    },
-    hasHeardWord: function(text) {
-      return service.hasWordInList(text, service.currentSettings.heardWords);
-    },
-    tweetIsHeard: function(tweet) {
-      var retweeter;
-      if (tweet.__retweeter) {
-        retweeter = tweet.__retweeter.screen_name;
-      }
-      tweet.__isHeard = (service.isHeardUser(tweet.__user.screen_name, retweeter) || service.hasHeardWord(tweet.__text));
-    },
-    tweetIsMuted: function(tweet) {
-      var retweeter;
-      if (tweet.__retweeter) {
-        retweeter = tweet.__retweeter.screen_name;
-      }
-      tweet.__isMuted = (service.isMutedUser(tweet.__user.screen_name, retweeter) || service.hasMutedWord(tweet.__text));
-    },
     meetsScope: function(tweet, filterScope) {
       if (filterScope === 'all') {
         return true;
@@ -90,22 +41,51 @@ angular.module('wynnoApp.services')
           switch(filterCondition.type) {
             case 'link':
               var linkResult = false;
-              // if no domain specified and tweet contains any link, pass
+              // if no link string specified and tweet contains any link, pass
               if (!filterCondition.link && tweet.__entities.urls.length) {
                 linkResult = true;
               }
-              // if domain is specified and tweet doesn't link to it, fail
+              // if a link string is specified and tweet doesn't link to it, fail
               for (var m = 0; m < tweet.__entities.urls.length; m++) {
                 if (!linkResult) {
-                  // TODO
+                  if (tweet.__entities.urls[m].display_url.indexOf(filterCondition.link) !== -1) {
+                    linkResult = true;
+                  }
                 }
               }
-              tweet.__entities.urls display_url
+              result = linkResult;
+              break;
             case 'word':
-             // LOOK AT TWEET TEXT
+              var wordResult = false;
+              // if the triggering string (i.e. word or phrase) contains a space (i.e. is probably a phrase), use indexOf
+              if (filterCondition.word.indexOf(' ') !== -1) {
+                if (tweet.__text.indexOf(filterCondition.word) !== -1) {
+                  wordResult = true;
+                }
+              }
+              // otherwise identify words and loop through them
+              if (!wordResult) {
+                // remove punctuation, except '
+                var text = tweet.__text;
+                var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                var noExtraSpaces = noPunctuation.replace(/\s{2,}/g," ");
+                var tweetWords = noExtraSpaces.split(' ');
+                for (var n = 0; n < tweetWords.length; n++) {
+                  if (!wordResult) {
+                    if (filterCondition.word === tweetWords[n]) {
+                      wordResult = true;
+                    }
+                  }
+                }
+              }
+              result = wordResult;
             case 'hashtag':
-              // if tweet doesn't contain specified hashtag, fail
               var hashtagResult = false;
+              // if no hashtag specified and tweet contains any hashtag, pass
+              if (!filterCondition.hashtag && tweet.__entities.hashtags.length) {
+                hashtagResult = true;
+              }
+              // if tweet doesn't contain specified hashtag, fail
               for (var j = 0; j < tweet.__entities.hashtags.length; j++) {
                 if (!hashtagResult) {
                   if (filterCondition.hashtag === tweet.__entities.hashtags[j].text) {
@@ -129,8 +109,14 @@ angular.module('wynnoApp.services')
               result = pictureResult;
               break;
             case 'quotation':
-              // if tweet contains two quotation marks or a quotation mark and ...
-              // TODO
+              var quotationResult = false;
+              // could work on more complicated variations, e.g. if tweet contains 
+              // two quotation marks or a quotation mark and ..., pass
+              // currently, I am just using presence of a quotation mark " to indicate
+              if (tweet.__text.indexOf('"') !== -1) {
+                quotationResult = true;
+              }
+              result = quotationResult;
           }
         }
       }
