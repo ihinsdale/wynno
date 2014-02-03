@@ -19,7 +19,7 @@ angular.module('wynnoApp.services')
       }
       var result = false;
       for (var i = 0; i < filterUsers.length; i++) {
-        if (tweet.__user.screen_name === filterUsers[i] || tweet.__retweeter.screen_name === filterUsers[i]) {
+        if (tweet.__user.screen_name === filterUsers[i] || (tweet.__retweeter && tweet.__retweeter.screen_name === filterUsers[i])) {
           result = true;
           break;
         }

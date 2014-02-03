@@ -37,6 +37,8 @@ angular.module('wynnoApp.controllers')
     SettingsService.saveFilter(draftFilter, originalIndex)
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
+    }, function(reason) {
+      console.log('Error saving filter:', reason);
     });
   };
 
