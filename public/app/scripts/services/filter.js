@@ -143,7 +143,7 @@ angular.module('wynnoApp.services')
       if (settings) {
         service.currentSettings = settings;
       }
-      console.log('current filters are:', settings.currentSettings.activeFilters);
+      console.log('current filters are:', service.currentSettings.activeFilters);
       angular.forEach(tweets, function(tweet) {
         // reset the values of tweet.__isHeard and tweet.__isMuted
         tweet.__isHeard = null;
