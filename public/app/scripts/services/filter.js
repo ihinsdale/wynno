@@ -38,17 +38,17 @@ angular.module('wynnoApp.services')
       var result = true;
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
-          switch(filterCondition.type) {
+          switch(filterConditions[i].type) {
             case 'link':
               var linkResult = false;
               // if no link string specified and tweet contains any link, pass
-              if (!filterCondition.link && tweet.__entities.urls.length) {
+              if (!filterConditions[i].link && tweet.__entities.urls.length) {
                 linkResult = true;
               }
               // if a link string is specified and tweet doesn't link to it, fail
               for (var m = 0; m < tweet.__entities.urls.length; m++) {
                 if (!linkResult) {
-                  if (tweet.__entities.urls[m].display_url.indexOf(filterCondition.link) !== -1) {
+                  if (tweet.__entities.urls[m].display_url.indexOf(filterConditions[i].link) !== -1) {
                     linkResult = true;
                   }
                 }
@@ -58,8 +58,8 @@ angular.module('wynnoApp.services')
             case 'word':
               var wordResult = false;
               // if the triggering string (i.e. word or phrase) contains a space (i.e. is probably a phrase), use indexOf
-              if (filterCondition.word.indexOf(' ') !== -1) {
-                if (tweet.__text.indexOf(filterCondition.word) !== -1) {
+              if (filterConditions[i].word.indexOf(' ') !== -1) {
+                if (tweet.__text.indexOf(filterConditions[i].word) !== -1) {
                   wordResult = true;
                 }
               }
@@ -72,7 +72,7 @@ angular.module('wynnoApp.services')
                 var tweetWords = noExtraSpaces.split(' ');
                 for (var n = 0; n < tweetWords.length; n++) {
                   if (!wordResult) {
-                    if (filterCondition.word === tweetWords[n]) {
+                    if (filterConditions[i].word === tweetWords[n]) {
                       wordResult = true;
                     }
                   }
@@ -82,13 +82,13 @@ angular.module('wynnoApp.services')
             case 'hashtag':
               var hashtagResult = false;
               // if no hashtag specified and tweet contains any hashtag, pass
-              if (!filterCondition.hashtag && tweet.__entities.hashtags.length) {
+              if (!filterConditions[i].hashtag && tweet.__entities.hashtags.length) {
                 hashtagResult = true;
               }
               // if tweet doesn't contain specified hashtag, fail
               for (var j = 0; j < tweet.__entities.hashtags.length; j++) {
                 if (!hashtagResult) {
-                  if (filterCondition.hashtag === tweet.__entities.hashtags[j].text) {
+                  if (filterConditions[i].hashtag === tweet.__entities.hashtags[j].text) {
                     // note this strict equality implies case sensitivity
                     hashtagResult = true;
                   }
