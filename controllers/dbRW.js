@@ -172,7 +172,7 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
       console.log('Error saving filter to db.');
       callback(err);
     } else {
-      User.findByIdAndUpdate(user_id, { $push: { activeFilters: doc._id } }, function(err, user) {
+      User.findByIdAndUpdate(user_id, { $push: { activeFilters: doc } }, function(err, user) {
         if (err) {
           console.log('Error finding user whose new filter this is.');
           callback(err);
@@ -186,7 +186,7 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
 };
 
 exports.disableFilter = function(user_id, activeFiltersIndex, filter_id) {
-  User.findByIdAndUpdate(user_id, { $pull: { activeFilters: filter_id }, $push: { disabledFilters: filter_id } }, function(err, doc) {
+  User.findByIdAndUpdate(user_id, { $push: { disabledFilters: { _id: filter_id } }, $pull: { activeFilters: { _id: filter_id } } }, function(err, doc) {
     if (err) {
       console.log('Error finding user whose filter to disable.');
       callback(err);
