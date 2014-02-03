@@ -46,7 +46,7 @@ angular.module('wynnoApp.services')
     },
     saveFilter: function(draftFilter, originalIndex) {
       var d = $q.defer();
-      var invalidConditions = hasInvalidConditions(draftFilter);
+      var invalidConditions = service.hasInvalidConditions(draftFilter);
       // make sure draftFilter has necessary elements:
       // Hear or Mute must always be specified
       if (!draftFilter.type) {
