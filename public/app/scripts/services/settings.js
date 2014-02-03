@@ -53,7 +53,9 @@ angular.module('wynnoApp.services')
         d.reject('Filter must hear or mute.');
       // at least one user or condition must be specified, and
       // filter cannot apply to all users without at least one condition
-      } else if (!draftFilter.users.length && !draftFilter.conditions.length) {
+      } else if (!draftFilter.users.length && !draftFilter.conditions[0].keys().length) {
+        // note we test for draftFilter.conditions[0] having any keys because draftFilter.conditions
+        // is initiated with an {} as the 0th element, so we cannot merely test for draftFilter.conditions.length
         d.reject('At least one user or condition must be specified.');
       // must not have invalid conditions
       } else if (invalidConditions) {
