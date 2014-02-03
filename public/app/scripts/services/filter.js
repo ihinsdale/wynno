@@ -99,7 +99,7 @@ angular.module('wynnoApp.services')
             case 'picture':
               // if tweet doesn't contain a picture, fail
               var pictureResult = false;
-              if (tweet.__entities.hasOwnProperty(media)) {
+              if (tweet.__entities.hasOwnProperty('media')) {
                 for (var k = 0; k < tweet.__entities.media.length; k++) {
                   if (!pictureResult) {
                     if (tweet.__entities.media[i].type === 'photo') {
