@@ -115,6 +115,8 @@ angular.module('wynnoApp.services')
     disableFilter: function(index) {
       var d = $q.defer();
 
+      // get _id of the filter to be disabled, before updating client side
+      var filterId = service.settings.activeFilters[index]._id;
       // update filters on the client side, to be undone if POST request fails
       var orig = service.settings.activeFilters.slice();
       service.settings.disabledFilters.push(service.settings.activeFilters.splice(index, 1));
@@ -122,7 +124,7 @@ angular.module('wynnoApp.services')
       // now POST the disable
       $http({ method: 'POST', url: '/disablefilter', data: {
         activeFiltersIndex: index,
-        filter_id: service.settings.activeFilters[index].id
+        filter_id: filterId
       } })
       .success(function(data, status) {
         console.log('Success disabling filter.');
