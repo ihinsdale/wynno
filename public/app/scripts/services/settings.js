@@ -29,24 +29,11 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
-    validateAndCleanConditions: function(draftFilter) {
-      var errors = [];
-      for (var i = 0; i < draftFilter.conditions.length; i++) {
-        // if user hasn't provided a word or phrase for the 'word' type of condition, invalid
-        if (draftFilter.conditions[i].type === 'word' && !draftFilter.conditions[i].word) {
-          errors.push('A word or phrase must be specified for condition ' + (i+1).toString());
-        }
-        // all other conditions are necessarily valid, because they have defaults in case of no user input
-      }
-      // if invalid conditions discovered, return those errors
-      if (errors.length) {
-        return errors;
-      }
-      // if no errors, proceed to cleaning
+    cleanAndValidateConditions: function(draftFilter) {
       var cleanConditions = [];
       for (var j = 0; j < draftFilter.conditions.length; j++) {
-        // by conditioning on having the 'type' property, we remove any empty condition objects,
-        // including the one that draftFilter.conditions is initialized with
+        // by conditioning on having the 'type' property, we exclude any empty condition objects,
+        // including the one that draftFilter.conditions is initialized with if it is still empty
         if draftFilter.conditions[j].hasOwnProperty('type') {
           // clean draftFilter of any unnecessary input created by switching condition types
           if (draftFilter.conditions[j].type === 'link') {
@@ -63,11 +50,24 @@ angular.module('wynnoApp.services')
         }
       }
       draftFilter.conditions = cleanConditions;
-      return null;
+      var errors = [];
+      for (var i = 0; i < draftFilter.conditions.length; i++) {
+        // if user hasn't provided a word or phrase for the 'word' type of condition, invalid
+        if (draftFilter.conditions[i].type === 'word' && !draftFilter.conditions[i].word) {
+          errors.push('A word or phrase must be specified for condition ' + (i+1).toString());
+        }
+        // all other conditions are necessarily valid, because they have defaults in case of no user input
+      }
+      // if invalid conditions discovered, return those errors
+      if (errors.length) {
+        return errors;
+      } else {
+        return null;
+      }
     },
     saveFilter: function(draftFilter, originalIndex) {
       var d = $q.defer();
-      var invalidConditions = service.validateAndCleanConditions(draftFilter);
+      var invalidConditions = service.cleanAndValidateConditions(draftFilter);
       // make sure draftFilter has necessary elements:
       // Hear or Mute must always be specified
       if (!draftFilter.type) {
@@ -78,8 +78,11 @@ angular.module('wynnoApp.services')
       // at least one user or condition must be specified, and
       // filter cannot apply to all users without at least one condition
       } else if (!draftFilter.users.length && !draftFilter.conditions.length) {
+      // note that in order for this conditioning on draftFilter.conditions.length to work,
+      // draftFilter.conditions must have been cleaned of empty objects {}, as done in by
+      // service.cleanAndValidateConditions
         d.reject('At least one user or condition must be specified.');
-      } else { 
+      } else {
         // update filters on the client side, to be undone if POST request fails
         var orig = service.settings.activeFilters.slice();
         service.settings.activeFilters.push(draftFilter);
