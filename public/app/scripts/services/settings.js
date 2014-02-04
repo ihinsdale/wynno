@@ -33,8 +33,8 @@ angular.module('wynnoApp.services')
       var errors = [];
       for (var i = 0; i < draftFilter.conditions.length; i++) {
         // if user hasn't provided a word or phrase for the 'word' type of condition, invalid
-        if (draftFilter.conditions[j].type === 'word' && !draftFilter.conditions[i].word) {
-          errors.push('A word or phrase must be specified for condition ' + (j+1).toString());
+        if (draftFilter.conditions[i].type === 'word' && !draftFilter.conditions[i].word) {
+          errors.push('A word or phrase must be specified for condition ' + (i+1).toString());
         }
         // all other conditions are necessarily valid, because they have defaults in case of no user input
       }
@@ -44,22 +44,22 @@ angular.module('wynnoApp.services')
       }
       // if no errors, proceed to cleaning
       var cleanConditions = [];
-      for (var i = 0; i < draftFilter.conditions.length; i++) {
+      for (var j = 0; j < draftFilter.conditions.length; j++) {
         // by conditioning on having the 'type' property, we remove any empty condition objects,
         // including the one that draftFilter.conditions is initialized with
-        if draftFilter.conditions[i].hasOwnProperty('type') {
+        if draftFilter.conditions[j].hasOwnProperty('type') {
           // clean draftFilter of any unnecessary input created by switching condition types
-          if (draftFilter.conditions[i].type === 'link') {
-            delete draftFilter.conditions[i].hashtag;
-            delete draftFilter.conditions[i].word;
-          } else if (draftFilter.conditions[i].type === 'word') {
-            delete draftFilter.conditions[i].link;
-            delete draftFilter.conditions[i].hashtag;
-          } else if (draftFilter.conditions[i].type === 'hashtag') {
-            delete draftFilter.conditions[i].link;
-            delete draftFilter.conditions[i].word;
+          if (draftFilter.conditions[j].type === 'link') {
+            delete draftFilter.conditions[j].hashtag;
+            delete draftFilter.conditions[j].word;
+          } else if (draftFilter.conditions[j].type === 'word') {
+            delete draftFilter.conditions[j].link;
+            delete draftFilter.conditions[j].hashtag;
+          } else if (draftFilter.conditions[j].type === 'hashtag') {
+            delete draftFilter.conditions[j].link;
+            delete draftFilter.conditions[j].word;
           }
-          cleanConditions.push(draftFilter.conditions[i]);
+          cleanConditions.push(draftFilter.conditions[j]);
         }
       }
       draftFilter.conditions = cleanConditions;
