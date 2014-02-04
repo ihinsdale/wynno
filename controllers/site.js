@@ -160,7 +160,7 @@ exports.disableFilter = function(req, res) {
   console.log('/disablefilter request data look like', data)
   async.waterfall([
     function(callback) {
-      db.disableFilter(req.user._id, data.activeFiltersIndex, data.filter_id);
+      db.disableFilter(req.user._id, data.activeFiltersIndex, data.filter_id, callback);
     }
   ], function(error) {
     if (error) {

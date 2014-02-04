@@ -185,7 +185,7 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
   });
 };
 
-exports.disableFilter = function(user_id, activeFiltersIndex, filter_id) {
+exports.disableFilter = function(user_id, activeFiltersIndex, filter_id, callback) {
   User.findByIdAndUpdate(user_id, { $push: { disabledFilters: { _id: filter_id } }, $pull: { activeFilters: { _id: filter_id } } }, function(err, doc) {
     if (err) {
       console.log('Error finding user whose filter to disable.');
