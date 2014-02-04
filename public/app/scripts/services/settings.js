@@ -34,7 +34,7 @@ angular.module('wynnoApp.services')
       for (var j = 0; j < draftFilter.conditions.length; j++) {
         // by conditioning on having the 'type' property, we exclude any empty condition objects,
         // including the one that draftFilter.conditions is initialized with if it is still empty
-        if draftFilter.conditions[j].hasOwnProperty('type') {
+        if (draftFilter.conditions[j].hasOwnProperty('type')) {
           // clean draftFilter of any unnecessary input created by switching condition types
           if (draftFilter.conditions[j].type === 'link') {
             delete draftFilter.conditions[j].hashtag;
