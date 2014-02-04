@@ -186,14 +186,25 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
 };
 
 exports.disableFilter = function(user_id, activeFiltersIndex, filter_id, callback) {
-  User.findByIdAndUpdate(user_id, { $push: { disabledFilters: { activeFilters: { _id: filter_id } } }, $pull: { activeFilters: { _id: filter_id } } }, function(err, doc) {
+  User.findById(user_id, function(err, doc) {
     if (err) {
       console.log('Error finding user whose filter to disable.');
       callback(err);
     } else {
-      console.log("User's active filters now are:", doc.activeFilters);
-      console.log("User's disabled filters now are:", doc.disabledFilters);
-      callback(null);
+      var filter = doc.activeFilters[activeFiltersIndex];
+      console.log('Filter being disabled is:', filter);
+      doc.disabledFilters.push(filter);
+      doc.activeFilters.id(filter_id).remove();
+      doc.save(function(err) {
+        if (err) {
+          console.log('Error updating active and disabled filters.');
+          callback(err);
+        } else {
+          console.log("User's active filters now are:", doc.activeFilters);
+          console.log("User's disabled filters now are:", doc.disabledFilters);
+          callback(null);
+        }
+      });
     }
   });
 };
