@@ -178,6 +178,7 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
           callback(err);
         } else {
           console.log('Successfully saved new filter for user.');
+          console.log("User's active filters are:", user.activeFilters);
           callback(null);
         }
       })
@@ -194,7 +195,7 @@ exports.disableFilter = function(user_id, activeFiltersIndex, filter_id, callbac
       var filter = doc.activeFilters[activeFiltersIndex];
       console.log('Filter being disabled is:', filter);
       doc.disabledFilters.push(filter);
-      doc.activeFilters.id(filter_id).remove();
+      doc.activeFilters[activeFiltersIndex].remove();
       doc.save(function(err) {
         if (err) {
           console.log('Error updating active and disabled filters.');
