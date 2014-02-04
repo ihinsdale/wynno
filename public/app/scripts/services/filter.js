@@ -61,6 +61,7 @@ angular.module('wynnoApp.services')
               if (filterConditions[i].word.indexOf(' ') !== -1) {
                 if (tweet.__text.indexOf(filterConditions[i].word) !== -1) {
                   wordResult = true;
+                  console.log('Found matching phrase.');
                 }
               }
               // otherwise identify words and loop through them
@@ -74,6 +75,7 @@ angular.module('wynnoApp.services')
                   if (!wordResult) {
                     if (filterConditions[i].word === tweetWords[n]) {
                       wordResult = true;
+                      console.log('Found matching word:', tweetWords[n]);
                     }
                   }
                 }
