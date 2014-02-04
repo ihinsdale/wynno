@@ -81,6 +81,7 @@ angular.module('wynnoApp.services')
                 }
               }
               result = wordResult;
+              break;
             case 'hashtag':
               var hashtagResult = false;
               // if no hashtag specified and tweet contains any hashtag, pass
