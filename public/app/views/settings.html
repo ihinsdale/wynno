@@ -33,19 +33,25 @@
           <div class="row">
             <div class="col-md-12">
               <h3><li>Whose tweets</li></h3>
+              <div class="row listOfUsers" ng-show="!draftFilter.users.length">
+                <div class="col-md-11 col-md-offset-1">
+                    <div class="conditionSideBorder">(all users - default)</div>
+                </div>
+              </div>
               <div class="row listOfUsers">
-                <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
-                  <div class="" ng-repeat="user in draftFilter.users">
+                <div class="col-md-1">
                     <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
                       <span class="icomoon-cancel-circle"></span>
                     </button>
-                    <div class="conditionSideBorder" ng-show="draftFilter.users.length == 0">All users (default)</div>
+                </div>div>
+                <div class="col-xs-11 col-md-11">
+                  <div class="" ng-repeat="user in draftFilter.users">
                     <div class="user conditionSideBorder">@{{user}}</div>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md- col-xs-12">
+                <div class="col-md-12 col-xs-12">
                   <div class="input-group">
                     <span class="input-group-addon">@</span>
                     <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
@@ -57,13 +63,12 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="col-md-12">
               <h3><li>Containing what</li></h3>
               <div class="" ng-repeat="condition in draftFilter.conditions">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-11 col-md-offset-1">
                     <div class="andCondition" ng-show="!$first">and</div>
                   </div>
                 </div>
@@ -110,7 +115,7 @@
           </div>
           <div class="row addConditionRow">
             <div class="col-xs-12 col-md-12">
-              <button type-"button" class="btn btn-primary btn-sm addCondition" ng-click="addAnotherCondition()">
+              <button type-"button" class="btn btn-primary addCondition" ng-click="addAnotherCondition()">
                 <span class="icomoon-plus plus"></span>Add another
               </button>
             </div>
