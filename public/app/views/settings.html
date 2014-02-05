@@ -68,10 +68,12 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-1">
                     <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                       <span class="icomoon-cancel-circle"></span>
                     </button>
+                  </div>
+                  <div class="col-md-11">
                     <div class="conditionSideBorder">
                       <div class="btn-group">
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'link'">a link to</button>
@@ -83,8 +85,7 @@
                       <div class="row conditionInputPaddingTop">
                         <div ng-show="condition.type == 'link'">
                           <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
-                            <input type="text" class="form-control" placeholder="Enter a domain: example.com" ng-model="condition.link">
-                            <p ng-show="!condition.hashtag.length">(Defaults to any domain.)</p>
+                            <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
                           </div>
                         </div>
                         <div ng-show="condition.type == 'word'">
@@ -96,8 +97,7 @@
                           <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
                             <div class="input-group">
                               <span class="input-group-addon">#</span>
-                              <input type="text" class="form-control" placeholder="Enter a hashtag" ng-model="condition.hashtag">
-                              <p ng-show="!condition.hashtag.length">(Defaults to any hashtag.)</p>
+                              <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
                             </div>
                           </div>
                         </div>
