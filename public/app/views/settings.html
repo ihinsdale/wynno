@@ -38,16 +38,14 @@
                     <div class="conditionSideBorder">(all users - default)</div>
                 </div>
               </div>
-              <div class="row listOfUsers">
+              <div class="row listOfUsers" ng-repeat="user in draftFilter.users">
                 <div class="col-md-1">
                     <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
                       <span class="icomoon-cancel-circle"></span>
                     </button>
-                </div>div>
+                </div>
                 <div class="col-xs-11 col-md-11">
-                  <div class="" ng-repeat="user in draftFilter.users">
-                    <div class="user conditionSideBorder">@{{user}}</div>
-                  </div>
+                  <div class="user conditionSideBorder">@{{user}}</div>
                 </div>
               </div>
               <div class="row">
