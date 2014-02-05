@@ -24,7 +24,7 @@
           <div class="row">
             <div class="col-md-12">
               <h3><li>Hear or Mute</li></h3>
-              <div class="btn-group">
+              <div class="btn-group-vertical">
                 <button type="button" class="btn btn-default hear" ng-model="draftFilter.type" btn-radio="'hear'">Hear</button>
                 <button type="button" class="btn btn-default mute" ng-model="draftFilter.type" btn-radio="'mute'">Mute</button>
               </div>
@@ -39,13 +39,12 @@
                 </div>
               </div>
               <div class="row listOfUsers" ng-repeat="user in draftFilter.users">
-                <div class="col-md-1">
-                    <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
-                      <span class="icomoon-cancel-circle"></span>
-                    </button>
-                </div>
-                <div class="col-xs-11 col-md-11">
-                  <div class="user conditionSideBorder">@{{user}}</div>
+                <div class="col-md-12">
+                  <span class="andCondition" ng-show="!$first">or</span>
+                  <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+                    <span class="icomoon-cancel-circle"></span>
+                  </button>
+                  <span class="user conditionSideBorder">@{{user}}</span>
                 </div>
               </div>
               <div class="row">
@@ -78,7 +77,7 @@
                   </div>
                   <div class="col-md-11">
                     <div class="conditionSideBorder">
-                      <div class="btn-group">
+                      <div class="btn-group-vertical">
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'link'">a link to</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'word'">the word or phrase</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
@@ -123,8 +122,8 @@
           <div class="row">
             <div class="col-md-12">
               <h3><li>More options</li></h3>
-              <span>Filter applied to:</span>
-              <div class="btn-group">
+              <div>Filter applied to:</div>
+              <div class="btn-group-vertical">
                 <button type="button" class="btn btn-default toggledPurple" ng-model="draftFilter.scope" btn-radio="'all'">Tweets + Retweets</button>
                 <button type="button" class="btn btn-default toggledPurple" ng-model="draftFilter.scope" btn-radio="'tweets'">Tweets only</button>
                 <button type="button" class="btn btn-default toggledPurple" ng-model="draftFilter.scope" btn-radio="'retweets'">Retweets only</button>
