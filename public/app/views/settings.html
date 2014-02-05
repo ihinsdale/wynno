@@ -39,12 +39,18 @@
                 </div>
               </div>
               <div class="row listOfUsers" ng-repeat="user in draftFilter.users">
-                <div class="col-md-12">
-                  <span class="andCondition" ng-show="!$first">or</span>
-                  <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
-                    <span class="icomoon-cancel-circle"></span>
-                  </button>
-                  <span class="user conditionSideBorder">@{{user}}</span>
+                <div class="row">
+                  <div class="col-md-11 col-md-offset-1">
+                    <div class="andCondition" ng-show="!$first">or</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+                      <span class="icomoon-cancel-circle"></span>
+                    </button>
+                    <span class="user conditionSideBorder">@{{user}}</span>
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -70,17 +76,15 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-1">
+                  <div class="col-md-12">
                     <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                       <span class="icomoon-cancel-circle"></span>
                     </button>
-                  </div>
-                  <div class="col-md-11">
                     <div class="conditionSideBorder">
                       <div class="btn-group-vertical">
-                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'link'">a link to</button>
-                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'word'">the word or phrase</button>
-                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'hashtag'">the hashtag</button>
+                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'link'">a link to:</button>
+                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'word'">the word or phrase:</button>
+                        <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'hashtag'">the hashtag:</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'picture'">a picture</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'quotation'">a quotation</button>
                       </div>
@@ -122,7 +126,7 @@
           <div class="row">
             <div class="col-md-12">
               <h3><li>More options</li></h3>
-              <div>Filter applied to:</div>
+              <div>Apply this filter to:</div>
               <div class="btn-group-vertical">
                 <button type="button" class="btn btn-default toggledPurple" ng-model="draftFilter.scope" btn-radio="'all'">Tweets + Retweets</button>
                 <button type="button" class="btn btn-default toggledPurple" ng-model="draftFilter.scope" btn-radio="'tweets'">Tweets only</button>
