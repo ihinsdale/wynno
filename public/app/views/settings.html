@@ -23,7 +23,10 @@
         <accordion close-others="true">
           <accordion-group heading="Hear/Mute" is-open="true">
             <accordion-heading>
-              <span>Hear/Mute <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span></span>
+              <div>
+                1. Hear/Mute
+                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': !true}"></span>
+              </div>
             </accordion-heading>
             <div class="btn-group">
               <button type="button" class="btn btn-default hear" ng-model="draftFilter.type" btn-radio="'hear'">Hear</button>
@@ -32,7 +35,10 @@
           </accordion-group>
           <accordion-group>
             <accordion-heading>
-              Who <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
+              <div>
+                2. Who
+                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
+              </div>
             </accordion-heading>
             <div class="row listOfUsers" ng-show="!draftFilter.users.length">
               <div class="col-md-11 col-md-offset-1">
@@ -76,7 +82,10 @@
           </accordion-group>
           <accordion-group>
             <accordion-heading>
-                What <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
+              <div>
+                What
+                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
+              </div>
             </accordion-heading>
             <div class="" ng-repeat="condition in draftFilter.conditions">
               <div class="row">
