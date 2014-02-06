@@ -59,6 +59,14 @@ $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
     color: $gray;
 }
 
+.okGreen {
+    color: #468847; // same as Bootstrap's alert-success text color
+}
+
+.notOkRed {
+    color: #b94a48; // same as Bootstrap's alert-danger text color
+}
+
 body {
     background: $background-color;
     font-family: "Open Sans", sans-serif;
