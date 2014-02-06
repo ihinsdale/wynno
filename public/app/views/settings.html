@@ -40,8 +40,8 @@
               <div>
                 2. Who
                 <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step2.isOpen, 'glyphicon-chevron-right': !step2.isOpen}"></span>
-                <span class="pull-right glyphicon glyphicon-ok okGreen" ng-show="draftFilter.users.length > 0 || [TODO there is a valid condition]"></span>
-                <span class="pull-right glyphicon glyphicon-remove notOkRed" ng-show="invalidForSaving.users && draftFilter.users.length == 0 && [TODO there isn't a valid condition]"></span>
+                <span class="pull-right glyphicon glyphicon-ok okGreen" ng-show="draftFilter.users.length > 0 || hasValidCondition()"></span>
+                <span class="pull-right glyphicon glyphicon-remove notOkRed" ng-show="invalidForSaving.users && draftFilter.users.length == 0 && !hasValidCondition()"></span>
               </div>
             </accordion-heading>
             <div class="row listOfUsers" ng-show="!draftFilter.users.length">
@@ -89,8 +89,8 @@
               <div>
                 3. What
                 <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step3.isOpen, 'glyphicon-chevron-right': !step3.isOpen}"></span>
-                <span class="pull-right glyphicon glyphicon-ok okGreen" ng-show="draftFilter.users.length > 0 || [TODO there is a valid condition]"></span>
-                <span class="pull-right glyphicon glyphicon-remove notOkRed" ng-show="(invalidForSaving.conditions && draftFilter.users.length == 0 && [TODO there isn't a valid condition]) || [TODO there is an invalid condition]"></span>
+                <span class="pull-right glyphicon glyphicon-ok okGreen" ng-show="draftFilter.users.length > 0 || hasValidCondition()"></span>
+                <span class="pull-right glyphicon glyphicon-remove notOkRed" ng-show="(invalidForSaving.conditions && draftFilter.users.length == 0 && !hasValidCondition()) || hasInvalidCondition()"></span>
               </div>
             </accordion-heading>
             <div class="" ng-repeat="condition in draftFilter.conditions">

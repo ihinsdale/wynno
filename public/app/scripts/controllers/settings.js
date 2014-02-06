@@ -38,6 +38,36 @@ angular.module('wynnoApp.controllers')
     $scope[whichError] = null;
   };
 
+  $scope.hasValidCondition = function() {
+    // must have at least one valid condition
+    var hasValidCondition = false;
+    for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
+      if (!hasValidCondition) {
+        // if condition type is a word, condition must have a word
+        // all other condition types are necessarily valid because they have defaults
+        if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
+            || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
+          hasValidCondition = true;
+        }
+      }
+    }
+    return hasValidCondition;
+  };
+
+  $scope.hasInvalidCondition = function() {
+    var hasInvalidCondition = false;
+    for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
+      if (!hasInvalidCondition) {
+        // if condition type is a word and condition doesn't have a word, invalid
+        // all other condition types are necessarily valid because they have defaults
+        if ($scope.draftFilter.conditions[i].type === 'word' && !$scope.draftFilter.conditions[i].word) {
+          hasInvalidCondition = true;
+        }
+      }
+    }
+    return hasInvalidCondition;
+  };
+
   $scope.addAnotherCondition = function() {
     $scope.draftFilter.conditions.push({});
   }
