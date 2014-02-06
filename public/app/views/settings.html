@@ -20,12 +20,12 @@
     <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
-        <accordion close-others="true">
-          <accordion-group heading="Hear/Mute" is-open="true">
+        <accordion close-others="true" >
+          <accordion-group is-open="step1.isOpen">
             <accordion-heading>
               <div>
                 1. Hear/Mute
-                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': !true}"></span>
+                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step1.isOpen, 'glyphicon-chevron-right': !step1.isOpen}"></span>
               </div>
             </accordion-heading>
             <div class="btn-group">
@@ -33,11 +33,11 @@
               <button type="button" class="btn btn-default mute" ng-model="draftFilter.type" btn-radio="'mute'">Mute</button>
             </div>
           </accordion-group>
-          <accordion-group>
+          <accordion-group is-open="step2.isOpen">
             <accordion-heading>
               <div>
                 2. Who
-                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></span>
+                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step2.isOpen, 'glyphicon-chevron-right': !step2.isOpen}"></span>
               </div>
             </accordion-heading>
             <div class="row listOfUsers" ng-show="!draftFilter.users.length">
@@ -80,11 +80,11 @@
               </div>
             </div>
           </accordion-group>
-          <accordion-group>
+          <accordion-group is-open="step3.isOpen">
             <accordion-heading>
               <div>
                 3. What
-                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></span>
+                <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step3.isOpen, 'glyphicon-chevron-right': !step3.isOpen}"></span>
               </div>
             </accordion-heading>
             <div class="" ng-repeat="condition in draftFilter.conditions">
@@ -138,9 +138,9 @@
               </div>
             </div>
           </accordion-group>
-          <accordion-group>
+          <accordion-group is-open="step4.isOpen">
             <accordion-heading>
-                Options <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></span>
+                Options <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step4.isOpen, 'glyphicon-chevron-right': !step4.isOpen}"></span>
             </accordion-heading>
             <div>Apply this filter to:</div>
             <div class="btn-group-vertical">
