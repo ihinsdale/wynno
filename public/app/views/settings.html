@@ -89,7 +89,7 @@
               <div>
                 3. What
                 <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': step3.isOpen, 'glyphicon-chevron-right': !step3.isOpen}"></span>
-                <span class="pull-right glyphicon glyphicon-ok okGreen" ng-show="draftFilter.users.length > 0 || hasValidCondition()"></span>
+                <span class="pull-right glyphicon glyphicon-ok okGreen" ng-show="(draftFilter.users.length > 0 || hasValidCondition()) && !hasInvalidCondition()"></span>
                 <span class="pull-right glyphicon glyphicon-remove notOkRed" ng-show="(invalidForSaving.conditions && draftFilter.users.length == 0 && !hasValidCondition()) || hasInvalidCondition()"></span>
               </div>
             </accordion-heading>
