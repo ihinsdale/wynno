@@ -23,7 +23,7 @@
         <accordion close-others="true">
           <accordion-group heading="Hear/Mute" is-open="true">
             <accordion-heading>
-              Hear/Mute <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+              <span>Hear/Mute <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span></span>
             </accordion-heading>
             <div class="btn-group">
               <button type="button" class="btn btn-default hear" ng-model="draftFilter.type" btn-radio="'hear'">Hear</button>
@@ -32,7 +32,7 @@
           </accordion-group>
           <accordion-group>
             <accordion-heading>
-              Who <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+              Who <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
             </accordion-heading>
             <div class="row listOfUsers" ng-show="!draftFilter.users.length">
               <div class="col-md-11 col-md-offset-1">
@@ -76,7 +76,7 @@
           </accordion-group>
           <accordion-group>
             <accordion-heading>
-                What <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                What <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
             </accordion-heading>
             <div class="" ng-repeat="condition in draftFilter.conditions">
               <div class="row">
@@ -131,7 +131,7 @@
           </accordion-group>
           <accordion-group>
             <accordion-heading>
-                Options <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                Options <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></span>
             </accordion-heading>
             <div>Apply this filter to:</div>
             <div class="btn-group-vertical">
