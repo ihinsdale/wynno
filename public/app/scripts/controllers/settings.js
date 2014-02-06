@@ -17,8 +17,8 @@ angular.module('wynnoApp.controllers')
   $scope.draftFilterAddUser = function(username) {
     // have to prevent duplicates from being added
     var duplicate = false;
-    for (var i = 0; i < draftFilter.users.length; i++) {
-      if (!duplicate && draftFilter.users[i] === username) {
+    for (var i = 0; i < $scope.draftFilter.users.length; i++) {
+      if (!duplicate && $scope.draftFilter.users[i] === username) {
         duplicate = true;
       }
     }
