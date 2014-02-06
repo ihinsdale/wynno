@@ -15,11 +15,27 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.draftFilterAddUser = function(username) {
-    $scope.draftFilter.users.push(username);
+    // have to prevent duplicates from being added
+    var duplicate = false;
+    for (var i = 0; i < draftFilter.users.length; i++) {
+      if (!duplicate && draftFilter.users[i] === username) {
+        duplicate = true;
+      }
+    }
+    if (!duplicate) {
+      $scope.errorAddingUser = null;
+      $scope.draftFilter.users.push(username);
+    } else {
+      $scope.errorAddingUser = 'That user has already been added.';
+    }  
   };
 
   $scope.draftFilterRemoveUser = function(userIndex) {
     $scope.draftFilter.users.splice(userIndex, 1);
+  };
+
+  $scope.dismissError = function(whichError) {
+    $scope[whichError] = null;
   };
 
   $scope.addAnotherCondition = function() {

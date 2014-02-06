@@ -53,6 +53,14 @@
                   </div>
                 </div>
               </div>
+              <div class="row" ng-show="!!errorAddingUser">
+                <div class="col-md-12">
+                  <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissAlert('errorAddingUser')">&times;</button>
+                    <strong>{{errorAddingUser}}</strong>
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-12 col-xs-12">
                   <div class="input-group">
@@ -80,7 +88,7 @@
                     <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                       <span class="icomoon-cancel-circle"></span>
                     </button>
-                    <div class="conditionSideBorder">
+                    <span class="conditionSideBorder">
                       <div class="btn-group-vertical">
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'link'">a link to:</button>
                         <button type="button" class="btn btn-default toggledPurple" ng-model="condition.type" btn-radio="'word'">the word or phrase:</button>
@@ -108,7 +116,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </span>
                   </div>
                 </div>
               </div>
