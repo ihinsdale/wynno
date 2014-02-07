@@ -93,6 +93,7 @@
                 <span class="pull-right glyphicon glyphicon-remove notOkRed stepStatus" ng-show="(invalidForSaving.conditions && draftFilter.users.length == 0 && !hasValidCondition()) || hasInvalidCondition()"></span>
               </div>
             </accordion-heading>
+            <label>Select the conditions tweets must match</label>
             <div class="" ng-repeat="condition in draftFilter.conditions">
               <div class="row">
                 <div class="col-md-11 col-md-offset-1">
