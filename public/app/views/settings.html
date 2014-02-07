@@ -104,8 +104,8 @@
                   <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                     <span class="icomoon-cancel-circle"></span>
                   </button>
-                  <span class="conditionSideBorder">
-                    <select class="form-control" ng-model="condition.type">
+                  <div class="conditionSideBorder">
+                    <select class="form-control conditionSelectorWidth" ng-model="condition.type">
                       <option value="link">a link to:</option>
                       <option value="word">the word or phrase:</option>
                       <option value="hashtag">the hashtag:</option>
@@ -132,7 +132,7 @@
                         </div>
                       </div>
                     </div>
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>

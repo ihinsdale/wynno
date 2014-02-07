@@ -659,6 +659,7 @@ $twitterButtonRadius: 3px;
 }
 
 .conditionSideBorder {
+    display: inline-block;
     border-left: 4px solid $deep-purple;
     padding-left: 10px;
 }
@@ -704,6 +705,11 @@ $twitterButtonRadius: 3px;
 
 .stepStatus {
     padding-right: 40px;
+}
+
+.conditionSelectorWidth {
+    display: inline-block;
+    width: 165px;
 }
 
 // media query-based styling
