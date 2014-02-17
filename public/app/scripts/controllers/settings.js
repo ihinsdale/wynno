@@ -2,17 +2,96 @@
 
 angular.module('wynnoApp.controllers')
 .controller('SettingsCtrl', function($scope, $location, AuthService, SettingsService) {
+  // initial conditions
+  $scope.builderIsCollapsed = true;
+
+  $scope.newDraftFilter = function() {
+    // toggle collapse of the filter builder
+    $scope.builderIsCollapsed = !$scope.builderIsCollapsed;
+    // reset any editExistingFilterIndex value
+    $scope.editExistingFilterIndex = null;
+    // initialize new draft filter
+    $scope.draftFilter = { conditions: [{}], users: [], scope: 'all' };
+  };
+
+  $scope.draftFilterAddUser = function(username) {
+    // have to prevent duplicates from being added
+    var duplicate = false;
+    for (var i = 0; i < $scope.draftFilter.users.length; i++) {
+      if (!duplicate && $scope.draftFilter.users[i] === username) {
+        duplicate = true;
+      }
+    }
+    if (!duplicate) {
+      $scope.errorAddingUser = null;
+      $scope.draftFilter.users.push(username);
+    } else {
+      $scope.errorAddingUser = 'That user has already been added.';
+    }  
+  };
+
+  $scope.draftFilterRemoveUser = function(userIndex) {
+    $scope.draftFilter.users.splice(userIndex, 1);
+  };
+
+  $scope.dismissError = function(whichError) {
+    $scope[whichError] = null;
+  };
+
+  $scope.hasValidCondition = function() {
+    // must have at least one valid condition
+    var hasValidCondition = false;
+    for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
+      if (!hasValidCondition) {
+        // if condition type is a word, condition must have a word
+        // all other condition types are necessarily valid because they have defaults
+        if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
+            || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
+          hasValidCondition = true;
+        }
+      }
+    }
+    return hasValidCondition;
+  };
+
+  $scope.hasInvalidCondition = function() {
+    var hasInvalidCondition = false;
+    for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
+      if (!hasInvalidCondition) {
+        // if condition type is a word and condition doesn't have a word, invalid
+        // all other condition types are necessarily valid because they have defaults
+        if ($scope.draftFilter.conditions[i].type === 'word' && !$scope.draftFilter.conditions[i].word) {
+          hasInvalidCondition = true;
+        }
+      }
+    }
+    return hasInvalidCondition;
+  };
+
+  $scope.addAnotherCondition = function() {
+    $scope.draftFilter.conditions.push({});
+  }
+
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {
-      $scope.settings = settings;
+      $scope.activeFilters = settings.activeFilters;
     });
   };
 
-  $scope.updateSetting = function(add_or_remove, user_or_word, mute_or_hear, input) {
-    SettingsService.updateSetting(add_or_remove, user_or_word, mute_or_hear, input)
+  $scope.saveFilter = function(draftFilter, originalIndex) {
+    SettingsService.saveFilter(draftFilter, originalIndex)
     .then(function(settings) {
-      $scope.settings = settings;
+      $scope.activeFilters = settings.activeFilters;
+    }, function(reason) {
+      console.log('Error saving filter:', reason);
+    });
+  };
+
+  $scope.disableFilter = function(index) {
+    SettingsService.disableFilter(index)
+    .then(function(settings) {
+      $scope.activeFilters = settings.activeFilters;
     });
   };
 

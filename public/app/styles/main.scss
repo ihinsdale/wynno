@@ -3,6 +3,12 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import "bootstrap-sass/lib/bootstrap";
 
+// update path to Bootstrap 3 glyphicons
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url("fonts/glyphicons-halflings-regular.eot");
+  src: url("fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("fonts/glyphicons-halflings-regular.woff") format("woff"), url("fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+}
 
 $color-scheme:  3321TvCw0w0w0;
 
@@ -31,6 +37,8 @@ $twitter-blue: #55acee;
 $gray: #777777;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
+// color utilities
+
 .ayeGreen {
     color: $aye-green;
 }
@@ -51,6 +59,14 @@ $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
     color: $gray;
 }
 
+.okGreen {
+    color: #468847; // same as Bootstrap's alert-success text color
+}
+
+.notOkRed {
+    color: #b94a48; // same as Bootstrap's alert-danger text color
+}
+
 body {
     background: $background-color;
     font-family: "Open Sans", sans-serif;
@@ -64,6 +80,8 @@ body {
 .navbar-default {
     background-color: $nav-background-color;
 }
+
+// tweet styling
 
 .tweet {
     padding-bottom: 5px;
@@ -159,6 +177,8 @@ body {
     font-size: 12px;
     line-height: 14px;
 }
+
+// vote button styling
 
 .voteButtons {
     // background-color: $tweet-background-color;
@@ -388,45 +408,8 @@ body {
     padding-left: 5px;
 }
 
-.heardUser, .heardWord, .mutedUser, .mutedWord {
-    padding-left: 10px;
-}
-
-.heardUsers .settingHeader, .heardWords .settingHeader {
-    background-color: $light-aye-green;
-}
-
-.mutedUsers .settingHeader, .mutedWords .settingHeader {
-    background-color: $light-nay-red;
-}
-
-.heardUsers, .heardWords {
-    border-left: 2px solid $aye-green;
-}
-
-.mutedUsers, .mutedWords {
-    border-left: 2px solid $nay-red;
-}
-
 .innerSettingsBlock {
     margin-left: 10px;
-}
-
-.user, .word {
-    display: inline;
-    width: 180px;
-}
-
-.removeSetting {
-    display: inline;
-    font-size: 16px;
-    color: $settings-gray;
-    background: transparent;
-    border: 0;
-}
-
-.removeSetting:hover {
-    color: #555555;
 }
 
 .settingInputContainer {
@@ -618,17 +601,118 @@ $twitterButtonRadius: 3px;
     padding-left: 6px;
 }
 
-@media (max-width: 979px) {
+// settings page styling
 
+.removeSetting {
+    display: inline;
+    font-size: 16px;
+    color: $settings-gray;
+    background: transparent;
+    border: 0;
 }
 
-@media (min-width: 980px) {
-
+.removeSetting:hover {
+    color: #555555;
 }
 
-@media (max-width: 767px) {
-
+.user {
+    display: inline;
+    font-size: 18px;
+    font-weight: bold;
+    color: $deep-purple;
 }
+
+.paddingTop40 {
+    padding-top: 40px;
+}
+
+.btn.addNewFilter, .btn.saveFilter {
+    background-color: $deep-purple;
+    color: #ffffff;
+}
+
+.btn.addNewFilter:hover, .btn.saveFilter:hover {
+    background-color: $deep-purple;
+}
+
+.btn.hear, .btn.hear:hover {
+    color: $aye-green;
+}
+
+.btn.mute, .btn.mute:hover {
+    color: $nay-red;
+}
+
+.btn.active.hear {
+    background-color: $aye-green;
+    color: #ffffff;
+}
+
+.btn.active.mute {
+    background-color: $nay-red;
+    color: #ffffff;
+}
+
+.btn.active.toggledPurple {
+    background-color: $badge-purple;
+    color: #ffffff;
+}
+
+.conditionSideBorder {
+    display: inline-block;
+    border-left: 4px solid $deep-purple;
+    padding-left: 10px;
+}
+
+.conditionInputPaddingTop {
+    padding-top: 10px;
+}
+
+.downRightArrow {
+    font-size: 2em;
+    padding-right: 20px;
+}
+
+.downRightArrow.link {
+    padding-left: 20px;
+}
+
+.downRightArrow.hashtag {
+    padding-left: 20px;
+}
+
+.andCondition {
+    padding: 10px 0;
+    color: $deep-purple;
+    font-weight: bold;
+}
+
+.listOfUsers {
+    padding-top: 20px;
+}
+
+.addConditionRow {
+    padding-top: 10px;
+}
+
+.addCondition {
+    float: right;
+}
+
+.plus {
+    padding-right: 10px;
+}
+
+.stepStatus {
+    padding-right: 40px;
+}
+
+.conditionSelectorWidth {
+    display: inline-block;
+    width: 165px;
+}
+
+// media query-based styling
 
 @media (min-width: 768px) {
     .navbar-brand {

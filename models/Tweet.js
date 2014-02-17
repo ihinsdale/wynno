@@ -9,7 +9,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   // i.e. full text resides in the retweeted_status nested object's text property
   __user: Schema.Types.Mixed,
   __created_at: String, //UTC time
-  __retweeter: Schema.Types.Mixed,
+  __retweeter: { type: Schema.Types.Mixed, default: null } ,
   __id_str: String,
   __displayStatus: Boolean,
   __entities: Schema.Types.Mixed,

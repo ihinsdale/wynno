@@ -7,7 +7,7 @@ var rendering = require('./rendering.js');
 
 exports.index = function(req, res) {
   // if user is already in session, send them the cookie again
-  // [WHY??]
+  // [WHY?? Just in case they had deleted the user cookie, and not the session one?]
   if (req.user) {
     res.cookie('user', JSON.stringify({
       username: '@' + req.user.tw_screen_name,
@@ -41,14 +41,26 @@ exports.old = function(req, res) {
     function(callback) {
       db.findTweetsBefore_id(req.user._id, oldestTweetId, callback);
     },
-    rendering.renderLinksAndMentions
-  ], function(error, tweets) {
+    rendering.renderLinksAndMentions,
+    function(tweets, callback) {
+      // if settings were requested too, get those
+      if (req.query.settings) {
+        db.getSettings(req.user._id, tweets, callback);
+      } else {
+        callback(null, tweets, null);
+      }
+    }
+  ], function(error, tweets, settings) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      console.log(tweets);
-      res.send(tweets);
+      var data = { tweets: tweets };
+      if (settings) {
+        data.settings = settings;
+      }
+      console.log('sending results for /old:', data);
+      res.send(data);
     }
   });
 };
@@ -84,12 +96,15 @@ exports.fresh = function(req, res) {
           }
         );
       },
+
       // calculate p-values for the new batch of tweets
       // currently this command crunches the numbers for all tweets which haven't been voted on
       // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
       // until the user has done some new voting--e.g. implement a vote counter so that numbers
       // only get crunched every 50 votes
-      algo.crunchTheNumbers,
+      // (MACHINE LEARNING CURRENTLY DISABLED, by commenting out line below:)
+      // algo.crunchTheNumbers,
+
       // get this new batch of tweets out of the database
       db.findTweetsSince_id,
       // render any links in the tweets
@@ -123,30 +138,43 @@ exports.processVote = function(req, res) {
   });
 };
 
-exports.processSetting = function(req, res) {
+exports.saveFilter = function(req, res) {
   var data = req.body;
-  console.log('request data look like', data)
+  console.log('/savefilter request data look like', data)
   async.waterfall([
     function(callback) {
-      db.saveSetting(req.user._id, data.add_or_remove, data.user_or_word, data.mute_or_hear, data.input, callback);
-    },
-    // TODO: this step of getting the updated settings could be removed if logic on the client-side updates the settings
-    //       model/view upon success message from server
-    function(callback) {
-      db.getSettings(req.user._id, callback);
+      db.saveFilter(req.user._id, data.draftFilter, data.revisionOf, callback);
     }
-  ], function(error, settings) {
+  ], function(error) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      res.send(settings);
+      res.send('Success saving filter:', data.draftFilter, ', revision of filter:', data.revisionOf);
+    }
+  });
+};
+
+exports.disableFilter = function(req, res) {
+  var data = req.body;
+  console.log('/disablefilter request data look like', data)
+  async.waterfall([
+    function(callback) {
+      db.disableFilter(req.user._id, data.activeFiltersIndex, data.filter_id, callback);
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully disabled filter.');
     }
   });
 };
 
 exports.getSettings = function(req, res) {
-  db.getSettings(req.user._id, function(error, settings) {
+  db.getSettings(req.user._id, null, function(error, tweetsPassingOn, settings) {
+    // we are just grabbing settings, so tweetsPassingOn is null;
     if (error) {
       console.log(error);
       res.send(500);

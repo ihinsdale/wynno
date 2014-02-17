@@ -14,8 +14,10 @@ module.exports = function(app) {
   app.get('/new', ensureAuthenticated, ensureAgreedTerms, site.fresh);
   // POST request to /vote saves vote in the database
   app.post('/vote', ensureAuthenticated, ensureAgreedTerms, site.processVote);
-  // POST request to /settings saves new filter setting in the database
-  app.post('/settings', ensureAuthenticated, ensureAgreedTerms, site.processSetting);
+  // POST request to /savefilter saves new filter in the database
+  app.post('/savefilter', ensureAuthenticated, ensureAgreedTerms, site.saveFilter);
+  // POST request to /disablefilter disables a filter
+  app.post('/disablefilter', ensureAuthenticated, ensureAgreedTerms, site.disableFilter);
   // GET request to /settings
   app.get('/settings', ensureAuthenticated, ensureAgreedTerms, site.getSettings);
   // GET request to /checkin after authenticating with Twitter
