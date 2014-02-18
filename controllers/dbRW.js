@@ -5,6 +5,7 @@ var User = require('../models/User.js').User;
 var Feedback = require('../models/Feedback.js').Feedback;
 var Filter = require('../models/Filter.js').Filter;
 var _ = require('../node_modules/underscore/underscore-min.js');
+var rendering = require('./rendering.js');
 
 // function to save a tweet to the db
 exports.saveTweet = function(user_id, tweet, callback) {
@@ -61,6 +62,11 @@ var processTweet = function(user_id, tweet) {
     tweet.__entities = tweet.entities;
     delete tweet.entities;
   }
+  // store a fully HTML rendered version of the tweet text in the db
+  // first escape the tweet.__text back to how it came from Twitter
+  tweet.renderedText = _.escape(tweet.__text);
+  // next insert html for urls, media, and user mentions
+  rendering.renderLinksAndMentions(tweet);
   return tweet;
 };
 

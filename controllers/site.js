@@ -41,7 +41,6 @@ exports.old = function(req, res) {
     function(callback) {
       db.findTweetsBefore_id(req.user._id, oldestTweetId, callback);
     },
-    rendering.renderLinksAndMentions,
     function(tweets, callback) {
       // if settings were requested too, get those
       if (req.query.settings) {
@@ -109,10 +108,8 @@ exports.fresh = function(req, res) {
       // algo.crunchTheNumbers,
 
       // get this new batch of tweets out of the database
+      // TODO: 
       db.findTweetsSince_id,
-      // render any links in the tweets
-      // TODO: do this only once and save the rendered version in a field in the db
-      rendering.renderLinksAndMentions,
     ], function(error, tweets) {
       if (error) {
         console.log(error);

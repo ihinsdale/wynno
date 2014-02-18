@@ -7,6 +7,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   __vote: Number,
   __text: String, // this is necessary because the text field is truncated when the tweet is a retweet.
   // i.e. full text resides in the retweeted_status nested object's text property
+  renderedText: String, // this contains __text but with escaped HTML characters and anchor elements
   __user: Schema.Types.Mixed,
   __created_at: String, //UTC time
   __retweeter: { type: Schema.Types.Mixed, default: null } ,
