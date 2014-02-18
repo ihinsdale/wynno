@@ -39,7 +39,7 @@ exports.old = function(req, res) {
   console.log('oldestTweetId sent in request looks like:', oldestTweetId);
   async.waterfall([
     function(callback) {
-      db.findTweetsBefore_id(req.user._id, oldestTweetId, callback);
+      db.findTweetsBeforeId(req.user._id, oldestTweetId, callback);
     },
     function(tweets, callback) {
       // if settings were requested too, get those
@@ -82,7 +82,15 @@ exports.fresh = function(req, res) {
       },
       // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
       // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
-      function(user_id, tweetsArray, callback) {
+      function(user_id, tweetsArray, id_str, callback) {
+        // if oldest tweet in new batch has id_str which matches the id_str used in the fetch request
+        // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
+        // because it's already in the db
+        var gap = true;
+        if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
+          tweetsArray.pop();
+          gap = false;
+        }
         async.eachSeries(tweetsArray.reverse(), 
           function(tweet, callback) {
             db.saveTweet(user_id, tweet, callback);
@@ -91,7 +99,7 @@ exports.fresh = function(req, res) {
             if (err) {
               console.log('Error saving fresh tweets:', err);
             } else {
-              callback(null, user_id, tweetsArray);
+              callback(null, user_id, tweetsArray[0].id_str);
             }
           }
         );

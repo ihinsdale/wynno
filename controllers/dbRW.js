@@ -62,6 +62,8 @@ var processTweet = function(user_id, tweet) {
     tweet.__entities = tweet.entities;
     delete tweet.entities;
   }
+  // the tweet's (Twitter API) id gets replaced as a string, which mongoose-long then stores as 64-bit integer
+  tweet.id = tweet.id_str;
   // store a fully HTML rendered version of the tweet text in the db
   // first escape the tweet.__text back to how it came from Twitter
   tweet.renderedText = _.escape(tweet.__text);
@@ -70,14 +72,23 @@ var processTweet = function(user_id, tweet) {
   return tweet;
 };
 
-exports.updateLatestTweetId = function(user_id, batchOfTweets, callback) {
-  User.findByIdAndUpdate(user_id, { $set: { latestTweetIdStr: batchOfTweets[0].id_str } }, function(err, user) {
+exports.updateLatestTweetId = function(user_id, newLatestTweetIdStr, gap, callback) {
+  User.findById(user_id, function(err, user) {
     if (err) {
       console.log('Error finding user whose latestTweetIdStr to update.');
       callback(err);
     } else {
-      console.log("Successfully updated user's latestTweetIdStr.");
-      callback(null, user.latestTweetIdStr);
+      var origLatestTweetIdStr = user.latestTweetIdStr;
+      user.latestTweetIdStr = newLatestTweetIdStr;
+      user.save(function(error) {
+        if (error) {
+          console.log('Error saving new latestTweetIdStr.');
+          callback(error);
+        } else {
+          console.log("Successfully updated user's latestTweetIdStr.");
+          callback(null, user_id, origLatestTweetIdStr, gap);
+        }
+      });
     }
   });
 };
@@ -124,22 +135,29 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
 
 var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
 
-exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
+exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
+  // user_id must be a db record id, i.e. _id, not a Twitter API id
+  // tweetIdStr is a Twitter API id
   var criteria = { user_id: user_id };
-  if (tweet_id !== '0') {
-    criteria._id = {$lt: tweet_id};
+  if (tweetIdStr !== '0') {
+    //var id = parseInt(tweetIdStr);
+    //criteria.id = {$lt: id};
+    criteria.id = {$lt: tweetIdStr};
   }
-  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 }, limit: 50 }, function(err, docs) {
+  Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 }, limit: 50 }, function(err, docs) {
     if (err) {
       console.log('error grabbing tweets');
     } else {
+      // check for rounding of id caused by Javascript's inability to deal with 53-bit integers
+      if (tweetIdStr !== '0' && docs[docs.length - 1].id_str !== tweetIdStr) {
+        callback('Rounding of tweet id to 53-bit integer has introduced a discrepancy.');
+      }
       callback(null, docs);
     }
   });
 };
 
-exports.findTweetsSinceId = function(user_id, tweetIdStr, callback) {
+exports.findTweetsSinceId = function(user_id, tweetIdStr, gap, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API id
   // tweetIdStr is a Twitter API id
   var criteria = {user_id: user_id};
@@ -147,20 +165,21 @@ exports.findTweetsSinceId = function(user_id, tweetIdStr, callback) {
     // if tweetId is not null, we restrict to tweets since it
     // if it is null that means user has never stored tweets in db before, so we grab all tweets for user
     if (tweetIdStr) { 
-      var id = parseInt(tweetIdStr);
-      console.log('parsed tweetIdStr is:', id);
-      console.log('tweetIdStr is:', tweetIdStr);
-      criteria.id = {$gt: id};
+      // var id = parseInt(tweetIdStr);
+      // // check for rounding of id caused by Javascript's inability to deal with 53-bit integers
+      // console.log('parsed tweetIdStr is:', id);
+      // console.log('tweetIdStr is:', tweetIdStr);
+      // if (id.toString() !== tweetIdStr) {
+      //   callback('Rounding of tweet id to 53-bit integer has introduced a discrepancy.');
+      // }
+      // criteria.id = {$gt: id};
+      criteria.id = {$gt: tweetIdStr};
     }
     Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 } }, function(err, docs) {
       if (err) {
         console.log('error grabbing tweets:', err);
         callback(err);
       } else {
-        // check for rounding of id caused by Javascript's inability to deal with 53-bit integers
-        if (docs[docs.length - 1].id_str !== tweetIdStr) {
-          callback('Rounding of tweet id to 53-bit integer has introduced a discrepancy.');
-        }
         callback(null, docs);
       }
     });

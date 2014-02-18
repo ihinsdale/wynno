@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+require('mongoose-long')(mongoose);
 var Schema = mongoose.Schema;
 
 exports.tweetSchema = tweetSchema = new Schema({
@@ -16,7 +17,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   __entities: Schema.Types.Mixed,
 
   //created_at: String, // UTC time
-  id: { type: Number, index: true },
+  id: { type: Schema.Types.Long, index: true },
   id_str: String,
   //text: String,
   source: String,

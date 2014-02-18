@@ -26,7 +26,7 @@ exports.fetch = function(user_id, token, tokenSecret, id_str, callback) {
       console.log('there was an error getting tweets from Twitter API:', error);
     } else {
       console.log('number of tweets:', data.length);
-      callback(null, user_id, data);
+      callback(null, user_id, data, id_str);
     }
   });
 };
