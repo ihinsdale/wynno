@@ -75,14 +75,15 @@ exports.fresh = function(req, res) {
     async.waterfall([
       // find (Twitter's) tweet id of the last saved tweet
       function(callback) {
-        db.lastTweetId(req.user._id, callback);
+        db.getLatestTweetIdForFetching(req.user._id, callback);
       },
       // use that id to grab new tweets from Twitter API
-      function(user_id, id, _id, callback) {
-        twitter.fetch(user_id, req.session.access_token, req.session.access_secret, id, _id, callback);
+      function(user_id, id_str, callback) {
+        twitter.fetch(user_id, req.session.access_token, req.session.access_secret, id_str, callback);
       },
-      // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
-      function(user_id, tweetsArray, _id, callback) {
+      // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
+      // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
+      function(user_id, tweetsArray, callback) {
         async.eachSeries(tweetsArray.reverse(), 
           function(tweet, callback) {
             db.saveTweet(user_id, tweet, callback);
@@ -91,11 +92,13 @@ exports.fresh = function(req, res) {
             if (err) {
               console.log('Error saving fresh tweets:', err);
             } else {
-              callback(null, user_id, _id);
+              callback(null, user_id, tweetsArray);
             }
           }
         );
       },
+      // after saving new batch of tweets, update latestTweetId in User doc
+      db.updateLatestTweetId,
 
       // calculate p-values for the new batch of tweets
       // currently this command crunches the numbers for all tweets which haven't been voted on

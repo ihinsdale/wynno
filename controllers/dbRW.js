@@ -64,50 +64,53 @@ var processTweet = function(user_id, tweet) {
   return tweet;
 };
 
-exports.lastTweetId = function(user_id, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
-
-  var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
-    n = n.toString(); // but n should be passed in as a string
-    var result = n;
-    var i = n.length - 1;
-    while (i > -1) {
-      if (n[i] === "9") {
-        result = result.substring(0,i) + "0" + result.substring(i + 1);
-        i--;
-      }
-      else {
-        result=result.substring(0,i)+(parseInt(n[i],10)+1).toString()+result.substring(i+1);
-        return result;
-      }
-    }
-    return result;
-  };
-
-  // TODO: refactor this so that last tweet id is stored as a field in the User schema
-  //       so that we don't have to sort through all user's tweets just to find the last one
-  Tweet.find({ user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, docs) {
-    var id;
-    var _id;
+exports.updateLatestTweetId = function(user_id, batchOfTweets, callback) {
+  User.findByIdAndUpdate(user_id, { $set: { latestTweetIdStr: batchOfTweets[0].id_str } }, function(err, user) {
     if (err) {
-      console.log('Error searching collection for a record');
-    } else if (!docs.length) {
-      console.log('Collection has no records for user', user_id);
-      id = null;
-      _id = null;
+      console.log('Error finding user whose latestTweetIdStr to update.');
+      callback(err);
     } else {
-      var item = docs[0];
-      console.log('item looks like:', item);
-      console.log('last tweets id string is', item.id_str);
-      id = incStrNum(item.id_str);
-      _id = item._id
-      console.log('last tweets db id is:', _id);
+      console.log("Successfully updated user's latestTweetIdStr.");
+      callback(null);
     }
-    callback(null, user_id, id, _id);
-    // this incrementing performed because since_id is actually inclusive,
-    // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
   });
-}
+};
+
+var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
+  n = n.toString(); // but n should be passed in as a string
+  var result = n;
+  var i = n.length - 1;
+  while (i > -1) {
+    if (n[i] === "9") {
+      result = result.substring(0,i) + "0" + result.substring(i + 1);
+      i--;
+    }
+    else {
+      result=result.substring(0,i)+(parseInt(n[i],10)+1).toString()+result.substring(i+1);
+      return result;
+    }
+  }
+  return result;
+};
+
+exports.getLatestTweetIdForFetching = function(user_id, callback) {
+  // user_id must be a db record id, i.e. _id, not a Twitter API user id
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user whose latestTweetIdStr to grab and increment.');
+      callback(err);
+    } else {
+      console.log('latestTweetIdStr stored in db is:', item.id_str);
+      id_str = incStrNum(item.id_str);
+      console.log('id_str type:', typeof id_str);
+      callback(null, user_id, id_str);
+      // this incrementing performed because since_id is actually inclusive,
+      // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
+      // so we increment the id of the latest tweet we already have, so that we don't
+      // receive it again
+    }
+  });
+};
 
 var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
 
@@ -181,7 +184,7 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
           console.log("User's active filters are:", user.activeFilters);
           callback(null);
         }
-      })
+      });
     }
   });
 };
