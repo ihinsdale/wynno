@@ -108,8 +108,7 @@ exports.fresh = function(req, res) {
       // algo.crunchTheNumbers,
 
       // get this new batch of tweets out of the database
-      // TODO: 
-      db.findTweetsSince_id,
+      db.findTweetsSinceId
     ], function(error, tweets) {
       if (error) {
         console.log(error);

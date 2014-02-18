@@ -77,7 +77,7 @@ exports.updateLatestTweetId = function(user_id, batchOfTweets, callback) {
       callback(err);
     } else {
       console.log("Successfully updated user's latestTweetIdStr.");
-      callback(null);
+      callback(null, user.latestTweetIdStr);
     }
   });
 };
@@ -106,14 +106,18 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
       console.log('Error finding user whose latestTweetIdStr to grab and increment.');
       callback(err);
     } else {
-      console.log('latestTweetIdStr stored in db is:', item.id_str);
-      id_str = incStrNum(item.id_str);
-      console.log('id_str type:', typeof id_str);
-      callback(null, user_id, id_str);
-      // this incrementing performed because since_id is actually inclusive,
+      console.log('latestTweetIdStr stored in db is:', doc.latestTweetIdStr);
+      id_str = doc.latestTweetIdStr;
+      // disabling incrementing of latestTweetIdStr before fetching new tweets from Twitter,
+      // because we will use overlap on this tweet between the new batch and the old tweets to indicate
+      // that there are no intervening tweets left to grab
+      //id_str = incStrNum(doc.latestTweetIdStr);
+      //console.log('id_str type:', typeof id_str);
+      // originally, we were incrementing id_str, because since_id is actually inclusive,
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
-      // so we increment the id of the latest tweet we already have, so that we don't
-      // receive it again
+      // so we incremented the id of the latest tweet we already have, so that we did't
+      // receive a duplicate
+      callback(null, user_id, id_str);
     }
   });
 };
@@ -135,20 +139,28 @@ exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
   });
 };
 
-exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
+exports.findTweetsSinceId = function(user_id, tweetIdStr, callback) {
+  // user_id must be a db record id, i.e. _id, not a Twitter API id
+  // tweetIdStr is a Twitter API id
   var criteria = {user_id: user_id};
-  if (tweet_id !== undefined) {
-    // if tweet_id is not null, we restrict to tweets since it
+  if (tweetIdStr !== undefined) {
+    // if tweetId is not null, we restrict to tweets since it
     // if it is null that means user has never stored tweets in db before, so we grab all tweets for user
-    if (tweet_id) { 
-      criteria._id = {$gt: tweet_id};
+    if (tweetIdStr) { 
+      var id = parseInt(tweetIdStr);
+      console.log('parsed tweetIdStr is:', id);
+      console.log('tweetIdStr is:', tweetIdStr);
+      criteria.id = {$gt: id};
     }
-    Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
+    Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 } }, function(err, docs) {
       if (err) {
         console.log('error grabbing tweets:', err);
         callback(err);
       } else {
+        // check for rounding of id caused by Javascript's inability to deal with 53-bit integers
+        if (docs[docs.length - 1].id_str !== tweetIdStr) {
+          callback('Rounding of tweet id to 53-bit integer has introduced a discrepancy.');
+        }
         callback(null, docs);
       }
     });

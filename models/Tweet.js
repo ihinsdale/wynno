@@ -16,7 +16,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   __entities: Schema.Types.Mixed,
 
   //created_at: String, // UTC time
-  id: Number,
+  id: { type: Number, index: true },
   id_str: String,
   //text: String,
   source: String,
