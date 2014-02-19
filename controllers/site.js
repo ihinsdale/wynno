@@ -85,35 +85,36 @@ exports.fresh = function(req, res) {
       function(user_id, tweetsArray, id_str, callback) {
         if (!tweetsArray.length) {
           callback('No new tweets have occurred.');
-        }
-        // if oldest tweet in new batch has id_str which matches the id_str used in the fetch request
-        // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
-        // because it's already in the db
-        var gap = true;
-        if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
-          // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
-          console.log('No gap remaining between this fetch and previous.');
-          tweetsArray.pop();
-          gap = false;
-        }
-        async.eachSeries(tweetsArray.reverse(), 
-          function(tweet, callback) {
-            db.saveTweet(user_id, tweet, callback);
-          }, 
-          function(err) {
-            if (err) {
-              console.log('Error saving fresh tweets:', err);
-              callback(err);
-            } else {
-              // tweetsArray has been reversed so last item in the array is the newest tweet
-              if (tweetsArray.length > 1) {
-                callback(null, user_id, tweetsArray[tweetsArray.length - 2].id_str, tweetsArray[tweetsArray.length - 1].id_str, gap);
-              } else if (tweetsArray.length === 1) {
-                callback(null, user_id, null, tweetsArray[tweetsArray.length - 1].id_str, gap);
+        } else {
+          // if oldest tweet in new batch has id_str which matches the id_str used in the fetch request
+          // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
+          // because it's already in the db
+          var gap = true;
+          if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
+            // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
+            console.log('No gap remaining between this fetch and previous.');
+            tweetsArray.pop();
+            gap = false;
+          }
+          async.eachSeries(tweetsArray.reverse(), 
+            function(tweet, callback) {
+              db.saveTweet(user_id, tweet, callback);
+            }, 
+            function(err) {
+              if (err) {
+                console.log('Error saving fresh tweets:', err);
+                callback(err);
+              } else {
+                // tweetsArray has been reversed so last item in the array is the newest tweet
+                if (tweetsArray.length > 1) {
+                  callback(null, user_id, tweetsArray[tweetsArray.length - 2].id_str, tweetsArray[tweetsArray.length - 1].id_str, gap);
+                } else if (tweetsArray.length === 1) {
+                  callback(null, user_id, null, tweetsArray[tweetsArray.length - 1].id_str, gap);
+                }
               }
             }
-          }
-        );
+          );
+        }
       },
       // after saving new batch of tweets, update latestTweetId in User doc
       db.updateSecondLatestTweetId,
