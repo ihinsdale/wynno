@@ -87,7 +87,7 @@ exports.fresh = function(req, res) {
         // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
         // because it's already in the db
         var gap = true;
-        if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
+        if (!!tweetsArray.length && tweetsArray[tweetsArray.length - 1].id_str === id_str) {
           // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
           console.log('No gap remaining between this fetch and previous.');
           tweetsArray.pop();
