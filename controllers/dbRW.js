@@ -118,11 +118,11 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
       callback(err);
     } else {
       console.log('latestTweetIdStr stored in db is:', doc.latestTweetIdStr);
-      id_str = doc.latestTweetIdStr;
+      var id_str = doc.latestTweetIdStr;
       // disabling incrementing of latestTweetIdStr before fetching new tweets from Twitter,
       // because we will use overlap on this tweet between the new batch and the old tweets to indicate
       // that there are no intervening tweets left to grab
-      //id_str = incStrNum(doc.latestTweetIdStr);
+      //var id_str = incStrNum(doc.latestTweetIdStr);
       //console.log('id_str type:', typeof id_str);
       // originally, we were incrementing id_str, because since_id is actually inclusive,
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
