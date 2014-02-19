@@ -72,21 +72,26 @@ var processTweet = function(user_id, tweet) {
   return tweet;
 };
 
-exports.updateLatestTweetId = function(user_id, newLatestTweetIdStr, gap, callback) {
+exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr, newLatestTweetIdStr, gap, callback) {
   User.findById(user_id, function(err, user) {
     if (err) {
-      console.log('Error finding user whose latestTweetIdStr to update.');
+      console.log('Error finding user whose secondLatestTweetIdStr to update.');
       callback(err);
     } else {
       var origLatestTweetIdStr = user.latestTweetIdStr;
       console.log('origLatestTweetIdStr is:', origLatestTweetIdStr);
+      if (newSecondLatestTweetIdStr === null) {
+        user.secondLatestTweetIdStr = user.latestTweetIdStr;
+      } else {
+        user.secondLatestTweetIdStr = newSecondLatestTweetIdStr;
+      }
       user.latestTweetIdStr = newLatestTweetIdStr;
       user.save(function(error) {
         if (error) {
-          console.log('Error saving new latestTweetIdStr.');
+          console.log('Error saving new secondLatestTweetIdStr.');
           callback(error);
         } else {
-          console.log("Successfully updated user's latestTweetIdStr.");
+          console.log("Successfully updated user's secondLatestTweetIdStr.");
           callback(null, user_id, origLatestTweetIdStr, gap);
         }
       });
@@ -115,17 +120,17 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API user id
   User.findById(user_id, function(err, doc) {
     if (err) {
-      console.log('Error finding user whose latestTweetIdStr to grab and increment.');
+      console.log('Error finding user whose secondLatestTweetIdStr to grab and increment.');
       callback(err);
     } else {
-      console.log('latestTweetIdStr stored in db is:', doc.latestTweetIdStr);
-      var id_str = doc.latestTweetIdStr || null; // default value of null, in the case of new user who has never
+      console.log('secondLatestTweetIdStr stored in db is:', doc.secondLatestTweetIdStr);
+      var id_str = doc.secondLatestTweetIdStr || null; // default value of null, in the case of new user who has never
       // fetched tweets before
 
-      // currently disabling incrementing of latestTweetIdStr before fetching new tweets from Twitter,
+      // currently disabling incrementing of secondLatestTweetIdStr before fetching new tweets from Twitter,
       // because we will use overlap on this tweet between the new batch and the old tweets to indicate
       // that there are no intervening tweets left to grab
-      //var id_str = incStrNum(doc.latestTweetIdStr);
+      //var id_str = incStrNum(doc.secondLatestTweetIdStr);
       //console.log('id_str type:', typeof id_str);
       // originally, we were incrementing id_str, because since_id is actually inclusive,
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084

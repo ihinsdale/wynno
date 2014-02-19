@@ -10,6 +10,7 @@ exports.userSchema = userSchema = new Schema({
   tw_screen_name: String,
   email: String,
   tw_profile_image_url: String,
+  secondLatestTweetIdStr: {type: String, default: null},
   latestTweetIdStr: {type: String, default: null},
   activeFilters: [ filterSchema ],
   disabledFilters: [ filterSchema ],

@@ -74,7 +74,7 @@ exports.fresh = function(req, res) {
     async.waterfall([
       // find (Twitter's) tweet id of the last saved tweet
       function(callback) {
-        db.getLatestTweetIdForFetching(req.user._id, callback);
+        db.getSecondLatestTweetIdForFetching(req.user._id, callback);
       },
       // use that id to grab new tweets from Twitter API
       function(user_id, id_str, callback) {
@@ -87,7 +87,7 @@ exports.fresh = function(req, res) {
         // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
         // because it's already in the db
         var gap = true;
-        if (!!tweetsArray.length && tweetsArray[tweetsArray.length - 1].id_str === id_str) {
+        if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
           // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
           console.log('No gap remaining between this fetch and previous.');
           tweetsArray.pop();
@@ -100,15 +100,22 @@ exports.fresh = function(req, res) {
           function(err) {
             if (err) {
               console.log('Error saving fresh tweets:', err);
+              callback(err);
             } else {
-              callback(null, user_id, tweetsArray[tweetsArray.length - 1].id_str, gap);
-              // tweetsArray has been reversed in the async.eachSeries, so the newest tweet is last in the array
+              // tweetsArray has been reversed so last item in the array is the newest tweet
+              if (tweetsArray.length > 1) {
+                callback(null, user_id, tweetsArray[tweetsArray.length - 2].id_str, tweetsArray[tweetsArray.length - 1].id_str, gap);
+              else if (tweetsArray.length === 1) {
+                callback(null, user_id, null, tweetsArray[tweetsArray.length - 1].id_str, gap);
+              } else {
+                callback('No new tweets have occurred.');
+              }
             }
           }
         );
       },
       // after saving new batch of tweets, update latestTweetId in User doc
-      db.updateLatestTweetId,
+      db.updateSecondLatestTweetId,
 
       // calculate p-values for the new batch of tweets
       // currently this command crunches the numbers for all tweets which haven't been voted on
@@ -122,8 +129,12 @@ exports.fresh = function(req, res) {
       db.findTweetsSinceId
     ], function(error, tweets) {
       if (error) {
-        console.log(error);
-        res.send(500);
+        if (error === 'No new tweets have occurred.') {
+          res.send([]);
+        } else {
+          console.log(error);
+          res.send(500);
+        }
       } else {
         // send the tweets back to the client
         res.send(tweets);
