@@ -83,15 +83,15 @@ exports.fresh = function(req, res) {
       },
       // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
       // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
-      function(user_id, tweetsArray, id_str, callback) {
+      function(user_id, tweetsArray, latestid_str, callback) {
         if (!tweetsArray.length) {
           callback('No new tweets have occurred.');
         } else {
-          // if oldest tweet in new batch has id_str which matches the id_str used in the fetch request
+          // if oldest tweet in new batch has id_str which matches the id_str of the latest tweet previously obtained
           // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
           // because it's already in the db
           var gap = true;
-          if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
+          if (tweetsArray[tweetsArray.length - 1].id_str === latestid_str) {
             // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
             console.log('No gap remaining between this fetch and previous.');
             tweetsArray.pop();

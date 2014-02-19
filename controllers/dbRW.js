@@ -150,18 +150,12 @@ exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
   // tweetIdStr is a Twitter API id
   var criteria = { user_id: user_id };
   if (tweetIdStr !== '0') {
-    //var id = parseInt(tweetIdStr);
-    //criteria.id = {$lt: id};
     criteria.id = {$lt: tweetIdStr};
   }
   Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 }, limit: 50 }, function(err, docs) {
     if (err) {
       console.log('error grabbing tweets');
     } else {
-      // check for rounding of id caused by Javascript's inability to deal with 53-bit integers
-      if (tweetIdStr !== '0' && docs[docs.length - 1].id_str !== tweetIdStr) {
-        callback('Rounding of tweet id to 53-bit integer has introduced a discrepancy.');
-      }
       callback(null, docs);
     }
   });
@@ -175,14 +169,6 @@ exports.findTweetsSinceId = function(user_id, tweetIdStr, gap, callback) {
     // if tweetId is not null, we restrict to tweets since it
     // if it is null that means user has never stored tweets in db before, so we grab all tweets for user
     if (tweetIdStr) { 
-      // var id = parseInt(tweetIdStr);
-      // // check for rounding of id caused by Javascript's inability to deal with 53-bit integers
-      // console.log('parsed tweetIdStr is:', id);
-      // console.log('tweetIdStr is:', tweetIdStr);
-      // if (id.toString() !== tweetIdStr) {
-      //   callback('Rounding of tweet id to 53-bit integer has introduced a discrepancy.');
-      // }
-      // criteria.id = {$gt: id};
       criteria.id = {$gt: tweetIdStr};
     }
     Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 } }, function(err, docs) {
