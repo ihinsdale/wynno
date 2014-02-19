@@ -131,7 +131,7 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
       // so we incremented the id of the latest tweet we already have, so that we did't
       // receive a duplicate
-      
+
       callback(null, user_id, id_str);
     }
   });
