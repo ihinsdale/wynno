@@ -79,6 +79,7 @@ exports.updateLatestTweetId = function(user_id, newLatestTweetIdStr, gap, callba
       callback(err);
     } else {
       var origLatestTweetIdStr = user.latestTweetIdStr;
+      console.log('origLatestTweetIdStr is:', origLatestTweetIdStr);
       user.latestTweetIdStr = newLatestTweetIdStr;
       user.save(function(error) {
         if (error) {
