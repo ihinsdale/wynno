@@ -99,7 +99,7 @@ exports.fresh = function(req, res) {
             if (err) {
               console.log('Error saving fresh tweets:', err);
             } else {
-              callback(null, user_id, tweetsArray[0].id_str);
+              callback(null, user_id, tweetsArray[0].id_str, gap);
             }
           }
         );
