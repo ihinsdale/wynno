@@ -4,11 +4,11 @@ var Twitter = require('ntwitter');
 exports.timeOfLastFetch = null;
 
 // Fetch new tweets from Twitter API
-exports.fetch = function(user_id, token, tokenSecret, id_str, callback) {
-  console.log('fetching tweets since', id_str);
+exports.fetch = function(user_id, token, tokenSecret, secondLatestid_str, latestid_str, callback) {
+  console.log('fetching tweets since:', secondLatestid_str);
   var options = {count: 195};
-  if (id_str) {
-    options.since_id = id_str;
+  if (secondLatestid_str) {
+    options.since_id = secondLatestid_str;
     console.log('Twitter id of last tweet, as sent in fetch call to Twitter API:', options.since_id);
     console.log('type of that id:', typeof options.since_id);
   }
@@ -26,7 +26,7 @@ exports.fetch = function(user_id, token, tokenSecret, id_str, callback) {
       console.log('there was an error getting tweets from Twitter API:', error);
     } else {
       console.log('number of tweets:', data.length);
-      callback(null, user_id, data, id_str);
+      callback(null, user_id, data, latestid_str);
     }
   });
 };

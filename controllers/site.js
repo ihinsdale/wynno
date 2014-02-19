@@ -37,6 +37,7 @@ exports.logout = function(req, res) {
 exports.old = function(req, res) {
   var oldestTweetId = req.query.oldestTweetId;
   console.log('oldestTweetId sent in request looks like:', oldestTweetId);
+  console.log('typeof oldestTweetId:', typeof oldestTweetId);
   async.waterfall([
     function(callback) {
       db.findTweetsBeforeId(req.user._id, oldestTweetId, callback);
@@ -77,8 +78,8 @@ exports.fresh = function(req, res) {
         db.getSecondLatestTweetIdForFetching(req.user._id, callback);
       },
       // use that id to grab new tweets from Twitter API
-      function(user_id, id_str, callback) {
-        twitter.fetch(user_id, req.session.access_token, req.session.access_secret, id_str, callback);
+      function(user_id, secondLatestid_str, latestid_str, callback) {
+        twitter.fetch(user_id, req.session.access_token, req.session.access_secret, secondLatestid_str, latestid_str, callback);
       },
       // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
       // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...

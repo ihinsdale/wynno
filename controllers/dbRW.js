@@ -124,7 +124,9 @@ exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
       callback(err);
     } else {
       console.log('secondLatestTweetIdStr stored in db is:', doc.secondLatestTweetIdStr);
-      var id_str = doc.secondLatestTweetIdStr;
+      console.log('latestTweetIdStr stored in db is:', doc.latestTweetIdStr);
+      var secondLatestid_str = doc.secondLatestTweetIdStr;
+      var latestid_str = doc.latestTweetIdStr;
 
       // currently disabling incrementing of secondLatestTweetIdStr before fetching new tweets from Twitter,
       // because we will use overlap on this tweet between the new batch and the old tweets to indicate
@@ -136,7 +138,7 @@ exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
       // so we incremented the id of the latest tweet we already have, so that we did't
       // receive a duplicate
 
-      callback(null, user_id, id_str);
+      callback(null, user_id, secondLatestid_str, latestid_str);
     }
   });
 };
