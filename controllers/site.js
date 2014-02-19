@@ -88,6 +88,8 @@ exports.fresh = function(req, res) {
         // because it's already in the db
         var gap = true;
         if (tweetsArray[tweetsArray.length - 1].id_str === id_str) {
+          // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
+          console.log('No gap remaining between this fetch and previous.');
           tweetsArray.pop();
           gap = false;
         }
@@ -99,7 +101,8 @@ exports.fresh = function(req, res) {
             if (err) {
               console.log('Error saving fresh tweets:', err);
             } else {
-              callback(null, user_id, tweetsArray[0].id_str, gap);
+              callback(null, user_id, tweetsArray[tweetsArray.length - 1].id_str, gap);
+              // tweetsArray has been reversed in the async.eachSeries, so the newest tweet is last in the array
             }
           }
         );

@@ -119,8 +119,10 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
       callback(err);
     } else {
       console.log('latestTweetIdStr stored in db is:', doc.latestTweetIdStr);
-      var id_str = doc.latestTweetIdStr;
-      // disabling incrementing of latestTweetIdStr before fetching new tweets from Twitter,
+      var id_str = doc.latestTweetIdStr || null; // default value of null, in the case of new user who has never
+      // fetched tweets before
+
+      // currently disabling incrementing of latestTweetIdStr before fetching new tweets from Twitter,
       // because we will use overlap on this tweet between the new batch and the old tweets to indicate
       // that there are no intervening tweets left to grab
       //var id_str = incStrNum(doc.latestTweetIdStr);
@@ -129,6 +131,7 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
       // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
       // so we incremented the id of the latest tweet we already have, so that we did't
       // receive a duplicate
+      
       callback(null, user_id, id_str);
     }
   });
