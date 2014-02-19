@@ -105,7 +105,7 @@ exports.fresh = function(req, res) {
               // tweetsArray has been reversed so last item in the array is the newest tweet
               if (tweetsArray.length > 1) {
                 callback(null, user_id, tweetsArray[tweetsArray.length - 2].id_str, tweetsArray[tweetsArray.length - 1].id_str, gap);
-              else if (tweetsArray.length === 1) {
+              } else if (tweetsArray.length === 1) {
                 callback(null, user_id, null, tweetsArray[tweetsArray.length - 1].id_str, gap);
               } else {
                 callback('No new tweets have occurred.');
