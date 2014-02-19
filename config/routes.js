@@ -1,7 +1,6 @@
 module.exports = function(app) {
   // Include controllers
   var site = require('../controllers/site.js');
-  var user = require('../controllers/user.js');
   var passport = require('passport');
   var ensureAuthenticated = require('./middleware.js').ensureAuthenticated;
   var ensureAgreedTerms = require('./middleware.js').ensureAgreedTerms;
