@@ -116,7 +116,7 @@ var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-
   return result;
 };
 
-exports.getLatestTweetIdForFetching = function(user_id, callback) {
+exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API user id
   User.findById(user_id, function(err, doc) {
     if (err) {
@@ -124,8 +124,7 @@ exports.getLatestTweetIdForFetching = function(user_id, callback) {
       callback(err);
     } else {
       console.log('secondLatestTweetIdStr stored in db is:', doc.secondLatestTweetIdStr);
-      var id_str = doc.secondLatestTweetIdStr || null; // default value of null, in the case of new user who has never
-      // fetched tweets before
+      var id_str = doc.secondLatestTweetIdStr;
 
       // currently disabling incrementing of secondLatestTweetIdStr before fetching new tweets from Twitter,
       // because we will use overlap on this tweet between the new batch and the old tweets to indicate
