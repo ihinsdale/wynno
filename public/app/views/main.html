@@ -45,7 +45,7 @@
             </a>
               <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></span>
           </div>
-          <div class="tweetText" ng-bind-html="tweet.__text"></div>
+          <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
           <div class="tweetFooter">
             <div ng-if="tweet.__retweeter" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>
           </div>
