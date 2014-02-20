@@ -90,12 +90,12 @@ exports.fresh = function(req, res) {
           // if oldest tweet in new batch has id_str which matches the id_str of the latest tweet previously obtained
           // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
           // because it's already in the db
-          var gap = true;
           if (tweetsArray[tweetsArray.length - 1].id_str === latestid_str) {
             // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
             console.log('No gap remaining between this fetch and previous.');
             tweetsArray.pop();
-            gap = false;
+          } else {
+            tweetsArray[tweetsArray.length - 1].gapAfterThis = true;
           }
           async.eachSeries(tweetsArray.reverse(), 
             function(tweet, callback) {

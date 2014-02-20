@@ -88,8 +88,15 @@ angular.module('wynnoApp.controllers')
     })
   };
 
-  $scope.fillGap = function(oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr) {
+  $scope.fillGap = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex) {
+    // TODO add activeTwitterRequest-like functionality
+    TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex)
+    .then(function(tweets) {
 
+    }, function(reason) {
+      console.log('error filling gap:', reason);
+      // TODO replicate waiting logic, as in getNewTweets
+    });
   };
 
   $scope.countdownTimer = function(wait, next) {

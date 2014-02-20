@@ -63,6 +63,42 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
+    getMiddleTweets: function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex) {
+      var d = $q.defer();
+      if (service.timeOfLastFetch) {
+        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
+      }
+      if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
+        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+      } else {
+        $http.get('/middle', {
+          params: {
+            oldestOfMoreRecentTweetsIdStr: service.currentTweets[oldestOfMoreRecentTweetsIndex].id_str,
+            secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str
+          }
+        })
+        .success(function(data, status) {
+          console.log('success getting middle tweets, they look like:', data.tweets);
+          // apply filtering rules to the tweets
+          FilterService.applyFilterRules(data.tweets);
+          // now add the tweets to currentTweets
+          // if a gap was indicated between this new batch of tweets and what was previously in the db,
+          // add a gap placeholder tweet
+          if (data.gap) {
+            data.tweets.push({gapPlaceholder: true});
+          }
+          service.currentTweets = service.currentTweets.slice(0,oldestOfMoreRecentTweetsIndex + 1).concat(data.tweets).concat(service.currentTweets.slice(secondNewestOfOlderTweetsIndex - 1));
+          // update timeOfLastFetch
+          service.timeOfLastFetch = new Date();
+          d.resolve(service.currentTweets);
+        })
+        .error(function(reason, status) {
+          console.log('error getting middle tweets:', reason);
+          d.reject(reason);
+        });
+      }
+      return d.promise;
+    },
     getPassingTweets: function(threshold) {
       var tweetsToDisplay = [];
       angular.forEach(service.currentTweets, function(tweet) {

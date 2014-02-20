@@ -15,6 +15,7 @@ exports.tweetSchema = tweetSchema = new Schema({
   __id_str: String,
   __displayStatus: Boolean,
   __entities: Schema.Types.Mixed,
+  gapAfterThis: { type: Boolean, default: false },
 
   //created_at: String, // UTC time
   id: { type: Schema.Types.Long, index: true },
