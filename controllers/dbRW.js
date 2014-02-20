@@ -65,10 +65,10 @@ var processTweet = function(user_id, tweet) {
   // the tweet's (Twitter API) id gets replaced as a string, which mongoose-long then stores as 64-bit integer
   tweet.id = tweet.id_str;
   // store a fully HTML rendered version of the tweet text in the db
-  // first escape the tweet.__text back to how it came from Twitter
-  tweet.renderedText = _.escape(tweet.__text);
-  // next insert html for urls, media, and user mentions
+  // first insert html for urls, media, and user mentions
   rendering.renderLinksAndMentions(tweet);
+  // then escape the tweet.__text back to how it came from Twitter
+  tweet.renderedText = _.escape(tweet.renderedText);
   return tweet;
 };
 
