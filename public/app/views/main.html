@@ -27,7 +27,7 @@
 </div>
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
-    <div class="shownTweetWrapper" ng-hide="tweet.hideGivenNewContraryVote">
+    <div class="shownTweetWrapper" ng-hide="tweet.hideGivenNewContraryVote || tweet.gapPlaceholder">
       <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, lastTweet: $last}">
         <div class="leftColumn">
           <div class="tweeterImage">
@@ -81,6 +81,11 @@
     <div class="col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote">
       <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
         <strong>Better filtering is on the way!</strong> Tweet moved to {{oppositeStream}}. 
+      </div>
+    </div>
+    <div class="col-md-7 col-md-offset-2 text-center" ng-show="tweet.gapPlaceholder">
+      <div class="" ng-class="">
+        <button type="button" class="btn btn-default" ng-click="fillGap(tweets[$index - 1].id_str, tweets[$index + 2].id_str)">Load more tweets</button> 
       </div>
     </div>
   </div>

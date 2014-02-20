@@ -178,7 +178,7 @@ exports.findTweetsSinceId = function(user_id, tweetIdStr, gap, callback) {
         console.log('error grabbing tweets:', err);
         callback(err);
       } else {
-        callback(null, docs);
+        callback(null, docs, gap);
       }
     });
   } else {

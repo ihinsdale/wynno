@@ -41,12 +41,17 @@ angular.module('wynnoApp.services')
         d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
       } else {
         $http.get('/new')
-        .success(function(tweets, status) {
-          console.log('success getting new tweets, they look like:', tweets);
+        .success(function(data, status) {
+          console.log('success getting new tweets, they look like:', data.tweets);
           // apply filtering rules to the tweets
-          FilterService.applyFilterRules(tweets);
+          FilterService.applyFilterRules(data.tweets);
           // now add the tweets to currentTweets
-          service.currentTweets = tweets.concat(service.currentTweets);
+          // if a gap was indicated between this new batch of tweets and what was previously in the db,
+          // add a gap placeholder tweet
+          if (data.gap) {
+            data.tweets.push({gapPlaceholder: true});
+          }
+          service.currentTweets = data.tweets.concat(service.currentTweets);
           // update timeOfLastFetch
           service.timeOfLastFetch = new Date();
           d.resolve(service.currentTweets);

@@ -130,7 +130,7 @@ exports.fresh = function(req, res) {
 
       // get this new batch of tweets out of the database
       db.findTweetsSinceId
-    ], function(error, tweets) {
+    ], function(error, tweets, gap) {
       if (error) {
         if (error === 'No new tweets have occurred.') {
           res.send([]);
@@ -140,7 +140,7 @@ exports.fresh = function(req, res) {
         }
       } else {
         // send the tweets back to the client
-        res.send(tweets);
+        res.send({ tweets: tweets, gap: gap });
       }
     });
   }

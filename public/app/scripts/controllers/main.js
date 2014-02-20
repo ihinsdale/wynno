@@ -88,6 +88,10 @@ angular.module('wynnoApp.controllers')
     })
   };
 
+  $scope.fillGap = function(oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr) {
+
+  };
+
   $scope.countdownTimer = function(wait, next) {
     console.log()
     $scope.remaining = wait;
