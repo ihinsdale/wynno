@@ -74,7 +74,7 @@ var processTweet = function(user_id, tweet) {
   return tweet;
 };
 
-exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr, newLatestTweetIdStr, gap, callback) {
+exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr, newLatestTweetIdStr, callback) {
   User.findById(user_id, function(err, user) {
     if (err) {
       console.log('Error finding user whose secondLatestTweetIdStr to update.');
@@ -94,28 +94,25 @@ exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr,
           callback(error);
         } else {
           console.log("Successfully updated user's secondLatestTweetIdStr.");
-          callback(null, user_id, origLatestTweetIdStr, gap);
+          callback(null, user_id, origLatestTweetIdStr);
         }
       });
     }
   });
 };
 
-var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
-  n = n.toString(); // but n should be passed in as a string
-  var result = n;
-  var i = n.length - 1;
-  while (i > -1) {
-    if (n[i] === "9") {
-      result = result.substring(0,i) + "0" + result.substring(i + 1);
-      i--;
+exports.updateGapMarker = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr, callback) {
+  // TODO could consolidate this updateGapMarker query with the findTweetsSinceIdAndBeforeId query
+  Tweet.findOneAndUpdate({ user_id: user_id, id: oldestOfMoreRecentTweetsIdStr }, { 
+    gapAfterThis: false,
+  }, function(err, doc) {
+    if (err) {
+      console.log('Error updating gap marker:', err);
+      callback(err);
+    } else {
+      callback(null, user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr);
     }
-    else {
-      result=result.substring(0,i)+(parseInt(n[i],10)+1).toString()+result.substring(i+1);
-      return result;
-    }
-  }
-  return result;
+  });
 };
 
 exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
@@ -163,7 +160,7 @@ exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
   });
 };
 
-exports.findTweetsSinceId = function(user_id, tweetIdStr, gap, callback) {
+exports.findTweetsSinceId = function(user_id, tweetIdStr, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API id
   // tweetIdStr is a Twitter API id
   var criteria = {user_id: user_id};
@@ -178,12 +175,26 @@ exports.findTweetsSinceId = function(user_id, tweetIdStr, gap, callback) {
         console.log('error grabbing tweets:', err);
         callback(err);
       } else {
-        callback(null, docs, gap);
+        callback(null, docs);
       }
     });
   } else {
     callback('No tweet_id provided');
   }
+};
+
+exports.findTweetsSinceIdAndBeforeId = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr) {
+  Tweet.find({
+    user_id: user_id,
+    id: {$lt: oldestOfMoreRecentTweetsIdStr, $gt: newestOfTheOlderTweetsIdStr}
+  }, renderedTweetFields, { sort: { id: -1 } }, function(err, docs) {
+    if (err) {
+      console.log('Error finding middle tweets:', err);
+      callback(err);
+    } else {
+      callback(null, docs);
+    }
+  });
 };
 
 exports.saveVote = function(user_id, tweet_id, vote, callback) {

@@ -11,6 +11,8 @@ module.exports = function(app) {
   app.get('/old', ensureAuthenticated, ensureAgreedTerms, site.old)
   // GET request to /new initiates request to Twitter API, saves tweets to database, send to client
   app.get('/new', ensureAuthenticated, ensureAgreedTerms, site.fresh);
+  // GET request to /middle initiates request to Twitter API for old tweets, saves tweets to database, send to client
+  app.get('/middle', ensureAuthenticated, ensureAgreedTerms, site.middle);
   // POST request to /vote saves vote in the database
   app.post('/vote', ensureAuthenticated, ensureAgreedTerms, site.processVote);
   // POST request to /savefilter saves new filter in the database

@@ -46,11 +46,6 @@ angular.module('wynnoApp.services')
           // apply filtering rules to the tweets
           FilterService.applyFilterRules(data.tweets);
           // now add the tweets to currentTweets
-          // if a gap was indicated between this new batch of tweets and what was previously in the db,
-          // add a gap placeholder tweet
-          if (data.gap) {
-            data.tweets.push({gapPlaceholder: true});
-          }
           service.currentTweets = data.tweets.concat(service.currentTweets);
           // update timeOfLastFetch
           service.timeOfLastFetch = new Date();
@@ -63,7 +58,7 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
-    getMiddleTweets: function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex) {
+    getMiddleTweets: function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
       var d = $q.defer();
       if (service.timeOfLastFetch) {
         var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
@@ -74,7 +69,8 @@ angular.module('wynnoApp.services')
         $http.get('/middle', {
           params: {
             oldestOfMoreRecentTweetsIdStr: service.currentTweets[oldestOfMoreRecentTweetsIndex].id_str,
-            secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str
+            secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str,
+            newestOfOlderTweetsIdStr: service.currentTweets[newestOfOlderTweetsIndex].id_str
           }
         })
         .success(function(data, status) {
@@ -82,11 +78,6 @@ angular.module('wynnoApp.services')
           // apply filtering rules to the tweets
           FilterService.applyFilterRules(data.tweets);
           // now add the tweets to currentTweets
-          // if a gap was indicated between this new batch of tweets and what was previously in the db,
-          // add a gap placeholder tweet
-          if (data.gap) {
-            data.tweets.push({gapPlaceholder: true});
-          }
           service.currentTweets = service.currentTweets.slice(0,oldestOfMoreRecentTweetsIndex + 1).concat(data.tweets).concat(service.currentTweets.slice(secondNewestOfOlderTweetsIndex - 1));
           // update timeOfLastFetch
           service.timeOfLastFetch = new Date();

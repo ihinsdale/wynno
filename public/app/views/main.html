@@ -1,33 +1,33 @@
 <div class="row">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
     <button class="btn btn-default fetchNew" ng-click="refreshRequest()">
-      <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest}"></span>
+      <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest.new}"></span>
       <span class="loadingText">
-        <span ng-show="!activeTwitterRequest">Fetch new</span>
-        <span ng-show="activeTwitterRequest">Fetching...</span>
+        <span ng-show="!activeTwitterRequest.new">Fetch new</span>
+        <span ng-show="activeTwitterRequest.new">Fetching...</span>
       </span>
     </button>
     <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
   </div>
 </div>
-<div class="row" ng-show="mustWait">
+<div class="row" ng-show="mustWait.new">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
     <div class="alert alert-warning refreshAlert">
       <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
-<div class="row" ng-show="twitterError">
+<div class="row" ng-show="twitterError.new">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
     <div class="alert alert-danger alert-dismissable refreshAlert">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissAlert('error')">&times;</button>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissAlert('error', 'new')">&times;</button>
       <strong>Error fetching new tweets from Twitter.</strong>
     </div>
   </div>
 </div>
 <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' infinite-scroll-immediate-check='false'>
   <div class="tweet row" ng-repeat="tweet in tweets">
-    <div class="shownTweetWrapper" ng-hide="tweet.hideGivenNewContraryVote">
+    <div class="shownTweetWrapper row" ng-hide="tweet.hideGivenNewContraryVote">
       <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, lastTweet: $last}">
         <div class="leftColumn">
           <div class="tweeterImage">
@@ -78,14 +78,37 @@
         </div>
       </div>
     </div>
-    <div class="col-md-7 col-md-offset-2" ng-show="tweet.hideGivenNewContraryVote">
-      <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
-        <strong>Better filtering is on the way!</strong> Tweet moved to {{oppositeStream}}. 
+    <div class="row" ng-show="tweet.hideGivenNewContraryVote">
+      <div class="col-md-7 col-md-offset-2">
+        <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
+          <strong>Better filtering is on the way!</strong> Tweet moved to {{oppositeStream}}. 
+        </div>
       </div>
     </div>
-    <div class="col-md-7 col-md-offset-2 text-center" ng-show="tweet.gapAfterThis">
-      <div class="" ng-class="">
-        <button type="button" class="btn btn-default" ng-click="fillGap($index - 1, $index + 2)">Load more tweets</button> 
+    <div class="row" ng-if="tweet.gapAfterThis">
+      <div class="col-md-7 col-md-offset-2 text-center">        
+        <button type="button" class="btn btn-default fetchNew" ng-click="fillGap($index, $index + 2, $index + 1)">
+          <span class="icomoon-spinner" ng-class="{spinner: activeTwitterRequest.middle}"></span>
+          <span class="loadingText">
+            <span ng-show="!activeTwitterRequest.middle">Load more tweets</span>
+            <span ng-show="activeTwitterRequest.middle">Loading...</span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="row" ng-if="tweet.gapAfterThis && mustWait.middle">
+      <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
+        <div class="alert alert-warning refreshAlert">
+          <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-if="tweet.gapAfterThis && twitterError.middle">
+      <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
+        <div class="alert alert-danger alert-dismissable refreshAlert">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissAlert('error', 'new')">&times;</button>
+          <strong>Error fetching older tweets from Twitter.</strong>
+        </div>
       </div>
     </div>
   </div>
