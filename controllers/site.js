@@ -83,7 +83,8 @@ exports.fresh = function(req, res) {
     // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
     // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
     function(user_id, tweetsArray, latestid_str, callback) {
-      if (!tweetsArray.length) {
+      // if we get back only 1 tweet, that's the one we already have, so we're done
+      if (tweetsArray.length === 1) {
         callback('No new tweets have occurred.');
       } else {
         // if oldest tweet in new batch has id_str which matches the id_str of the latest tweet previously obtained
