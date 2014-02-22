@@ -3,6 +3,8 @@
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetsAndSettingsService) {
   $scope.activeTwitterRequest = { new: false, middle: false }; // used by spinner, to keep track of an active request to the Twitter API
+  $scope.mustWait = { new: false, middle: false };
+  $scope.twitterError = { new: false, middle: false };
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
   if ($location.path() === '/in') {
     $scope.currentStream = "The Good Stuff";
@@ -95,7 +97,7 @@ angular.module('wynnoApp.controllers')
     // disadvantage of current approach is it won't work if a new twitter user's timeline only has
     // one tweet in it when we fetch their tweets for the first time, and then more than 195 tweets
     // elapse before their next use of wynno
-    if (!scope.activeTwitterRequest.middle) {
+    if (!$scope.activeTwitterRequest.middle) {
       console.log('filling the gap');
       $scope.activeTwitterRequest.middle = true;
       TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex)
