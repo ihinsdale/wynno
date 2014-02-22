@@ -8427,7 +8427,7 @@ body {
   }
 
   /* line 756, main.scss */
-  .tweetBelowHiddenGivenVote {
+  .tweetBelowHiddenGivenVote, .gapBelow {
     border-bottom: 1px solid #e0e0e0;
   }
 
