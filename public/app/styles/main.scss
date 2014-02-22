@@ -16,6 +16,7 @@ $tweet-border-width: 1px;
 $tweet-border-color: #e0e0e0;
 $tweet-border-dotted: $tweet-border-width dotted $tweet-border-color;
 $tweet-border-solid: $tweet-border-width solid $tweet-border-color;
+$tweet-border-dashed: $tweet-border-width dashed $tweet-border-color;
 $background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
@@ -757,8 +758,16 @@ $twitterButtonRadius: 3px;
         border-bottom: 0;
     }
 
-    .tweetBelowHiddenGivenVote, .gapBelow {
+    .tweetBelowHiddenGivenVote {
         border-bottom: $tweet-border-solid;
+    }
+
+    .gapBelow {
+        border-bottom: $tweet-border-dashed;
+    }
+
+    .gapAbove {
+        border-top: $tweet-border-dashed;
     }
 
     .lastTweet {
