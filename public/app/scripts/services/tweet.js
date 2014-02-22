@@ -77,6 +77,8 @@ angular.module('wynnoApp.services')
           console.log('success getting middle tweets, they look like:', data.tweets);
           // apply filtering rules to the tweets
           FilterService.applyFilterRules(data.tweets);
+          // update gapAfterThis to false on the cutoff tweet, because there is no longer a gap after this tweet
+          service.currentTweets[oldestOfMoreRecentTweetsIndex].gapAfterThis = false;
           // now add the tweets to currentTweets
           service.currentTweets = service.currentTweets.slice(0,oldestOfMoreRecentTweetsIndex + 1).concat(data.tweets).concat(service.currentTweets.slice(secondNewestOfOlderTweetsIndex - 1));
           // update timeOfLastFetch
