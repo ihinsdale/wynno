@@ -159,7 +159,7 @@ exports.middle = function(req, res) {
     function(callback) {
       req.session.timeOfLastFetch = new Date().getTime();
       console.log('time of last fetch now:', req.session.timeOfLastFetch);
-      twitter.fetchMiddle(user_id, req.session.access_token, req.session.access_secret, oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr, newestOfOlderTweetsIdStr, callback);
+      twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr, newestOfOlderTweetsIdStr, callback);
     },
     // save each tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
     // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
