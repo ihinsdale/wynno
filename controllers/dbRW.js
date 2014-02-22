@@ -183,7 +183,7 @@ exports.findTweetsSinceId = function(user_id, tweetIdStr, callback) {
   }
 };
 
-exports.findTweetsSinceIdAndBeforeId = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr) {
+exports.findTweetsSinceIdAndBeforeId = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr, callback) {
   Tweet.find({
     user_id: user_id,
     id: {$lt: oldestOfMoreRecentTweetsIdStr, $gt: newestOfTheOlderTweetsIdStr}
