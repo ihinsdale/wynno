@@ -135,7 +135,7 @@ exports.fresh = function(req, res) {
   ], function(error, tweets) {
     if (error) {
       if (error === 'No new tweets have occurred.') {
-        res.send([]);
+        res.send({ tweets: [] });
       } else if (error.slice(0,20) === 'Please try again in ') {
         res.send(429, error);
       } else {
