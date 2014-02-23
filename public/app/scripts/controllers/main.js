@@ -251,7 +251,7 @@ angular.module('wynnoApp.controllers')
     }
   };
 
-  window.scrollTo(0);
+  window.scrollTo(0, 0);
   $scope.initialLoad();
 
   $scope.$on("sendingAgreement", function() {
