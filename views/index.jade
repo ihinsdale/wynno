@@ -5,9 +5,9 @@ block nav
     .navbar-header
       a.navbar-brand.wynno(href='#')
         span w
-        span.y y
+        span y
         span n
-        span.n n
+        span n
         span o
       button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
         span.sr-only Toggle navigation
@@ -33,7 +33,7 @@ block nav
         li.passing.visible-xs(ng-class='{active: active[0]}')
           a(href='#/in', ng-click='doCollapse()')
             span.icomoon-filter
-            span.wynnoButtonDesc The Good Stuff
+            span.wynnoButtonDesc Good Stuff
         li.failing.visible-xs(ng-class='{active: active[1]}')
           a(href='#/out', ng-click='doCollapse()')
             span.icomoon-filter
@@ -44,7 +44,7 @@ block nav
             span.wynnoButtonDesc Settings
         // these items displayed on not-mobile
         li.passing.hidden-xs(ng-class='{active: active[0]}')
-          a(href='#/in', tooltip-placement="bottom",tooltip="The Good Stuff", tooltip-popup-delay='400')
+          a(href='#/in', tooltip-placement="bottom",tooltip="Good Stuff", tooltip-popup-delay='400')
             span.icomoon-filter
         li.failing.hidden-xs(ng-class='{active: active[1]}')
           a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='400')

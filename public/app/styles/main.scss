@@ -20,7 +20,8 @@ $tweet-border-dashed: $tweet-border-width dashed $tweet-border-color;
 $background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
-$nav-background-color: #e6f1f6;
+//$nav-background-color: #e6f1f6;
+$nav-background-color: #ffffff;
 
 $vote-button-side-padding: 20px;
 $vote-button-vert-padding: 5px;
@@ -80,6 +81,7 @@ body {
 
 .navbar-default {
     background-color: $nav-background-color;
+    border-bottom: 1px solid $deep-purple;
 }
 
 // tweet styling
@@ -592,6 +594,8 @@ $twitterButtonRadius: 3px;
 }
 
 .footer {
+    position: fixed;
+    bottom: 0;
     padding: 5px 0;
     width: 100%;
     background-color: $nav-background-color;
