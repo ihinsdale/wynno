@@ -190,6 +190,10 @@ body {
     background-color: $aye-green;
 }
 
+.navMobileSignIn {
+    padding: 9px 5px;
+}
+
 // landing page
 
 .jumbotron {
@@ -250,7 +254,7 @@ body {
 }
 
 .tryIt {
-    font-size: 26px;
+    font-size: 20px;
     //background-color: #ff6a32;
     background-color: $shallower-purple;
     width: 50%;
@@ -771,6 +775,11 @@ $twitterButtonRadius: 3px;
 
     .landingMainBig {
         font-size: 10em;
+    }
+
+    .tryIt {
+        font-size: 26px;
+        width: 50%;
     }
 }
 
