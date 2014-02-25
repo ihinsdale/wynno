@@ -201,7 +201,7 @@ body {
 }
 
 .landingMainBig {
-    font-size: 10em;
+    font-size: 6em;
 }
 
 .landingMainSmall {
@@ -767,6 +767,10 @@ $twitterButtonRadius: 3px;
 
     .landingFeatureSmall.hidden-xs{
         display: inline !important;
+    }
+
+    .landingMainBig {
+        font-size: 10em;
     }
 }
 
