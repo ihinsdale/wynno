@@ -204,6 +204,10 @@ body {
     color: $deep-purple;
 }
 
+.jumbotron > h1 {
+    margin: 0;
+}
+
 .landingMainBig {
     font-size: 6em;
 }
@@ -257,7 +261,7 @@ body {
     font-size: 20px;
     //background-color: #ff6a32;
     background-color: $shallower-purple;
-    width: 50%;
+    width: 70%;
     border-color: $deep-purple;
 }
 
@@ -275,7 +279,17 @@ body {
 }
 
 .landingCopy {
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.halfRule {
+    width: 100px;
+    margin: 40px auto;
+    border-top-color: $shallower-purple;
+}
+
+.fullRule {
+    border-top-color: $shallower-purple;
 }
 
 // tweet styling
@@ -775,6 +789,10 @@ $twitterButtonRadius: 3px;
 
     .landingMainBig {
         font-size: 10em;
+    }
+
+    .landingFeature {
+        font-size: 8em;
     }
 
     .tryIt {
