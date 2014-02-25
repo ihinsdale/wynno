@@ -9,7 +9,7 @@ block nav
         span n
         span n
         span o
-      button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+      button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
         span.sr-only Toggle navigation
         span.icon-bar.firstBar
         span.icon-bar.secondBar
@@ -17,7 +17,7 @@ block nav
       a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           span.icomoon-twitter.twitterBlue
-        .signIn Sign in
+        .signIn Sign in with Twitter
       .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
         a.dropdown-toggle(href='', ng-bind="username")
         ul.dropdown-menu
@@ -28,7 +28,7 @@ block nav
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
-      ul.nav.navbar-nav.navbar-left.wynnoButtons
+      ul.nav.navbar-nav.navbar-left.wynnoButtons(ng-show="currentPathNeedsAuth")
         // these items displayed on mobile
         li.passing.visible-xs(ng-class='{active: active[0]}')
           a(href='#/in', ng-click='doCollapse()')
