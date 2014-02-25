@@ -41,6 +41,7 @@ $jumbo-purple: #dbc3f0;
 $twitter-blue: #55acee;
 $gray: #777777;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
+$footer-height: 30px;
 
 // color utilities
 
@@ -82,14 +83,23 @@ $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
 
 // navbar
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background: $background-color;
     font-family: "Open Sans", sans-serif;
     color: #333;
-    padding-top: 70px;
+    margin-bottom: $footer-height;
 }
 
 .container {
+}
+
+body > .container {
+    padding-top: 70px;
 }
 
 .navbar-default {
@@ -645,11 +655,17 @@ $twitterButtonRadius: 3px;
     background-color: #ffffff;
 }
 
+// sticky footer styling
+
 .footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    padding: 5px 0;
     width: 100%;
+    height: $footer-height;
+}
+
+.footer {
+    border-top: 1px solid $deep-purple;
     background-color: $nav-background-color;
 }
 
