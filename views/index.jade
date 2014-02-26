@@ -5,19 +5,19 @@ block nav
     .navbar-header
       a.navbar-brand.wynno(href='#')
         span w
-        span.y y
+        span y
         span n
-        span.n n
+        span n
         span o
-      button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+      button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
         span.sr-only Toggle navigation
         span.icon-bar.firstBar
         span.icon-bar.secondBar
         span.icon-bar.thirdBar
-      a.navbar-toggle(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+      a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           span.icomoon-twitter.twitterBlue
-        .signIn Sign in
+        .signIn Sign in with Twitter
       .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
         a.dropdown-toggle(href='', ng-bind="username")
         ul.dropdown-menu
@@ -28,12 +28,12 @@ block nav
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
-      ul.nav.navbar-nav.navbar-left.wynnoButtons
+      ul.nav.navbar-nav.navbar-left.wynnoButtons(ng-show="currentPathNeedsAuth")
         // these items displayed on mobile
         li.passing.visible-xs(ng-class='{active: active[0]}')
           a(href='#/in', ng-click='doCollapse()')
             span.icomoon-filter
-            span.wynnoButtonDesc The Good Stuff
+            span.wynnoButtonDesc Good Stuff
         li.failing.visible-xs(ng-class='{active: active[1]}')
           a(href='#/out', ng-click='doCollapse()')
             span.icomoon-filter
@@ -44,7 +44,7 @@ block nav
             span.wynnoButtonDesc Settings
         // these items displayed on not-mobile
         li.passing.hidden-xs(ng-class='{active: active[0]}')
-          a(href='#/in', tooltip-placement="bottom",tooltip="The Good Stuff", tooltip-popup-delay='400')
+          a(href='#/in', tooltip-placement="bottom",tooltip="Good Stuff", tooltip-popup-delay='400')
             span.icomoon-filter
         li.failing.hidden-xs(ng-class='{active: active[1]}')
           a(href='#/out', tooltip-placement="bottom", tooltip="The Rest", tooltip-popup-delay='400')
@@ -83,7 +83,4 @@ block footer
     span.footerItem <a>Privacy</a>
   .feedbackContainer(ng-click="openFeedback()")
     span.icomoon-bullhorn
-    span.feedback Feedback  
-
-
-
+    span.feedback Feedback 

@@ -29,7 +29,7 @@ angular.module('wynnoApp.services')
         TweetService.currentTweets = data.tweets;
         // update oldestTweetId, if any tweets were received
         if (data.tweets.length) {
-          TweetService.oldestTweetId = TweetService.currentTweets[TweetService.currentTweets.length - 1]._id;
+          TweetService.oldestTweetId = TweetService.currentTweets[TweetService.currentTweets.length - 1].id_str;
         }
         console.log('oldestTweetId after getting batch of tweets is:', TweetService.oldestTweetId);
         d.resolve(TweetService.currentTweets);

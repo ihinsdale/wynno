@@ -16,26 +16,32 @@ $tweet-border-width: 1px;
 $tweet-border-color: #e0e0e0;
 $tweet-border-dotted: $tweet-border-width dotted $tweet-border-color;
 $tweet-border-solid: $tweet-border-width solid $tweet-border-color;
+$tweet-border-dashed: $tweet-border-width dashed $tweet-border-color;
 $background-color: #ffffff;
 $tweet-background-color: #ffffff;
 $tweet-background-hover-color: #f8f8f8;
-$nav-background-color: #e6f1f6;
+//$nav-background-color: #e6f1f6;
+$nav-background-color: #ffffff;
 
 $vote-button-side-padding: 20px;
 $vote-button-vert-padding: 5px;
 $tweet-glyph-size: 24px;
 $deep-purple: #a166d5;
+$shallower-purple: #b578ea;
 $aye-green: #62d7a5;
 $light-aye-green: #a5ebcd;
 $nay-red: #ff9c74;
 $light-nay-red: #ffc8b3;
 $settings-gray: #777777;
+$dark-gray: #555;
 $tweet-padding: 5px;
 $light-purple: #efe6f6;
 $badge-purple: #c7a9e1;
+$jumbo-purple: #dbc3f0;
 $twitter-blue: #55acee;
 $gray: #777777;
 $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
+$footer-height: 30px;
 
 // color utilities
 
@@ -67,18 +73,234 @@ $nontweet-tweet-column-padding: $tweet-padding + 2 * $tweet-border-width;
     color: #b94a48; // same as Bootstrap's alert-danger text color
 }
 
+.darkGray {
+    color: $dark-gray;
+}
+
+.white {
+    color: #ffffff;
+}
+
+// navbar
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background: $background-color;
     font-family: "Open Sans", sans-serif;
     color: #333;
-    padding-top: 70px;
+    margin-bottom: $footer-height;
 }
 
 .container {
 }
 
+body > .container {
+    padding-top: 70px;
+}
+
 .navbar-default {
     background-color: $nav-background-color;
+    border-bottom: 1px solid $deep-purple;
+}
+
+.nav.wynnoButtons li a {
+    font-size: 24px;
+    line-height: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.navbar .nav > li > a:hover {
+    background-color: #f8f8f8;
+}
+
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+    background-color: $background-color;
+    //border-bottom: 4px solid $deep-purple;
+    box-shadow: none;
+}
+
+.navbar .nav > li.active > a {
+    //padding-bottom: 6px;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+
+}
+
+.funnel {
+    display: inline;
+    font-size: 20px;
+    padding-right: 16px
+}
+
+.navbar-brand {
+    font-size: 36px;
+    line-height: 18px;
+}
+
+.wynno, 
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+    font-family: "Ubuntu", sans-serif;
+    color: $deep-purple;
+}
+
+.y {
+    color: $aye-green;
+}
+
+.n {
+    color: $nay-red;
+}
+
+.navbar .nav > .passing > a,
+.navbar .nav > .passing > a:hover {
+    color: $aye-green;
+}
+
+.navbar .nav > .failing > a,
+.navbar .nav > .failing > a:hover {
+    color: $nay-red;
+}
+
+.navbar .navbar-btn {
+    background-image: none;
+    border-color: $deep-purple;
+    background-color: whitesmoke;
+}
+
+.navbar .navbar-btn:hover {
+    background-color: whitesmoke;
+}
+
+.navbar .navbar-btn:focus {
+    background-color: #e6e6e6;
+}
+
+.navbar .navbar-btn .icon-bar {
+}
+
+.navbar .navbar-btn .icon-bar.firstBar {
+    background-color: $aye-green;
+}
+
+.navbar .navbar-btn .icon-bar.secondBar {
+    background-color: $nay-red;
+}
+
+.navbar .navbar-btn .icon-bar.thirdBar {
+    background-color: $aye-green;
+}
+
+.navMobileSignIn {
+    padding: 9px 5px;
+}
+
+// landing page
+
+.jumbotron {
+    background-color: $jumbo-purple;
+}
+
+.jumbotron > .headline {
+    color: $deep-purple;
+}
+
+.jumbotron > h1 {
+    margin: 0;
+}
+
+.landingMainBig {
+    font-size: 6em;
+}
+
+.landingMainSmall {
+    position: relative;
+    left: -20px;
+    font-size: 5em;
+    vertical-align: 22px;
+}
+
+.landingFeatureSmall {
+    font-size: 5em;
+    vertical-align: 18px;
+}
+
+.landingBird {
+    color: $twitter-blue;
+}
+
+.landingFilter {
+    color: $aye-green;
+}
+
+.landingGrin {
+    color: $deep-purple;
+}
+
+.landingBannerBackground {
+    background-color: moccasin;
+}
+
+.buzzword {
+    color: orangered;
+}
+
+.topAndBottomPadding {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.landingFeature {
+    font-size: 5em;
+}
+
+.tryItContainer {
+    padding-top: 30px;
+}
+
+.tryIt {
+    font-size: 20px;
+    //background-color: #ff6a32;
+    background-color: $shallower-purple;
+    width: 70%;
+    border-color: $deep-purple;
+}
+
+.tryIt:hover {
+    background-color: $deep-purple;
+    border-color: $deep-purple;
+}
+
+.trainGlyph {
+    display: inline-block;
+}
+
+.beaker {
+    padding-top: 10px;
+}
+
+.landingCopy {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.halfRule {
+    width: 100px;
+    margin: 40px auto;
+    border-top-color: $shallower-purple;
+}
+
+.fullRule {
+    border-top-color: $shallower-purple;
 }
 
 // tweet styling
@@ -215,12 +437,7 @@ body {
     color: $nay-red;
 }
 
-.nav.wynnoButtons li a {
-    font-size: 24px;
-    line-height: 24px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
+
 
 .wynnoButtonDesc {
     font-family: "Ubuntu", sans-serif;
@@ -245,158 +462,6 @@ body {
 
 .noVoteAlertAbove {
     margin-top: 20px;
-}
-
-.navbar .nav > li > a:hover {
-    background-color: #f8f8f8;
-}
-
-.navbar .nav > .active > a,
-.navbar .nav > .active > a:hover,
-.navbar .nav > .active > a:focus {
-    background-color: $background-color;
-    //border-bottom: 4px solid $deep-purple;
-    box-shadow: none;
-}
-
-.navbar .nav > li.active > a {
-    //padding-bottom: 6px;
-}
-
-.navbar .navbar-brand,
-.navbar .navbar-brand:hover {
-
-}
-
-.funnel {
-    display: inline;
-    font-size: 20px;
-    padding-right: 16px
-}
-
-.navbar-brand {
-    font-size: 36px;
-    line-height: 18px;
-}
-
-.wynno, 
-.navbar .navbar-brand,
-.navbar .navbar-brand:hover {
-    font-family: "Ubuntu", sans-serif;
-    color: $deep-purple;
-}
-
-.y {
-    color: $aye-green;
-}
-
-.n {
-    color: $nay-red;
-}
-
-.navbar .nav > .passing > a,
-.navbar .nav > .passing > a:hover {
-    color: $aye-green;
-}
-
-.navbar .nav > .failing > a,
-.navbar .nav > .failing > a:hover {
-    color: $nay-red;
-}
-
-.navbar .navbar-btn {
-    background-image: none;
-    border-color: $deep-purple;
-    background-color: whitesmoke;
-}
-
-.navbar .navbar-btn:hover {
-    background-color: whitesmoke;
-}
-
-.navbar .navbar-btn:focus {
-    background-color: #e6e6e6;
-}
-
-.navbar .navbar-btn .icon-bar {
-}
-
-.navbar .navbar-btn .icon-bar.firstBar {
-    background-color: $aye-green;
-}
-
-.navbar .navbar-btn .icon-bar.secondBar {
-    background-color: $nay-red;
-}
-
-.navbar .navbar-btn .icon-bar.thirdBar {
-    background-color: $aye-green;
-}
-
-.landingMainBig {
-    font-size: 8em;
-}
-
-.landingMainSmall {
-    position: relative;
-    left: -20px;
-    font-size: 5em;
-    vertical-align: 22px;
-}
-
-.landingFeatureSmall {
-    font-size: 5em;
-    vertical-align: 18px;
-}
-
-.landingBird {
-    color: $twitter-blue;
-}
-
-.landingFilter {
-    color: $aye-green;
-}
-
-.landingGrin {
-    color: $deep-purple;
-}
-
-.landingBannerBackground {
-    background-color: moccasin;
-}
-
-.buzzword {
-    color: orangered;
-}
-
-.topAndBottomPadding {
-    padding-top: 20px;
-    padding-bottom: 10px;
-}
-
-.landingFeature {
-    font-size: 6em;
-}
-
-.tryItContainer {
-    padding-top: 30px;
-}
-
-.tryIt, .tryIt:hover {
-    //background-color: #ff6a32;
-    background-color: $deep-purple;
-}
-
-.trainGlyph {
-    display: inline-block;
-}
-
-.beaker {
-    padding-top: 10px;
-}
-
-.landingCopy {
-    font-size: 16px;
 }
 
 .page-header {
@@ -439,6 +504,10 @@ $twitterButtonRadius: 3px;
 
 .fetchNew {
     margin-bottom: 10px;
+}
+
+.fetchMiddle {
+    margin: 20px 0;
 }
 
 .loadEarlier {
@@ -586,9 +655,17 @@ $twitterButtonRadius: 3px;
     background-color: #ffffff;
 }
 
+// sticky footer styling
+
 .footer {
-    padding: 5px 0;
+    position: absolute;
+    bottom: 0;
     width: 100%;
+    height: $footer-height;
+}
+
+.footer {
+    border-top: 1px solid $deep-purple;
     background-color: $nav-background-color;
 }
 
@@ -726,6 +803,19 @@ $twitterButtonRadius: 3px;
     .landingFeatureSmall.hidden-xs{
         display: inline !important;
     }
+
+    .landingMainBig {
+        font-size: 10em;
+    }
+
+    .landingFeature {
+        font-size: 8em;
+    }
+
+    .tryIt {
+        font-size: 26px;
+        width: 50%;
+    }
 }
 
 @media (min-width: 992px) {
@@ -755,6 +845,14 @@ $twitterButtonRadius: 3px;
 
     .tweetBelowHiddenGivenVote {
         border-bottom: $tweet-border-solid;
+    }
+
+    .gapBelow {
+        border-bottom: $tweet-border-dashed;
+    }
+
+    .gapAbove {
+        border-top: $tweet-border-dashed;
     }
 
     .lastTweet {

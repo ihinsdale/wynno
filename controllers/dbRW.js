@@ -5,6 +5,7 @@ var User = require('../models/User.js').User;
 var Feedback = require('../models/Feedback.js').Feedback;
 var Filter = require('../models/Filter.js').Filter;
 var _ = require('../node_modules/underscore/underscore-min.js');
+var rendering = require('./rendering.js');
 
 // function to save a tweet to the db
 exports.saveTweet = function(user_id, tweet, callback) {
@@ -61,63 +62,96 @@ var processTweet = function(user_id, tweet) {
     tweet.__entities = tweet.entities;
     delete tweet.entities;
   }
+  // the tweet's (Twitter API) id gets replaced as a string, which mongoose-long then stores as 64-bit integer
+  tweet.id = tweet.id_str;
+  // store a fully HTML rendered version of the tweet text in the db
+  // renderedText starts off the same as __text
+  tweet.renderedText = tweet.__text
+  // escape the text back to how it came from Twitter
+  tweet.renderedText = _.escape(tweet.renderedText);
+  // then insert html for urls, media, and user mentions into renderedText
+  rendering.renderLinksAndMentions(tweet);
   return tweet;
 };
 
-exports.lastTweetId = function(user_id, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
-
-  var incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
-    n = n.toString(); // but n should be passed in as a string
-    var result = n;
-    var i = n.length - 1;
-    while (i > -1) {
-      if (n[i] === "9") {
-        result = result.substring(0,i) + "0" + result.substring(i + 1);
-        i--;
-      }
-      else {
-        result=result.substring(0,i)+(parseInt(n[i],10)+1).toString()+result.substring(i+1);
-        return result;
-      }
-    }
-    return result;
-  };
-
-  // TODO: refactor this so that last tweet id is stored as a field in the User schema
-  //       so that we don't have to sort through all user's tweets just to find the last one
-  Tweet.find({ user_id: user_id }, 'id_str _id', { sort: { _id: -1}, limit: 1 }, function(err, docs) {
-    var id;
-    var _id;
+exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr, newLatestTweetIdStr, callback) {
+  User.findById(user_id, function(err, user) {
     if (err) {
-      console.log('Error searching collection for a record');
-    } else if (!docs.length) {
-      console.log('Collection has no records for user', user_id);
-      id = null;
-      _id = null;
+      console.log('Error finding user whose secondLatestTweetIdStr to update.');
+      callback(err);
     } else {
-      var item = docs[0];
-      console.log('item looks like:', item);
-      console.log('last tweets id string is', item.id_str);
-      id = incStrNum(item.id_str);
-      _id = item._id
-      console.log('last tweets db id is:', _id);
+      var origLatestTweetIdStr = user.latestTweetIdStr;
+      console.log('origLatestTweetIdStr is:', origLatestTweetIdStr);
+      if (newSecondLatestTweetIdStr === null) {
+        user.secondLatestTweetIdStr = user.latestTweetIdStr;
+      } else {
+        user.secondLatestTweetIdStr = newSecondLatestTweetIdStr;
+      }
+      user.latestTweetIdStr = newLatestTweetIdStr;
+      user.save(function(error) {
+        if (error) {
+          console.log('Error saving new secondLatestTweetIdStr.');
+          callback(error);
+        } else {
+          console.log("Successfully updated user's secondLatestTweetIdStr.");
+          callback(null, user_id, origLatestTweetIdStr);
+        }
+      });
     }
-    callback(null, user_id, id, _id);
-    // this incrementing performed because since_id is actually inclusive,
-    // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
   });
-}
+};
 
-var renderedTweetFields = '_id __p __vote __text __created_at __user __retweeter __id_str __entities';
+exports.updateGapMarker = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr, callback) {
+  // TODO could consolidate this updateGapMarker query with the findTweetsSinceIdAndBeforeId query
+  Tweet.findOneAndUpdate({ user_id: user_id, id: oldestOfMoreRecentTweetsIdStr }, { 
+    gapAfterThis: false,
+  }, function(err, doc) {
+    if (err) {
+      console.log('Error updating gap marker:', err);
+      callback(err);
+    } else {
+      callback(null, user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr);
+    }
+  });
+};
 
-exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
+exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
+  // user_id must be a db record id, i.e. _id, not a Twitter API user id
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user whose secondLatestTweetIdStr to grab and increment.');
+      callback(err);
+    } else {
+      console.log('secondLatestTweetIdStr stored in db is:', doc.secondLatestTweetIdStr);
+      console.log('latestTweetIdStr stored in db is:', doc.latestTweetIdStr);
+      var secondLatestid_str = doc.secondLatestTweetIdStr;
+      var latestid_str = doc.latestTweetIdStr;
+
+      // currently disabling incrementing of secondLatestTweetIdStr before fetching new tweets from Twitter,
+      // because we will use overlap on this tweet between the new batch and the old tweets to indicate
+      // that there are no intervening tweets left to grab
+      //var id_str = incStrNum(doc.secondLatestTweetIdStr);
+      //console.log('id_str type:', typeof id_str);
+      // originally, we were incrementing id_str, because since_id is actually inclusive,
+      // contra the Twitter API docs. Cf. https://dev.twitter.com/discussions/11084
+      // so we incremented the id of the latest tweet we already have, so that we did't
+      // receive a duplicate
+
+      callback(null, user_id, secondLatestid_str, latestid_str);
+    }
+  });
+};
+
+var renderedTweetFields = '_id __p __vote __created_at __user __retweeter __id_str __entities renderedText id_str gapAfterThis';
+
+exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
+  // user_id must be a db record id, i.e. _id, not a Twitter API id
+  // tweetIdStr is a Twitter API id
   var criteria = { user_id: user_id };
-  if (tweet_id !== '0') {
-    criteria._id = {$lt: tweet_id};
+  if (tweetIdStr !== '0') {
+    criteria.id = {$lt: tweetIdStr};
   }
-  Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 }, limit: 50 }, function(err, docs) {
+  Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 }, limit: 50 }, function(err, docs) {
     if (err) {
       console.log('error grabbing tweets');
     } else {
@@ -126,16 +160,17 @@ exports.findTweetsBefore_id = function(user_id, tweet_id, callback) {
   });
 };
 
-exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
+exports.findTweetsSinceId = function(user_id, tweetIdStr, callback) {
+  // user_id must be a db record id, i.e. _id, not a Twitter API id
+  // tweetIdStr is a Twitter API id
   var criteria = {user_id: user_id};
-  if (tweet_id !== undefined) {
-    // if tweet_id is not null, we restrict to tweets since it
+  if (tweetIdStr !== undefined) {
+    // if tweetId is not null, we restrict to tweets since it
     // if it is null that means user has never stored tweets in db before, so we grab all tweets for user
-    if (tweet_id) { 
-      criteria._id = {$gt: tweet_id};
+    if (tweetIdStr) { 
+      criteria.id = {$gt: tweetIdStr};
     }
-    Tweet.find(criteria, renderedTweetFields, { sort: { _id: -1 } }, function(err, docs) {
+    Tweet.find(criteria, renderedTweetFields, { sort: { id: -1 } }, function(err, docs) {
       if (err) {
         console.log('error grabbing tweets:', err);
         callback(err);
@@ -146,6 +181,20 @@ exports.findTweetsSince_id = function(user_id, tweet_id, callback) {
   } else {
     callback('No tweet_id provided');
   }
+};
+
+exports.findTweetsSinceIdAndBeforeId = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr, callback) {
+  Tweet.find({
+    user_id: user_id,
+    id: {$lt: oldestOfMoreRecentTweetsIdStr, $gt: newestOfTheOlderTweetsIdStr}
+  }, renderedTweetFields, { sort: { id: -1 } }, function(err, docs) {
+    if (err) {
+      console.log('Error finding middle tweets:', err);
+      callback(err);
+    } else {
+      callback(null, docs);
+    }
+  });
 };
 
 exports.saveVote = function(user_id, tweet_id, vote, callback) {
@@ -181,7 +230,7 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
           console.log("User's active filters are:", user.activeFilters);
           callback(null);
         }
-      })
+      });
     }
   });
 };

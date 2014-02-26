@@ -21,7 +21,7 @@ angular.module('wynnoApp.services')
         service.currentTweets = service.currentTweets.concat(data.tweets);
         // update oldestTweetId, if any tweets were received
         if (data.tweets.length) {
-          service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1]._id;
+          service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1].id_str;
         }
         console.log('oldestTweetId after getting batch of tweets is:', service.oldestTweetId);
         d.resolve(service.currentTweets);
@@ -41,18 +41,52 @@ angular.module('wynnoApp.services')
         d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
       } else {
         $http.get('/new')
-        .success(function(tweets, status) {
-          console.log('success getting new tweets, they look like:', tweets);
+        .success(function(data, status) {
+          console.log('success getting new tweets, they look like:', data.tweets);
           // apply filtering rules to the tweets
-          FilterService.applyFilterRules(tweets);
+          FilterService.applyFilterRules(data.tweets);
           // now add the tweets to currentTweets
-          service.currentTweets = tweets.concat(service.currentTweets);
+          service.currentTweets = data.tweets.concat(service.currentTweets);
           // update timeOfLastFetch
           service.timeOfLastFetch = new Date();
           d.resolve(service.currentTweets);
         })
         .error(function(reason, status) {
           console.log('error getting new tweets:', reason);
+          d.reject(reason);
+        });
+      }
+      return d.promise;
+    },
+    getMiddleTweets: function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
+      var d = $q.defer();
+      if (service.timeOfLastFetch) {
+        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
+      }
+      if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
+        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+      } else {
+        $http.get('/middle', {
+          params: {
+            oldestOfMoreRecentTweetsIdStr: service.currentTweets[oldestOfMoreRecentTweetsIndex].id_str,
+            secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str,
+            newestOfOlderTweetsIdStr: service.currentTweets[newestOfOlderTweetsIndex].id_str
+          }
+        })
+        .success(function(data, status) {
+          console.log('success getting middle tweets, they look like:', data.tweets);
+          // apply filtering rules to the tweets
+          FilterService.applyFilterRules(data.tweets);
+          // update gapAfterThis to false on the cutoff tweet, because there is no longer a gap after this tweet
+          service.currentTweets[oldestOfMoreRecentTweetsIndex].gapAfterThis = false;
+          // now add the tweets to currentTweets
+          service.currentTweets = service.currentTweets.slice(0,oldestOfMoreRecentTweetsIndex + 1).concat(data.tweets).concat(service.currentTweets.slice(secondNewestOfOlderTweetsIndex - 1));
+          // update timeOfLastFetch
+          service.timeOfLastFetch = new Date();
+          d.resolve(service.currentTweets);
+        })
+        .error(function(reason, status) {
+          console.log('error getting middle tweets:', reason);
           d.reject(reason);
         });
       }

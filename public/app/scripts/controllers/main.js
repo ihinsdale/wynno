@@ -2,18 +2,20 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetsAndSettingsService) {
-  $scope.activeTwitterRequest = false; // used by spinner, to keep track of an active request to the Twitter API
+  $scope.activeTwitterRequest = { new: false, middle: false }; // used by spinner, to keep track of an active request to the Twitter API
+  $scope.mustWait = { new: false, middle: false };
+  $scope.twitterError = { new: false, middle: false };
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
   if ($location.path() === '/in') {
-    $scope.currentStream = "The Good Stuff";
+    $scope.currentStream = "Good Stuff";
     $scope.oppositeStream = "The Rest";
   } else if ($location.path() === '/out') {
     $scope.currentStream = "The Rest";
-    $scope.oppositeStream = "The Good Stuff";
+    $scope.oppositeStream = "Good Stuff";
   }
 
   $scope.refreshRequest = function() {
-    if (!$scope.activeTwitterRequest) {
+    if (!$scope.activeTwitterRequest.new) {
       $scope.getNewTweets();
     }
   };
@@ -66,26 +68,59 @@ angular.module('wynnoApp.controllers')
 
   $scope.getNewTweets = function() {
     console.log('getNewTweets firing');
-    $scope.activeTwitterRequest = true;
+    $scope.activeTwitterRequest.new = true;
     TweetService.getNewTweets()
     .then(function(tweets) {
       $scope.renderInOrOut();
-      $scope.activeTwitterRequest = false; // to stop the spinner
-      // note we don't want to set activeTwitterRequest to false inside .renderInOrOut() or .display(),
+      $scope.activeTwitterRequest.new = false; // to stop the spinner
+      // note we don't want to set activeTwitterRequest.new to false inside .renderInOrOut() or .display(),
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
-      $scope.mustWait = false;
-      $scope.twitterError = false;
+      $scope.mustWait.new = false;
+      $scope.twitterError.new = false;
     }, function(reason) {
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
-        $scope.mustWait = true;
-        $scope.wait = parseInt(reason.slice(20,22));
+        $scope.mustWait.new = true;
+        $scope.wait = parseInt(reason.slice(20,22), 10);
         $scope.countdownTimer($scope.wait, $scope.getNewTweets);
       } else {
-        $scope.activeTwitterRequest = false; // to stop the spinner
-        $scope.twitterError = true;
+        $scope.activeTwitterRequest.new = false; // to stop the spinner
+        $scope.twitterError.new = true;
       }
     })
+  };
+
+  $scope.fillGap = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
+    // (eventual) TODO could also use index of newest of the older tweets, and decrement it by one
+    // (eventual) TODO could likewise only store latestIdStr in db, don't need secondLatest because
+    // we can just decrement latest by 1 when using as since_id
+    // disadvantage of current approach is it won't work if a new twitter user's timeline only has
+    // one tweet in it when we fetch their tweets for the first time, and then more than 195 tweets
+    // elapse before their next use of wynno
+    if (!$scope.activeTwitterRequest.middle) {
+      console.log('filling the gap');
+      $scope.activeTwitterRequest.middle = true;
+      TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex)
+      .then(function(tweets) {
+        $scope.renderInOrOut();
+        $scope.activeTwitterRequest.middle = false; // to stop the spinner
+        $scope.mustWait.middle = false;
+        $scope.twitterError.middle = false;
+      }, function(reason) {
+        console.log('error filling gap:', reason);
+        if (reason.slice(0,20) === 'Please try again in ') {
+          $scope.mustWait.middle = true;
+          $scope.wait = parseInt(reason.slice(20,22), 10);
+          $scope.countdownTimer($scope.wait, function() {
+            $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
+          });
+        } else {
+          $scope.activeTwitterRequest.middle = false; // to stop the spinner
+          $scope.twitterError.middle = true;
+        }
+      });
+    }
+
   };
 
   $scope.countdownTimer = function(wait, next) {
@@ -102,11 +137,13 @@ angular.module('wynnoApp.controllers')
     $timeout($scope.decr, 1000);
   };
 
-  $scope.dismissAlert = function(wait_or_error) {
-    if (wait_or_error === 'wait') {
-      $scope.mustWait = false;
-    } else if (wait_or_error === 'error') {
-      $scope.twitterError = false;
+  $scope.dismissAlert = function(waitOrError, newOrMiddleError) {
+    if (waitOrError === 'error') {
+      if (newOrMiddleError === 'new') {
+        $scope.twitterError.new = false;
+      } else if (newOrMiddleError === 'middle') {
+        $scope.twitterError.middle = false;
+      }
     }
   };
 
@@ -214,11 +251,11 @@ angular.module('wynnoApp.controllers')
     }
   };
 
-  window.scrollTo(0);
+  window.scrollTo(0, 0);
   $scope.initialLoad();
 
   $scope.$on("sendingAgreement", function() {
-    $scope.activeTwitterRequest = true;
+    $scope.activeTwitterRequest.new = true;
     $scope.busy = true;
   });
 

@@ -37,11 +37,11 @@ exports.logout = function(req, res) {
 exports.old = function(req, res) {
   var oldestTweetId = req.query.oldestTweetId;
   console.log('oldestTweetId sent in request looks like:', oldestTweetId);
+  console.log('typeof oldestTweetId:', typeof oldestTweetId);
   async.waterfall([
     function(callback) {
-      db.findTweetsBefore_id(req.user._id, oldestTweetId, callback);
+      db.findTweetsBeforeId(req.user._id, oldestTweetId, callback);
     },
-    rendering.renderLinksAndMentions,
     function(tweets, callback) {
       // if settings were requested too, get those
       if (req.query.settings) {
@@ -66,23 +66,38 @@ exports.old = function(req, res) {
 };
 
 exports.fresh = function(req, res) {
-  if (twitter.timeOfLastFetch) {
-    var timeSinceLastFetch = new Date().getTime() - twitter.timeOfLastFetch;
-  }
-  if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-    res.send(429, 'Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
-  } else {
-    async.waterfall([
-      // find (Twitter's) tweet id of the last saved tweet
-      function(callback) {
-        db.lastTweetId(req.user._id, callback);
-      },
-      // use that id to grab new tweets from Twitter API
-      function(user_id, id, _id, callback) {
-        twitter.fetch(user_id, req.session.access_token, req.session.access_secret, id, _id, callback);
-      },
-      // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological order
-      function(user_id, tweetsArray, _id, callback) {
+  async.waterfall([
+    function(callback) {
+      checkTimeOfLastFetch(req.session.timeOfLastFetch, callback);
+    },
+    // find (Twitter's) tweet id of the last saved tweet
+    function(callback) {
+      db.getSecondLatestTweetIdForFetching(req.user._id, callback);
+    },
+    // use that id to grab new tweets from Twitter API
+    function(user_id, secondLatestid_str, latestid_str, callback) {
+      req.session.timeOfLastFetch = new Date().getTime();
+      console.log('time of last fetch now:', req.session.timeOfLastFetch);
+      twitter.fetchNew(user_id, req.session.access_token, req.session.access_secret, secondLatestid_str, latestid_str, callback);
+    },
+    // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
+    // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
+    function(user_id, tweetsArray, latestid_str, callback) {
+      // if we get back only 1 tweet, that's the one we already have, so we're done
+      if (tweetsArray.length === 1) {
+        callback('No new tweets have occurred.');
+      } else {
+        // if oldest tweet in new batch has id_str which matches the id_str of the latest tweet previously obtained
+        // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
+        // because it's already in the db
+        if (tweetsArray[tweetsArray.length - 1].id_str === latestid_str) {
+          // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
+          console.log('No gap remaining between this fetch and previous.');
+          tweetsArray.pop();
+        } else {
+          console.log('Gap exists between this fetch and previous.');
+          tweetsArray[tweetsArray.length - 1].gapAfterThis = true;
+        }
         async.eachSeries(tweetsArray.reverse(), 
           function(tweet, callback) {
             db.saveTweet(user_id, tweet, callback);
@@ -90,35 +105,122 @@ exports.fresh = function(req, res) {
           function(err) {
             if (err) {
               console.log('Error saving fresh tweets:', err);
+              callback(err);
             } else {
-              callback(null, user_id, _id);
+              // tweetsArray has been reversed so last item in the array is the newest tweet
+              if (tweetsArray.length > 1) {
+                callback(null, user_id, tweetsArray[tweetsArray.length - 2].id_str, tweetsArray[tweetsArray.length - 1].id_str);
+              } else if (tweetsArray.length === 1) {
+                // if only one tweet has occurred, the secondLatestTweetId needs to come from the db
+                callback(null, user_id, null, tweetsArray[tweetsArray.length - 1].id_str);
+              }
             }
           }
         );
-      },
+      }
+    },
+    // after saving new batch of tweets, update latestTweetId in User doc
+    db.updateSecondLatestTweetId,
 
-      // calculate p-values for the new batch of tweets
-      // currently this command crunches the numbers for all tweets which haven't been voted on
-      // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
-      // until the user has done some new voting--e.g. implement a vote counter so that numbers
-      // only get crunched every 50 votes
-      // (MACHINE LEARNING CURRENTLY DISABLED, by commenting out line below:)
-      // algo.crunchTheNumbers,
+    // calculate p-values for the new batch of tweets
+    // currently this command crunches the numbers for all tweets which haven't been voted on
+    // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
+    // until the user has done some new voting--e.g. implement a vote counter so that numbers
+    // only get crunched every 50 votes
+    // (MACHINE LEARNING CURRENTLY DISABLED, by commenting out line below:)
+    // algo.crunchTheNumbers,
 
-      // get this new batch of tweets out of the database
-      db.findTweetsSince_id,
-      // render any links in the tweets
-      // TODO: do this only once and save the rendered version in a field in the db
-      rendering.renderLinksAndMentions,
-    ], function(error, tweets) {
-      if (error) {
+    // get this new batch of tweets out of the database
+    db.findTweetsSinceId
+  ], function(error, tweets) {
+    if (error) {
+      if (error === 'No new tweets have occurred.') {
+        res.send({ tweets: [] });
+      } else if (error.slice(0,20) === 'Please try again in ') {
+        res.send(429, error);
+      } else {
         console.log(error);
         res.send(500);
-      } else {
-        // send the tweets back to the client
-        res.send(tweets);
       }
-    });
+    } else {
+      // send the tweets back to the client
+      res.send({ tweets: tweets });
+    }
+  });
+};
+
+exports.middle = function(req, res) {
+  var oldestOfMoreRecentTweetsIdStr = req.query.oldestOfMoreRecentTweetsIdStr;
+  var secondNewestOfOlderTweetsIdStr = req.query.secondNewestOfOlderTweetsIdStr;
+  var newestOfOlderTweetsIdStr = req.query.newestOfOlderTweetsIdStr;
+  async.waterfall([
+    function(callback) {
+      checkTimeOfLastFetch(req.session.timeOfLastFetch, callback);
+    },
+    function(callback) {
+      req.session.timeOfLastFetch = new Date().getTime();
+      console.log('time of last fetch now:', req.session.timeOfLastFetch);
+      twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr, newestOfOlderTweetsIdStr, callback);
+    },
+    // save each tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
+    // which is not strictly necessary at this point; could refactor to allow asynchronous saving, which would presumably be faster...
+    function(user_id, tweetsArray, newestOfTheOlderTweetsid_str, callback) {
+      // NB shouldn't have to consider case where tweetsArray contains less than 2 tweets, because 1 or 0 tweets would imply
+      // that there wasn't a gap in the first place
+      // if oldest tweet in new batch has id_str which matches the id_str of the newest of the older tweets we already had,
+      // then we have closed the gap, and we don't want to save this oldest tweet
+      // because it's already in the db
+      if (tweetsArray[tweetsArray.length - 1].id_str === newestOfTheOlderTweetsid_str) {
+        // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
+        console.log('The gap has been closed.');
+        tweetsArray.pop();
+      } else {
+        console.log('A gap still remains.');
+        tweetsArray[tweetsArray.length - 1].gapAfterThis = true;
+      }
+      async.eachSeries(tweetsArray.reverse(), 
+        function(tweet, callback) {
+          db.saveTweet(user_id, tweet, callback);
+        }, 
+        function(err) {
+          if (err) {
+            console.log('Error saving middle tweets:', err);
+            callback(err);
+          } else {
+            callback(null, user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsid_str);
+          }
+        }
+      );
+    },
+    // could consolidate the updateGapMarker query with the findTweetsSinceIdAndBeforeId query, may be faster
+    db.updateGapMarker,
+    // (MACHINE LEARNING CURRENTLY DISABLED, by commenting out line below:)
+    // algo.crunchTheNumbers,
+    db.findTweetsSinceIdAndBeforeId
+  ], function(error, tweets) {
+    if (error) {
+      if (error.slice(0,20) === 'Please try again in ') {
+        res.send(429, error);
+      } else {
+        console.log(error);
+        res.send(500);
+      }
+    } else {
+      // send the tweets back to the client
+      res.send({ tweets: tweets });
+    }
+  });
+};
+
+var checkTimeOfLastFetch = function(timeOfLastFetch, callback) {
+  console.log('time of last fetch before this one:', timeOfLastFetch);
+  if (timeOfLastFetch) {
+    var timeSinceLastFetch = new Date().getTime() - timeOfLastFetch;
+  }
+  if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
+    callback('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
+  } else {
+    callback(null);
   }
 };
 

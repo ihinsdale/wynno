@@ -33,8 +33,12 @@ angular.module('wynnoApp', [
       templateUrl: '/app/views/settings.html',
       controller: 'SettingsCtrl'
     })
-    .when('/termsofservice', {
+    .when('/terms', {
       templateUrl:'/app/views/termsofservice.html',
+      controller: 'StaticCtrl'
+    })
+    .when('/privacy', {
+      templateUrl:'/app/views/privacypolicy.html',
       controller: 'StaticCtrl'
     })
     .otherwise({
