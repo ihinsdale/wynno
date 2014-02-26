@@ -79,7 +79,8 @@ block content
 block footer
   .footer(ng-show="!currentPathNeedsAuth")
     span.footerItem.footerBrand &copy; 2014 wynno
-    span.footerItem <a>Terms</a>
+    span.footerItem
+      a(href="#/terms") Terms
     span.footerItem <a>Privacy</a>
   .feedbackContainer(ng-click="openFeedback()")
     span.icomoon-bullhorn
