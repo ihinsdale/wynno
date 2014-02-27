@@ -127,13 +127,13 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.decr = function(timeRemaining, next) {
+  $scope.decr = function(middleOrNew, timeRemaining, next) {
     if (timeRemaining === 0) {
       next();
     } else {
-      timeRemaining--;
+      $scope.remaining[middleOrNew] = timeRemaining - 1;
       $timeout(function() {
-        $scope.decr(timeRemaining, next);
+        $scope.decr(middleOrNew, timeRemaining, next);
       }, 1000);
     } 
   };
@@ -141,7 +141,7 @@ angular.module('wynnoApp.controllers')
   $scope.countdownTimer = function(middleOrNew, wait, next) {
     $scope.remaining[middleOrNew] = wait;
     $timeout(function() {
-      $scope.decr($scope.remaining[middleOrNew], next);
+      $scope.decr(middleOrNew, $scope.remaining[middleOrNew], next);
     }, 1000);
   };
 
