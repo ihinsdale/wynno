@@ -81,8 +81,8 @@ angular.module('wynnoApp.controllers')
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait.new = true;
-        $scope.wait = parseInt(reason.slice(20,22), 10);
-        $scope.countdownTimer($scope.wait, $scope.getNewTweets);
+        $scope.waitNew = parseInt(reason.slice(20,22), 10);
+        $scope.countdownTimer($scope.waitNew, $scope.getNewTweets);
       } else {
         $scope.activeTwitterRequest.new = false; // to stop the spinner
         $scope.twitterError.new = true;
@@ -115,8 +115,8 @@ angular.module('wynnoApp.controllers')
       console.log('error filling gap:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait.middle = true;
-        $scope.wait = parseInt(reason.slice(20,22), 10);
-        $scope.countdownTimer($scope.wait, function() {
+        $scope.waitMiddle = parseInt(reason.slice(20,22), 10);
+        $scope.countdownTimer($scope.waitMiddle, function() {
           $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
         });
       } else {
@@ -126,18 +126,21 @@ angular.module('wynnoApp.controllers')
     });
   };
 
+  $scope.decr = function(timeRemaining, next) {
+    if (timeRemaining === 0) {
+      next();
+    } else {
+      timeRemaining--;
+      $timeout(function() {
+        $scope.decr(timeRemaining, next);
+      }, 1000);
+    } 
+  };
+
   $scope.countdownTimer = function(wait, next) {
-    console.log()
-    $scope.remaining = wait;
-    $scope.decr = function() {
-      if ($scope.remaining === 0) {
-        next();
-      } else {
-        $scope.remaining--;
-        $timeout($scope.decr, 1000);
-      }
-    };
-    $timeout($scope.decr, 1000);
+    $timeout(function() {
+      $scope.decr(wait, next);
+    }, 1000);
   };
 
   $scope.dismissAlert = function(waitOrError, newOrMiddleError) {
