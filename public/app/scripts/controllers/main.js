@@ -90,6 +90,12 @@ angular.module('wynnoApp.controllers')
     })
   };
 
+  $scope.fillGapRequest = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
+    if (!scope.activeTwitterRequest.middle) {
+      $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
+    }
+  };
+
   $scope.fillGap = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
     // (eventual) TODO could also use index of newest of the older tweets, and decrement it by one
     // (eventual) TODO could likewise only store latestIdStr in db, don't need secondLatest because
@@ -97,30 +103,27 @@ angular.module('wynnoApp.controllers')
     // disadvantage of current approach is it won't work if a new twitter user's timeline only has
     // one tweet in it when we fetch their tweets for the first time, and then more than 195 tweets
     // elapse before their next use of wynno
-    if (!$scope.activeTwitterRequest.middle) {
-      console.log('filling the gap');
-      $scope.activeTwitterRequest.middle = true;
-      TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex)
-      .then(function(tweets) {
-        $scope.renderInOrOut();
+    console.log('filling the gap');
+    $scope.activeTwitterRequest.middle = true;
+    TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex)
+    .then(function(tweets) {
+      $scope.renderInOrOut();
+      $scope.activeTwitterRequest.middle = false; // to stop the spinner
+      $scope.mustWait.middle = false;
+      $scope.twitterError.middle = false;
+    }, function(reason) {
+      console.log('error filling gap:', reason);
+      if (reason.slice(0,20) === 'Please try again in ') {
+        $scope.mustWait.middle = true;
+        $scope.wait = parseInt(reason.slice(20,22), 10);
+        $scope.countdownTimer($scope.wait, function() {
+          $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
+        });
+      } else {
         $scope.activeTwitterRequest.middle = false; // to stop the spinner
-        $scope.mustWait.middle = false;
-        $scope.twitterError.middle = false;
-      }, function(reason) {
-        console.log('error filling gap:', reason);
-        if (reason.slice(0,20) === 'Please try again in ') {
-          $scope.mustWait.middle = true;
-          $scope.wait = parseInt(reason.slice(20,22), 10);
-          $scope.countdownTimer($scope.wait, function() {
-            $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
-          });
-        } else {
-          $scope.activeTwitterRequest.middle = false; // to stop the spinner
-          $scope.twitterError.middle = true;
-        }
-      });
-    }
-
+        $scope.twitterError.middle = true;
+      }
+    });
   };
 
   $scope.countdownTimer = function(wait, next) {
