@@ -294,9 +294,14 @@ body > .container {
     padding-top: 10px;
 }
 
-.landingCopy, .welcomeCopy {
+.landingCopy {
     font-size: 20px;
     line-height: 28px;
+}
+
+.welcomeCopy {
+    font-size:32px;
+    line-height: 32px;
 }
 
 .halfRule {
