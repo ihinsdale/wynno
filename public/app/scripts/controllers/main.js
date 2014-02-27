@@ -133,7 +133,7 @@ angular.module('wynnoApp.controllers')
     } else {
       $scope.remaining[middleOrNew] = timeRemaining - 1;
       $timeout(function() {
-        $scope.decr(middleOrNew, timeRemaining, next);
+        $scope.decr(middleOrNew, $scope.remaining[middleOrNew], next);
       }, 1000);
     } 
   };
