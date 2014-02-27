@@ -18,13 +18,6 @@ block nav
         .twitterBird
           span.icomoon-twitter.twitterBlue
         .signIn Sign in with Twitter
-      .navbar-toggle.dropdown(ng-show="currentPathNeedsAuth")
-        a.dropdown-toggle(href='', ng-bind="username")
-        ul.dropdown-menu
-          li
-            a(ng-click="logout('twitter')")
-              span.icomoon-exit
-              span Sign out
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
@@ -42,6 +35,12 @@ block nav
           a(href='#/settings', ng-click='doCollapse()')
             span.icomoon-cogs
             span.wynnoButtonDesc Settings
+        li.divider.visible-xs(role="presentation")
+        li.dropdown-header.visible-xs(role="presentation", ng-bind="username")
+        li.visible-xs
+          a(ng-click="logout('twitter')")
+            span.icomoon-exit
+            span Sign out
         // these items displayed on not-mobile
         li.passing.hidden-xs(ng-class='{active: active[0]}')
           a(href='#/in', tooltip-placement="bottom",tooltip="Good Stuff", tooltip-popup-delay='400')
