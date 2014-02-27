@@ -328,7 +328,7 @@ body > .container {
 .tweetStuff {
     background-color: $tweet-background-color;
     min-height: 90px;
-    padding: $tweet-padding;
+    padding: 0;
     border-top: $tweet-border-dotted;
     border-right: $tweet-border-dotted;
     border-bottom: $tweet-border-dotted;
@@ -812,6 +812,10 @@ $twitterButtonRadius: 3px;
 }
 
 // media query-based styling
+
+@media (min-width: 692px) {
+    padding: $tweet-padding;
+}
 
 @media (min-width: 768px) {
     .navbar-brand {
