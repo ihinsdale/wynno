@@ -91,7 +91,7 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.fillGapRequest = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
-    if (!scope.activeTwitterRequest.middle) {
+    if (!$scope.activeTwitterRequest.middle) {
       $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
     }
   };
