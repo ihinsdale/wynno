@@ -11,9 +11,9 @@ block nav
         span o
       button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
         span.sr-only Toggle navigation
-        span.icon-bar.firstBar
-        span.icon-bar.secondBar
-        span.icon-bar.thirdBar
+        span.icon-filter.ayeGreen(ng-show="active[0]")
+        span.icon-filter.nayRed(ng-show="active[1]")
+        span.icon-cogs(ng-show="active[2]")
       a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           span.icomoon-twitter.twitterBlue
