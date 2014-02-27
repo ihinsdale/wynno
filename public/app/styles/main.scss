@@ -812,7 +812,9 @@ $twitterButtonRadius: 3px;
 // media query-based styling
 
 @media (min-width: 692px) {
-    padding: $tweet-padding;
+    .tweetStuff {
+        padding: $tweet-padding;
+    }
 }
 
 @media (min-width: 768px) {
