@@ -670,12 +670,18 @@ $twitterButtonRadius: 3px;
 }
 
 .footerItem {
+    display: inline-block;
+    padding-top: 4px;
     padding-right: 6px;
     color: $gray;
 }
 
 .footerBrand {
     padding-left: 6px;
+}
+
+.wynnoDefinition {
+    margin-bottom: 20px;
 }
 
 // settings page styling
