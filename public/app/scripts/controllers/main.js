@@ -220,6 +220,7 @@ angular.module('wynnoApp.controllers')
     // is crucial for rendering quickly in Safari (desktop and mobile).
     // in Chrome and firefox it worked fine not to do that until inside
     // the success callback, but in Safari that created an extremely long delay (minutes)
+    var origVoteCount = $scope.voteCount;
     var origVote = tweet.__vote;
     var origTweets = $scope.tweets.slice();
 
@@ -238,6 +239,9 @@ angular.module('wynnoApp.controllers')
       // $scope.tweets.splice(index, 1); // can't do this, see above
       tweet.hideGivenNewContraryVote = true;
     }
+    // increment user's total vote count
+    TODO using event
+
     // now pass the vote on to the server
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
@@ -247,6 +251,8 @@ angular.module('wynnoApp.controllers')
       $scope.tweets = origTweets;
       // and restore the original vote
       tweet.__vote = origVote;
+      // and restore the original vote count
+      TODO using event
     });
   };
 

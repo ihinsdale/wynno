@@ -35,6 +35,11 @@ angular.module('wynnoApp.controllers')
     }
   });
 
+  TODO
+  // create listener for initialization of voteCount, and votesRequiredForNextRec
+  // create listener for increment of voteCount and votesRequiredForNextRec
+  // create listener for error, undoing increment of voteCount and votesRequiredForNextRec
+
   $scope.doCollapse = function() {
     $scope.navCollapsed = true;
   };

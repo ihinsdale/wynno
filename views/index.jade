@@ -9,6 +9,7 @@ block nav
         span n
         span n
         span o
+      .badge(ng-bind="votesRequiredForNextRec", ng-if="currentPathNeedsAuth")
       button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
         span.sr-only Toggle navigation
         span.icomoon-filter.ayeGreen(ng-show="active[0]")
@@ -63,6 +64,7 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
+        .badge(ng-bind="votesRequiredForNextRec", ng-if="currentPathNeedsAuth")
         .dropdown
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu

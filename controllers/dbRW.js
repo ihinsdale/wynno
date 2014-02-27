@@ -200,15 +200,21 @@ exports.findTweetsSinceIdAndBeforeId = function(user_id, oldestOfMoreRecentTweet
 exports.saveVote = function(user_id, tweet_id, vote, callback) {
   // *_id must be a db record id, i.e. _id, not a Twitter API id
 
-  // querying by user_id not necessary
-  Tweet.update({ _id: tweet_id }, { __vote: vote }, {}, function (err, numberAffected, raw) {
+  Tweet.findByIdAndUpdate(tweet_id, { __vote: vote }, {}, function (err, numberAffected, raw) {
     if (err) {
       console.log('error updating tweet', tweet_id);
       callback(err);
     } else {
-      console.log('The number of updated documents was %d', numberAffected);
-      console.log('The raw response from Mongo was ', raw);
-      callback(null);
+      console.log('Recorded vote', vote, 'on tweet', tweet_id, 'successfully.')
+      User.findByIdAndUpdate(user_id, { $inc: { voteCount: 1 } }, {}, function(err, numberAffected, raw) {
+        if (err) {
+          console.log('error updating vote count for user', user_id);
+          callback(err);
+        } else {
+          console.log('Incremented vote count for user', user_id);
+          callback(null);
+        }
+      });
     }
   });
 };
@@ -311,7 +317,7 @@ exports.registerUser = function(user, callback) {
 };
 
 exports.getSettings = function(user_id, tweetsToPassOn, callback) {
-  User.findById(user_id, 'activeFilters disabledFilters', function(err, doc) {
+  User.findById(user_id, 'activeFilters disabledFilters voteCount', function(err, doc) {
     if (err) {
       console.log('error finding user', user_id, 'settings');
       callback(err);

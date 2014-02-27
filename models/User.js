@@ -18,7 +18,8 @@ exports.userSchema = userSchema = new Schema({
   tw_access_secret: String,
   joined_at: {type: Date, default: Date.now},
   agreed_terms: {type: Boolean, default: false},
-  agreed_terms_at: {type: Date, default: null}
+  agreed_terms_at: {type: Date, default: null},
+  voteCount: { type: Number, default: 0 }
 });
 
 exports.User = mongoose.model('User', userSchema);
