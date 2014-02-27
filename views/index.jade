@@ -36,8 +36,9 @@ block nav
             span.icomoon-cogs
             span.wynnoButtonDesc Settings
         li.dropdown.visible-xs
-          a.dropdown-toggle(href="", data-toggle="dropdown", ng-bind="username")
-            span.glyphicon.glyphicon-chevron-down
+          a.dropdown-toggle(href="", data-toggle="dropdown")
+            span(ng-bind="username")
+            b.caret
           ul.dropdown-menu
             li
               a(ng-click="logout('twitter')")
