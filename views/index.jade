@@ -41,7 +41,9 @@ block nav
             span.glyphicon.glyphicon-chevron-down.size14.leftPadding5
           ul.dropdown-menu
             li
-              a(ng-click="logout('twitter')")
+              a(href="https://twitter.com/intent/tweet", target="_blank") Compose a tweet
+            li
+              a(href="", ng-click="logout('twitter')")
                 span.icomoon-exit
                 span Sign out
 
@@ -64,6 +66,8 @@ block nav
         .dropdown
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu
+            li
+              a(href="https://twitter.com/intent/tweet", target="_blank") Compose a tweet
             li
               a(ng-click="logout('twitter')")
                 span.icomoon-exit
