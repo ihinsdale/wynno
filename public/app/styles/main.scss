@@ -659,7 +659,11 @@ $twitterButtonRadius: 3px;
     margin: 0;
     position: relative;
     bottom: 1px;
-    font-size: 20px;
+}
+
+.agree {
+    font-size: 18px;
+    font-weight: normal;
 }
 
 .disagree:hover {
