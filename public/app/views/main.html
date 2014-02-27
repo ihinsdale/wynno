@@ -13,7 +13,7 @@
 <div class="row" ng-show="mustWait.new">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
     <div class="alert alert-warning refreshAlert">
-      <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
+      <strong>Waiting {{remaining.new}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
@@ -99,7 +99,7 @@
     <div class="row" ng-if="tweet.gapAfterThis && mustWait.middle">
       <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
         <div class="alert alert-warning refreshAlert">
-          <strong>Waiting {{remaining}} seconds,</strong> due to Twitter API rate limiting.
+          <strong>Waiting {{remaining.middle}} seconds,</strong> due to Twitter API rate limiting.
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ angular.module('wynnoApp.controllers')
   $scope.activeTwitterRequest = { new: false, middle: false }; // used by spinner, to keep track of an active request to the Twitter API
   $scope.mustWait = { new: false, middle: false };
   $scope.twitterError = { new: false, middle: false };
+  $scope.remaining = {}; // initialize this object used by $scope.countdownTimer;
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
   if ($location.path() === '/in') {
     $scope.currentStream = "Good Stuff";
@@ -82,7 +83,7 @@ angular.module('wynnoApp.controllers')
       if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait.new = true;
         $scope.waitNew = parseInt(reason.slice(20,22), 10);
-        $scope.countdownTimer($scope.waitNew, $scope.getNewTweets);
+        $scope.countdownTimer("new", $scope.waitNew, $scope.getNewTweets);
       } else {
         $scope.activeTwitterRequest.new = false; // to stop the spinner
         $scope.twitterError.new = true;
@@ -116,7 +117,7 @@ angular.module('wynnoApp.controllers')
       if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait.middle = true;
         $scope.waitMiddle = parseInt(reason.slice(20,22), 10);
-        $scope.countdownTimer($scope.waitMiddle, function() {
+        $scope.countdownTimer("middle", $scope.waitMiddle, function() {
           $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
         });
       } else {
@@ -137,9 +138,10 @@ angular.module('wynnoApp.controllers')
     } 
   };
 
-  $scope.countdownTimer = function(wait, next) {
+  $scope.countdownTimer = function(middleOrNew, wait, next) {
+    $scope.remaining[middleOrNew] = wait;
     $timeout(function() {
-      $scope.decr(wait, next);
+      $scope.decr($scope.remaining[middleOrNew], next);
     }, 1000);
   };
 
