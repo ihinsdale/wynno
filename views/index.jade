@@ -15,11 +15,11 @@ block nav
         span.icomoon-filter.nayRed(ng-show="active[1]")
         span.icomoon-cogs(ng-show="active[2]")
       span.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg")
-        .badge
+        .badge.badgePurpleBadge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
-          span.icomoon-spinner2(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
+          span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
       a.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", ng-bind="undismissedSugg")
-        .badge
+        .badgePurpleBadge
           span.icomoon-trophy
       a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
@@ -70,12 +70,12 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        span.navbar-btn(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg")
-          .badge
+        span.navbar-btn.rightPadding10(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg")
+          .badgePurpleBadge
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
-            span.icomoon-spinner2(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-        a.navbar-btn(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
-          .badge
+            span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
+        a.navbar-btn.rightPadding10(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
+          .badgePurpleBadge
             span.icomoon-trophy
         .dropdown.inlineBlock
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")

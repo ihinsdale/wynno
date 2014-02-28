@@ -252,7 +252,7 @@ exports.saveFilter = function(req, res) {
       console.log(error);
       res.send(500);
     } else {
-      res.send('Success saving filter:', data.draftFilter, ', revision of filter:', data.revisionOf);
+      res.send('Success saving filter:' + data.draftFilter + ', revision of filter:' + data.revisionOf);
     }
   });
 };
