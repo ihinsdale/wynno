@@ -18,7 +18,7 @@ block nav
         .badge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
           span.icomoon-spinner2(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-      a.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
+      a.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", ng-bind="undismissedSugg")
         .badge
           span.icomoon-trophy
       a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
@@ -77,7 +77,7 @@ block nav
         a.navbar-btn(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
           .badge
             span.icomoon-trophy
-        .dropdown
+        .dropdown.inlineBlock
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu
             li
