@@ -71,11 +71,11 @@ block nav
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
         span.navbar-btn.rightPadding10(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg")
-          .badgePurpleBadge
+          .badge.badgePurpleBadge
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
             span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
         a.navbar-btn.rightPadding10(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
-          .badgePurpleBadge
+          .badge.badgePurpleBadge
             span.icomoon-trophy
         .dropdown.inlineBlock
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
