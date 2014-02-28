@@ -235,7 +235,7 @@ exports.processVote = function(req, res) {
       console.log(error);
       res.send(500);
     } else {
-      res.send('Successfully recorded your vote on tweet', data._id);
+      res.send('Successfully recorded your vote on tweet' + data._id);
     }
   });
 };
