@@ -37,6 +37,7 @@ angular.module('wynnoApp.controllers')
 
   // create listener for update to voteCount and votesRequiredForNextSugg
   $scope.$on("setSuggIndicators", function(votesRequiredForNextSugg, undismissedSugg) {
+    console.log('Settings votesRequired and undismissedSugg indicators.');
     if (votesRequiredForNextSugg !== null) {
       $scope.votesRequiredForNextSugg = votesRequiredForNextSugg;
     }

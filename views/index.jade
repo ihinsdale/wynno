@@ -9,7 +9,7 @@ block nav
         span n
         span n
         span o
-      .badge(ng-show="currentPathNeedsAuth && !undismissedSugg")
+      span.badge(ng-show="currentPathNeedsAuth && !undismissedSugg")
         span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
         span.icomoon-spinner2(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
       a(ng-show="currentPathNeedsAuth && undismissedSugg", href="#/settings")
