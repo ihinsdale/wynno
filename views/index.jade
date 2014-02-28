@@ -9,10 +9,10 @@ block nav
         span n
         span n
         span o
-      span.badge(ng-show="currentPathNeedsAuth && !undismissedSugg")
+      span.badge(ng-show="currentPathNeedsAuth && undismissedSugg != undefined && !undismissedSugg")
         span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
         span.icomoon-spinner2(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-      a(ng-show="currentPathNeedsAuth && undismissedSugg", href="#/settings")
+      a(ng-show="currentPathNeedsAuth && undismissedSugg != undefined && undismissedSugg", href="#/settings")
         .badge
           span.icomoon-trophy
       button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
@@ -69,10 +69,10 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        .badge(ng-show="currentPathNeedsAuth && !undismissedSugg")
-          span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg != 0")
+        span.badge(ng-show="currentPathNeedsAuth && undismissedSugg != undefined && !undismissedSugg")
+          span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
           span.icomoon-spinner2(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-        a(ng-show="currentPathNeedsAuth && undismissedSugg")
+        a(ng-show="currentPathNeedsAuth && undismissedSugg != undefined && undismissedSugg", href="#/settings")
           .badge
             span.icomoon-trophy
         .dropdown
