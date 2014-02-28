@@ -29,6 +29,8 @@ sudo pip install -U pyyaml nltk
 sudo apt-get install libevent-dev
 sudo pip install zerorpc
 
+sudo pip install -U scikit-learn
+
 # Install nvm: node-version manager
 # https://github.com/creationix/nvm
 sudo apt-get install -y git

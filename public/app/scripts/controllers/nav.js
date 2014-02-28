@@ -35,10 +35,15 @@ angular.module('wynnoApp.controllers')
     }
   });
 
-  TODO
-  // create listener for initialization of voteCount, and votesRequiredForNextRec
-  // create listener for increment of voteCount and votesRequiredForNextRec
-  // create listener for error, undoing increment of voteCount and votesRequiredForNextRec
+  // create listener for update to voteCount and votesRequiredForNextSugg
+  $scope.$on("setSuggIndicators", function(votesRequiredForNextSugg, undismissedSugg) {
+    if (votesRequiredForNextSugg) {
+      $scope.votesRequiredForNextSugg = votesRequiredForNextSugg);
+    }
+    if (undismissedSugg) {
+      $scope.undismissedSugg = undismissedSugg;
+    }
+  });
 
   $scope.doCollapse = function() {
     $scope.navCollapsed = true;

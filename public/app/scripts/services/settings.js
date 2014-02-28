@@ -139,6 +139,23 @@ angular.module('wynnoApp.services')
         d.reject(reason);
       });
       return d.promise;
+    },
+    requestSugg: function() {
+      var d = $q.defer();
+      $http.get('/suggestion')
+      .success(function(data, status, headers, config) {
+        console.log('Success requesting filter suggestion.');
+        service.settings.suggestedFilters = data.suggestedFilters;
+        service.settings.undismissedSugg = data.undismissedSugg;
+        // reset votesRequiredForNextSugg
+        service.settings.votesRequiredForNextSugg = 100 - (voteCount - (voteCount / 100).floor() * 100);
+        d.resolve(data.suggestedFilters);
+      })
+      .error(function(reason, status) {
+        console.log('error getting filter suggestion');
+        d.reject(reason);
+      });
+      return d.promise;
     }
   };
 

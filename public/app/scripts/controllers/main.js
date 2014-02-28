@@ -47,7 +47,11 @@ angular.module('wynnoApp.controllers')
     $scope.busy = true;
     InitialTweetsAndSettingsService.getInitialOldTweetsAndSettings(TweetService.oldestTweetId)
     .then(function(tweets) {
+      // set the indicators displayed in the navbar
+      $scope.$emit('setSuggIndicators', SettingsService.settings.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);
+      // render the initial tweets
       $scope.renderInOrOut();
+      // fetch new tweets
       $scope.getNewTweets();
     }, function(reason) {
       console.log('error getting first batch of old tweets:', reason);
@@ -220,7 +224,8 @@ angular.module('wynnoApp.controllers')
     // is crucial for rendering quickly in Safari (desktop and mobile).
     // in Chrome and firefox it worked fine not to do that until inside
     // the success callback, but in Safari that created an extremely long delay (minutes)
-    var origVoteCount = $scope.voteCount;
+    var origVoteCount = SettingsService.settings.voteCount;
+    var origVotesRequiredForNextSugg = SettingsService.settings.votesRequiredForNextSugg;
     var origVote = tweet.__vote;
     var origTweets = $scope.tweets.slice();
 
@@ -240,19 +245,36 @@ angular.module('wynnoApp.controllers')
       tweet.hideGivenNewContraryVote = true;
     }
     // increment user's total vote count
-    TODO using event
+    SettingsService.settings.voteCount++;
+    SettingsService.settings.votesRequiredForNextSugg--;
+    // update the count displayed in the navbar
+    $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg);
 
     // now pass the vote on to the server
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
-      console.log("vote recorded, don't need to do anything more");
+      console.log("vote recorded");
+      if (SettingsService.settings.votesRequiredForNextSugg === 0) {
+        console.log('Enough votes for new filter suggestion. Requesting...');
+        SettingsService.requestSugg()
+        .then(function() {
+          console.log('Received new suggestion.');
+          // update indicators on the navbar
+          $scope.$emit("setSuggIndicators", SettingsService.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);
+        }, function(error) {
+          console.log('Error receiving new suggestion.');
+        });
+      }
     }, function(error) {
       // restore the original tweet
       $scope.tweets = origTweets;
       // and restore the original vote
       tweet.__vote = origVote;
       // and restore the original vote count
-      TODO using event
+      SettingsService.settings.voteCount--;
+      SettingsService.settings.votesRequiredForNextSugg++;
+      // update the count displayed in the navbar
+      $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg);
     });
   };
 

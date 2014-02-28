@@ -77,9 +77,21 @@ def save_guesses(guesses):
   for pair in guesses:
     result = db.tweets.update({"_id": pair[0]}, {"$set": {"__p": pair[1]}})
     if result['err']: # is this test formulated correctly?
-      raise SaveError('there was an error saving the prediction')
+      raise SaveError('There was an error saving the prediction.')
   #return guesses
   return
+
+def save_suggested_filters(user_id, filters):
+  result = db.users.update({"_id": user_id}, {"$push": {"filters": {"$each": filters}}, "$set": {"undismissedSugg": True}})
+  if result['err']:
+    raise SaveError('There was an error saving the suggested filters.')
+  return
+
+def from_votes_to_filters(user_id, tweets):
+  voted_feature_sets = [(tweet_features(tweet), tweet['__vote']) for tweet in tweets]
+  classifier = nltk.NaiveBayesClassifier.train(voted_feature_sets)
+  classifier.show_most_informative_features(20)
+  return []
 
 class RPC(object):
   def predict(self, user_id):
@@ -95,6 +107,13 @@ class RPC(object):
     # this will return the p's for all nonvoted tweets which have just been crunched
     # requires save_guesses to return the guesses
     # return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
+  def suggest(self, user_id):
+    # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
+    user_id = ObjectId(user_id)
+    voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
+    if voted_tweets.count():
+      suggestedFilters = from_votes_to_filters(user_id, voted_tweets)
+    return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
 s = zerorpc.Server(RPC())
 s.bind("tcp://0.0.0.0:4242")

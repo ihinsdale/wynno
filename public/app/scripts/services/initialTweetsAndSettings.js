@@ -18,9 +18,9 @@ angular.module('wynnoApp.services')
       .success(function(data, status) {
         console.log('success getting old tweets and settings:', data);
         // save settings in SettingsService
+        // after initializing votesRequiredForNextSugg
+        data.settings.votesRequiredForNextSugg = 100 - (voteCount - (voteCount / 100).floor() * 100);
         SettingsService.settings = data.settings;
-        // set voteCount in NavCtrl
-        TODO using event, sending out data.settings.voteCount
 
         // apply filtering rules to the tweets
         FilterService.applyFilterRules(data.tweets, data.settings); 

@@ -21,6 +21,8 @@ module.exports = function(app) {
   app.post('/disablefilter', ensureAuthenticated, ensureAgreedTerms, site.disableFilter);
   // GET request to /settings
   app.get('/settings', ensureAuthenticated, ensureAgreedTerms, site.getSettings);
+  // GET request to /suggestion
+  app.get('/suggestion', ensureAuthenticated, ensureAgreedTerms, site.makeSuggestion);
   // GET request to /checkin after authenticating with Twitter
   app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'

@@ -286,6 +286,29 @@ exports.getSettings = function(req, res) {
   });
 };
 
+exports.makeSuggestion = function(req, res) {
+  // check that user is eligible for new recommendation
+  // currently that is the case if voteCount is a multiple of 100
+  var voteCount = req.user.voteCount;
+  if (voteCount % 100 !== 0 || voteCount === 0) {
+    var requiredVotes = 100 - (voteCount - (voteCount / 100).floor() * 100)
+    res.send(402, "User must vote on " + requiredVotes.toString() + " more tweets to generate new filter suggestion.");
+  } else {
+    async.waterfall([
+        function(callback) {
+          algo.suggestFilters(req.user._id, callback);
+        }
+      ], function(error, suggestedFilters, undismissedSugg) {
+        if (error) {
+          console.log('Error making suggestions:', error);
+          res.send(500);
+        } else {
+          res.send({ suggestedFilters: suggestedFilters, undismissedSugg: undismissedSugg });
+        }
+      })
+  }
+}
+
 exports.processFeedback = function(req, res) {
   var user_id = req.user ? req.user._id : null;
   var data = req.body;
