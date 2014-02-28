@@ -248,7 +248,7 @@ angular.module('wynnoApp.controllers')
     SettingsService.settings.voteCount++;
     SettingsService.settings.votesRequiredForNextSugg--;
     // update the count displayed in the navbar
-    $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg);
+    $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg, null);
 
     // now pass the vote on to the server
     VoteService.vote(tweet, vote)
@@ -274,7 +274,7 @@ angular.module('wynnoApp.controllers')
       SettingsService.settings.voteCount--;
       SettingsService.settings.votesRequiredForNextSugg++;
       // update the count displayed in the navbar
-      $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg);
+      $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg, null);
     });
   };
 
