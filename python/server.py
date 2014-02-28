@@ -8,24 +8,25 @@ import json
 import os.path
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-
 from pymongo import MongoClient
+from sklearn import tree
+from sklearn.feature_extraction import DictVectorizer
 
 logging.basicConfig();
 
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
-client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@127.0.0.1:27017/wynno-dev')
+client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['host'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
 
-def tweet_features(tweet):
+def tweet_features_dict(tweet):
   features = {}
   features['tweeter'] = tweet['__user']['screen_name']
 
   if '__retweeter' in tweet and tweet['__retweeter'] is not None:
     features['retweeter'] = tweet['__retweeter']['screen_name']
   else:
-    features['retweeter'] = ''
+    features['retweeter'] = None
 
   # contains link / more than one
   # contains hashtag / more than one
@@ -88,7 +89,20 @@ def save_suggested_filters(user_id, filters):
   return
 
 def from_votes_to_filters(user_id, tweets):
-  voted_feature_sets = [(tweet_features(tweet), tweet['__vote']) for tweet in tweets]
+  # use NLTK to tokenize tweet text, using unigrams and bigrams
+  # combine those tokens, which should be binary rather than count, into one feature dict
+  # (do anything about stop words or high frequency words?)
+  # use DictVectorizer to transform the dict into scikit vector
+  # use DecisionTreeClassifier, or perhaps Random Forest, and look for shortest path with no error
+
+
+  # define X array for DecisionTreeClassifier
+  feature_dicts = [tweet_features_dict(tweet) for tweet in tweets]
+  vec = DictVectorizer()
+
+  # define Y array
+  votes = [tweet['__vote'] for tweet in tweets]
+
   classifier = nltk.NaiveBayesClassifier.train(voted_feature_sets)
   classifier.show_most_informative_features(20)
   return []
