@@ -148,7 +148,7 @@ angular.module('wynnoApp.services')
         service.settings.suggestedFilters = data.suggestedFilters;
         service.settings.undismissedSugg = data.undismissedSugg;
         // reset votesRequiredForNextSugg
-        service.settings.votesRequiredForNextSugg = 100 - (voteCount - (voteCount / 100).floor() * 100);
+        service.settings.votesRequiredForNextSugg = 100 - (voteCount - Math.floor(voteCount / 100) * 100);
         d.resolve(data.suggestedFilters);
       })
       .error(function(reason, status) {
