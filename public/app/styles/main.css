@@ -7685,8 +7685,8 @@ td.visible-print {
 }
 
 /* line 88, main.scss */
-.navbar-btn.whiteBackground {
-  background-color: #ffffff;
+.whiteBackground {
+  background-color: #ffffff !important;
 }
 
 /* line 94, main.scss */
