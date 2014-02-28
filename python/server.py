@@ -115,9 +115,10 @@ class RPC(object):
       suggestedFilters = from_votes_to_filters(user_id, voted_tweets)
     return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
-s = zerorpc.Server(RPC())
-s.bind("tcp://0.0.0.0:4242")
-s.run()
+# commenting out the RPC server while testing
+# s = zerorpc.Server(RPC())
+# s.bind("tcp://0.0.0.0:4242")
+# s.run()
 
 test = RPC()
 test.suggest("5310690f1264b0ac1b000005")
