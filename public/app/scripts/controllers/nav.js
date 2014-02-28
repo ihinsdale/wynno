@@ -3,6 +3,8 @@
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
+  $scope.votesRequiredForNextSugg = null;
+  $scope.undismissedSugg = null;
 
   // if there is a current user, set the value of username in the scope
   if (AuthService.getCurrentUser()) {
