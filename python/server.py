@@ -118,3 +118,6 @@ class RPC(object):
 s = zerorpc.Server(RPC())
 s.bind("tcp://0.0.0.0:4242")
 s.run()
+
+test = RPC()
+test.suggest("5310690f1264b0ac1b000005")
