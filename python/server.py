@@ -13,6 +13,7 @@ from bson.objectid import ObjectId
 from pymongo import MongoClient
 from sklearn import tree
 from sklearn.feature_extraction import DictVectorizer
+from pprint import pprint
 
 logging.basicConfig();
 
@@ -27,7 +28,7 @@ with open("effective_tld_names.dat.txt") as tld_file:
     tlds = set([line.strip() for line in tld_file if line[0] not in "/\n"])
 
 def get_domain(url, tlds):
-  """Extracts domain from a url. Requires tlds file used as above.
+  """Extracts domain from a url, e.g. google.com. Requires tlds file used as above.
      From http://stackoverflow.com/a/1069780"""
   url_elements = urlparse(url)[1].split('.')
   # url_elements = ["abcde","co","uk"]
@@ -51,8 +52,6 @@ def get_domain(url, tlds):
 
   raise ValueError("Domain not in global list of TLDs")
 
-print get_domain("http://www.slate.com/articles/news_and_politics/fighting_words/2003/03/talking_turkey.single.html", tlds)
-
 def tweet_features_dict(tweet):
   """Creates a dictionary of tweet features. Keys beginning with w_ indicate presence of word/bigram.
      To be more efficient, could save the tweet features dict created here to the db."""
@@ -70,40 +69,78 @@ def tweet_features_dict(tweet):
     features['retweet_count'] = tweet['retweeted_status']['retweet_count']
   # number of times original tweet has been favorited
     features['favorite_count'] = tweet['retweeted_status']['favorite_count']
+  # original tweet is geotagged
+    if tweet['retweeted_status']['coordinates']:
+      features['is_geotagged'] = True
 
   # number of user_mentions
-  features['user_mentions'] = tweet['__entities']['user_mentions']length
+  features['user_mentions'] = len(tweet['__entities']['user_mentions'])
   # mentioned users
-  for user in tweet.__entities.user_mentions:
-    features['user_mention_' + user.screen_name] = True
+  for user in tweet['__entities']['user_mentions']:
+    features['user_mention_' + user['screen_name']] = True
+    # currently identifying mentioned users by their screen_name, because screen_name is also what's used
+    # by tweet filters. But if a user changed screen_name, this would break. Stronger version would be
+    # to identify user by id_str
 
   # number of (non-media) links
-  features['urls'] = tweet.__entities.urls.count()
+  features['urls'] = len(tweet['__entities']['urls'])
   # domains of those (non-media) links
-  for url in tweet.__entities.urls:
-    domain = get_domain(url['expanded_url'],tlds)
+  for url in tweet['__entities']['urls']:
+    domain = get_domain(url['expanded_url'], tlds)
     features['url_' + domain] = True
 
   # number of hashtags
-  features['hashtags'] = tweet.__entities.hashtags.count()
+  features['hashtags'] = len(tweet['__entities']['hashtags'])
   # hashtags
-  for hashtag in tweet.__entities.hashtags:
-    features['hashtag_' + hashtag] = True
+  for hashtag in tweet['__entities']['hashtags']:
+    features['hashtag_' + hashtag['text']] = True
 
   # number of media
+  if 'media' in tweet['__entities']:
+    for each in tweet['__entities']['media']:
+      if each['type'] not in features:
+        features[each['type']] = 0
+      features[each['type']] += 1
 
   # contains quotation
+  if '"' in tweet['__text']:
+    features['has_quotation'] = True
 
-  # number of times tweet has been retweeted and favorited, if those weren't set earlier for a retweet
-  if 'retweet_count' not in features:
+  # if tweet is not a retweet and so these were not set earlier:
+  if ('__retweeter' in tweet and tweet['__retweeter'] is None) or ('__retweeter' not in tweet):
+  # number of times tweet has been retweeted and favorited
     features['retweet_count'] = tweet['retweet_count']
-  if 'favorite_count' not in features:
     features['favorite_count'] = tweet['favorite_count']
+  # is geotagged
+    if tweet['coordinates']:
+      features[is_geotagged] = True
 
-  # whether person being retweeted has e.g. > 5,000 followers
-  # length of tweet
-  # and of course the words in the tweet
-  # certain keywords like cartoon
+  # TODO
+  # length of pure text in tweet, i.e. excluding user mentions, hashtags, and links
+  # or should the metric be simply how many characters out of the  allowed 140?
+
+  # words in the tweet
+  whitespaced_words = tweet['__text'].split()
+  pure_words = []
+  for each in whitespaced_words:
+    if each[0] != '@' and each[0] != '#' and each[0:7] != 'http://' and each[0:8] != 'https://':
+      pure_words.append(each)
+  pure_lowered_text = ' '.join(pure_words).lower()
+  print pure_lowered_text
+  # Now use NLTK's tokenizer
+  # could try stemming words too
+  # get word tokens
+  words = set([word for sent in nltk.sent_tokenize(pure_lowered_text) for word in nltk.word_tokenize(sent)])
+  # remove stop words
+  words -= set(nltk.corpus.stopwords.words('english'))
+  # remove single symbol 'words', though not perhaps $
+  words -= set(['(', ')', ',', '.', ':', ';', "'", '"', '``', "''"])
+  for word in words:
+    features['w_' + word] = True
+
+  # other possible features
+  # tweet sentiment
+  # contains numbers/figures
 
   return features
 
@@ -168,14 +205,15 @@ def from_votes_to_filters(user_id, tweets):
 
   # define X array for DecisionTreeClassifier
   feature_dicts = [tweet_features_dict(tweet) for tweet in tweets]
-  vec = DictVectorizer()
+  pprint(feature_dicts)
+  #vec = DictVectorizer()
 
   # define Y array
-  votes = [tweet['__vote'] for tweet in tweets]
+  #votes = [tweet['__vote'] for tweet in tweets]
 
-  classifier = nltk.NaiveBayesClassifier.train(voted_feature_sets)
-  classifier.show_most_informative_features(20)
-  return []
+  #classifier = nltk.NaiveBayesClassifier.train(voted_feature_sets)
+  #classifier.show_most_informative_features(20)
+  return
 
 class RPC(object):
   def predict(self, user_id):
@@ -197,7 +235,8 @@ class RPC(object):
     voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
     if voted_tweets.count():
       suggestedFilters = from_votes_to_filters(user_id, voted_tweets)
-    return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
+    return
+    #return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
 # commenting out the RPC server while testing
 # s = zerorpc.Server(RPC())

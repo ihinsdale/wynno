@@ -31,6 +31,14 @@ sudo pip install zerorpc
 
 sudo pip install -U scikit-learn
 
+# Install additional nltk packages
+# python
+# import nltk
+# nltk.download()
+# d
+# punkt
+# stopwords
+
 # Install nvm: node-version manager
 # https://github.com/creationix/nvm
 sudo apt-get install -y git
