@@ -39,6 +39,7 @@ angular.module('wynnoApp.services')
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
           switch(filterConditions[i].type) {
+            // TODO add user_mention as a type of condition
             case 'link':
               var linkResult = false;
               // if no link string specified and tweet contains any link, pass
@@ -49,6 +50,7 @@ angular.module('wynnoApp.services')
               for (var m = 0; m < tweet.__entities.urls.length; m++) {
                 if (!linkResult) {
                   if (tweet.__entities.urls[m].display_url.indexOf(filterConditions[i].link) !== -1) {
+                  // could conceivably also use expanded_url as the text to search
                     linkResult = true;
                   }
                 }

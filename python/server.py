@@ -1,3 +1,5 @@
+from __future__ import with_statement
+from urlparse import urlparse
 import logging
 import pymongo
 import zerorpc
@@ -14,22 +16,90 @@ from sklearn.feature_extraction import DictVectorizer
 
 logging.basicConfig();
 
+# connect to db
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
 client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['host'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
 
+# load tlds, ignore comments and empty lines:
+with open("effective_tld_names.dat.txt") as tld_file:
+    tlds = set([line.strip() for line in tld_file if line[0] not in "/\n"])
+
+def get_domain(url, tlds):
+  """Extracts domain from a url. Requires tlds file used as above.
+     From http://stackoverflow.com/a/1069780"""
+  url_elements = urlparse(url)[1].split('.')
+  # url_elements = ["abcde","co","uk"]
+
+  for i in range(-len(url_elements), 0):
+    last_i_elements = url_elements[i:]
+    #    i=-3: ["abcde","co","uk"]
+    #    i=-2: ["co","uk"]
+    #    i=-1: ["uk"] etc
+
+    candidate = ".".join(last_i_elements) # abcde.co.uk, co.uk, uk
+    wildcard_candidate = ".".join(["*"] + last_i_elements[1:]) # *.co.uk, *.uk, *
+    exception_candidate = "!" + candidate
+
+    # match tlds: 
+    if (exception_candidate in tlds):
+      return ".".join(url_elements[i:]) 
+    if (candidate in tlds or wildcard_candidate in tlds):
+      return ".".join(url_elements[i-1:])
+      # returns "abcde.co.uk"
+
+  raise ValueError("Domain not in global list of TLDs")
+
+print get_domain("http://www.slate.com/articles/news_and_politics/fighting_words/2003/03/talking_turkey.single.html", tlds)
+
 def tweet_features_dict(tweet):
+  """Creates a dictionary of tweet features. Keys beginning with w_ indicate presence of word/bigram.
+     To be more efficient, could save the tweet features dict created here to the db."""
   features = {}
+
+  # tweeter
   features['tweeter'] = tweet['__user']['screen_name']
 
+  # retweeter
   if '__retweeter' in tweet and tweet['__retweeter'] is not None:
     features['retweeter'] = tweet['__retweeter']['screen_name']
-  else:
-    features['retweeter'] = None
+  # number of followers of the person being retweeted
+    features['num_followers_orig_tweeter'] = tweet['__user']['followers_count']
+  # number of times original tweet has been retweeted
+    features['retweet_count'] = tweet['retweeted_status']['retweet_count']
+  # number of times original tweet has been favorited
+    features['favorite_count'] = tweet['retweeted_status']['favorite_count']
 
-  # contains link / more than one
-  # contains hashtag / more than one
+  # number of user_mentions
+  features['user_mentions'] = tweet['__entities']['user_mentions']length
+  # mentioned users
+  for user in tweet.__entities.user_mentions:
+    features['user_mention_' + user.screen_name] = True
+
+  # number of (non-media) links
+  features['urls'] = tweet.__entities.urls.count()
+  # domains of those (non-media) links
+  for url in tweet.__entities.urls:
+    domain = get_domain(url['expanded_url'],tlds)
+    features['url_' + domain] = True
+
+  # number of hashtags
+  features['hashtags'] = tweet.__entities.hashtags.count()
+  # hashtags
+  for hashtag in tweet.__entities.hashtags:
+    features['hashtag_' + hashtag] = True
+
+  # number of media
+
+  # contains quotation
+
+  # number of times tweet has been retweeted and favorited, if those weren't set earlier for a retweet
+  if 'retweet_count' not in features:
+    features['retweet_count'] = tweet['retweet_count']
+  if 'favorite_count' not in features:
+    features['favorite_count'] = tweet['favorite_count']
+
   # whether person being retweeted has e.g. > 5,000 followers
   # length of tweet
   # and of course the words in the tweet
