@@ -1,5 +1,4 @@
 from __future__ import with_statement
-from urlparse import urlparse
 import logging
 import pymongo
 import zerorpc
@@ -8,13 +7,17 @@ import random
 import math
 import json
 import os.path
+import unicodedata
+from urlparse import urlparse
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 from sklearn import tree
 from sklearn.feature_extraction import DictVectorizer
 from pprint import pprint
+from StringIO import StringIO
 
+# ZeroRPC needs logging
 logging.basicConfig();
 
 # connect to db
@@ -22,6 +25,11 @@ keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"..
 client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['host'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
+
+def strip_accents(s):
+  """ Removes accents from string.
+      Cf. http://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string """
+  return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 # load tlds, ignore comments and empty lines:
 with open("effective_tld_names.dat.txt") as tld_file:
@@ -52,9 +60,68 @@ def get_domain(url, tlds):
 
   raise ValueError("Domain not in global list of TLDs")
 
-def tweet_features_dict(tweet):
-  """Creates a dictionary of tweet features. Keys beginning with w_ indicate presence of word/bigram.
-     To be more efficient, could save the tweet features dict created here to the db."""
+def extract_features(tweets, with_ngrams=False):
+  # add tokenized versions of tweet __text to the tweet
+  for tweet in tweets:
+    tweet['word_tokens'] = tokenize_tweet_text(tweet['__text'])
+
+  if with_ngrams:
+    # and assemble corpus of all tokens in user's corpus of voted tweets
+    # 'tw33t_3nd_m4rker' demarcates tweets
+    tokenized_corpus = ['tw33t_3nd_m4rker']
+    tokenized_corpus.extend(tweet['word_tokens'])
+    tokenized_corpus.append('tw33t_3nd_m4rker')
+
+    # extract the most useful bigram and trigram features from the corpus
+    bi_finder = nltk.collocations.BigramCollocationFinder.from_words(tokenized_corpus)
+    bigram_measures = nltk.collocations.BigramAssocMeasures()
+    bi_finder.apply_freq_filter(2) # filter out bigrams appearing less than 2 times
+    best_bigrams = bi_finder.nbest(bigram_measures.pmi, 10)
+    print best_bigrams
+    best_bigrams = [bigram for bigram in best_bigrams if not 'tw33t_3nd_m4rker' in bigram]
+    tri_finder = nltk.collocations.TrigramCollocationFinder.from_words(tokenized_corpus)
+    trigram_measures = nltk.collocations.TrigramAssocMeasures()
+    tri_finder.apply_freq_filter(2) # filter out trigrams appearing less than 2 times
+    best_trigrams = tri_finder.nbest(trigram_measures.raw_freq, 10)
+    print best_trigrams
+    ngram_features = {'bigrams': set(best_bigrams), 'trigrams': set(best_trigrams)}
+  else:
+    ngram_features = {}
+  print 'ngram_features from corpus are:'
+  print ngram_features
+
+  return [tweet_features_dict(tweet, ngram_features) for tweet in tweets]
+
+def tokenize_tweet_text(tweet_text):
+  """ Converts a string of raw tweet text into a list of tokens. """
+  # first strip accents
+  text = strip_accents(tweet_text)
+  # Now remove user mentions and links from tweet text. We'll keep hashtags as words because they are sometimes used that way
+  whitespaced_words = text.split()
+  pure_words = []
+  for each in whitespaced_words:
+    # treat hashtag text as words
+    if each[0] == '#':
+      pure_words.append(each[1:])
+    elif each[0] != '@' and each[0:7] != 'http://' and each[0:8] != 'https://':
+      pure_words.append(each)
+  pure_lowered_text = ' '.join(pure_words).lower()
+
+  # get word tokens using NLTK's tokenizer
+  # could conceivably try stemming words too
+  tokens = [word for sent in nltk.sent_tokenize(pure_lowered_text) for word in nltk.word_tokenize(sent)]
+  # remove stop words. can't use set subtraction because that would mess up subsequent calculation of bigrams using the unigram tokens
+  # also remove junk symbol words, though not perhaps $
+  stop_words = nltk.corpus.stopwords.words('english')
+  junk_symbol_words = ['(', ')', '[', ']', ',', '.', ':', ';', '?', '!', '%', "'", '"', '``', "''", "_", "__"]
+  noise = stop_words + junk_symbol_words
+  tokens = [word for word in tokens if not word in noise]
+  return tokens
+
+def tweet_features_dict(tweet, corpus_ngram_features):
+  """Creates a dictionary of tweet features. Keys beginning with w_ indicate presence of word/ngram.
+     To be more efficient, could save the tweet features dict created here to the db.
+     corpus_ngram_features contain prominent bi- and tri- grams from user corpus. """
   features = {}
 
   # tweeter
@@ -92,6 +159,7 @@ def tweet_features_dict(tweet):
   # number of hashtags
   features['hashtags'] = len(tweet['__entities']['hashtags'])
   # hashtags
+  # may arguably want to remove these, because we're counting hashtag text in words and bigrams
   for hashtag in tweet['__entities']['hashtags']:
     features['hashtag_' + hashtag['text']] = True
 
@@ -119,24 +187,32 @@ def tweet_features_dict(tweet):
   # length of pure text in tweet, i.e. excluding user mentions, hashtags, and links
   # or should the metric be simply how many characters out of the  allowed 140?
 
-  # words in the tweet
-  whitespaced_words = tweet['__text'].split()
-  pure_words = []
-  for each in whitespaced_words:
-    if each[0] != '@' and each[0] != '#' and each[0:7] != 'http://' and each[0:8] != 'https://':
-      pure_words.append(each)
-  pure_lowered_text = ' '.join(pure_words).lower()
-  print pure_lowered_text
-  # Now use NLTK's tokenizer
-  # could try stemming words too
-  # get word tokens
-  words = set([word for sent in nltk.sent_tokenize(pure_lowered_text) for word in nltk.word_tokenize(sent)])
-  # remove stop words
-  words -= set(nltk.corpus.stopwords.words('english'))
-  # remove single symbol 'words', though not perhaps $
-  words -= set(['(', ')', ',', '.', ':', ';', "'", '"', '``', "''"])
-  for word in words:
-    features['w_' + word] = True
+  # natural language in the tweet
+  # first create features for each word
+  for word in tweet['word_tokens']:
+    features['w__' + word] = True
+  # now create features for any bigrams and trigrams present, if corpus_ngram_features have been provided
+  if corpus_ngram_features:
+    tweet_tokenized_for_ngram_analysis = ['tw33t_3nd_m4rker']
+    tweet_tokenized_for_ngram_analysis.extend(tweet['word_tokens'])
+    tweet_tokenized_for_ngram_analysis.extend(['tw33t_3nd_m4rker'])
+    bi_finder = nltk.collocations.BigramCollocationFinder.from_words(tweet_tokenized_for_ngram_analysis)
+    bigram_measures = nltk.collocations.BigramAssocMeasures()
+    bigrams = set(bi_finder.score_ngrams(bigram_measures.raw_freq))
+    for bigram in corpus_ngram_features['bigrams']:
+      if bigram in bigrams:
+        features['b__' + bigram[0] + '__' + bigram[1]] = True
+      else:
+        features['b__' + bigram[0] + '__' + bigram[1]] = False
+
+    tri_finder = nltk.collocations.TrigramCollocationFinder.from_words(tweet_tokenized_for_ngram_analysis)
+    trigram_measures = nltk.collocations.TrigramAssocMeasures()
+    trigrams = set(tri_finder.score_ngrams(trigram_measures.raw_freq))
+    for trigram in corpus_ngram_features['trigrams']:
+      if trigram in trigrams:
+        features['t__' + trigram[0] + '__' + trigram[1] + '__' + trigram[2]] = True
+      else:
+        features['t__' + trigram[0] + '__' + trigram[1] + '__' + trigram[2]] = False
 
   # other possible features
   # tweet sentiment
@@ -196,23 +272,37 @@ def save_suggested_filters(user_id, filters):
   return
 
 def from_votes_to_filters(user_id, tweets):
-  # use NLTK to tokenize tweet text, using unigrams and bigrams
-  # combine those tokens, which should be binary rather than count, into one feature dict
-  # (do anything about stop words or high frequency words?)
   # use DictVectorizer to transform the dict into scikit vector
   # use DecisionTreeClassifier, or perhaps Random Forest, and look for shortest path with no error
 
 
+
   # define X array for DecisionTreeClassifier
-  feature_dicts = [tweet_features_dict(tweet) for tweet in tweets]
+  feature_dicts = extract_features(tweets, True)
   pprint(feature_dicts)
-  #vec = DictVectorizer()
+  # vectorize the dictionaries of features
+  vec = DictVectorizer()
+  vectorized_features = vec.fit_transform(feature_dicts).toarray()
+  pprint(vectorized_features)
+  feature_names = vec.get_feature_names()
+  # could also experiment with tfidf vectorizing, though documentation says for short documents
+  # tfidf can be noisy so the current binary approach is likely better
+  # http://scikit-learn.org/stable/modules/feature_extraction.html
 
   # define Y array
-  #votes = [tweet['__vote'] for tweet in tweets]
+  votes = [tweet['__vote'] for tweet in tweets]
 
-  #classifier = nltk.NaiveBayesClassifier.train(voted_feature_sets)
-  #classifier.show_most_informative_features(20)
+  # train the classifier
+  clf = tree.DecisionTreeClassifier()
+  clf = clf.fit(vectorized_features, votes)
+  print clf.tree_.feature
+  print clf.tree_.value
+  with open("output.dot", "w") as output_file:
+    tree.export_graphviz(clf, out_file=output_file, feature_names=feature_names)
+  out = StringIO()
+  out = tree.export_graphviz(clf, out_file=out, feature_names=feature_names)
+  print out.getvalue()
+
   return
 
 class RPC(object):
@@ -232,9 +322,11 @@ class RPC(object):
   def suggest(self, user_id):
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
     user_id = ObjectId(user_id)
-    voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
+    voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }) # may also perhaps want to restrict the
+    print 'User has voted on ' + str(voted_tweets.count()) + ' tweets'
+    # tweets used by excluding ones to which filters apply
     if voted_tweets.count():
-      suggestedFilters = from_votes_to_filters(user_id, voted_tweets)
+      suggestedFilters = from_votes_to_filters(user_id, list(voted_tweets)) # using list() necessary to convert from cursor
     return
     #return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
@@ -244,4 +336,5 @@ class RPC(object):
 # s.run()
 
 test = RPC()
-test.suggest("5310690f1264b0ac1b000005")
+#test.suggest("5310690f1264b0ac1b000005")
+test.suggest("5311704f0970b2d421000006")

@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-1 voteButtons" ng-show="tweet.__vote == null && !tweet.__isProtected && !tweet.__isMuted">
+        <div class="col-md-1 voteButtons" ng-show="tweet.__vote == null && !tweet.__isHeard && !tweet.__isMuted">
           <div class="btn-group-vertical hidden-xs hidden-sm">
               <button type="button" class="btn btn-default" ng-click="vote(tweet, 1, $index)">
                 <div class="aye">

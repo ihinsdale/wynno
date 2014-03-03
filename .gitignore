@@ -4,4 +4,6 @@ dist
 .sass-cache
 app/bower_components
 db_admin_steps.txt
-keys.json
+config/keys.json
+python/output.dot
+python/.DS_Store
