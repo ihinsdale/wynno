@@ -7,3 +7,4 @@ db_admin_steps.txt
 config/keys.json
 python/output.dot
 python/.DS_Store
+python/*.pdf

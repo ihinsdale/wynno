@@ -31,6 +31,12 @@ sudo pip install zerorpc
 
 sudo pip install -U scikit-learn
 
+sudo apt-get install -y python-pygraphviz
+sudo apt-get install python-pydot # don't use pip for this, there's a bug 
+
+pip install unidecode
+
+
 # Install additional nltk packages
 # python
 # import nltk

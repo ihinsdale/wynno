@@ -8,14 +8,20 @@ import math
 import json
 import os.path
 import unicodedata
+import copy
+import pydot
+import numpy as np
+from unidecode import unidecode
 from urlparse import urlparse
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 from sklearn import tree
 from sklearn.feature_extraction import DictVectorizer
+from sklearn import naive_bayes
 from pprint import pprint
 from StringIO import StringIO
+from sklearn.externals.six import StringIO as sk_StringIO
 
 # ZeroRPC needs logging
 logging.basicConfig();
@@ -94,8 +100,9 @@ def extract_features(tweets, with_ngrams=False):
 
 def tokenize_tweet_text(tweet_text):
   """ Converts a string of raw tweet text into a list of tokens. """
-  # first strip accents
-  text = strip_accents(tweet_text)
+  # first strip accents...make that, all unicode
+  #text = strip_accents(tweet_text)
+  text = unidecode(tweet_text)
   # Now remove user mentions and links from tweet text. We'll keep hashtags as words because they are sometimes used that way
   whitespaced_words = text.split()
   pure_words = []
@@ -171,7 +178,7 @@ def tweet_features_dict(tweet, corpus_ngram_features):
       features[each['type']] += 1
 
   # contains quotation
-  if '"' in tweet['__text']:
+  if '"' in unidecode(tweet['__text']):
     features['has_quotation'] = True
 
   # if tweet is not a retweet and so these were not set earlier:
@@ -219,6 +226,16 @@ def tweet_features_dict(tweet, corpus_ngram_features):
   # contains numbers/figures
 
   return features
+
+def binarize_feature_dicts(feature_dicts):
+  """ Converts any features in feature dict that are counts into binary indicators of presence of feature.
+      Assumes numerical features are integers. """
+  binarized = copy.deepcopy(feature_dicts)
+  for dict in binarized:
+    for key in dict:
+      if dict[key] > 1:
+        dict[key] = 1
+  return binarized
 
 def crunch(votedTweets, nonvotedTweets):
   votedFeatureSets = [(tweet_features(tweet), tweet['__vote']) for tweet in votedTweets]
@@ -271,37 +288,198 @@ def save_suggested_filters(user_id, filters):
     raise SaveError('There was an error saving the suggested filters.')
   return
 
-def from_votes_to_filters(user_id, tweets):
-  # use DictVectorizer to transform the dict into scikit vector
-  # use DecisionTreeClassifier, or perhaps Random Forest, and look for shortest path with no error
-
-
-
-  # define X array for DecisionTreeClassifier
-  feature_dicts = extract_features(tweets, True)
-  pprint(feature_dicts)
-  # vectorize the dictionaries of features
+def decision_tree(feature_dicts, votes):
+  # vectorize the feature dicts
   vec = DictVectorizer()
   vectorized_features = vec.fit_transform(feature_dicts).toarray()
-  pprint(vectorized_features)
   feature_names = vec.get_feature_names()
-  # could also experiment with tfidf vectorizing, though documentation says for short documents
-  # tfidf can be noisy so the current binary approach is likely better
-  # http://scikit-learn.org/stable/modules/feature_extraction.html
-
-  # define Y array
-  votes = [tweet['__vote'] for tweet in tweets]
-
+  
   # train the classifier
-  clf = tree.DecisionTreeClassifier()
+  criterion = "entropy"
+  clf = tree.DecisionTreeClassifier(criterion=criterion,min_samples_leaf=10)
   clf = clf.fit(vectorized_features, votes)
   print clf.tree_.feature
   print clf.tree_.value
+  # save results in dotfile
   with open("output.dot", "w") as output_file:
     tree.export_graphviz(clf, out_file=output_file, feature_names=feature_names)
+  # also print results to console
   out = StringIO()
   out = tree.export_graphviz(clf, out_file=out, feature_names=feature_names)
   print out.getvalue()
+  # also create pdf graph from dotfile
+  dot_data = sk_StringIO() 
+  tree.export_graphviz(clf, out_file=dot_data, feature_names=feature_names) 
+  graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
+  graph.write_pdf("graph_" + criterion + ".pdf") 
+
+def sk_naive_bayes(X, Y, feature_names):
+  clf = naive_bayes.BernoulliNB() # binarize turns count features like number of urls into binary indicator
+  clf.fit(X, Y)
+  show_most_informative_features(feature_names, clf)
+
+def nltk_naive_bayes(X, Y, feature_names):
+  # need to convert from X back into feature dict
+  # important to start with X though, so that all dicts have the exact same keys
+  feature_dicts = []
+  for each in X:
+    dict = {}
+    for index, feature_value in enumerate(each):
+      dict[feature_names[index]] = feature_value
+    feature_dicts.append(dict)
+
+  clf = nltk.NaiveBayesClassifier.train([(feature_dicts[index], Y[index]) for index, val in enumerate(X)])
+  clf.show_most_informative_features(20)
+
+def show_most_informative_features(feature_names, clf, n=20):
+  """ For scikit, shows n most informative features of a classifier, mimicking this functionality of nltk.
+      Cf. http://stackoverflow.com/questions/11116697/how-to-get-most-informative-features-for-scikit-learn-classifiers """
+  c_f = sorted(zip(clf.coef_[0], feature_names))
+  best = c_f[:n]
+  worst = c_f[:-(n+1):-1]
+  pprint(best)
+  pprint(worst)
+
+def show_most_prevalent_originators_of_tweets(feature_dicts):
+  """ Takes list of feature dictionaries and returns sorted list of users who originate
+      (i.e. tweet or retweet) the most tweets. """
+  originators = {}
+  for dict in feature_dicts:
+    if 'retweeter' in dict:
+      if not dict['retweeter'] in originators:
+        originators[dict['retweeter']] = {}
+        originators[dict['retweeter']]['total'] = 1
+        originators[dict['retweeter']]['ow_retweets'] = 1
+      else:
+        originators[dict['retweeter']]['total'] += 1
+        originators[dict['retweeter']]['ow_retweets'] += 1
+    else:
+      if dict['tweeter'] in originators:
+        originators[dict['tweeter']]['total'] += 1
+      else:
+        originators[dict['tweeter']] = {}
+        originators[dict['tweeter']]['total'] = 1
+        originators[dict['tweeter']]['ow_retweets'] = 0
+
+  # get list of originators descending by the total tweets they originate
+  most_prevalent_users = sorted(originators.iterkeys(), key=lambda k: -1 * originators[k]['total'])
+  return most_prevalent_users
+
+def custom(feature_dicts, votes_vector):
+  # binarize the feature_dicts
+  binarized_feature_dicts = binarize_feature_dicts(feature_dicts)
+
+  # if tweet-filter conditioning options are expanded to include e.g. tweets that do NOT contain a link,
+  # then we'd want to distinguish between originally-binary and originally-continuous features here,
+  # and apply the recursive searching to e.g. originally-continous features with at least 5 or more 0 values
+
+  # vectorize features
+  vec = DictVectorizer()
+  vectorized_features = vec.fit_transform(feature_dicts).toarray()
+  feature_names = vec.get_feature_names()
+  print 'Feature names are:'
+  print feature_names
+
+  # tack votes on to each vectorized tweet as last item
+  # since vectorized_features is a numpy array, we need to use numpy methods
+  # Cf. http://stackoverflow.com/questions/5064822/how-to-add-items-into-a-numpy-array
+  b = np.array(votes_vector)
+  vectorized_features_and_votes = np.hstack((vectorized_features, np.atleast_2d(b).T))
+
+  # could conceivably
+  # eliminate features from consideration which the user can't currently use in building a filter
+  # would do this by replacing feature values with all 0's, rather than removing the columns entirely,
+  # which would destroy index correspondence with feature_names
+  # however this is unnecessary -- we'll just only parse into filter suggestions the results which don't
+  # involve unfilterable features
+  # This is accomplished by remove_unimplementable_results()
+  # non_filterable_features = ['favorite_count', 'retweet_count', 'is_geotagged', etc.]
+  # for non_filterable_feature in non_filterable_features:
+  #   for index, feature in enumerate(feature_names):
+  #     if non_filterable_features == feature:
+  #       vectorized_features_and_votes[:,index] = 0
+
+  results = []
+
+  def recur_find(vector_to_search, inherited_features, min_tweets=5):
+    """ NB each tweet features vector must have the vote/class of the tweet as its last element. 
+        Works as follows:
+        For each feature with at least min_tweets tweets with non-zero value,
+        check if that feature corresponds to a 100% or 0% voting percentage.
+        If it does, add that feature to results (closure variable).
+        Also, recursively search all tweets with the current feature for features with at least min_tweets tweets 
+        with non-zero value for 100% or 0% voting percentage. """
+    a = vector_to_search
+    # count number of rows with non-zero elements in each column (excluding the vote column)
+    print a
+    columns = (a[:,0:-1] != 0).sum(0) # http://stackoverflow.com/a/3797190
+    for index, count in enumerate(columns):
+      # check if any winning feature found
+      if count >= min_tweets:
+        print 'Checking out ' + str(count) + ' tweets of ' + feature_names[index]
+        sum_votes = np.sum(a[a[:,index] != 0][:,-1], axis=0)
+        like_pct = sum_votes * 1.0 / count
+        print 'like_pct is ' + str(like_pct)
+        if like_pct == 0 or like_pct == 1:
+          winning_combo = inherited_features[:]
+          winning_combo.append(feature_names[index])
+          results.append({'like_pct': like_pct, 'num_votes': count, 'features': winning_combo})
+        # prepare new array for recursive search
+        # remove rows for which current feature is not non-zero, creating new array in the process
+        b = a[a[:,index] != 0]
+        # get rid of column for the current feature
+        # we don't want to actually remove the column, because then index no longer points us correctly within feature_names
+        # so we'll just replace the column with 0's
+        b[:,index] = 0
+        # and in fact to be more efficient, we can replace all columns < index with 0's, so that we don't
+        # duplicate any work by considering the same feature combinations in different orders
+        b[:,0:index] = 0
+
+        next_inherited_features = inherited_features[:]
+        next_inherited_features.append(feature_names[index])
+        recur_find(b, next_inherited_features)
+  
+  recur_find(vectorized_features_and_votes, [])
+  print remove_unimplementable_results(results)
+
+def remove_unimplementable_results(results):
+  """ Removes from results list the feature combinations which cannot be the basis of filters
+      because filtering functionality based on one or more features does not exist. """
+  non_filterable_features = ['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions']
+  trimmed_results = []
+  for result in results:
+    for feature in result['features']:
+      if feature in non_filterable_features or feature[:13] == 'user_mention_':
+        break
+    else:
+      trimmed_results.append(result)
+  return trimmed_results
+
+def from_votes_to_filters(user_id, tweets):
+  # create feature dictionaries
+  feature_dicts = extract_features(tweets, with_ngrams=False)
+  pprint(feature_dicts)
+
+  # define array of votes, i.e. class labels, also known as Y array for scikit classifiers
+  votes = [tweet['__vote'] for tweet in tweets]
+
+  # decision tree classifier 
+  decision_tree(feature_dicts, votes)
+
+  # [THIS BLOCK WORKS, JUST COMMENTING IT OUT FOR EFFICIENCY WHILE EXPERIMENTING WITH OTHER STUFF]
+  # # use Bernoulli naive Bayes from scikit
+  # binarized_feature_dicts = binarize_feature_dicts(feature_dicts)
+  # # vectorize the binarized feature dicts
+  # vec = DictVectorizer()
+  # binarized_vectorized_features = vec.fit_transform(binarized_feature_dicts).toarray()
+  # feature_names = vec.get_feature_names()
+  # sk_naive_bayes(binarized_vectorized_features, votes, feature_names)
+
+  # # compare with naive Bayes from nltk
+  # nltk_naive_bayes(binarized_vectorized_features, votes, feature_names)
+
+  # also compute custom approach
+  custom(feature_dicts, votes)
 
   return
 
