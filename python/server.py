@@ -11,6 +11,7 @@ import unicodedata
 import copy
 import pydot
 import numpy as np
+import time
 from unidecode import unidecode
 from urlparse import urlparse
 from bson.json_util import dumps
@@ -439,7 +440,10 @@ def custom(feature_dicts, votes_vector):
         next_inherited_features.append(feature_names[index])
         recur_find(b, next_inherited_features)
   
+  start = time.time()
   recur_find(vectorized_features_and_votes, [])
+  elapsed = time.time() - start
+  print 'Completed filter candidate identification in ' + str(round(elapsed, 2)) + ' seconds'
   print remove_unimplementable_results(results)
 
 def remove_unimplementable_results(results):
