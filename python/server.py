@@ -444,7 +444,16 @@ def custom(feature_dicts, votes_vector):
   recur_find(vectorized_features_and_votes, [])
   elapsed = time.time() - start
   print 'Completed filter candidate identification in ' + str(round(elapsed, 2)) + ' seconds'
-  print remove_unimplementable_results(results)
+  results = remove_unimplementable_results(results)
+  print 'Results before trimming redundancies:'
+  pprint(results)
+  results = remove_redundant_hashtag_text_words(results)
+  results = remove_redundant_entity_type_indicator_features('hashtags', results)
+  results = remove_redundant_entity_type_indicator_features('urls', results)
+  results = remove_redundant_entity_type_indicator_features('user_mentions', results)
+  results = remove_any_remaining_duplicate_results(results)
+  print 'Results after trimming redundancies:'
+  pprint(results)
 
 def remove_unimplementable_results(results):
   """ Removes from results list the feature combinations which cannot be the basis of filters
@@ -457,6 +466,85 @@ def remove_unimplementable_results(results):
         break
     else:
       trimmed_results.append(result)
+  return trimmed_results
+
+def remove_redundant_hashtag_text_words(results):
+  """ Removes from results list the word feature of a hashtag's text, 
+      if that specific hashtag feature is also present. Necessary because hashtag text is
+      currently used to create a word feature for tweet. Assumes, as is currently the case,
+      that word feature text is always lowercase but hashtag text might not be. """
+  trimmed_results = []
+  for result in results:
+    hashtag_text_words_to_remove = []
+    found_redundancy = False
+    duplicate_result = False
+    word_features = [feature[3:] for feature in result['features'] if feature[:3] == 'w__']
+    hashtag_features = [feature for feature in result['features'] if feature[:8] == 'hashtag_']
+    for feature in hashtag_features:
+      hashtag_text_word = feature[8:].lower()
+      if hashtag_text_word in word_features:
+        if len(result['features']) == 2:
+          found_redundancy = True
+          duplicate_result = True
+          print 'Removing what is a duplicate result after removal of redundant hashtag text word feature.'
+        else: 
+          found_redundancy = True
+          duplicate_result = False
+          print 'Removing a redundant hashtag text word feature.'
+          hashtag_text_words_to_remove.append('w__' + hashtag_text_word)
+    if duplicate_result:
+      continue
+    elif found_redundancy and not duplicate_result:
+      new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
+      # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
+      for word in hashtag_text_words_to_remove:
+        new_result['features'].remove(word)
+      trimmed_results.append(new_result)
+    else:
+      trimmed_results.append(result)
+  return trimmed_results
+
+def remove_redundant_entity_type_indicator_features(entity_type_indicator_feature, results):
+  """ Removes redundant features from feature combinations, e.g. for 'features': [u'hashtag_Oscar', 'hashtags'],
+      the 'hashtags' features should be removed since it is currently a binary indicator of hashtags
+      and is therefore implied by 'hashtag_Oscar'. """
+  trimmed_results = []
+  for result in results:
+    if entity_type_indicator_feature in result['features']:
+      # look for a specific feature of the general_feature's type
+      for feature in result['features']:
+        specific_feature_prefix = entity_type_indicator_feature[:-1] + '_'
+        if feature[:len(specific_feature_prefix)] == specific_feature_prefix:
+          if len(result['features']) == 2:
+            # if the specific feature and the general indicator are the only two features in the result
+            # we can just skip this result, don't need to add it to trimmed_results. Because we know
+            # that a result with just the specific feature must be somewhere in results already.
+            # By skipping, we avoid creating duplicate results.
+            print 'Removing what is a duplicate result after removal of redundant ' + entity_type_indicator_feature + ' feature.'
+          else:
+            print 'Removing a redundant ' + entity_type_indicator_feature + ' feature.'
+            new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
+            # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
+            new_result['features'].remove(entity_type_indicator_feature)
+            trimmed_results.append(new_result)
+          break
+      # if we looped through every feature without hitting a break, i.e. without finding a matching specific feature
+      # then the result is valid, so add it to trimmed_results
+      else:
+        trimmed_results.append(result)
+    else:
+      trimmed_results.append(result)
+  return trimmed_results
+
+def remove_any_remaining_duplicate_results(results):
+  """ Safeguard to remove any remaining duplicate results. Duplicates could result
+      e.g. in cases of multiple redundant features of different types in the same tweet -- the 
+      removal functions might not have caught all such combinations. """
+  # convert feature list to tuple -- order doesn't matter at this point
+  # this is necessary so we can use dict() (I think), which requires hashable keys
+  for result in results:
+    result['features'] = tuple(result['features'])
+  trimmed_results = [dict(tupleized) for tupleized in set(tuple(sorted(result.items())) for result in results)]
   return trimmed_results
 
 def from_votes_to_filters(user_id, tweets):
