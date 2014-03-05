@@ -345,22 +345,22 @@ def show_most_prevalent_originators_of_tweets(feature_dicts):
   """ Takes list of feature dictionaries and returns sorted list of users who originate
       (i.e. tweet or retweet) the most tweets. """
   originators = {}
-  for dict in feature_dicts:
-    if 'retweeter' in dict:
-      if not dict['retweeter'] in originators:
-        originators[dict['retweeter']] = {}
-        originators[dict['retweeter']]['total'] = 1
-        originators[dict['retweeter']]['ow_retweets'] = 1
+  for each in feature_dicts:
+    if 'retweeter' in each:
+      if not each['retweeter'] in originators:
+        originators[each['retweeter']] = {}
+        originators[each['retweeter']]['total'] = 1
+        originators[each['retweeter']]['ow_retweets'] = 1
       else:
-        originators[dict['retweeter']]['total'] += 1
-        originators[dict['retweeter']]['ow_retweets'] += 1
+        originators[each['retweeter']]['total'] += 1
+        originators[each['retweeter']]['ow_retweets'] += 1
     else:
-      if dict['tweeter'] in originators:
-        originators[dict['tweeter']]['total'] += 1
+      if each['tweeter'] in originators:
+        originators[each['tweeter']]['total'] += 1
       else:
-        originators[dict['tweeter']] = {}
-        originators[dict['tweeter']]['total'] = 1
-        originators[dict['tweeter']]['ow_retweets'] = 0
+        originators[each['tweeter']] = {}
+        originators[each['tweeter']]['total'] = 1
+        originators[each['tweeter']]['ow_retweets'] = 0
 
   # get list of originators descending by the total tweets they originate
   most_prevalent_users = sorted(originators.iterkeys(), key=lambda k: -1 * originators[k]['total'])
@@ -445,24 +445,40 @@ def custom(feature_dicts, votes_vector):
   elapsed = time.time() - start
   print 'Completed filter candidate identification in ' + str(round(elapsed, 2)) + ' seconds'
   results = remove_unimplementable_results(results)
-  print 'Results before trimming redundancies:'
+  #print 'Results before trimming redundancies:'
   pprint(results)
+  print 'Number of results before trimming redundancies: ' + str(len(results))
   results = remove_redundant_hashtag_text_words(results)
   results = remove_redundant_entity_type_indicator_features('hashtags', results)
   results = remove_redundant_entity_type_indicator_features('urls', results)
   results = remove_redundant_entity_type_indicator_features('user_mentions', results)
   results = remove_any_remaining_duplicate_results(results)
-  print 'Results after trimming redundancies:'
-  pprint(results)
+  print 'Number after trimming redundancies: ' + str(len(results))
+  pprint(select_winning_results(results))
 
 def remove_unimplementable_results(results):
   """ Removes from results list the feature combinations which cannot be the basis of filters
-      because filtering functionality based on one or more features does not exist. """
-  non_filterable_features = ['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions']
+      because filtering functionality based on one or more features does not exist. 
+      CURRENT LIST OF UNIMPLEMENTABLE RESULTS -- if 'features' contains:
+      -- a tweeter=* feature and retweeter=* feature
+      -- any of ['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions']
+      -- a user_mention_* feature """
+  non_filterable_features = set(['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions'])
   trimmed_results = []
   for result in results:
+    has_tweeter = False
+    has_retweeter = False
     for feature in result['features']:
-      if feature in non_filterable_features or feature[:13] == 'user_mention_':
+      if feature in non_filterable_features:
+        break
+      if feature[:13] == 'user_mention_':
+        break
+
+      if feature[:8] == 'tweeter=':
+        has_tweeter = True
+      if feature[:10] == 'retweeter=':
+        has_retweeter = True
+      if has_tweeter and has_retweeter:
         break
     else:
       trimmed_results.append(result)
@@ -546,6 +562,15 @@ def remove_any_remaining_duplicate_results(results):
     result['features'] = tuple(result['features'])
   trimmed_results = [dict(tupleized) for tupleized in set(tuple(sorted(result.items())) for result in results)]
   return trimmed_results
+
+def select_winning_results(results, n=3):
+  """ Selects up to n results from batch of candidate results. These are the results that will be
+      suggested to the user as filters. """
+  sorted_results = sorted(results, key=lambda k: (-1 * k['num_votes'], -1 * len(k['features'])))
+  return sorted_results
+
+def parse_result_into_filter():
+  return
 
 def from_votes_to_filters(user_id, tweets):
   # create feature dictionaries
