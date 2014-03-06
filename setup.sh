@@ -1,5 +1,5 @@
 #!/bin/bash
-# Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance
+# Simple setup.sh for configuring Ubuntu 12.04 LTS EC2 instance for wynno
 
 sudo apt-get update
 sudo apt-get install build-essential
@@ -24,6 +24,7 @@ sudo pip install pyzmq
 sudo pip install pymongo
 
 sudo pip install -U numpy
+sudo apt-get install python-scipy
 sudo pip install -U pyyaml nltk
 
 sudo apt-get install libevent-dev
@@ -34,7 +35,7 @@ sudo pip install -U scikit-learn
 sudo apt-get install -y python-pygraphviz
 sudo apt-get install python-pydot # don't use pip for this, there's a bug 
 
-pip install unidecode
+sudo pip install unidecode
 
 
 # Install additional nltk packages
@@ -43,6 +44,7 @@ pip install unidecode
 # nltk.download()
 # d
 # punkt
+# d
 # stopwords
 
 # Install nvm: node-version manager

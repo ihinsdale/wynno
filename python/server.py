@@ -29,7 +29,7 @@ logging.basicConfig();
 
 # connect to db
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
-client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['host'] + '/wynno-dev')
+client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['localhost'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
 
