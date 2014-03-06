@@ -189,7 +189,7 @@ def tweet_features_dict(tweet, corpus_ngram_features):
     features['favorite_count'] = tweet['favorite_count']
   # is geotagged
     if tweet['coordinates']:
-      features[is_geotagged] = True
+      features['is_geotagged'] = True
 
   # TODO
   # length of pure text in tweet, i.e. excluding user mentions, hashtags, and links

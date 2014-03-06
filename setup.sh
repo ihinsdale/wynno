@@ -46,6 +46,8 @@ sudo pip install unidecode
 # punkt
 # d
 # stopwords
+# q
+# exit()
 
 # Install nvm: node-version manager
 # https://github.com/creationix/nvm
