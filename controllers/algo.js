@@ -27,10 +27,9 @@ exports.suggestFilters = function(user_id, callback) {
     } else if (more) {
       console.log('there is more to come:', more);
     } else {
+      res = JSON.parse(res)
       console.log('Response received from RPC call to "suggest":')
       console.log(res);
-      console.log('res type:', typeof res);
-      console.log('res.suggestedFilters:', res.suggestedFilters);
       callback(null, res.suggestedFilters, res.undismissedSugg);
     }
   });
