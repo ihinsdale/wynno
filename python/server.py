@@ -718,7 +718,8 @@ class RPC(object):
       suggestedFilters = from_votes_to_filters(user_id, list(voted_tweets)) # using list() necessary to convert from cursor
       # save filter suggestions before returning them
       save_suggested_filters(user_id, suggestedFilters)
-    return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
+
+    return dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
 s = zerorpc.Server(RPC())
 s.bind("tcp://0.0.0.0:4242")
