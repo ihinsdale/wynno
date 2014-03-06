@@ -145,6 +145,7 @@ angular.module('wynnoApp.services')
       $http({ method: 'POST', url: '/suggestion', data: {} })
       .success(function(data, status, headers, config) {
         console.log('Success requesting filter suggestion.');
+        console.log('Data look like:', data)
         // append the suggested filters received to any preexisting suggestedFilters
         for (var i = 0; i < data.suggestedFilters.length; i++) {
           service.settings.suggestedFilters.push(data.suggestedFilters[i])

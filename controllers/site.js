@@ -303,6 +303,7 @@ exports.makeSuggestion = function(req, res) {
           console.log('Error making suggestions:', error);
           res.send(500);
         } else {
+          console.log('Sending back suggested filters:', suggestedFilters)
           res.send({ suggestedFilters: suggestedFilters, undismissedSugg: undismissedSugg });
         }
       })
