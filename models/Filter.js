@@ -8,8 +8,9 @@ exports.filterSchema = filterSchema = new Schema({
   conditions: [ Schema.Types.Mixed ],
   scope: String,
   created_at: {type: Date, default: Date.now},
-  creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  revision_of: { type: Schema.Types.ObjectId, ref: 'Filter' }
+  user_creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  revision_of: { type: Schema.Types.ObjectId, ref: 'Filter' },
+  wynno_created: {type: Boolean, default: False}
 });
 
 exports.Filter = mongoose.model('Filter', filterSchema);
