@@ -263,6 +263,8 @@ angular.module('wynnoApp.controllers')
           $scope.$emit("setSuggIndicators", SettingsService.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);
         }, function(error) {
           console.log('Error receiving new suggestion.');
+          // TODO: should figure out something to display when error getting suggestions.
+          // Don't just want to reset counter to 100, that would be irritating
         });
       }
     }, function(error) {

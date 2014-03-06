@@ -286,8 +286,13 @@ def save_guesses(guesses):
 def save_suggested_filters(user_id, filters):
   """ Save filter suggestions to the user's record in the database. """
   print 'Saving filter suggestions to the db.'
-  result = db.users.update({"_id": user_id}, {"$push": {"suggestedFilters": {"$each": filters}}, "$set": {"undismissedSugg": True}})
-  if result['err']:
+  try:
+    filter_ids = db.filters.insert(filters)
+    saved_filters = []
+    for filter_id in filter_ids:
+      saved_filters.append(db.filters.find_one({"_id": filter_id}))
+    result = db.users.update({"_id": user_id}, {"$push": {"suggestedFilters": {"$each": saved_filters}}, "$set": {"undismissedSugg": True}})
+  except:
     raise SaveError('There was an error saving the suggested filters.')
   return
 
@@ -687,9 +692,6 @@ def from_votes_to_filters(user_id, tweets):
   # we can display in reverse order an array of all filter suggestions which are ranked in ascending order of accuracy/certainty/quality.
   filters.reverse()
 
-  # save filter suggestions before returning them
-  save_suggested_filters(user_id, filters)
-
   return filters
 
 class RPC(object):
@@ -714,8 +716,9 @@ class RPC(object):
     # tweets used by excluding ones to which filters apply
     if voted_tweets.count():
       suggestedFilters = from_votes_to_filters(user_id, list(voted_tweets)) # using list() necessary to convert from cursor
-    return
-    #return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
+      # save filter suggestions before returning them
+      save_suggested_filters(user_id, suggestedFilters)
+    return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
 # commenting out the RPC server while testing
 # s = zerorpc.Server(RPC())
