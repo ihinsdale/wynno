@@ -444,17 +444,14 @@ def custom(feature_dicts, votes_vector):
   recur_find(vectorized_features_and_votes, [])
   elapsed = time.time() - start
   print 'Completed filter candidate identification in ' + str(round(elapsed, 2)) + ' seconds'
+  print 'Number of results before trimming unimplementable results: ' + str(len(results))
   results = remove_unimplementable_results(results)
-  #print 'Results before trimming redundancies:'
-  pprint(results)
-  print 'Number of results before trimming redundancies: ' + str(len(results))
-  results = remove_redundant_hashtag_text_words(results)
-  results = remove_redundant_entity_type_indicator_features('hashtags', results)
-  results = remove_redundant_entity_type_indicator_features('urls', results)
-  results = remove_redundant_entity_type_indicator_features('user_mentions', results)
+  print 'Number of results before trimming duplicates: ' + str(len(results))
   results = remove_any_remaining_duplicate_results(results)
-  print 'Number after trimming redundancies: ' + str(len(results))
-  pprint(select_winning_results(results))
+  print 'Number of results after trimming duplicates: ' + str(len(results))
+  pprint(results)
+
+  return parse_results_into_filters(select_winning_results(results))
 
 def remove_unimplementable_results(results):
   """ Removes from results list the feature combinations which cannot be the basis of filters
@@ -462,7 +459,8 @@ def remove_unimplementable_results(results):
       CURRENT LIST OF UNIMPLEMENTABLE RESULTS -- if 'features' contains:
       -- a tweeter=* feature and retweeter=* feature
       -- any of ['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions']
-      -- a user_mention_* feature """
+      -- a user_mention_* feature 
+      -- a bigram or trigram: b__* or t__* """
   non_filterable_features = set(['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions'])
   trimmed_results = []
   for result in results:
@@ -472,6 +470,8 @@ def remove_unimplementable_results(results):
       if feature in non_filterable_features:
         break
       if feature[:13] == 'user_mention_':
+        break
+      if feature[:3] == 'b__' or feature[:3] == 't__':
         break
 
       if feature[:8] == 'tweeter=':
@@ -493,24 +493,15 @@ def remove_redundant_hashtag_text_words(results):
   for result in results:
     hashtag_text_words_to_remove = []
     found_redundancy = False
-    duplicate_result = False
     word_features = [feature[3:] for feature in result['features'] if feature[:3] == 'w__']
     hashtag_features = [feature for feature in result['features'] if feature[:8] == 'hashtag_']
     for feature in hashtag_features:
       hashtag_text_word = feature[8:].lower()
       if hashtag_text_word in word_features:
-        if len(result['features']) == 2:
-          found_redundancy = True
-          duplicate_result = True
-          print 'Removing what is a duplicate result after removal of redundant hashtag text word feature.'
-        else: 
-          found_redundancy = True
-          duplicate_result = False
-          print 'Removing a redundant hashtag text word feature.'
-          hashtag_text_words_to_remove.append('w__' + hashtag_text_word)
-    if duplicate_result:
-      continue
-    elif found_redundancy and not duplicate_result:
+        found_redundancy = True
+        print 'Removing a redundant hashtag text word feature.'
+        hashtag_text_words_to_remove.append('w__' + hashtag_text_word)
+    if found_redundancy:
       new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
       # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
       for word in hashtag_text_words_to_remove:
@@ -531,18 +522,11 @@ def remove_redundant_entity_type_indicator_features(entity_type_indicator_featur
       for feature in result['features']:
         specific_feature_prefix = entity_type_indicator_feature[:-1] + '_'
         if feature[:len(specific_feature_prefix)] == specific_feature_prefix:
-          if len(result['features']) == 2:
-            # if the specific feature and the general indicator are the only two features in the result
-            # we can just skip this result, don't need to add it to trimmed_results. Because we know
-            # that a result with just the specific feature must be somewhere in results already.
-            # By skipping, we avoid creating duplicate results.
-            print 'Removing what is a duplicate result after removal of redundant ' + entity_type_indicator_feature + ' feature.'
-          else:
-            print 'Removing a redundant ' + entity_type_indicator_feature + ' feature.'
-            new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
-            # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
-            new_result['features'].remove(entity_type_indicator_feature)
-            trimmed_results.append(new_result)
+          print 'Removing a redundant ' + entity_type_indicator_feature + ' feature.'
+          new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
+          # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
+          new_result['features'].remove(entity_type_indicator_feature)
+          trimmed_results.append(new_result)
           break
       # if we looped through every feature without hitting a break, i.e. without finding a matching specific feature
       # then the result is valid, so add it to trimmed_results
@@ -566,11 +550,96 @@ def remove_any_remaining_duplicate_results(results):
 def select_winning_results(results, n=3):
   """ Selects up to n results from batch of candidate results. These are the results that will be
       suggested to the user as filters. """
+  winning_results = []
+  # sort results first on number of votes, then on number of features in result
   sorted_results = sorted(results, key=lambda k: (-1 * k['num_votes'], -1 * len(k['features'])))
-  return sorted_results
+  # select most specific result
+  # commenting out invocations of remove_redundant_hashtag_text_words() and remove_redundant_entity_type_indicator_features()
+  # in recur_find allows us to now ascertain the most specific results just by looking at length of 'features'
+  last_unique_result = None
+  for result in sorted_results:
+    if not last_unique_result:
+      winning_results.append(result)
+      last_unique_result = result
+      continue
+    # if all features in result are features of the last_unique_result, and both results have same number of votes, 
+    # then result is a weaker variant of last_unique_result and should be skipped
+    if result['num_votes'] == last_unique_result['num_votes'] and set(result['features']) < set(last_unique_result['features']):
+      continue
+    else:
+      winning_results.append(result)
+      last_unique_result = result
+    if len(winning_results) == n:
+      break
+  return winning_results
 
-def parse_result_into_filter():
-  return
+def parse_results_into_filter(results):
+  """ Converts a list of result dictionaries into a list of filter dictionaries, i.e. dictionaries
+      in the format of a filter parsed by client-side. Removes redundant features before doing so. 
+      Filter format is: 
+      { 
+        type: 'hear' or 'mute',
+        users: [screen_name1_str, screen_name2_str, ...], 
+        conditions: [{
+          type: 'link' or 'word' or 'hashtag' or 'picture' or 'quotation',
+          (optional, as appropriate:)
+          link: domain_str,
+          word: word_or_phrase_str,
+          wordIsCaseSensitive: Boolean,
+          hashtag: hashtag_str
+        }, ...], 
+        scope: 'all' or 'tweets' or 'retweets'
+      } """
+  filters = []
+  # remove redundant features from results
+  results = remove_redundant_hashtag_text_words(results)
+  results = remove_redundant_entity_type_indicator_features('hashtags', results)
+  results = remove_redundant_entity_type_indicator_features('urls', results)
+  results = remove_redundant_entity_type_indicator_features('user_mentions', results)
+  for result in results:
+    filter = {'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
+    for feature in result['features']:
+      # tweeter=
+      if feature[:8] == 'tweeter=':
+        filter['users'].append(feature[8:])
+      # retweeter=
+      elif feature[:10] == 'retweeter=':
+        filter['users'].append('feature'[10:])
+        filter['scope'] = 'retweets'
+      # hashtags
+      elif feature[:8] == 'hashtags':
+        filter['conditions'].append({'type': 'hashtag'})
+      # hashtag_
+      elif feature[:8] == 'hashtag_':
+        filter['conditions'].append({'type': 'hashtag', 'hashtag': feature[8:]})
+      # urls
+      elif feature[:4] == 'urls':
+        filter['conditions'].append({'type': 'link'})
+      # url_
+      elif feature[:4] == 'url_':
+        filter['conditions'].append({'type': 'link', 'link': feature[4:]})
+      # photo
+      elif feature[:5] == 'photo':
+        filter['conditions'].append({'type': 'picture'})
+      # has_quotation
+      elif feature == 'has_quotation':
+        filter['conditions'].append({'type': 'quotation'})
+      # w__
+      elif feature[:3] == 'w__'
+        filter['conditions'].append({'type': 'word', 'word': feature[3:], 'wordIsCaseSensitive': False})
+
+      # NOT IMPLEMENTABLE YET:
+      # tweeter= and retweeter=
+      # user_mentions
+      # user_mention_
+      # favorite_count
+      # retweet_count
+      # is_geotagged
+      # num_followers_orig_tweeter
+      # b__
+      # t__
+    filters.append(filter)
+  return filters
 
 def from_votes_to_filters(user_id, tweets):
   # create feature dictionaries
