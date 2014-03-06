@@ -608,7 +608,7 @@ def parse_results_into_filters(results):
   results = remove_redundant_entity_type_indicator_features('urls', results)
   results = remove_redundant_entity_type_indicator_features('user_mentions', results)
   for result in results:
-    filter = {'wynno_created': True, type': None, 'users': [], 'conditions': [], 'scope': 'all'}
+    filter = {'wynno_created': True, 'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
     # set the filter type
     if result['like_pct'] == 0:
       filter['type'] = 'mute'
