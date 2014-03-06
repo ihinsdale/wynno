@@ -720,11 +720,10 @@ class RPC(object):
       save_suggested_filters(user_id, suggestedFilters)
     return json.dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
-# commenting out the RPC server while testing
-# s = zerorpc.Server(RPC())
-# s.bind("tcp://0.0.0.0:4242")
-# s.run()
+s = zerorpc.Server(RPC())
+s.bind("tcp://0.0.0.0:4242")
+s.run()
 
-test = RPC()
-#test.suggest("5310690f1264b0ac1b000005")
-test.suggest("5311704f0970b2d421000006")
+# test = RPC()
+# #test.suggest("5310690f1264b0ac1b000005")
+# test.suggest("5311704f0970b2d421000006")
