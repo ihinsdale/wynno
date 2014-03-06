@@ -42,6 +42,7 @@ angular.module('wynnoApp.services')
             // TODO add user_mention as a type of condition
             case 'link':
               var linkResult = false;
+              var parser = document.createElement('a');
               // if no link string specified and tweet contains any link, pass
               if (!filterConditions[i].link && tweet.__entities.urls.length) {
                 linkResult = true;
@@ -49,8 +50,10 @@ angular.module('wynnoApp.services')
               // if a link string is specified and tweet doesn't link to it, fail
               for (var m = 0; m < tweet.__entities.urls.length; m++) {
                 if (!linkResult) {
-                  if (tweet.__entities.urls[m].display_url.indexOf(filterConditions[i].link) !== -1) {
-                  // could conceivably also use expanded_url as the text to search
+                  parser.href = tweet.__entities.urls[m].extended_url
+                  // it appears extended_url always has the same domain as display_url, so we can search
+                  // extended_url which has the benefit that we can use the parser
+                  if (parser.hostname.indexOf(filterConditions[i].link) !== -1) {
                     linkResult = true;
                   }
                 }
@@ -59,28 +62,18 @@ angular.module('wynnoApp.services')
               break;
             case 'word':
               var wordResult = false;
-              // if the triggering string (i.e. word or phrase) contains a space (i.e. is probably a phrase), use indexOf
-              if (filterConditions[i].word.indexOf(' ') !== -1) {
-                if (tweet.__text.indexOf(filterConditions[i].word) !== -1) {
-                  wordResult = true;
-                  console.log('Found matching phrase:', filterConditions[i].word, 'in tweet text:', tweet.__text);
-                }
+              var stringToSearch;
+              var searchFor;
+              if (filterConditions[i].wordIsCaseSensitive) {
+                stringToSearch = tweet.__text
+                searchFor = filterConditions[i].word
+              } else {
+                stringToSearch = tweet.__text.toLowerCase()
+                searchFor = filterConditions[i].word.toLowerCase()
               }
-              // otherwise identify words and loop through them
-              if (!wordResult) {
-                // remove punctuation, except '
-                var text = tweet.__text;
-                var noPunctuation = text.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-                var noExtraSpaces = noPunctuation.replace(/\s{2,}/g," ");
-                var tweetWords = noExtraSpaces.split(' ');
-                for (var n = 0; n < tweetWords.length; n++) {
-                  if (!wordResult) {
-                    if (filterConditions[i].word === tweetWords[n]) {
-                      wordResult = true;
-                      console.log('Found matching word:', tweetWords[n], 'in tweet text:', tweet.__text);
-                    }
-                  }
-                }
+              if (stringToSearch.indexOf(searchFor) !== -1) {
+                wordResult = true;
+                console.log('Found matching word/phrase:', searchFor, 'in tweet text:', stringToSearch);
               }
               result = wordResult;
               break;

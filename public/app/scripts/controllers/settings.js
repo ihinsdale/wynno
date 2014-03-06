@@ -76,6 +76,7 @@ angular.module('wynnoApp.controllers')
     SettingsService.provideSettings()
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
+      $scope.suggestedFilters = settings.suggestedFilters;
     });
   };
 

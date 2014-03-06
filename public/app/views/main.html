@@ -40,11 +40,11 @@
           </div>
           <div class="rightColumn">
             <div class="tweetMeta">
-              <a href="https://twitter.com/{{tweet.__user.screen_name}}">
+              <a href="https://twitter.com/{{tweet.__user.screen_name}}" target="_blank">
                 <span class="tweeterName">{{tweet.__user.name}}&nbsp;</span>
                 <span class="tweeterScreenName">@{{tweet.__user.screen_name}}</span>
               </a>
-                <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}">{{tweet.__elegant_time}}</a></span>
+                <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}" target="_blank">{{tweet.__elegant_time}}</a></span>
             </div>
             <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
             <div class="tweetFooter">

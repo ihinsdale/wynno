@@ -284,7 +284,9 @@ def save_guesses(guesses):
   return
 
 def save_suggested_filters(user_id, filters):
-  result = db.users.update({"_id": user_id}, {"$push": {"filters": {"$each": filters}}, "$set": {"undismissedSugg": True}})
+  """ Save filter suggestions to the user's record in the database. """
+  print 'Saving filter suggestions to the db.'
+  result = db.users.update({"_id": user_id}, {"$push": {"suggestedFilters": {"$each": filters}}, "$set": {"undismissedSugg": True}})
   if result['err']:
     raise SaveError('There was an error saving the suggested filters.')
   return
@@ -573,7 +575,7 @@ def select_winning_results(results, n=3):
       break
   return winning_results
 
-def parse_results_into_filter(results):
+def parse_results_into_filters(results):
   """ Converts a list of result dictionaries into a list of filter dictionaries, i.e. dictionaries
       in the format of a filter parsed by client-side. Removes redundant features before doing so. 
       Filter format is: 
@@ -592,12 +594,22 @@ def parse_results_into_filter(results):
       } """
   filters = []
   # remove redundant features from results
+  # first we need to convert the 'features' tuples in each result into a list, because
+  # the remove_redundant_* methods use list.remove()
+  for result in results:
+    result['features'] = list(result['features'])
   results = remove_redundant_hashtag_text_words(results)
   results = remove_redundant_entity_type_indicator_features('hashtags', results)
   results = remove_redundant_entity_type_indicator_features('urls', results)
   results = remove_redundant_entity_type_indicator_features('user_mentions', results)
   for result in results:
     filter = {'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
+    # set the filter type
+    if result['like_pct'] == 0:
+      filter['type'] = 'mute'
+    elif result['like_pct'] == 1:
+      filter['type'] = 'hear'
+    # populate the filter with other features
     for feature in result['features']:
       # tweeter=
       if feature[:8] == 'tweeter=':
@@ -625,7 +637,7 @@ def parse_results_into_filter(results):
       elif feature == 'has_quotation':
         filter['conditions'].append({'type': 'quotation'})
       # w__
-      elif feature[:3] == 'w__'
+      elif feature[:3] == 'w__':
         filter['conditions'].append({'type': 'word', 'word': feature[3:], 'wordIsCaseSensitive': False})
 
       # NOT IMPLEMENTABLE YET:
@@ -650,7 +662,7 @@ def from_votes_to_filters(user_id, tweets):
   votes = [tweet['__vote'] for tweet in tweets]
 
   # decision tree classifier 
-  decision_tree(feature_dicts, votes)
+  #decision_tree(feature_dicts, votes)
 
   # [THIS BLOCK WORKS, JUST COMMENTING IT OUT FOR EFFICIENCY WHILE EXPERIMENTING WITH OTHER STUFF]
   # # use Bernoulli naive Bayes from scikit
@@ -664,10 +676,21 @@ def from_votes_to_filters(user_id, tweets):
   # # compare with naive Bayes from nltk
   # nltk_naive_bayes(binarized_vectorized_features, votes, feature_names)
 
-  # also compute custom approach
-  custom(feature_dicts, votes)
+  # make filter suggestions, using compute custom approach
+  filters = custom(feature_dicts, votes)
+  # filters at this point are ranked in descending order of accuracy/quality: the 0th element is the one we're most confident in.
+  # So we want to reverse filters, to rank filters in ascending order of accuracy/certainty/quality.
+  # This is because
+  # when displaying suggested filters to the user, we want to display them in what is all-time descending order of accuracy/certainty/quality.
+  # We can assume that more recently generated suggestions are always better than older ones, because they would have
+  # been generated using at least as much vote information. So to display suggestions in all-time descending order,
+  # we can display in reverse order an array of all filter suggestions which are ranked in ascending order of accuracy/certainty/quality.
+  filters.reverse()
 
-  return
+  # save filter suggestions before returning them
+  save_suggested_filters(user_id, filters)
+
+  return filters
 
 class RPC(object):
   def predict(self, user_id):
