@@ -28,7 +28,7 @@ exports.suggestFilters = function(user_id, callback) {
       console.log('there is more to come:', more);
     } else {
       console.log(res);
-      callback(null, suggestedFilters, undismissedSugg);
+      callback(null, res.suggestedFilters, res.undismissedSugg);
     }
   });
 };
