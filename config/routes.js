@@ -21,8 +21,12 @@ module.exports = function(app) {
   app.post('/disablefilter', ensureAuthenticated, ensureAgreedTerms, site.disableFilter);
   // GET request to /settings
   app.get('/settings', ensureAuthenticated, ensureAgreedTerms, site.getSettings);
-  // POST request to /suggestion
-  app.post('/suggestion', ensureAuthenticated, ensureAgreedTerms, site.makeSuggestion);
+  // POST request to /suggest
+  app.post('/suggest', ensureAuthenticated, ensureAgreedTerms, site.makeSuggestion);
+  // POST request to /adoptsuggestion
+  app.post('/adoptsuggestion', ensureAuthenticated, ensureAgreedTerms, site.adoptSuggestion);
+  // POST request to /dismisssuggestion
+  app.post('/dismisssuggestion', ensureAuthenticated, ensureAgreedTerms, site.dismissSuggestion);
   // GET request to /checkin after authenticating with Twitter
   app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'

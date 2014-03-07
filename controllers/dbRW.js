@@ -265,6 +265,52 @@ exports.disableFilter = function(user_id, activeFiltersIndex, filter_id, callbac
   });
 };
 
+exports.adoptSuggestion = function(user_id, suggestedFiltersIndex, callback) {
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user to adopt suggestion for.');
+      callback(err);
+    } else {
+      var filter = doc.suggestedFilters[suggestedFiltersIndex];
+      doc.activeFilters.push(filter);
+      doc.suggestedFilters[suggestedFiltersIndex].remove();
+      doc.save(function(err) {
+        if (err) {
+          console.log('Error updating active and suggested filters.');
+          callback(err);
+        } else {
+          console.log("User's active filters now are:", doc.activeFilters);
+          console.log("User's suggested filters now are:", doc.suggestedFilters);
+          callback(null);
+        }
+      })
+    }
+  });
+};
+
+exports.dismissSuggestion = function(user_id, suggestedFiltersIndex, callback) {
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user to dismiss suggestion for.');
+      callback(err);
+    } else {
+      var filter = doc.suggestedFilters[suggestedFiltersIndex];
+      doc.dismissedFilters.push(filter);
+      doc.suggestedFilters[suggestedFiltersIndex].remove();
+      doc.save(function(err) {
+        if (err) {
+          console.log('Error updating dismissed and suggested filters.');
+          callback(err);
+        } else {
+          console.log("User's active filters now are:", doc.dismissedFilters);
+          console.log("User's suggested filters now are:", doc.suggestedFilters);
+          callback(null);
+        }
+      })
+    }
+  });
+};
+
 exports.findUser = function(user_id, callback) {
   User.findById(user_id, function(err, user) {
     console.log('findUser found user:', user);

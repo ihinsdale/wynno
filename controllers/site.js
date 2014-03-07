@@ -308,7 +308,39 @@ exports.makeSuggestion = function(req, res) {
         }
       })
   }
-}
+};
+
+exports.adoptSuggestion = function(req, res) {
+  var data = req.body;
+  async.waterfall([
+    function(callback) {
+      db.adoptSuggestion(req.user._id, data.suggestedFiltersIndex, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully adopted suggestion.');
+    }
+  });
+};
+
+exports.dismissSuggestion = function(req, res) {
+  var data = req.body;
+  async.waterfall([
+    function(callback) {
+      db.dismissSuggestion(req.user._id, data.suggestedFiltersIndex, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully dismissed suggestion.');
+    }
+  });
+};
 
 exports.processFeedback = function(req, res) {
   var user_id = req.user ? req.user._id : null;

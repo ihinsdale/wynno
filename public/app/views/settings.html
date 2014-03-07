@@ -13,6 +13,14 @@
 </div>
 <div>Filter Suggestions</div>
 <div class="row" ng-repeat="filter in suggestedFilters | reverse">
+  <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Adopt</button>
+  <div class="col-md-8 col-md-offset-2">
+    {{filter}}
+  </div>
+  <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+</div>
+<div>Dismissed Suggestions</div>
+<div class="row" ng-repeat="filter in dismissedFilters | reverse">
   <div class="col-md-8 col-md-offset-2">
     {{filter}}
   </div>
