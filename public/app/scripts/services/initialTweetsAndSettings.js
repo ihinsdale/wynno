@@ -18,6 +18,8 @@ angular.module('wynnoApp.services')
       .success(function(data, status) {
         console.log('success getting old tweets and settings:', data);
         // save settings in SettingsService
+        // after initializing votesRequiredForNextSugg
+        data.settings.votesRequiredForNextSugg = 100 - (data.settings.voteCount - Math.floor(data.settings.voteCount / 100) * 100);
         SettingsService.settings = data.settings;
 
         // apply filtering rules to the tweets
@@ -35,7 +37,7 @@ angular.module('wynnoApp.services')
         d.resolve(TweetService.currentTweets);
       })
       .error(function(reason, status) {
-        console.log('error getting old tweets:', reason);
+        console.log('error getting old tweets and settings:', reason);
         d.reject(reason);
       })
       return d.promise;

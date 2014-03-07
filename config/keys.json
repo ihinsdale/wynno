@@ -4,7 +4,8 @@
     "consumer_secret": "Ke3KzVQk01grsPb6Df5h4nCvAQVLJQX7rEqTwkcnKY"
   },
   "db": {
-    "host": "",
+    "host": "54.201.54.173",
+    "localhost": "127.0.0.1",
     "port": 27017,
     "username": "Ian",
     "password": "gHz32KplsW5241431fdsa234234aiwieqiwue"

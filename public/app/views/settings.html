@@ -3,7 +3,7 @@
     <h2>Your filters</h2>
   </div>
 </div>
-<div class="row" ng-repeat="filter in activeFilters">
+<div class="row" ng-repeat="filter in activeFilters | reverse">
   <div class="col-md-8 col-md-offset-2">
     <button class="removeSetting" ng-click="disableFilter($index)">
       <span class="icomoon-cancel-circle"></span>
@@ -11,13 +11,49 @@
     {{filter}}
   </div>
 </div>
+<div>Filter Suggestions</div>
+<div class="row" ng-repeat="filter in suggestedFilters | reverse">
+  <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Adopt</button>
+  <div class="col-md-8 col-md-offset-2">
+    {{filter}}
+  </div>
+  <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+</div>
+<div>Dismissed Suggestions</div>
+<div class="row" ng-repeat="filter in dismissedFilters | reverse">
+  <div class="col-md-8 col-md-offset-2">
+    {{filter}}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2 col-md-offset-1">
+    <h3>How</h3>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
+        <span ng-bind="draftFilter.typeDisplayed"></span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
+        <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <h3>Who</h3>
+  </div>
+  <div class="col-md-6">
+    <h3>What</h3>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
+    <hr>
     <div class="text-center">
       <button class="btn btn-default btn-lg addNewFilter" ng-click="newDraftFilter()">Add new filter</button>
     </div>
-    <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
         <accordion close-others="true" >
@@ -123,6 +159,7 @@
                         <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
                           <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
                         </div>
+                        <div>TODO: add checkbox for case sensitivity</div>
                       </div>
                       <div ng-show="condition.type == 'hashtag'">
                         <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">

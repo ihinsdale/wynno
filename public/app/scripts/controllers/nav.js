@@ -3,6 +3,8 @@
 angular.module('wynnoApp.controllers')
 .controller('NavCtrl', function($scope, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
+  $scope.votesRequiredForNextSugg = null;
+  $scope.undismissedSugg = null;
 
   // if there is a current user, set the value of username in the scope
   if (AuthService.getCurrentUser()) {
@@ -32,6 +34,17 @@ angular.module('wynnoApp.controllers')
     console.log('inside locationChangeSuccess listener, currentUser looks like:', currentUser);
     if (currentUser && !currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
       $scope.openWelcome();
+    }
+  });
+
+  // create listener for update to voteCount and votesRequiredForNextSugg
+  $scope.$on("setSuggIndicators", function(event, votesRequiredForNextSugg, undismissedSugg) {
+    console.log('Setting votesRequired and undismissedSugg indicators.');
+    if (votesRequiredForNextSugg !== null) {
+      $scope.votesRequiredForNextSugg = votesRequiredForNextSugg;
+    }
+    if (undismissedSugg !== null) {
+      $scope.undismissedSugg = undismissedSugg;
     }
   });
 

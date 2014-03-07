@@ -76,6 +76,8 @@ angular.module('wynnoApp.controllers')
     SettingsService.provideSettings()
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
+      $scope.suggestedFilters = settings.suggestedFilters;
+      $scope.dismissedFilters = settings.dismissedFilters;
     });
   };
 
@@ -94,6 +96,27 @@ angular.module('wynnoApp.controllers')
       $scope.activeFilters = settings.activeFilters;
     });
   };
+
+  $scope.adoptSugg = function(index) {
+    SettingsService.adoptSugg(index)
+    .then(function(settings) {
+      $scope.activeFilters = settings.activeFilters;
+      $scope.suggestedFilters = settings.suggestedFilters;
+      if (!settings.undismissedSugg) {
+        $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
+      }
+    })
+  };
+
+  $scope.dismissSugg = function(index) {
+    SettingsService.dismissSugg(index)
+    .then(function(settings) {
+      $scope.suggestedFilters = settings.suggestedFilters;
+      if (!settings.undismissedSugg) {
+        $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
+      }
+    })
+  }
 
   window.scrollTo(0, 0);
   $scope.injectSettings();

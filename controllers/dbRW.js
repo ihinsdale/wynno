@@ -200,21 +200,27 @@ exports.findTweetsSinceIdAndBeforeId = function(user_id, oldestOfMoreRecentTweet
 exports.saveVote = function(user_id, tweet_id, vote, callback) {
   // *_id must be a db record id, i.e. _id, not a Twitter API id
 
-  // querying by user_id not necessary
-  Tweet.update({ _id: tweet_id }, { __vote: vote }, {}, function (err, numberAffected, raw) {
+  Tweet.findByIdAndUpdate(tweet_id, { __vote: vote }, {}, function (err, numberAffected, raw) {
     if (err) {
       console.log('error updating tweet', tweet_id);
       callback(err);
     } else {
-      console.log('The number of updated documents was %d', numberAffected);
-      console.log('The raw response from Mongo was ', raw);
-      callback(null);
+      console.log('Recorded vote', vote, 'on tweet', tweet_id, 'successfully.')
+      User.findByIdAndUpdate(user_id, { $inc: { voteCount: 1 } }, {}, function(err, numberAffected, raw) {
+        if (err) {
+          console.log('error updating vote count for user', user_id);
+          callback(err);
+        } else {
+          console.log('Incremented vote count for user', user_id);
+          callback(null);
+        }
+      });
     }
   });
 };
 
 exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
-  draftFilter.creator = user_id;
+  draftFilter.user_creator = user_id;
   draftFilter.revision_of = revisionOf_id;
   Filter.create(draftFilter, function(err, doc) {
     if (err) {
@@ -255,6 +261,58 @@ exports.disableFilter = function(user_id, activeFiltersIndex, filter_id, callbac
           callback(null);
         }
       });
+    }
+  });
+};
+
+exports.adoptSuggestion = function(user_id, suggestedFiltersIndex, callback) {
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user to adopt suggestion for.');
+      callback(err);
+    } else {
+      var filter = doc.suggestedFilters[suggestedFiltersIndex];
+      doc.activeFilters.push(filter);
+      doc.suggestedFilters[suggestedFiltersIndex].remove();
+      if (doc.suggestedFilters.length === 0) {
+        doc.undismissedSugg = false;
+      }
+      doc.save(function(err) {
+        if (err) {
+          console.log('Error updating active and suggested filters.');
+          callback(err);
+        } else {
+          console.log("User's active filters now are:", doc.activeFilters);
+          console.log("User's suggested filters now are:", doc.suggestedFilters);
+          callback(null);
+        }
+      })
+    }
+  });
+};
+
+exports.dismissSuggestion = function(user_id, suggestedFiltersIndex, callback) {
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user to dismiss suggestion for.');
+      callback(err);
+    } else {
+      var filter = doc.suggestedFilters[suggestedFiltersIndex];
+      doc.dismissedFilters.push(filter);
+      doc.suggestedFilters[suggestedFiltersIndex].remove();
+      if (doc.suggestedFilters.length === 0) {
+        doc.undismissedSugg = false;
+      }
+      doc.save(function(err) {
+        if (err) {
+          console.log('Error updating dismissed and suggested filters.');
+          callback(err);
+        } else {
+          console.log("User's active filters now are:", doc.dismissedFilters);
+          console.log("User's suggested filters now are:", doc.suggestedFilters);
+          callback(null);
+        }
+      })
     }
   });
 };
@@ -311,7 +369,7 @@ exports.registerUser = function(user, callback) {
 };
 
 exports.getSettings = function(user_id, tweetsToPassOn, callback) {
-  User.findById(user_id, 'activeFilters disabledFilters', function(err, doc) {
+  User.findById(user_id, 'activeFilters disabledFilters voteCount suggestedFilters dismissedFilters undismissedSugg', function(err, doc) {
     if (err) {
       console.log('error finding user', user_id, 'settings');
       callback(err);

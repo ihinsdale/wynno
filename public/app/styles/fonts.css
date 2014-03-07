@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot');
-	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.woff') format('woff'),
-		url('fonts/icomoon.ttf') format('truetype'),
-		url('fonts/icomoon.svg#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?-m4y9kz');
+	src:url('fonts/icomoon.eot?#iefix-m4y9kz') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-m4y9kz') format('woff'),
+		url('fonts/icomoon.ttf?-m4y9kz') format('truetype'),
+		url('fonts/icomoon.svg?-m4y9kz#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -29,23 +29,11 @@
 .icomoon-spinner:before {
 	content: "\e601";
 }
-.icomoon-grin:before {
-	content: "\e602";
-}
 .icomoon-happy:before {
 	content: "\e603";
 }
 .icomoon-plus:before {
 	content: "\e604";
-}
-.icomoon-arrow-right:before {
-	content: "\e605";
-}
-.icomoon-arrow-right2:before {
-	content: "\e606";
-}
-.icomoon-arrow-right3:before {
-	content: "\e607";
 }
 .icomoon-filter:before {
 	content: "\e608";
@@ -116,9 +104,6 @@
 .icomoon-sound:before {
 	content: "\e61e";
 }
-.icomoon-sound-off:before {
-	content: "\e61f";
-}
 .icomoon-cancel-circle:before {
 	content: "\e621";
 }
@@ -130,9 +115,6 @@
 }
 .icomoon-heart2:before {
 	content: "\e624";
-}
-.icomoon-question:before {
-	content: "\e625";
 }
 .icomoon-question2:before {
 	content: "\e626";
@@ -146,6 +128,87 @@
 .icomoon-heart3:before {
 	content: "\e629";
 }
+.icomoon-exit:before {
+	content: "\e602";
+}
+.icomoon-quill:before {
+	content: "\e605";
+}
+.icomoon-sound-off:before {
+	content: "\e61f";
+}
+.icomoon-trophy:before {
+	content: "\e606";
+}
+.icomoon-spinner2:before {
+	content: "\e607";
+}
+.icomoon-spinner3:before {
+	content: "\e625";
+}
 .icomoon-params:before {
 	content: "\e620";
+}
+.icomoon-mail:before {
+	content: "\e62a";
+}
+.icomoon-feather:before {
+	content: "\e62b";
+}
+.icomoon-heart4:before {
+	content: "\e62c";
+}
+.icomoon-tools:before {
+	content: "\e62d";
+}
+.icomoon-megaphone:before {
+	content: "\e62e";
+}
+.icomoon-trophy2:before {
+	content: "\e62f";
+}
+.icomoon-hourglass:before {
+	content: "\e630";
+}
+.icomoon-ellipsis:before {
+	content: "\e631";
+}
+.icomoon-dots:before {
+	content: "\e632";
+}
+.icomoon-dot:before {
+	content: "\e633";
+}
+.icomoon-arrow-down:before {
+	content: "\e634";
+}
+.icomoon-arrow-right:before {
+	content: "\e635";
+}
+.icomoon-arrow-down2:before {
+	content: "\e636";
+}
+.icomoon-arrow-right2:before {
+	content: "\e637";
+}
+.icomoon-arrow-down3:before {
+	content: "\e638";
+}
+.icomoon-arrow-right3:before {
+	content: "\e639";
+}
+.icomoon-retweet:before {
+	content: "\e63a";
+}
+.icomoon-info3:before {
+	content: "\e63b";
+}
+.icomoon-info4:before {
+	content: "\e63c";
+}
+.icomoon-help:before {
+	content: "\e63d";
+}
+.icomoon-cone:before {
+	content: "\e63e";
 }

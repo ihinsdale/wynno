@@ -86,6 +86,8 @@ exports.fresh = function(req, res) {
       // if we get back only 1 tweet, that's the one we already have, so we're done
       if (tweetsArray.length === 1) {
         callback('No new tweets have occurred.');
+      } else if (tweetsArray.length === 0) {
+        callback("There was an error on Twitter's end in fetching new tweets.")
       } else {
         // if oldest tweet in new batch has id_str which matches the id_str of the latest tweet previously obtained
         // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet
@@ -235,7 +237,7 @@ exports.processVote = function(req, res) {
       console.log(error);
       res.send(500);
     } else {
-      res.send('Successfully recorded your vote on tweet', data._id);
+      res.send('Successfully recorded your vote on tweet' + data._id);
     }
   });
 };
@@ -252,7 +254,7 @@ exports.saveFilter = function(req, res) {
       console.log(error);
       res.send(500);
     } else {
-      res.send('Success saving filter:', data.draftFilter, ', revision of filter:', data.revisionOf);
+      res.send('Success saving filter:' + data.draftFilter + ', revision of filter:' + data.revisionOf);
     }
   });
 };
@@ -282,6 +284,62 @@ exports.getSettings = function(req, res) {
       res.send(500);
     } else {
       res.send(settings);
+    }
+  });
+};
+
+exports.makeSuggestion = function(req, res) {
+  // check that user is eligible for new recommendation
+  // currently that is the case if voteCount is a multiple of 100
+  var voteCount = req.user.voteCount;
+  if (voteCount % 100 !== 0 || voteCount === 0) {
+    var requiredVotes = 100 - (voteCount - (voteCount / 100).floor() * 100)
+    res.send(402, "User must vote on " + requiredVotes.toString() + " more tweets to generate new filter suggestion.");
+  } else {
+    async.waterfall([
+        function(callback) {
+          algo.suggestFilters(req.user._id, callback);
+        }
+      ], function(error, suggestedFilters, undismissedSugg) {
+        if (error) {
+          console.log('Error making suggestions:', error);
+          res.send(500);
+        } else {
+          console.log('Sending back suggested filters:', suggestedFilters)
+          res.send({ suggestedFilters: suggestedFilters, undismissedSugg: undismissedSugg });
+        }
+      })
+  }
+};
+
+exports.adoptSuggestion = function(req, res) {
+  var data = req.body;
+  async.waterfall([
+    function(callback) {
+      db.adoptSuggestion(req.user._id, data.suggestedFiltersIndex, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully adopted suggestion.');
+    }
+  });
+};
+
+exports.dismissSuggestion = function(req, res) {
+  var data = req.body;
+  async.waterfall([
+    function(callback) {
+      db.dismissSuggestion(req.user._id, data.suggestedFiltersIndex, callback)
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully dismissed suggestion.');
     }
   });
 };

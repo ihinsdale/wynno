@@ -8,6 +8,7 @@ angular.module('wynnoApp', [
   'ui.bootstrap',
   'wynnoApp.services',
   'wynnoApp.controllers',
+  'wynnoApp.filters',
   'infinite-scroll',
   'ngRoute'
 ])

@@ -139,6 +139,83 @@ angular.module('wynnoApp.services')
         d.reject(reason);
       });
       return d.promise;
+    },
+    requestSugg: function() {
+      var d = $q.defer();
+      $http({ method: 'POST', url: '/suggest', data: {} })
+      .success(function(data, status, headers, config) {
+        console.log('Success requesting filter suggestion.');
+        console.log('Data look like:', data)
+        // append the suggested filters received to any preexisting suggestedFilters
+        for (var i = 0; i < data.suggestedFilters.length; i++) {
+          service.settings.suggestedFilters.push(data.suggestedFilters[i])
+        }
+        service.settings.undismissedSugg = data.undismissedSugg;
+        // reset votesRequiredForNextSugg
+        service.settings.votesRequiredForNextSugg = 100 - (service.settings.voteCount - Math.floor(service.settings.voteCount / 100) * 100);
+        d.resolve(data.suggestedFilters);
+      })
+      .error(function(reason, status) {
+        console.log('error getting filter suggestion');
+        d.reject(reason);
+      });
+      return d.promise;
+    },
+    adoptSugg: function(index) {
+      var d = $q.defer();
+      // update filters on the client side, to be undone if POST request fails
+      var origSuggested = service.settings.suggestedFilters.slice();
+      var origActive = service.settings.activeFilters.slice();
+      var origUndismissedSugg = service.settings.undismissedSugg;
+      service.settings.activeFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      if (!service.settings.suggestedFilters.length) {
+        service.settings.undismissedSugg = false;
+      }
+      $http({ method: 'POST', url: '/adoptsuggestion', data: {
+        suggestedFiltersIndex: index
+      } })
+      .success(function(data, status) {
+        console.log('Success adopting filter suggestion.');
+        // apply the new filters to currentTweets
+        FilterService.applyFilterRules(TweetService.currentTweets, service.settings);
+        d.resolve(service.settings);
+      })
+      .error(function(reason, status) {
+        console.log('Error adopting filter suggestion.');
+        // reset to original filters
+        service.settings.suggestedFilters = origSuggested;
+        service.settings.activeFilters = origActive;
+        service.settings.undismissedSugg = origUndismissedSugg;
+        d.reject(reason);
+      });
+      return d.promise;
+    },
+    dismissSugg: function(index) {
+      var d = $q.defer();
+      // update filters on the client side, to be undone if POST request fails
+      var origSuggested = service.settings.suggestedFilters.slice();
+      var origDismissed = service.settings.dismissedFilters.slice();
+      var origUndismissedSugg = service.settings.undismissedSugg;
+      service.settings.dismissedFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      if (!service.settings.suggestedFilters.length) {
+        service.settings.undismissedSugg = false;
+      }
+      $http({ method: 'POST', url: '/dismisssuggestion', data: {
+        suggestedFiltersIndex: index
+      } })
+      .success(function(data, status) {
+        console.log('Success dismissing filter suggestion.');
+        d.resolve(service.settings);
+      })
+      .error(function(reason, status) {
+        console.log('Error dismissing filter suggestion.');
+        // reset to original filters
+        service.settings.suggestedFilters = origSuggested;
+        service.settings.dismissedFilters = origDismissed;
+        service.settings.undismissedSugg = origUndismissedSugg;
+        d.reject(reason);
+      });
+      return d.promise;
     }
   };
 
