@@ -12,7 +12,7 @@
   </div>
 </div>
 <div>Filter Suggestions</div>
-<div class="row" ng-repeat="filter in suggestedFilters | orderBy: $index: true">
+<div class="row" ng-repeat="filter in suggestedFilters | orderBy: '$index': true">
   <div class="col-md-8 col-md-offset-2">
     {{filter}}
   </div>
