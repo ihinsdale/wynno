@@ -8412,25 +8412,25 @@ body > .container {
 }
 
 /* line 756, main.scss */
-.hear, .hear:hover {
-  color: #62d7a5;
-}
-
-/* line 760, main.scss */
-.mute, .mute:hover {
-  color: #ff9c74;
-}
-
-/* line 764, main.scss */
-.btn.active.hear {
+.btn.hear, .btn.hear:hover {
   background-color: #62d7a5;
   color: #ffffff;
 }
 
-/* line 769, main.scss */
-.btn.active.mute {
+/* line 761, main.scss */
+.btn.mute, .btn.mute:hover {
   background-color: #ff9c74;
   color: #ffffff;
+}
+
+/* line 766, main.scss */
+.dropdown-menu > li > a.ayeGreen {
+  color: #62d7a5;
+}
+
+/* line 770, main.scss */
+.dropdown-menu > li > a.nayRed {
+  color: #ff9c74;
 }
 
 /* line 774, main.scss */

@@ -30,7 +30,8 @@
   <div class="col-md-2 col-md-offset-1">
     <h3>How</h3>
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-bind="draftFilter.typeDisplayed" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
+        <span ng-bind="draftFilter.typeDisplayed"></span>
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">

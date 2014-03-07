@@ -753,22 +753,22 @@ $twitterButtonRadius: 3px;
     background-color: $deep-purple;
 }
 
-.hear, .hear:hover {
-    color: $aye-green;
-}
-
-.mute, .mute:hover {
-    color: $nay-red;
-}
-
-.btn.active.hear {
+.btn.hear, .btn.hear:hover {
     background-color: $aye-green;
     color: #ffffff;
 }
 
-.btn.active.mute {
+.btn.mute, .btn.mute:hover {
     background-color: $nay-red;
     color: #ffffff;
+}
+
+.dropdown-menu > li > a.ayeGreen {
+    color: $aye-green;
+}
+
+.dropdown-menu > li > a.nayRed {
+    color: $nay-red;
 }
 
 .btn.active.toggledPurple {
