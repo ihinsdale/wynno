@@ -8412,12 +8412,12 @@ body > .container {
 }
 
 /* line 756, main.scss */
-.btn.hear, .btn.hear:hover {
+.hear, .hear:hover {
   color: #62d7a5;
 }
 
 /* line 760, main.scss */
-.btn.mute, .btn.mute:hover {
+.mute, .mute:hover {
   color: #ff9c74;
 }
 

@@ -30,12 +30,12 @@
   <div class="col-md-2 col-md-offset-1">
     <h3>How</h3>
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-bind="draftFilter.typeDisplayed" ng-class="{hear:draftFilter.type == 'hear, mute:draftFilter.type=='mute'}">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-bind="draftFilter.typeDisplayed" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'">Hear</a></li>
-        <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'">Mute</a></li>
+        <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
+        <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
       </ul>
     </div>
   </div>
