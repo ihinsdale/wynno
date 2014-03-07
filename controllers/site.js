@@ -86,6 +86,8 @@ exports.fresh = function(req, res) {
       // if we get back only 1 tweet, that's the one we already have, so we're done
       if (tweetsArray.length === 1) {
         callback('No new tweets have occurred.');
+      } else if (tweetsArray.length === 0) {
+        callback("There was an error on Twitter's end in fetching new tweets.")
       } else {
         // if oldest tweet in new batch has id_str which matches the id_str of the latest tweet previously obtained
         // then we have gotten all tweets since the last fetch, and we don't want to save this oldest tweet

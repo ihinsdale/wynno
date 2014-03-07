@@ -27,11 +27,32 @@
 </div>
 
 <div class="row">
+  <div class="col-md-2 col-md-offset-1">
+    <h3>How</h3>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-bind="draftFilter.typeDisplayed" ng-class="{hear:draftFilter.type == 'hear, mute:draftFilter.type=='mute'}">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'">Hear</a></li>
+        <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'">Mute</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <h3>Who</h3>
+  </div>
+  <div class="col-md-6">
+    <h3>What</h3>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-md-8 col-md-offset-2">
+    <hr>
     <div class="text-center">
       <button class="btn btn-default btn-lg addNewFilter" ng-click="newDraftFilter()">Add new filter</button>
     </div>
-    <hr>
     <div collapse="builderIsCollapsed">
       <div class="well well-lg">
         <accordion close-others="true" >
