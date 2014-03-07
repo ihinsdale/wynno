@@ -102,6 +102,9 @@ angular.module('wynnoApp.controllers')
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
       $scope.suggestedFilters = settings.suggestedFilters;
+      if (!settings.undismissedSugg) {
+        $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
+      }
     })
   };
 
@@ -109,6 +112,9 @@ angular.module('wynnoApp.controllers')
     SettingsService.dismissSugg(index)
     .then(function(settings) {
       $scope.suggestedFilters = settings.suggestedFilters;
+      if (!settings.undismissedSugg) {
+        $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
+      }
     })
   }
 

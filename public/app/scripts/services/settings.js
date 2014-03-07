@@ -166,7 +166,11 @@ angular.module('wynnoApp.services')
       // update filters on the client side, to be undone if POST request fails
       var origSuggested = service.settings.suggestedFilters.slice();
       var origActive = service.settings.activeFilters.slice();
+      var origUndismissedSugg = service.settings.undismissedSugg;
       service.settings.activeFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      if (!service.settings.suggestedFilters.length) {
+        service.settings.undismissedSugg = false;
+      }
       $http({ method: 'POST', url: '/adoptsuggestion', data: {
         suggestedFiltersIndex: index
       } })
@@ -181,6 +185,7 @@ angular.module('wynnoApp.services')
         // reset to original filters
         service.settings.suggestedFilters = origSuggested;
         service.settings.activeFilters = origActive;
+        service.settings.undismissedSugg = origUndismissedSugg;
         d.reject(reason);
       });
       return d.promise;
@@ -190,7 +195,11 @@ angular.module('wynnoApp.services')
       // update filters on the client side, to be undone if POST request fails
       var origSuggested = service.settings.suggestedFilters.slice();
       var origDismissed = service.settings.dismissedFilters.slice();
+      var origUndismissedSugg = service.settings.undismissedSugg;
       service.settings.dismissedFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      if (!service.settings.suggestedFilters.length) {
+        service.settings.undismissedSugg = false;
+      }
       $http({ method: 'POST', url: '/dismisssuggestion', data: {
         suggestedFiltersIndex: index
       } })
@@ -203,6 +212,7 @@ angular.module('wynnoApp.services')
         // reset to original filters
         service.settings.suggestedFilters = origSuggested;
         service.settings.dismissedFilters = origDismissed;
+        service.settings.undismissedSugg = origUndismissedSugg;
         d.reject(reason);
       });
       return d.promise;

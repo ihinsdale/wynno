@@ -274,6 +274,9 @@ exports.adoptSuggestion = function(user_id, suggestedFiltersIndex, callback) {
       var filter = doc.suggestedFilters[suggestedFiltersIndex];
       doc.activeFilters.push(filter);
       doc.suggestedFilters[suggestedFiltersIndex].remove();
+      if (doc.suggestedFilters.length === 0) {
+        doc.undismissedSugg = false;
+      }
       doc.save(function(err) {
         if (err) {
           console.log('Error updating active and suggested filters.');
@@ -297,6 +300,9 @@ exports.dismissSuggestion = function(user_id, suggestedFiltersIndex, callback) {
       var filter = doc.suggestedFilters[suggestedFiltersIndex];
       doc.dismissedFilters.push(filter);
       doc.suggestedFilters[suggestedFiltersIndex].remove();
+      if (doc.suggestedFilters.length === 0) {
+        doc.undismissedSugg = false;
+      }
       doc.save(function(err) {
         if (err) {
           console.log('Error updating dismissed and suggested filters.');

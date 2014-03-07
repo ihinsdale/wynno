@@ -18,7 +18,7 @@ block nav
         .badge.badgePurpleBadge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
           span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-      a.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", ng-bind="undismissedSugg")
+      a.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
         .badgePurpleBadge
           span.icomoon-trophy
       a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
