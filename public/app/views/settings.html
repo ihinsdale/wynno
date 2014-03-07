@@ -3,7 +3,7 @@
     <h2>Your filters</h2>
   </div>
 </div>
-<div class="row" ng-repeat="filter in activeFilters">
+<div class="row" ng-repeat="filter in activeFilters | reverse">
   <div class="col-md-8 col-md-offset-2">
     <button class="removeSetting" ng-click="disableFilter($index)">
       <span class="icomoon-cancel-circle"></span>
@@ -12,7 +12,7 @@
   </div>
 </div>
 <div>Filter Suggestions</div>
-<div class="row" ng-repeat="filter in suggestedFilters | orderBy: '$index': true">
+<div class="row" ng-repeat="filter in suggestedFilters | reverse">
   <div class="col-md-8 col-md-offset-2">
     {{filter}}
   </div>
