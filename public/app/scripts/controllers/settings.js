@@ -32,6 +32,9 @@ angular.module('wynnoApp.controllers')
 
   $scope.draftFilterRemoveUser = function(userIndex) {
     $scope.draftFilter.users.splice(userIndex, 1);
+    if (!$scope.draftFilters.users.length) {
+      $scope.draftFilter.usersDisplayed = 'all users (default)';
+    }
   };
 
   $scope.dismissError = function(whichError) {

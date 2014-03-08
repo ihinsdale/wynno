@@ -27,12 +27,12 @@
 </div>
 
 <div class="row">
-  <div class="col-md-2 col-md-offset-1">
+  <div class="col-md-1 col-md-offset-1">
     <h3>How</h3>
     <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.typeDisplayed = 'Hear/Mute'" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
         <span ng-bind="draftFilter.typeDisplayed"></span>
-        <span class="caret"></span>
+        <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
         <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
@@ -42,6 +42,32 @@
   </div>
   <div class="col-md-2">
     <h3>Who</h3>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.usersDisplayed = 'all users (default)'">
+        <span ng-bind="draftFilter.usersDisplayed"></span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="user in draftFilter.users">
+          <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+            <span class="icomoon-cancel-circle"></span>
+          </button>
+          <span class="user conditionSideBorder">@{{user}}</span>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
   </div>
   <div class="col-md-6">
     <h3>What</h3>
