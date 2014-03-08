@@ -42,19 +42,21 @@
   </div>
   <div class="col-xs-12 col-md-3">
     <h3>Who</h3>
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-init="draftFilter.usersDisplayed = 'all users (default)'">
-        <span ng-bind="draftFilter.usersDisplayed"></span>
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="user in draftFilter.users">
-          <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
-          <span class="user conditionSideBorder">@{{user}}</span>
-        </li>
-      </ul>
+    <div class="dropdown" ng-controller="DropdownCtrl">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" ng-init="draftFilter.usersDisplayed = 'all users (default)'">
+          <span ng-bind="draftFilter.usersDisplayed"></span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="user in draftFilter.users">
+            <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+              <span class="icomoon-cancel-circle"></span>
+            </button>
+            <span class="user conditionSideBorder">@{{user}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="input-group">
       <span class="input-group-addon">@</span>
