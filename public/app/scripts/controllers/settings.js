@@ -31,7 +31,7 @@ angular.module('wynnoApp.controllers')
         $scope.draftFilter.usersDisplayed = '@' + username;
       } else if ($scope.draftFilter.users.length === 2) {
         $scope.draftFilter.usersDisplayed += ', ';
-        $scope.draftFilter.usersDisplayed = '@' + username;
+        $scope.draftFilter.usersDisplayed += '@' + username;
       } else if ($scope.draftFilter.users.length === 3) {
         $scope.draftFilter.usersDisplayed += ', ...';
       }
@@ -48,11 +48,11 @@ angular.module('wynnoApp.controllers')
       $scope.draftFilter.usersDisplayed = '';
       var limit;
       if ($scope.draftFilter.users.length > 2) {
-        limit = 2;
+        limit = 3;
       } else {
         limit = $scope.draftFilter.users.length;
       }
-      for (var i = 0; i <= limit; i++) {
+      for (var i = 0; i < limit; i++) {
         if (i > 0) {
           $scope.draftFilter.usersDisplayed += ', ';
         }
