@@ -66,9 +66,11 @@ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 source $HOME/.nvm/nvm.sh
 sudo nvm install v0.10.26
 sudo nvm use v0.10.26
+# Install node dependencies
+npm install -g
 
-# Install Bower
+# Install Bower and front-end dependencies
 sudo npm install -g bower
-
+bower install
 
 
