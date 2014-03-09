@@ -27,7 +27,7 @@ angular.module('wynnoApp.controllers')
     if (!duplicate) {
       $scope.errorAddingUser = null;
       $scope.draftFilter.users.push(username);
-      if ($scope.draftFilters.users.length === 1) {
+      if ($scope.draftFilter.users.length === 1) {
         $scope.draftFilter.usersDisplayed = $scope.draftFilter.users[0];
       } else {
         $scope.draftFilter.usersDisplayed = $scope.draftFilter.users[0] + ', ...';
