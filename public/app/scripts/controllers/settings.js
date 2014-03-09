@@ -27,6 +27,7 @@ angular.module('wynnoApp.controllers')
     if (!duplicate) {
       $scope.errorAddingUser = null;
       $scope.draftFilter.users.push(username);
+      // display up to two usernames within the dropdown field. More are represented by ...
       if ($scope.draftFilter.users.length === 1) {
         $scope.draftFilter.usersDisplayed = '@' + username;
       } else if ($scope.draftFilter.users.length === 2) {

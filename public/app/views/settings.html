@@ -75,6 +75,57 @@
           </div>
           <div class="col-xs-12 col-md-6">
             <h3>What</h3>
+            <div class="" ng-repeat="condition in draftFilter.conditions">
+              <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                  <div class="andCondition" ng-show="!$first">and</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
+                    <span class="icomoon-cancel-circle"></span>
+                  </button>
+                  <div class="conditionSideBorder">
+                    <select class="form-control conditionSelectorWidth" ng-model="condition.type">
+                      <option value="link">a link to:</option>
+                      <option value="word">the word or phrase:</option>
+                      <option value="hashtag">the hashtag:</option>
+                      <option value="picture">a picture</option>
+                      <option value="quotation">a quotation</option>
+                    </select>
+                    <div class="row conditionInputPaddingTop">
+                      <div ng-show="condition.type == 'link'">
+                        <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
+                          <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
+                        </div>
+                      </div>
+                      <div ng-show="condition.type == 'word'">
+                        <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
+                          <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+                        </div>
+                        <div>TODO: add checkbox for case sensitivity</div>
+                      </div>
+                      <div ng-show="condition.type == 'hashtag'">
+                        <div class="col-xs-11 col-xs-offset-1 col-md-11 col-md-offset-1">
+                          <div class="input-group">
+                            <span class="input-group-addon">#</span>
+                            <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row addConditionRow">
+              <div class="col-xs-12 col-md-12">
+                <button type-"button" class="btn btn-primary addCondition" ng-click="addAnotherCondition()">
+                  <span class="icomoon-plus plus"></span>Add another
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
