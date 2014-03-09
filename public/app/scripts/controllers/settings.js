@@ -136,6 +136,5 @@ angular.module('wynnoApp.controllers')
   $scope.$on("agreementSaved", function() {
     $scope.injectSettings();
   });
-})
-.controller('UsersDropdownCtrl', function($scope);
+});
   
