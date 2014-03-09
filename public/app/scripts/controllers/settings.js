@@ -14,6 +14,7 @@ angular.module('wynnoApp.controllers')
     $scope.draftFilter = { conditions: [{}], users: [], scope: 'all' };
     $scope.draftFilter.typeDisplayed = 'Hear/Mute';
     $scope.draftFilter.usersDisplayed = 'all users (default)'
+    $scope.draftFilter.conditions[0].typeDisplayed = '(anything)';
   };
 
   $scope.draftFilterAddUser = function(username) {
@@ -101,7 +102,14 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.addAnotherCondition = function() {
-    $scope.draftFilter.conditions.push({});
+    $scope.draftFilter.conditions.push({typeDisplayed: '(choose one)'});
+  }
+
+  $scope.removeCondition = function(index) {
+    $scope.draftFilter.conditions.splice(index, 1);
+    if (!$scope.draftFilter.conditions) {
+      $scope.draftFilter.conditions = [{typeDisplayed: '(anything)'}];
+    }
   }
 
   $scope.injectSettings = function() {
