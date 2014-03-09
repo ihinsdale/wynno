@@ -26,13 +26,15 @@ angular.module('wynnoApp.controllers')
     }
     if (!duplicate) {
       $scope.errorAddingUser = null;
-      if ($scope.draftFilter.users.length === 0) {
-        $scope.draftFilter.usersDisplayed = ''
-      } else {
-        $scope.draftFilter.usersDisplayed += ', '
-      }
       $scope.draftFilter.users.push(username);
-      $scope.draftFilter.usersDisplayed += ('@' + username);
+      if ($scope.draftFilter.users.length === 1) {
+        $scope.draftFilter.usersDisplayed = '@' + username;
+      } else if ($scope.draftFilter.users.length === 2) {
+        $scope.draftFilter.usersDisplayed += ', ';
+        $scope.draftFilter.usersDisplayed = '@' + username;
+      } else if ($scope.draftFilter.users.length === 3) {
+        $scope.draftFilter.usersDisplayed += ', ...';
+      }
     } else {
       $scope.errorAddingUser = 'That user has already been added.';
     }
@@ -44,11 +46,21 @@ angular.module('wynnoApp.controllers')
       $scope.draftFilter.usersDisplayed = 'all users (default)';
     } else {
       $scope.draftFilter.usersDisplayed = '';
-      for (var i = 0; i < $scope.draftFilter.users.length; i++) {
+      var limit;
+      if ($scope.draftFilter.users.length > 2) {
+        limit = 2;
+      } else {
+        limit = $scope.draftFilter.users.length;
+      }
+      for (var i = 0; i <= limit; i++) {
         if (i > 0) {
           $scope.draftFilter.usersDisplayed += ', ';
         }
-        $scope.draftFilter.usersDisplayed += ('@' + $scope.draftFilter.users[i])
+        if (i === 2) {
+          $scope.draftFilter.usersDisplayed += '...';
+        } else {
+          $scope.draftFilter.usersDisplayed += ('@' + $scope.draftFilter.users[i])
+        }
       }
     }
   };
