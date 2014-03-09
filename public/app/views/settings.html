@@ -42,9 +42,9 @@
   </div>
   <div class="col-xs-12 col-md-3">
     <h3>Who</h3>
-    <div ng-init="draftFilter.usersDisplayed = 'all users (default)'">
+
       <div class="dropdown">
-        <a class="btn btn-default dropdown-toggle">
+        <a class="btn btn-default dropdown-toggle" ng-init="draftFilter.usersDisplayed = 'all users (default)'">
           <span ng-bind="draftFilter.usersDisplayed"></span>
           <span class="caret"></span>
         </a>
@@ -57,7 +57,9 @@
           </li>
         </ul>
       </div>
-    </div>
+      <div ng-repeat="user in draftFilter.users">
+      </div>
+
     <div class="input-group">
       <span class="input-group-addon">@</span>
       <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
