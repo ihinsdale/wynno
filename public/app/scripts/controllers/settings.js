@@ -12,6 +12,8 @@ angular.module('wynnoApp.controllers')
     $scope.editExistingFilterIndex = null;
     // initialize new draft filter
     $scope.draftFilter = { conditions: [{}], users: [], scope: 'all' };
+    $scope.draftFilter.typeDisplayed = 'Hear/Mute';
+    $scope.draftFilter.usersDisplayed = 'all users (default)'
   };
 
   $scope.draftFilterAddUser = function(username) {
