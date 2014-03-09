@@ -103,14 +103,14 @@ angular.module('wynnoApp.controllers')
 
   $scope.addAnotherCondition = function() {
     $scope.draftFilter.conditions.push({typeDisplayed: '(choose one)'});
-  }
+  };
 
   $scope.removeCondition = function(index) {
     $scope.draftFilter.conditions.splice(index, 1);
-    if (!$scope.draftFilter.conditions) {
+    if (!$scope.draftFilter.conditions.length) {
       $scope.draftFilter.conditions = [{typeDisplayed: '(anything)'}];
     }
-  }
+  };
 
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
