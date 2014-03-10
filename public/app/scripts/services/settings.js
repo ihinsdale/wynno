@@ -45,7 +45,7 @@ angular.module('wynnoApp.services')
           } else if (draftFilter.conditions[j].type === 'hashtag') {
             // strip a leading # character from the hashtag input
             // this is necessary because I could not get the Bootstrap # input add-on to display inline
-            if (draftFilter.conditions[j].hashtag[0] === '#') {
+            if (draftFilter.conditions[j].hashtag && draftFilter.conditions[j].hashtag[0] === '#') {
               draftFilter.conditions[j].hashtag = draftFilter.conditions[j].hashtag.slice(1);
             }
             delete draftFilter.conditions[j].link;
