@@ -51,7 +51,7 @@
           </div>
           <div class="col-xs-12 col-md-4">
             <h3>Who</h3>
-            <div class="dropup">
+            <div class="dropdown">
               <a class="btn btn-default dropdown-toggle">
                 <span ng-bind="draftFilter.usersDisplayed"></span>
                 <span class="caret" ng-show="!!draftFilter.users.length"></span>
@@ -66,7 +66,7 @@
               </ul>
             </div>
             <div class="input-group">
-              <span class="input-group-addon">@</span>
+              <div class="customInlineAddOn">@</div>
               <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
               <span class="input-group-btn">
                 <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
