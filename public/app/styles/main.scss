@@ -759,6 +759,10 @@ $twitterButtonRadius: 3px;
     padding-top: 40px;
 }
 
+.paddingTop60 {
+    padding-top: 60px;
+}
+
 .btn.addNewFilter, .btn.saveFilter {
     background-color: $shallower-purple;
     color: #ffffff;
@@ -770,9 +774,9 @@ $twitterButtonRadius: 3px;
     border-color: $deep-purple;
 }
 
-.saveFilter.incomplete {
+.pieceOfDraft {
+    padding: 5px;
     background-color: $badge-purple;
-    border-color: $badge-purple;
 }
 
 .btn.hear, .btn.hear:hover {
