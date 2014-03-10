@@ -26,7 +26,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12 col-md-10 col-md-offset-1">
+  <div class="col-xs-12 col-md-12">
     <div class="text-center">
       <button class="btn btn-default btn-lg addNewFilter" ng-click="newDraftFilter()">Add new filter</button>
     </div>
@@ -110,7 +110,7 @@
         </div>
         <div class="row paddingTop40">
           <div class="col-xs-12 col-md-12 text-center">
-            <button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)">Save filter</button>
+            <button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)" ng-class="{incomplete: draftFilterIsIncomplete()}">Save filter</button>
           </div>
         </div>
       </div>

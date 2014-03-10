@@ -42,6 +42,36 @@ angular.module('wynnoApp.controllers')
     }
   };
 
+  $scope.draftFilterIsIncomplete = function() {
+    // if no users have been specified, at least one condition must be valid
+    // if a user has been specified, invalid conditions are okay
+    if (!draftFilter.type) {
+      return true;
+    } else if (!draftFilter.scope) {
+      return true;
+    } else if (!draftFilter.users.length) {
+      // if not all conditions valid, incomplete
+      var oneValid = false;
+      for (var i = 0; i < draftFilter.conditions.length; i++) {
+        if (!oneValid) {
+          // if the condition has a type that's not 'word', or its type is 'word' and a word has been entered, valid
+          if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
+            || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
+            oneValid = true;
+          }
+        }
+      }
+      if (!oneValid) { 
+        return true;
+      } else {
+      // else, complete
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   $scope.draftFilterRemoveUser = function(userIndex) {
     $scope.draftFilter.users.splice(userIndex, 1);
     if (!$scope.draftFilter.users.length) {
@@ -122,13 +152,15 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.saveFilter = function(draftFilter, originalIndex) {
-    SettingsService.saveFilter(draftFilter, originalIndex)
-    .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
-      $scope.newDraftFilter();
-    }, function(reason) {
-      console.log('Error saving filter:', reason);
-    });
+    if (!$scope.draftFilterIsIncomplete()) {
+      SettingsService.saveFilter(draftFilter, originalIndex)
+      .then(function(settings) {
+        $scope.activeFilters = settings.activeFilters;
+        $scope.newDraftFilter();
+      }, function(reason) {
+        console.log('Error saving filter:', reason);
+      });
+    }
   };
 
   $scope.disableFilter = function(index) {
