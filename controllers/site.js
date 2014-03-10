@@ -247,14 +247,14 @@ exports.saveFilter = function(req, res) {
   console.log('/savefilter request data look like', data)
   async.waterfall([
     function(callback) {
-      db.saveFilter(req.user._id, data.draftFilter, data.revisionOf, callback);
+      db.saveFilter(req.user._id, data.draftFilter, data.revisionOfFilter_id, callback);
     }
   ], function(error) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      res.send('Success saving filter:' + data.draftFilter + ', revision of filter:' + data.revisionOf);
+      res.send('Success saving filter:' + data.draftFilter + ', revision of filter:' + data.revisionOfFilter_id);
     }
   });
 };
