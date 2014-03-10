@@ -220,7 +220,7 @@ exports.saveVote = function(user_id, tweet_id, vote, callback) {
 };
 
 exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
-  draftFilter.user_creator = user_id;
+  //draftFilter.user_creator = user_id;
   if (revisionOf_id) {
     draftFilter.revision_of = revisionOf_id;
   }
