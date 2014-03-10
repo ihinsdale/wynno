@@ -10,8 +10,8 @@ exports.filterSchema = filterSchema = new Schema({
   typeDisplayed: String,
   usersDisplayed: String,
   created_at: {type: Date, default: Date.now},
-  //user_creator: { type: Schema.Types.ObjectId, ref: 'User', default: null },
-  //revision_of: { type: Schema.Types.ObjectId, ref: 'Filter', default: null },
+  user_creator: { type: Schema.Types.ObjectId, ref: 'User', default: null },
+  revision_of: { type: Schema.Types.ObjectId, ref: 'Filter', default: null },
   wynno_created: {type: Boolean, default: false}
 });
 

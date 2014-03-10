@@ -231,14 +231,21 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
     } else {
       console.log('Filter doc created is:', doc);
       console.log('user_id is:', user_id);
-      User.findByIdAndUpdate(user_id, { $push: { activeFilters: doc } }, function(err, user) {
+      User.findById(user_id, function(err, user) {
         if (err) {
           console.log('Error finding user whose new filter this is.');
           callback(err);
         } else {
+          user.activeFilters.push(doc);
           console.log('Successfully saved new filter for user.');
           console.log("User's active filters are:", user.activeFilters);
-          callback(null);
+          user.save(function(err) {
+            if (err) {
+              console.log("Error adding filter to user's activeFilters.");
+            } else {
+              callback(null);
+            }
+          });
         }
       });
     }
