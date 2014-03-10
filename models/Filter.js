@@ -7,6 +7,8 @@ exports.filterSchema = filterSchema = new Schema({
   users: [ String ],
   conditions: [ Schema.Types.Mixed ],
   scope: String,
+  typeDisplayed: String,
+  usersDisplayed: String,
   created_at: {type: Date, default: Date.now},
   user_creator: { type: Schema.Types.ObjectId, ref: 'User' },
   revision_of: { type: Schema.Types.ObjectId, ref: 'Filter' },
