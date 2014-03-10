@@ -45,11 +45,11 @@ angular.module('wynnoApp.controllers')
   $scope.draftFilterIsIncomplete = function() {
     // if no users have been specified, at least one condition must be valid
     // if a user has been specified, invalid conditions are okay
-    if (!$scope.draftFilter.type) {
+    if ($scope.draftFilter && !$scope.draftFilter.type) {
       return true;
-    } else if (!$scope.draftFilter.scope) {
+    } else if ($scope.draftFilter && !$scope.draftFilter.scope) {
       return true;
-    } else if (!$scope.draftFilter.users.length) {
+    } else if ($scope.draftFilter && !$scope.draftFilter.users.length) {
       // if not all conditions valid, incomplete
       var oneValid = false;
       for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
