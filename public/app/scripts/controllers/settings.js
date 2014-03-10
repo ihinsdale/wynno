@@ -152,15 +152,13 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.saveFilter = function(draftFilter, originalIndex) {
-    if (!$scope.draftFilterIsIncomplete()) {
-      SettingsService.saveFilter(draftFilter, originalIndex)
-      .then(function(settings) {
-        $scope.activeFilters = settings.activeFilters;
-        $scope.newDraftFilter();
-      }, function(reason) {
-        console.log('Error saving filter:', reason);
-      });
-    }
+    SettingsService.saveFilter(draftFilter, originalIndex)
+    .then(function(settings) {
+      $scope.activeFilters = settings.activeFilters;
+      $scope.newDraftFilter();
+    }, function(reason) {
+      console.log('Error saving filter:', reason);
+    });
   };
 
   $scope.disableFilter = function(index) {
