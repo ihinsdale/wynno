@@ -220,7 +220,7 @@ exports.saveVote = function(user_id, tweet_id, vote, callback) {
 };
 
 exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
-  //draftFilter.user_creator = user_id;
+  draftFilter.user_creator = user_id;
   if (revisionOf_id) {
     draftFilter.revision_of = revisionOf_id;
   }
@@ -229,6 +229,8 @@ exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
       console.log('Error saving filter to db.');
       callback(err);
     } else {
+      console.log('Filter doc created is:', doc);
+      console.log('user_id is:', user_id);
       User.findByIdAndUpdate(user_id, { $push: { activeFilters: doc } }, function(err, user) {
         if (err) {
           console.log('Error finding user whose new filter this is.');
