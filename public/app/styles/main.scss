@@ -760,12 +760,18 @@ $twitterButtonRadius: 3px;
 }
 
 .btn.addNewFilter, .btn.saveFilter {
-    background-color: $deep-purple;
+    background-color: $shallower-purple;
     color: #ffffff;
+    border-color: $deep-purple;
 }
 
 .btn.addNewFilter:hover, .btn.saveFilter:hover {
     background-color: $deep-purple;
+    border-color: $deep-purple;
+}
+
+.saveFilter.incomplete {
+    background-color: $badge-purple;
 }
 
 .btn.hear, .btn.hear:hover {
