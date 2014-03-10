@@ -110,7 +110,7 @@
         </div>
         <div class="row paddingTop40">
           <div class="col-xs-12 col-md-12 text-center">
-            <button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)" ng-class="{incomplete: draftFilterIsIncomplete()}">Save filter</button>
+            <button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()" ng-class="">Save filter</button>
           </div>
         </div>
       </div>
