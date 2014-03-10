@@ -45,14 +45,14 @@ angular.module('wynnoApp.controllers')
   $scope.draftFilterIsIncomplete = function() {
     // if no users have been specified, at least one condition must be valid
     // if a user has been specified, invalid conditions are okay
-    if (!draftFilter.type) {
+    if (!$scope.draftFilter.type) {
       return true;
-    } else if (!draftFilter.scope) {
+    } else if (!$scope.draftFilter.scope) {
       return true;
-    } else if (!draftFilter.users.length) {
+    } else if (!$scope.draftFilter.users.length) {
       // if not all conditions valid, incomplete
       var oneValid = false;
-      for (var i = 0; i < draftFilter.conditions.length; i++) {
+      for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
         if (!oneValid) {
           // if the condition has a type that's not 'word', or its type is 'word' and a word has been entered, valid
           if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
