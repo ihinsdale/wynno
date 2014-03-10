@@ -9,6 +9,7 @@ exports.filterSchema = filterSchema = new Schema({
   scope: String,
   typeDisplayed: String,
   usersDisplayed: String,
+  scopeDisplayed: String,
   created_at: {type: Date, default: Date.now},
   user_creator: { type: Schema.Types.ObjectId, ref: 'User', default: null },
   revision_of: { type: Schema.Types.ObjectId, ref: 'Filter', default: null },

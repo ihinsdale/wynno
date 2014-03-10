@@ -15,6 +15,7 @@ angular.module('wynnoApp.controllers')
     $scope.draftFilter.typeDisplayed = 'Hear/Mute';
     $scope.draftFilter.usersDisplayed = 'all users (default)'
     $scope.draftFilter.conditions[0].typeDisplayed = '(anything)';
+    $scope.draftFilter.scopeDisplayed = 'Tweets + Retweets'
   };
 
   $scope.draftFilterAddUser = function(username) {
