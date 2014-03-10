@@ -11,7 +11,7 @@ exports.filterSchema = filterSchema = new Schema({
   usersDisplayed: String,
   created_at: {type: Date, default: Date.now},
   user_creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  revision_of: { type: Schema.Types.ObjectId, ref: 'Filter' },
+  revision_of: { type: Schema.Types.ObjectId, ref: 'Filter', default: null },
   wynno_created: {type: Boolean, default: false}
 });
 
