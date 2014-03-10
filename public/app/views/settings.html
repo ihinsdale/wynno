@@ -51,7 +51,7 @@
           </div>
           <div class="col-xs-12 col-md-4">
             <h3>Who</h3>
-            <div class="dropdown">
+            <div class="dropup">
               <a class="btn btn-default dropdown-toggle">
                 <span ng-bind="draftFilter.usersDisplayed"></span>
                 <span class="caret" ng-show="!!draftFilter.users.length"></span>
@@ -102,15 +102,8 @@
                 </div>
                 <div ng-show="condition.type == 'word'" class="inlineBlock">TODO: add checkbox for case sensitivity</div>
                 <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
-                  <form class="form-inline" role="form">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <span class="input-group-addon">#</span>
-                        <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
-                      </div>
-                    </div>
-                  </form>
-
+                  <span class="input-group-addon">#</span>
+                  <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
                 </div>
               </div>
             </div>
