@@ -96,8 +96,8 @@
             <span>that contain</span>
             <div class="inlineBlock">
               <div class="" ng-repeat="condition in draftFilter.conditions">
-                <span class="andCondition" ng-show="!$first">and</span>
-                <div class="inlineBlock">                
+                <div class="inlineBlock">
+                  <span class="andCondition" ng-show="!$first">and</span>               
                   <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                     <span class="icomoon-cancel-circle"></span>
                   </button>

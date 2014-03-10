@@ -33,10 +33,11 @@ angular.module('wynnoApp.controllers')
       if ($scope.draftFilter.users.length === 1) {
         $scope.draftFilter.usersDisplayed = '@' + username;
       } else if ($scope.draftFilter.users.length === 2) {
-        $scope.draftFilter.usersDisplayed += ', ';
-        $scope.draftFilter.usersDisplayed += '@' + username;
-      } else if ($scope.draftFilter.users.length === 3) {
         $scope.draftFilter.usersDisplayed += ', ...';
+        //$scope.draftFilter.usersDisplayed += ', ';
+        //$scope.draftFilter.usersDisplayed += '@' + username;
+      //} else if ($scope.draftFilter.users.length === 3) {
+      //  $scope.draftFilter.usersDisplayed += ', ...';
       }
     } else {
       $scope.errorAddingUser = 'That user has already been added.';
@@ -80,8 +81,8 @@ angular.module('wynnoApp.controllers')
     } else {
       $scope.draftFilter.usersDisplayed = '';
       var limit;
-      if ($scope.draftFilter.users.length > 2) {
-        limit = 3;
+      if ($scope.draftFilter.users.length > 1) {
+        limit = 2;
       } else {
         limit = $scope.draftFilter.users.length;
       }
@@ -89,7 +90,7 @@ angular.module('wynnoApp.controllers')
         if (i > 0) {
           $scope.draftFilter.usersDisplayed += ', ';
         }
-        if (i === 2) {
+        if (i === 1) {
           $scope.draftFilter.usersDisplayed += '...';
         } else {
           $scope.draftFilter.usersDisplayed += ('@' + $scope.draftFilter.users[i])
