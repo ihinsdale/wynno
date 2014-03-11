@@ -14,7 +14,7 @@ block nav
         span.icomoon-filter.ayeGreen(ng-show="active[0]")
         span.icomoon-filter.nayRed(ng-show="active[1]")
         span.icomoon-cogs(ng-show="active[2]")
-      span.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg")
+      span.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filtering suggestions!")
         .badge.badgePurpleBadge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
           span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
@@ -42,18 +42,15 @@ block nav
           a(href='#/settings', ng-click='doCollapse()')
             span.icomoon-cogs
             span.wynnoButtonDesc Settings
-        li.divider
-        li.dropdown.visible-xs
-          a.dropdown-toggle(href="", data-toggle="dropdown")
-            span(ng-bind="username")
-            span.glyphicon.glyphicon-chevron-down.size14.leftPadding5
-          ul.dropdown-menu
-            li
-              a(href="https://twitter.com/intent/tweet", target="_blank") Compose a tweet
-            li
-              a(href="", ng-click="logout('twitter')")
-                span.icomoon-exit
-                span Sign out
+        li.visible-xs.customDivider
+        li.visible-xs
+          span(ng-bind="username")
+        li.visible-xs
+          a(href="https://twitter.com/intent/tweet", target="_blank") Compose a tweet
+        li.visible-xs
+          a(href="", ng-click="logout('twitter')")
+            span.icomoon-exit
+            span Sign out
 
         // these items displayed on not-mobile
         li.passing.hidden-xs(ng-class='{active: active[0]}')
@@ -71,11 +68,11 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg")
+        span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next suggestion", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
             span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-        a.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
+        a.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", tooltip-placement="bottom", tooltip="You have new filtering suggestions!", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span.icomoon-trophy
         .dropdown.inlineBlock
