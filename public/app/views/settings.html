@@ -38,7 +38,7 @@
             <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <span ng-bind="draftFilter.typeDisplayed"></span>
+                  <span ng-bind="draftFilter.typeDisplayed" ng-class="{ayeGreen: draftFilter.type == 'hear', nayRed: draftFilter.type =='mute'}"></span>
                   <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
@@ -90,6 +90,7 @@
                 </ul>
               </div>
             </div>
+            <div class="visible-xs paddingTop16"></div>
           </div>
           <div class="col-xs-12 col-md-5">
             <div class="hidden-xs paddingTop56"></div>
