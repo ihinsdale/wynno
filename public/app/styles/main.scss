@@ -794,10 +794,16 @@ $twitterButtonRadius: 3px;
 .thatContain {
     vertical-align: top;
     padding-top: 8px;
+    background-color: $badge-purple;
 }
 
-.thatContain, .s {
-    font-size: 20px;
+.sentenceText {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.s {
+    float: right;
 }
 
 .btn.hear, .btn.hear:hover {
@@ -848,8 +854,6 @@ $twitterButtonRadius: 3px;
 
 .andCondition {
     padding: 10px 0;
-    color: $deep-purple;
-    font-weight: bold;
 }
 
 .listOfUsers {

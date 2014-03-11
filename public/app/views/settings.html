@@ -56,7 +56,7 @@
                   <span ng-bind="draftFilter.usersDisplayed"></span>
                   <span class="caret" ng-show="!!draftFilter.users.length"></span>
                 </a>
-                <span class="s">'s</span>
+                <span class="s sentenceText">'s</span>
                 <ul class="dropdown-menu" role="menu">
                   <li ng-repeat="user in draftFilter.users">
                     <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
@@ -92,12 +92,12 @@
             </div>
           </div>
           <div class="col-xs-12 col-md-5">
-            <div class="hidden-xs paddingTop60"></div>
-            <div class="inlineBlock thatContain">that contain</div>
+            <div class="hidden-xs paddingTop56"></div>
+            <div class="inlineBlock thatContain sentenceText">that contain</div>
             <div class="inlineBlock pieceOfDraft">
               <div class="" ng-repeat="condition in draftFilter.conditions">
                 <div class="inlineBlock">
-                  <div class="andCondition" ng-show="!$first">and</div>               
+                  <div class="andCondition sentenceText" ng-show="!$first">and</div>               
                   <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                     <span class="icomoon-cancel-circle"></span>
                   </button>
