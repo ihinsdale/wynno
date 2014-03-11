@@ -8471,12 +8471,12 @@ body > .container {
 
 /* line 805, main.scss */
 .pieceOfDraft, .thatContain {
-  background-color: lightgray;
+  background-color: #c7a9e1;
 }
 
 /* line 809, main.scss */
 .pieceOfDraft.scope {
-  padding: 5px 3px;
+  padding: 5px 2px;
 }
 
 /* line 813, main.scss */

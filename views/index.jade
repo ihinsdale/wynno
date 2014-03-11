@@ -14,7 +14,7 @@ block nav
         span.icomoon-filter.ayeGreen(ng-show="active[0]")
         span.icomoon-filter.nayRed(ng-show="active[1]")
         span.icomoon-cogs(ng-show="active[2]")
-      span.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filtering suggestions!")
+      span.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!")
         .badge.badgePurpleBadge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
           span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
@@ -44,11 +44,14 @@ block nav
             span.wynnoButtonDesc Settings
         li.visible-xs.customDivider
         li.visible-xs
-          span(ng-bind="username")
+          a(href="https://twitter.com/{{username}}", target="_blank")
+            span(ng-bind="username")
         li.visible-xs
-          a(href="https://twitter.com/intent/tweet", target="_blank") Compose a tweet
+          a(href="https://twitter.com/intent/tweet", target="_blank", ng-click="doCollapse()")
+          span.icomoon-quill
+          span Compose a tweet
         li.visible-xs
-          a(href="", ng-click="logout('twitter')")
+          a(href="", ng-click="logout('twitter')", ng-click="doCollapse()")
             span.icomoon-exit
             span Sign out
 
@@ -68,7 +71,7 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next suggestion", tooltip-popup-delay='400')
+        span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next filter suggestion", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
             span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
@@ -79,7 +82,9 @@ block nav
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu
             li
-              a(href="https://twitter.com/intent/tweet", target="_blank") Compose a tweet
+              a(href="https://twitter.com/intent/tweet", target="_blank")
+                span.icomoon-quill
+                span Compose a tweet
             li
               a(ng-click="logout('twitter')")
                 span.icomoon-exit

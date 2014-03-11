@@ -803,11 +803,11 @@ $twitterButtonRadius: 3px;
 }
 
 .pieceOfDraft, .thatContain {
-    background-color: lightgray;
+    background-color: $badge-purple;
 }
 
 .pieceOfDraft.scope {
-    padding: 5px 3px;
+    padding: 5px 2px;
 }
 
 .thatContain {
