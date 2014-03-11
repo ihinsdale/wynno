@@ -13,7 +13,7 @@ angular.module('wynnoApp.controllers')
     // initialize new draft filter
     $scope.draftFilter = { conditions: [{}], users: [], scope: 'all' };
     $scope.draftFilter.typeDisplayed = 'Hear/Mute';
-    $scope.draftFilter.usersDisplayed = 'all users (default)'
+    $scope.draftFilter.usersDisplayed = '(all users)'
     $scope.draftFilter.conditions[0].typeDisplayed = '(anything)';
     $scope.draftFilter.scopeDisplayed = 'Tweets + Retweets'
   };
@@ -77,7 +77,7 @@ angular.module('wynnoApp.controllers')
   $scope.draftFilterRemoveUser = function(userIndex) {
     $scope.draftFilter.users.splice(userIndex, 1);
     if (!$scope.draftFilter.users.length) {
-      $scope.draftFilter.usersDisplayed = 'all users (default)';
+      $scope.draftFilter.usersDisplayed = '(all users)';
     } else {
       $scope.draftFilter.usersDisplayed = '';
       var limit;
