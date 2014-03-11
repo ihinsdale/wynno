@@ -802,15 +802,23 @@ $twitterButtonRadius: 3px;
     background-color: lightgray;
 }
 
+.pieceOfDraft.scope {
+    padding: 5px 3px;
+}
+
 .thatContain {
     vertical-align: top;
     margin-right: -4px;
-    padding: 11.5px;
+    padding: 11px;
 }
 
 .sentenceText {
     font-size: 16px;
     color: #ffffff;
+}
+
+.textAlignLeft {
+    text-align: left;
 }
 
 .s {

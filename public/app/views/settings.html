@@ -35,13 +35,13 @@
         <div class="row">
           <div class="col-xs-12 col-md-2">
             <h3 class="wynnoPurple">1. How</h3>
-            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+            <div class="pieceOfDraft text-center" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <span ng-bind="draftFilter.typeDisplayed" ng-class="{ayeGreen: draftFilter.type == 'hear', nayRed: draftFilter.type =='mute'}"></span>
                   <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu textAlignLeft" role="menu">
                   <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
                   <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
                 </ul>
@@ -50,14 +50,14 @@
           </div>
           <div class="col-xs-12 col-md-3">
             <h3 class="wynnoPurple">2. Who</h3>
-            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+            <div class="pieceOfDraft text-center" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="dropdown">
                 <a class="btn btn-default dropdown-toggle">
                   <span ng-bind="draftFilter.usersDisplayed"></span>
                   <span class="caret" ng-show="!!draftFilter.users.length"></span>
                 </a>
                 <span class="s sentenceText">'s</span>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu textAlignLeft" role="menu">
                   <li ng-repeat="user in draftFilter.users">
                     <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
                       <span class="icomoon-cancel-circle"></span>
@@ -77,13 +77,13 @@
           </div>
           <div class="col-xs-12 col-md-2">
             <h3 class="wynnoPurple">3. What</h3>
-            <div class="inlineBlock pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+            <div class="pieceOfDraft text-center scope" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <span ng-bind="draftFilter.scopeDisplayed"></span>
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu textAlignLeft" role="menu">
                   <li><a href="" ng-click="draftFilter.scope = 'all'; draftFilter.scopeDisplayed = 'Tweets + Retweets'">Tweets + Retweets</a></li>
                   <li><a href="" ng-click="draftFilter.scope = 'tweets'; draftFilter.scopeDisplayed = 'Tweets only'">Tweets only</a></li>
                   <li><a href="" ng-click="draftFilter.scope = 'retweets'; draftFilter.scopeDisplayed = 'Retweets only'">Retweets only</a></li>
@@ -99,7 +99,7 @@
               <div class="" ng-repeat="condition in draftFilter.conditions">
                 <div class="inlineBlock">
                   <div class="andCondition sentenceText" ng-show="!$first">and</div>               
-                  <button class="removeSetting" ng-click="removeCondition($index)">
+                  <button class="removeSetting" ng-click="removeCondition($index)" ng-show="condition.typeDisplayed ='(anything)'">
                     <span class="icomoon-cancel-circle"></span>
                   </button>
                   <div class="btn-group">
