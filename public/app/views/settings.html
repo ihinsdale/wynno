@@ -99,7 +99,7 @@
               <div class="" ng-repeat="condition in draftFilter.conditions">
                 <div class="inlineBlock">
                   <div class="andCondition sentenceText" ng-show="!$first">and</div>               
-                  <button class="removeSetting" ng-click="removeCondition($index)" ng-show="condition.typeDisplayed ='(anything)'">
+                  <button class="removeSetting" ng-click="removeCondition($index)" ng-hide="condition.typeDisplayed == '(anything)'">
                     <span class="icomoon-cancel-circle"></span>
                   </button>
                   <div class="btn-group">
