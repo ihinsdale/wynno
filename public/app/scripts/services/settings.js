@@ -10,6 +10,8 @@ angular.module('wynnoApp.services')
         $http.get('/settings')
         .success(function(data, status) {
           console.log('success getting settings, they look like:', data);
+          // add the rendered text versions of the filters, since that doesn't come from the db
+          service.renderFilters(data);
           service.settings = data;
           d.resolve(service.settings);
         })
@@ -19,6 +21,118 @@ angular.module('wynnoApp.services')
         })
       }
       return d.promise;
+    },
+    renderFilters: function(settings) {
+      var filterGroups = ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
+      angular.forEach(filterGroups, function(filterGroup) {
+        angular.forEach(settings[filterGroup], function(filter) {
+          filter.rendered = 
+        });
+      });
+    },
+    renderFilter: function(filter) {
+      var result = '';
+      // filter type
+      if (filter.type === 'hear') {
+        result += 'Hear ';
+      } else if (filter.type === 'mute') {
+        result += 'Mute ';
+      }
+      // filter users
+      if (!filter.users.length) {
+        result += "<span class='wynnoPurple'>all users' </span>"; 
+      } else {
+        for (var i = 0; i < filter.users.length; i++) {
+          result += ('<span class="wynnoPurple">' + '@' + filter.users[i] + '</span>');
+          if (i === filter.users.length - 1) {
+            if (result[result.length - 8] === 's') {
+              result += "' ";
+            } else {
+              result += "'s ";
+            }
+          } else if (i === filter.users.length - 2) {
+            if (filter.users.length === 2) {
+              result += ' and ';
+            } else {
+              result += ', and ';
+            }
+          } else {
+            result += ', ';
+          }
+        }
+      }
+      // filter scope
+      if (filter.scope === 'all') {
+        if (filter.conditions.length) {
+          result += 'tweets and retweets';
+        } else {
+          // if there are no filter conditions, we can keep the rendered filter short
+          // e.g. it would read, Hear @ihinsdale
+          if (result.slice(result.length - 3) === "'s ") {
+            result = result.slice(0, result.length - 3);
+          } else {
+            result = result.slice(0, result.length - 2);
+          }
+        }
+      } else if (filter.scope === 'tweets') {
+        result += 'tweets';
+      } else if (filter.scope === 'retweets') {
+        result += 'retweets';
+      } 
+      // filter conditions
+      if (filter.conditions.length) {
+        result += service.parseConditions(filter.conditions);
+      }
+      return result;
+    },
+    parseConditions: function(conditions) {
+      var result = ' that ';
+      var linksResult = '';
+      var wordsResult = '';
+      var hashtagsResult = '';
+      var linkIndices = [];
+      var hashtagIndices = [];
+      var wordIndices = [];
+      for (var i = 0; i < conditions.length; i++) {
+        switch(filter.conditions[i].type) {
+          case 'link':
+            linkIndices.push(i);
+            break;
+          case 'word':
+            wordIndices.push(i);
+            break;
+          case 'hashtag':
+            hashtagIndices.push(i);
+            break;
+        }
+      }
+      for (var j = 0; j < conditions.length; j++) {
+        switch(filter.conditions[j]) {
+          case 'link':
+            result += 'link to'
+            if (filter.conditions[j].link) {
+              result += ' to <span class="wynnoPurple">' + filter.conditions[j].link + '</span>'
+            }
+            break;
+          case 'word':
+            if (filter.conditions[j].word) {
+              result += '<span class="wynnoPurple">' + filter.conditions[j].word + '</span>'
+            }
+            break;
+          case 'hashtag':
+
+            break;
+          case 'picture':
+
+            break;
+          case 'quotation':
+
+            break;
+          default:
+            break;
+        }
+      }
+      return result;
     },
     provideSettings: function() {
       if (service.settings.length === 0) {

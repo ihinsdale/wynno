@@ -1,6 +1,26 @@
+<tabset>
+    <tab heading="Enabled Filters">
+      <div class="row" ng-repeat="filter in activeFilters | reverse">
+        <div class="col-xs-12 col-md-12">
+          <button class="removeSetting" ng-click="disableFilter($index)">
+            <span class="icomoon-cancel-circle"></span>
+          </button>
+          <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+            <div ng-bind="filter.rendered"></div>
+          </div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Disabled Filters">
+      
+    </tab>
+    <tab heading="Suggested Filters">
+    </tab>
+  </tabset>
+
 <div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
-    <h2>Your filters</h2>
+  <div class="col-xs-12 col-md-12">
+    <h2>Active filters</h2>
   </div>
 </div>
 <div class="row" ng-repeat="filter in activeFilters | reverse">
@@ -11,7 +31,11 @@
     {{filter}}
   </div>
 </div>
-<div>Filter Suggestions</div>
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <h2>Suggested Filters</h2>
+  </div>
+</div>
 <div class="row" ng-repeat="filter in suggestedFilters | reverse">
   <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Adopt</button>
   <div class="col-xs-12 col-md-12">

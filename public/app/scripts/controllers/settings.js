@@ -147,9 +147,10 @@ angular.module('wynnoApp.controllers')
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
-      $scope.suggestedFilters = settings.suggestedFilters;
-      $scope.dismissedFilters = settings.dismissedFilters;
+      var filterGroups = ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
+      angular.forEach(filterGroups, function(filterGroup) {
+        $scope[filterGroup] = settings[filterGroup];
+      });
     });
   };
 
@@ -169,6 +170,11 @@ angular.module('wynnoApp.controllers')
       $scope.activeFilters = settings.activeFilters;
     });
   };
+
+  $scope.enableFilter = function(index) {
+    // to enable a disabled filter
+    // TODO
+  }
 
   $scope.adoptSugg = function(index) {
     SettingsService.adoptSugg(index)
