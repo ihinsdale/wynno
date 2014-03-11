@@ -759,8 +759,12 @@ $twitterButtonRadius: 3px;
     padding-top: 40px;
 }
 
-.paddingTop60 {
-    padding-top: 60px;
+.paddingTop56 {
+    padding-top: 56px;
+}
+
+.paddingTop16 {
+    padding-top: 16px;
 }
 
 .inputWidth {
@@ -778,6 +782,10 @@ $twitterButtonRadius: 3px;
     border-color: $deep-purple;
 }
 
+.btn.saveFilter {
+    width: 200px;
+}
+
 .pieceOfDraft {
     padding: 5px;
     background-color: $badge-purple;
@@ -785,6 +793,11 @@ $twitterButtonRadius: 3px;
 
 .thatContain {
     vertical-align: top;
+    padding-top: 8px;
+}
+
+.thatContain, .s {
+    font-size: 20px;
 }
 
 .btn.hear, .btn.hear:hover {
