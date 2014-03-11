@@ -93,11 +93,11 @@
           </div>
           <div class="col-xs-12 col-md-5">
             <div class="hidden-xs paddingTop60"></div>
-            <span>that contain</span>
-            <div class="inlineBlock">
+            <div class="inlineBlock thatContain">that contain</div>
+            <div class="inlineBlock pieceOfDraft">
               <div class="" ng-repeat="condition in draftFilter.conditions">
                 <div class="inlineBlock">
-                  <span class="andCondition" ng-show="!$first">and</span>               
+                  <div class="andCondition" ng-show="!$first">and</div>               
                   <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
                     <span class="icomoon-cancel-circle"></span>
                   </button>
@@ -115,14 +115,14 @@
                     </ul>
                   </div>                
                   <div ng-show="condition.type == 'link'" class="inlineBlock">
-                    <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
+                    <input type="text" class="form-control inputWidth" placeholder="(any domain)" ng-model="condition.link">
                   </div>
                   <div ng-show="condition.type == 'word'" class="inlineBlock">
-                    <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+                    <input type="text" class="form-control inputWidth" placeholder="Enter a word or phrase" ng-model="condition.word">
                   </div>
                   <div ng-show="condition.type == 'word'" class="inlineBlock">TODO: add checkbox for case sensitivity</div>
                   <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
-                    <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                    <input type="text" class="form-control inputWidth" placeholder="(any hashtag)" ng-model="condition.hashtag">
                   </div>
                 </div>
               </form>
