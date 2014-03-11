@@ -94,10 +94,10 @@
           </div>
           <div class="col-xs-12 col-md-5">
             <div class="hidden-xs paddingTop56"></div>
-            <div class="inlineBlock thatContain sentenceText" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">that contain</div>
-            <div class="inlineBlock pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+            <div class="thatContain sentenceText" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">that contain</div>
+            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="" ng-repeat="condition in draftFilter.conditions">
-                <div class="inlineBlock">
+                <div class="">
                   <div class="andCondition sentenceText" ng-show="!$first">and</div>               
                   <button class="removeSetting" ng-click="removeCondition($index)" ng-hide="condition.typeDisplayed == '(anything)'">
                     <span class="icomoon-cancel-circle"></span>
