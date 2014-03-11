@@ -34,10 +34,10 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-md-2">
-            <h3>How</h3>
-            <div class="pieceOfDraft">
+            <h3 class="wynnoPurple">1. How</h3>
+            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <span ng-bind="draftFilter.typeDisplayed"></span>
                   <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
                 </button>
@@ -49,8 +49,8 @@
             </div>
           </div>
           <div class="col-xs-12 col-md-3">
-            <h3>Who</h3>
-            <div class="pieceOfDraft">
+            <h3 class="wynnoPurple">2. Who</h3>
+            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="dropdown">
                 <a class="btn btn-default dropdown-toggle">
                   <span ng-bind="draftFilter.usersDisplayed"></span>
@@ -76,8 +76,8 @@
             </div>
           </div>
           <div class="col-xs-12 col-md-2">
-            <h3>What</h3>
-            <div class="inlineBlock pieceOfDraft">
+            <h3 class="wynnoPurple">3. What</h3>
+            <div class="inlineBlock pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                   <span ng-bind="draftFilter.scopeDisplayed"></span>
@@ -93,12 +93,12 @@
           </div>
           <div class="col-xs-12 col-md-5">
             <div class="hidden-xs paddingTop56"></div>
-            <div class="inlineBlock thatContain sentenceText">that contain</div>
-            <div class="inlineBlock pieceOfDraft">
+            <div class="inlineBlock thatContain sentenceText" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">that contain</div>
+            <div class="inlineBlock pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
               <div class="" ng-repeat="condition in draftFilter.conditions">
                 <div class="inlineBlock">
                   <div class="andCondition sentenceText" ng-show="!$first">and</div>               
-                  <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
+                  <button class="removeSetting" ng-click="removeCondition($index)">
                     <span class="icomoon-cancel-circle"></span>
                   </button>
                   <div class="btn-group">

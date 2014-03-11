@@ -788,13 +788,25 @@ $twitterButtonRadius: 3px;
 
 .pieceOfDraft {
     padding: 5px;
-    background-color: $badge-purple;
+}
+
+.pieceOfDraft.ayeGreenBackground, .thatContain.ayeGreenBackground {
+    background-color: $aye-green;
+}
+
+.pieceOfDraft.nayRedBackground, .thatContain.nayRedBackground {
+    background-color: $nay-red;
+}
+
+.pieceOfDraft, .thatContain {
+    background-color: lightgray;
 }
 
 .thatContain {
     vertical-align: top;
     padding-top: 8px;
-    background-color: $badge-purple;
+    margin-right: -4px;
+    padding-right: 11.5px;
 }
 
 .sentenceText {
@@ -803,7 +815,7 @@ $twitterButtonRadius: 3px;
 }
 
 .s {
-    float: right;
+
 }
 
 .btn.hear, .btn.hear:hover {
