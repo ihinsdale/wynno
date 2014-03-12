@@ -90,48 +90,144 @@ angular.module('wynnoApp.services')
       var linksResult = '';
       var wordsResult = '';
       var hashtagsResult = '';
-      var linkIndices = [];
-      var hashtagIndices = [];
-      var wordIndices = [];
+      var picturesResult = '';
+      var quotationResult = '';
+      var lastNonemptyResult = '';
+
+      // loop through conditions, updating summary objects about each type
+      var links = { total: 0, specific: { count: 0, domains: {} }, anywhere: { count: 0 } };
+      var hashtags = { specific: { count: 0, text: {} }, anything: { count: 0 } };
+      var words = {};
+      var pictures = 0;
+      var quotations = 0;
       for (var i = 0; i < conditions.length; i++) {
         switch(filter.conditions[i].type) {
           case 'link':
-            linkIndices.push(i);
-            break;
-          case 'word':
-            wordIndices.push(i);
-            break;
-          case 'hashtag':
-            hashtagIndices.push(i);
-            break;
-        }
-      }
-      for (var j = 0; j < conditions.length; j++) {
-        switch(filter.conditions[j]) {
-          case 'link':
-            result += 'link to'
-            if (filter.conditions[j].link) {
-              result += ' to <span class="wynnoPurple">' + filter.conditions[j].link + '</span>'
+            if (filter.conditions[i].link) {
+              links.specific.count++;
+              if (links.specific.domains.hasOwnProperty(filter.conditions[i].link)) {
+                links.specific.domains[filter.conditions[i].link]++;
+              } else {
+                links.specific.domains[filter.conditions[i].link] = 1;
+              }
+            } else {
+              links.anywhere.count++;
             }
+            links.total++;
             break;
           case 'word':
-            if (filter.conditions[j].word) {
-              result += '<span class="wynnoPurple">' + filter.conditions[j].word + '</span>'
+            if (words.hasOwnProperty(filter.conditions[i].word)) {
+              words[filter.conditions[i].word]++;
+            } else {
+              words[filter.conditions[i].word] = 1;
             }
             break;
           case 'hashtag':
-
+            if (filter.conditions[i].hashtag) {
+              hashtags.specific.count++;
+              if (hashtags.specific.text.hasOwnProperty(filter.conditions[i].hashtag)) {
+                hashtags.specific.text[filter.conditions[i].hashtag]++;
+              } else {
+                hashtags.specific.text[filter.conditions[i].hashtag] = 1;
+              }
+            } else {
+              hashtags.anything.count++;
+            }
             break;
           case 'picture':
-
+            pictures++;
             break;
           case 'quotation':
-
-            break;
-          default:
+            quotations++;
             break;
         }
       }
+      // now render text for each type
+      // links
+      // if there are link conditions but nowhere specific specified
+      if (links.total && !links.specific.count) {
+        linksResult = 'contain ' + links.total + ' link';
+        if (links.anywhere.count > 1) {
+          linksResult += 's';
+        }
+      // otherwise if there are link conditions and somewhere specific has been specified
+      } else if (links.total) {
+        var specificDomains = Object.keys(links.specific.domains);
+        // if no link domain has a count > 1
+        var countsLessThan1 = true;
+        if links.anywhere.count > 1 {
+          countsLessThan1 = false;
+        }
+        for (var j = 0; j < specificDomains.length; j++) {
+          if (countsLessThan1) {
+            if (links.specific.domains[specificDomains[j]] > 1) {
+              countsLessThan1 = false;
+            }
+          }
+        }
+        if (countsLessThan1) {
+          linksResult = 'link to ';
+          for (var k = 0; k < specificDomains.length; k++) {
+            linksResult += specificDomains[k];
+            if (k !== specificDomains.length - 1) {
+              linksResult += ' and ';
+            }
+          }
+          if (links.anywhere.count) {
+            linksResult += ' and anywhere else';
+          }
+        // otherwise
+        } else {
+          linksResult = 'contain ' + links.total + ' links, ';
+          for (var m = 0; m < specificDomains.length; m++) {
+            linksResult += (links.specific.domains[specificDomains[m]] + ' to ' + specificDomains[m]);
+            if (m !== specificDomains.length - 1) {
+              linksResult += ' and ';
+            }
+          }
+          if (links.anywhere.count) {
+            linksResult += (' and ' + links.anywhere.count + ' anywhere else');
+          }
+        }
+      }
+      if (linksResult) {
+        result += linksResult;
+        lastNonemptyResult = 'linksResult';
+      }
+      // hashtags
+
+      // words
+      
+      // picture
+      if (pictures) {
+        var noun = ' picture';
+        if (pictures > 1) {
+          noun += 's';
+        }
+        picturesResult = pictures + noun;
+      }
+      // quotation
+      if (quotations) {
+        quotationResult = 'a quotation';
+      }
+
+
+      // now join the results
+        //       // the actual count of quotation conditions doesn't matter; as long as there's one, that's all that's meaningful
+        // if (lastNonemptyResult === 'linksResult') {
+        //   if (linksResult.slice(0, 7) === 'link to') {
+        //     result += ' and contain a quotation';
+        //   } else if (linksResult.slice(linksResult.length - 5) === ' link' || linksResult.slice(linksResult.length - 5) === 'links') {
+        //     result += ' and a quotation';
+        //   } else {
+        //     result += ', and a quotation';
+        //   }
+        // } else {
+        //   // TODO
+        //   // if first word is contain, implies ...
+        //   // else
+        // }
+
       return result;
     },
     provideSettings: function() {
