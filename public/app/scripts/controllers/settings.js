@@ -168,6 +168,7 @@ angular.module('wynnoApp.controllers')
     SettingsService.disableFilter(index)
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
+      $scope.disableFilter = settings.disabledFilters;
     });
   };
 

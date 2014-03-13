@@ -5,6 +5,8 @@
         <h3 class="darkGray">Active Filters</h3>
         <div class="panel filterPanel">
           <div class="container">
+            <div class="row" ng-show="!activeFilters.length">
+            </div>
             <div class="row" ng-repeat="filter in activeFilters | reverse">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
@@ -28,7 +30,7 @@
             </div>
           </div>
         </div>
-        <a class="darkGray" ng-show="!!disabledFilters.length"><h5 ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</h5></a>
+        <a class="darkGray" ng-show="!!disabledFilters.length"><span ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</span></a>
         <div collapse="disabledIsCollapsed">
           <h3 class="darkGray">Disabled Filters</h3>
           <div class="panel filterPanel">
@@ -45,11 +47,11 @@
                   </div>
                   <div class="filterToggleButtonRightWrapper">
                     <div class="hidden-xs">
-                      <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Disable</button>
+                      <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
                     </div>
                   </div>
                   <div class="visible-xs">
-                    <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Disable</button>
+                    <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
                   </div>
                 </div>
               </div>
