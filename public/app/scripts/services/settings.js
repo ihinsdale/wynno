@@ -424,6 +424,9 @@ angular.module('wynnoApp.services')
       } else {
         // update filters on the client side, to be undone if POST request fails
         var orig = service.settings.activeFilters.slice();
+        // add rendered version to draftFilter
+        draftFilter.rendered = service.renderFilter(draftFilter);
+        // add draftFilter to the activeFilters
         service.settings.activeFilters.push(draftFilter);
         // remove previous version, if this save was a revision
         if (originalIndex) {

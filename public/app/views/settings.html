@@ -61,40 +61,8 @@
         </div>
       </div>
     </tab>
-
   </tabset>
 
-<div class="row">
-  <div class="col-xs-12 col-md-12">
-    <h2>Active filters</h2>
-  </div>
-</div>
-<div class="row" ng-repeat="filter in activeFilters | reverse">
-  <div class="col-xs-12 col-md-12">
-    <button class="removeSetting" ng-click="disableFilter($index)">
-      <span class="icomoon-cancel-circle"></span>
-    </button>
-    {{filter}}
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-md-12">
-    <h2>Suggested Filters</h2>
-  </div>
-</div>
-<div class="row" ng-repeat="filter in suggestedFilters | reverse">
-  <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Adopt</button>
-  <div class="col-xs-12 col-md-12">
-    {{filter}}
-  </div>
-  <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
-</div>
-<div>Dismissed Suggestions</div>
-<div class="row" ng-repeat="filter in dismissedFilters | reverse">
-  <div class="col-xs-12 col-md-12">
-    {{filter}}
-  </div>
-</div>
 <div class="row">
   <div class="col-xs-12 col-md-12">
     <div class="text-center paddingBottom20">
