@@ -6,20 +6,18 @@ angular.module('wynnoApp.services')
     // first request for old tweets. But it serves as a backup for service.provideSettings)
     getSettingsFromDb: function() {
       var d = $q.defer();
-      if (service.settings.length === 0) {
-        $http.get('/settings')
-        .success(function(data, status) {
-          console.log('success getting settings, they look like:', data);
-          // add the rendered text versions of the filters, since that doesn't come from the db
-          service.renderFilters(data);
-          service.settings = data;
-          d.resolve(service.settings);
-        })
-        .error(function(reason, status) {
-          console.log('error getting settings');
-          d.reject(reason);
-        })
-      }
+      $http.get('/settings')
+      .success(function(data, status) {
+        console.log('success getting settings, they look like:', data);
+        // add the rendered text versions of the filters, since that doesn't come from the db
+        service.renderFilters(data);
+        service.settings = data;
+        d.resolve(service.settings);
+      })
+      .error(function(reason, status) {
+        console.log('error getting settings');
+        d.reject(reason);
+      })
       return d.promise;
     },
     renderFilters: function(settings) {

@@ -14,7 +14,7 @@ block nav
         span.icomoon-filter.ayeGreen(ng-show="active[0]")
         span.icomoon-filter.nayRed(ng-show="active[1]")
         span.icomoon-cogs(ng-show="active[2]")
-      span.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!")
+      button.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!")
         .badge.badgePurpleBadge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
           span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
