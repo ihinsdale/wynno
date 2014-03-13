@@ -43,6 +43,13 @@ angular.module('wynnoApp.services')
         $http.get('/new')
         .success(function(data, status) {
           console.log('success getting new tweets, they look like:', data.tweets);
+          // since the initial request for old tweets is always completed before getNewTweets is called for the first time,
+          // we know that if service.currentTweets is empty we are dealing with a new user,
+          // in which case we want to update oldestTweetId after receiving the new tweets
+          if (!service.currentTweets.length) {
+            service.oldestTweetId = data.tweets[data.tweets.length - 1].id_str;
+          }
+
           // apply filtering rules to the tweets
           FilterService.applyFilterRules(data.tweets);
           // now add the tweets to currentTweets
