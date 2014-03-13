@@ -745,8 +745,8 @@ $twitterButtonRadius: 3px;
     display: inline-block;
 }
 
-.filterToggleButtonRightWrapper {
-    display: inline-block !important;
+.filterToggleButtonRightWrapper.inlineBlock {
+    display: inline-block;
 }
 
 .filterWrapper > .filterText {

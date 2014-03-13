@@ -8401,8 +8401,8 @@ body > .container {
 }
 
 /* line 748, main.scss */
-.filterToggleButtonRightWrapper {
-  display: inline-block !important;
+.filterToggleButtonRightWrapper.inlineBlock {
+  display: inline-block;
 }
 
 /* line 752, main.scss */
