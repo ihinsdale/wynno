@@ -167,8 +167,9 @@ angular.module('wynnoApp.controllers')
   $scope.disableFilter = function(index) {
     SettingsService.disableFilter(index)
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
-      $scope.disableFilter = settings.disabledFilters;
+      //$scope.activeFilters = settings.activeFilters;
+      //$scope.disableFilter = settings.disabledFilters;
+      console.log('after binding to controller, disabledFilters looks like:', settings.disabledFilters);
     });
   };
 
