@@ -458,7 +458,9 @@ angular.module('wynnoApp.services')
       // get _id of the filter to be disabled, before updating client side
       var filterId = service.settings.activeFilters[index]._id;
       // update filters on the client side, to be undone if POST request fails
-      var orig = service.settings.activeFilters.slice();
+      var origActive = service.settings.activeFilters.slice();
+      var origDisabled = service.settings.disabledFilters.slice();
+      console.log('Filter being added to disabledFilters looks like:', service.settings.activeFilters[index]);
       service.settings.disabledFilters.push(service.settings.activeFilters.splice(index, 1));
 
       // now POST the disable
@@ -475,7 +477,8 @@ angular.module('wynnoApp.services')
       .error(function(reason, status) {
         console.log('Error disabling filter.');
         // reset to original filters
-        service.settings.activeFilters = orig;
+        service.settings.activeFilters = origActive;
+        service.settings.disabledFilters = origDisabled;
         d.reject(reason);
       });
       return d.promise;
