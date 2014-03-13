@@ -113,6 +113,7 @@ angular.module('wynnoApp.services')
               // could work on more complicated variations, e.g. if tweet contains 
               // two quotation marks or a quotation mark and ..., pass
               // currently, I am just using presence of a quotation mark " to indicate
+              // TODO make sure this method of checking handles unicode characters correctly
               if (tweet.__text.indexOf('"') !== -1) {
                 quotationResult = true;
               }

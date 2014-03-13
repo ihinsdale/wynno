@@ -96,6 +96,8 @@ exports.fresh = function(req, res) {
           // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
           console.log('No gap remaining between this fetch and previous.');
           tweetsArray.pop();
+        } else if (latestid_str === null) {
+          // this is the case of a new user, so we're done
         } else {
           console.log('Gap exists between this fetch and previous.');
           tweetsArray[tweetsArray.length - 1].gapAfterThis = true;
