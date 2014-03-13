@@ -1,9 +1,9 @@
 angular.module('wynnoApp.services')
 .factory('SettingsService', ['$q', '$http', 'FilterService', 'TweetService', function($q, $http, FilterService, TweetService) {
   var service = {
-    settings: [],
-    // (this function is obsolete now, because settings are got with the 
-    // first request for old tweets)
+    settings: {},
+    // (this function is essentially obsolete now, because settings are got with the 
+    // first request for old tweets. But it serves as a backup for service.provideSettings)
     getSettingsFromDb: function() {
       var d = $q.defer();
       if (service.settings.length === 0) {
@@ -355,7 +355,7 @@ angular.module('wynnoApp.services')
       return result;
     },
     provideSettings: function() {
-      if (service.settings.length === 0) {
+      if (!Object.keys(service.settings).length) {
         return service.getSettingsFromDb();
       } else {
         var d = $q.defer();
