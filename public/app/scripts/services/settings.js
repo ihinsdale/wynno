@@ -92,23 +92,22 @@ angular.module('wynnoApp.services')
       var hashtagsResult = '';
       var picturesResult = '';
       var quotationResult = '';
-      var lastNonemptyResult = '';
 
       // loop through conditions, updating summary objects about each type
       var links = { total: 0, specific: { count: 0, domains: {} }, anywhere: { count: 0 } };
-      var hashtags = { specific: { count: 0, text: {} }, anything: { count: 0 } };
-      var words = {};
+      var hashtags = { total: 0, specific: { count: 0, text: {} }, anything: { count: 0 } };
+      var words = { total: 0, words: {count: 0, text: {} }, phrases: { count: 0, text: {} } };
       var pictures = 0;
       var quotations = 0;
       for (var i = 0; i < conditions.length; i++) {
-        switch(filter.conditions[i].type) {
+        switch(conditions[i].type) {
           case 'link':
-            if (filter.conditions[i].link) {
+            if (conditions[i].link) {
               links.specific.count++;
-              if (links.specific.domains.hasOwnProperty(filter.conditions[i].link)) {
-                links.specific.domains[filter.conditions[i].link]++;
+              if (links.specific.domains.hasOwnProperty(conditions[i].link)) {
+                links.specific.domains[conditions[i].link]++;
               } else {
-                links.specific.domains[filter.conditions[i].link] = 1;
+                links.specific.domains[conditions[i].link] = 1;
               }
             } else {
               links.anywhere.count++;
@@ -116,23 +115,27 @@ angular.module('wynnoApp.services')
             links.total++;
             break;
           case 'word':
-            if (words.hasOwnProperty(filter.conditions[i].word)) {
-              words[filter.conditions[i].word]++;
+            var type = conditions[i].word.indexOf(' ') === -1 ? 'words' : 'phrases';
+            words[type].count++;
+            if (words[type].text.hasOwnProperty(conditions[i].word)) {
+              words[type].text[conditions[i].word]++;
             } else {
-              words[filter.conditions[i].word] = 1;
+              words[type].text[conditions[i].word] = 1;
             }
+            words.total++;
             break;
           case 'hashtag':
-            if (filter.conditions[i].hashtag) {
+            if (conditions[i].hashtag) {
               hashtags.specific.count++;
-              if (hashtags.specific.text.hasOwnProperty(filter.conditions[i].hashtag)) {
-                hashtags.specific.text[filter.conditions[i].hashtag]++;
+              if (hashtags.specific.text.hasOwnProperty(conditions[i].hashtag)) {
+                hashtags.specific.text[conditions[i].hashtag]++;
               } else {
-                hashtags.specific.text[filter.conditions[i].hashtag] = 1;
+                hashtags.specific.text[conditions[i].hashtag] = 1;
               }
             } else {
               hashtags.anything.count++;
             }
+            hashtags.total++;
             break;
           case 'picture':
             pictures++;
@@ -143,19 +146,28 @@ angular.module('wynnoApp.services')
         }
       }
       // now render text for each type
+
       // links
+
+      // links are the only type for which the verb might not be 'contain'
+      // so we will add the verb directly in linksResult. Whereas for other condition types
+      // we will wait to see whether the verb 'contain' needs to be added before joining any of them
+
+      var linksResultHasComma = false; // this is used in joining all results together
       // if there are link conditions but nowhere specific specified
       if (links.total && !links.specific.count) {
-        linksResult = 'contain ' + links.total + ' link';
-        if (links.anywhere.count > 1) {
-          linksResult += 's';
+        if (links.total === 1) {
+          linksResult = 'contain a link';
+        } else {
+          linksResult = 'contain ' + links.total + ' links';
         }
+
       // otherwise if there are link conditions and somewhere specific has been specified
       } else if (links.total) {
         var specificDomains = Object.keys(links.specific.domains);
         // if no link domain has a count > 1
         var countsLessThan1 = true;
-        if links.anywhere.count > 1 {
+        if (links.anywhere.count > 1) {
           countsLessThan1 = false;
         }
         for (var j = 0; j < specificDomains.length; j++) {
@@ -178,27 +190,82 @@ angular.module('wynnoApp.services')
           }
         // otherwise
         } else {
-          linksResult = 'contain ' + links.total + ' links, ';
-          for (var m = 0; m < specificDomains.length; m++) {
-            linksResult += (links.specific.domains[specificDomains[m]] + ' to ' + specificDomains[m]);
-            if (m !== specificDomains.length - 1) {
-              linksResult += ' and ';
+          linksResult = 'contain ' + links.total + ' links';
+          if (specificDomains.length === 1) {
+            linksResult += ' to ' + specificDomains[0];
+          } else {
+            linksResult += ', ';
+            linksResultHasComma = true;
+            for (var m = 0; m < specificDomains.length; m++) {
+              linksResult += (links.specific.domains[specificDomains[m]] + ' to ' + specificDomains[m]);
+              if (m !== specificDomains.length - 1) {
+                linksResult += ' and ';
+              }
             }
-          }
-          if (links.anywhere.count) {
-            linksResult += (' and ' + links.anywhere.count + ' anywhere else');
+            if (links.anywhere.count) {
+              linksResult += (' and ' + links.anywhere.count + ' anywhere else');
+            }
           }
         }
       }
-      if (linksResult) {
-        result += linksResult;
-        lastNonemptyResult = 'linksResult';
-      }
+
       // hashtags
 
+      if (hashtags.total && !hashtags.specific.count) {
+        if (hashtags.total === 1) {
+          hashtagsResult += 'a hashtag';
+        } else {
+          hashtagsresult += hashtags.total + ' hashtags';
+        }
+      } else if (hashtags.total) {
+        var specificHashtags = Object.keys(hashtags.specific.text);
+        if (specificHashtags.length === 1) {
+          hashtagsResult += 'the hashtag ' + specificHashtags[0];
+        } else {
+          hashtagsResult += 'the hashtags ';
+          var count;
+          for (var p = 0; p < specificHashtags.length; p++) {
+            hashtagsResult += specificHashtags[p];
+            count = hashtags.specific.text[specificHashtags[p]];
+            if (count > 1) {
+              if (count === 2) {
+                hashtagsResult += ' (twice)';
+              } else {
+                hashtagsResult += ' (' + count + ' times)';
+              }
+            }
+            if (p !== specificHashtags.length - 1) {
+              hashtagsResult += ' and ';
+            }
+          }
+        }
+        if (hashtags.anything.count) {
+          if (hashtags.anything.count === 1) {
+            hashtagsResult += 'and any other';
+          } else {
+            hashtagsResult += ' and any ' + hashtags.anything.count + ' others'
+          }
+        }
+      }
+
       // words
-      
+
+      if (words.total) {
+        // words
+        if (words.words.count) {
+          wordsResult += service.wordsRender(words.words, false);
+          if (words.phrases.count) {
+            wordsResult += ' and ';
+          }
+        }
+        // phrases
+        if (words.phrases.count) {
+          wordsResult += service.wordsRender(words.phrases, true);
+        }
+      }
+
       // picture
+
       if (pictures) {
         var noun = ' picture';
         if (pictures > 1) {
@@ -206,28 +273,84 @@ angular.module('wynnoApp.services')
         }
         picturesResult = pictures + noun;
       }
+
       // quotation
+
       if (quotations) {
         quotationResult = 'a quotation';
       }
 
 
       // now join the results
-        //       // the actual count of quotation conditions doesn't matter; as long as there's one, that's all that's meaningful
-        // if (lastNonemptyResult === 'linksResult') {
-        //   if (linksResult.slice(0, 7) === 'link to') {
-        //     result += ' and contain a quotation';
-        //   } else if (linksResult.slice(linksResult.length - 5) === ' link' || linksResult.slice(linksResult.length - 5) === 'links') {
-        //     result += ' and a quotation';
-        //   } else {
-        //     result += ', and a quotation';
-        //   }
-        // } else {
-        //   // TODO
-        //   // if first word is contain, implies ...
-        //   // else
-        // }
+      result += linksResult;
+      if (linksResult.slice(0,7) === 'link to'
+          && (wordsResult || hashtagsResult || picturesResult || quotationResult)) {
+        result += ' and contain ';
+      } else if (linksResult && (wordsResult || hashtagsResult || picturesResult || quotationResult)) {
+        if (linksResultHasComma) {
+          result += ', and ';
+        } else {
+          result += ' and ';
+        }
+      } else {
+        if (!linksResult) {
+          result += 'contain ';
+        }
+      }
+      result += wordsResult;
+      if (wordsResult && (hashtagsResult || picturesResult || quotationResult)) {
+        result += ' and ';
+      }
+      result += hashtagsResult;
+      if (hashtagsResult && (picturesResult || quotationResult)) {
+        result += ' and ';
+      }
+      result += picturesResult;
+      if (picturesResult && quotationResult) {
+        result += ' and ';
+      }
+      result += quotationResult;
 
+      return result;
+    },
+    wordsRender: function(wordsOrPhrasesObject, isPhrases) {
+      var result = '';
+      var type;
+      if (isPhrases) {
+        type = 'phrase';
+      } else {
+        type = 'word';
+      }
+      var specific = Object.keys(wordsOrPhrasesObject.text);
+      var count;
+      if (specific.length > 1) {
+        result = 'the ' + type + 's ';
+        for (var n = 0; n < specific.length; n++) {
+          result += specific[n];
+          count = wordsOrPhrasesObject.text[specific[n]];
+          if (count > 1) {
+            if (count === 2) {
+              result += ' (twice)';
+            } else {
+              result += ' (' + count + ' times)';
+            }
+          }
+          if (n !== specific.length - 1) {
+            result += ' and ';
+          }
+        }
+      } else {
+        result = 'the ' + type + ' ';
+        result += specific[0];
+        count = wordsOrPhrasesObject.text[specific[0]];
+        if (count > 1) {
+          if (count === 2) {
+            result += ' (twice)';
+          } else {
+            result += ' (' + count + ' times)';
+          }
+        }
+      }
       return result;
     },
     provideSettings: function() {
