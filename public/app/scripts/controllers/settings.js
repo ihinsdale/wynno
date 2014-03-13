@@ -157,6 +157,7 @@ angular.module('wynnoApp.controllers')
   $scope.saveFilter = function(draftFilter, originalIndex) {
     SettingsService.saveFilter(draftFilter, originalIndex)
     .then(function(settings) {
+      // no need to rebind this object to the scope
       //$scope.activeFilters = settings.activeFilters;
       $scope.newDraftFilter();
     }, function(reason) {
@@ -167,6 +168,7 @@ angular.module('wynnoApp.controllers')
   $scope.disableFilter = function(index) {
     SettingsService.disableFilter(index)
     .then(function(settings) {
+      // no need to rebind these objects to the scope
       //$scope.activeFilters = settings.activeFilters;
       //$scope.disabledFilter = settings.disabledFilters;
       console.log('after binding to controller, disabledFilters looks like:', settings.disabledFilters);

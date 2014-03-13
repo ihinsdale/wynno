@@ -460,8 +460,7 @@ angular.module('wynnoApp.services')
       // update filters on the client side, to be undone if POST request fails
       var origActive = service.settings.activeFilters.slice();
       var origDisabled = service.settings.disabledFilters.slice();
-      console.log('Filter being added to disabledFilters looks like:', service.settings.activeFilters[index]);
-      service.settings.disabledFilters.push(service.settings.activeFilters.splice(index, 1));
+      service.settings.disabledFilters.push(service.settings.activeFilters.splice(index, 1)[0]);
 
       // now POST the disable
       $http({ method: 'POST', url: '/disablefilter', data: {
@@ -510,7 +509,7 @@ angular.module('wynnoApp.services')
       var origSuggested = service.settings.suggestedFilters.slice();
       var origActive = service.settings.activeFilters.slice();
       var origUndismissedSugg = service.settings.undismissedSugg;
-      service.settings.activeFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      service.settings.activeFilters.push(service.settings.suggestedFilters.splice(index, 1)[0]);
       if (!service.settings.suggestedFilters.length) {
         service.settings.undismissedSugg = false;
       }
@@ -539,7 +538,7 @@ angular.module('wynnoApp.services')
       var origSuggested = service.settings.suggestedFilters.slice();
       var origDismissed = service.settings.dismissedFilters.slice();
       var origUndismissedSugg = service.settings.undismissedSugg;
-      service.settings.dismissedFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      service.settings.dismissedFilters.push(service.settings.suggestedFilters.splice(index, 1)[0]);
       if (!service.settings.suggestedFilters.length) {
         service.settings.undismissedSugg = false;
       }
