@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <a><h4 ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</h4><a>
+    <a><h4 ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</h4></a>
     <div collapse="disabledIsCollapsed">
       <div class="row" ng-repeat="filter in disabledFilters | reverse">
         <div class="col-xs-12 col-md-12">
@@ -46,8 +46,11 @@
       </div>
     </div>
   </tab>
-  <tab heading="Suggestions">
-
+  <tab>
+    <tab-heading>
+      <span>Suggestions </span>
+      <span class="badge badgePurpleBadge" ng-show="!!suggestedFilters.length" ng-bind="suggestedFilters.length"></span>
+    </tab-heading>
     <h3>Suggested Filters</h3>
     <div class="row" ng-repeat="filter in suggestedFilters | reverse">
       <div class="col-xs-12 col-md-12">
@@ -72,7 +75,7 @@
         </div>
       </div>
     </div>
-    <a><h4 ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">Show suggestions dismissed</h4><a>
+    <a><h4 ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">Show suggestions dismissed</h4></a>
     <div collapse="dismissedIsCollapsed">
       <div class="row" ng-repeat="filter in dismissedFilters | reverse">
         <div class="col-xs-12 col-md-12">
