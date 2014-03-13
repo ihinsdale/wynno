@@ -26,7 +26,7 @@ angular.module('wynnoApp.services')
       var filterGroups = ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
       angular.forEach(filterGroups, function(filterGroup) {
         angular.forEach(settings[filterGroup], function(filter) {
-          filter.rendered = 
+          filter.rendered = service.renderFilter(filter);
         });
       });
     },
@@ -215,7 +215,7 @@ angular.module('wynnoApp.services')
         if (hashtags.total === 1) {
           hashtagsResult += 'a hashtag';
         } else {
-          hashtagsresult += hashtags.total + ' hashtags';
+          hashtagsResult += hashtags.total + ' hashtags';
         }
       } else if (hashtags.total) {
         var specificHashtags = Object.keys(hashtags.specific.text);
@@ -241,7 +241,7 @@ angular.module('wynnoApp.services')
         }
         if (hashtags.anything.count) {
           if (hashtags.anything.count === 1) {
-            hashtagsResult += 'and any other';
+            hashtagsResult += ' and any other hashtag';
           } else {
             hashtagsResult += ' and any ' + hashtags.anything.count + ' others'
           }
@@ -269,9 +269,10 @@ angular.module('wynnoApp.services')
       if (pictures) {
         var noun = ' picture';
         if (pictures > 1) {
-          noun += 's';
+          picturesResult += (pictures + noun + 's');
+        } else {
+          picturesResult += 'a' + noun
         }
-        picturesResult = pictures + noun;
       }
 
       // quotation

@@ -173,6 +173,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.enableFilter = function(index) {
     // to enable a disabled filter
+    // should work with dismissed suggestion or disabled filter
     // TODO
   }
 
