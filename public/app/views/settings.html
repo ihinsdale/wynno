@@ -1,31 +1,34 @@
-<tabset>
+<tabset justified="true">
   <tab heading="Your Filters">
-    <h3>Active Filters</h3>
-    <div class="row" ng-repeat="filter in activeFilters | reverse">
-      <div class="col-xs-12 col-md-12">
-        <div class="filterWrapper">
-          <div class="filterNumber">
-            <span ng-bind="$index + 1"></span>
-            <span> - </span>
+    <h3 class="darkGray">Active Filters</h3>
+    <div class="panel">
+      <div class="row" ng-repeat="filter in activeFilters | reverse">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+          <div class="filterWrapper">
+            <div class="filterNumber">
+              <span ng-bind="$index + 1"></span>
+              <span> - </span>
+            </div>
+            <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+              <div ng-bind-html="filter.rendered"></div>
+            </div>
           </div>
-          <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
-            <div ng-bind-html="filter.rendered"></div>
+          <div class="filterToggleButtonRightWrapper">
+            <div class="hidden-xs">
+              <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+            </div>
           </div>
-        </div>
-        <div class="filterToggleButtonRightWrapper">
-          <div class="hidden-xs">
+          <div class="visible-xs">
             <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
           </div>
         </div>
-        <div class="visible-xs">
-          <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
-        </div>
       </div>
     </div>
-    <a><h4 ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</h4></a>
-    <div collapse="disabledIsCollapsed">
+    <a href="" class="darkGray"><h5 ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</h5></a>
+    <div collapse="disabledIsCollapsed" class="panel">
+      <h3 class="darkGray">Disabled filters</h3>
       <div class="row" ng-repeat="filter in disabledFilters | reverse">
-        <div class="col-xs-12 col-md-12">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
           <div class="filterWrapper">
             <div class="filterNumber">
               <span> - </span>
@@ -51,9 +54,9 @@
       <span>Suggestions </span>
       <span class="badge badgePurpleBadge" ng-show="!!suggestedFilters.length" ng-bind="suggestedFilters.length"></span>
     </tab-heading>
-    <h3>Suggested Filters</h3>
+    <h3 class="darkGray">Suggested Filters</h3>
     <div class="row" ng-repeat="filter in suggestedFilters | reverse">
-      <div class="col-xs-12 col-md-12">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
         <div class="filterWrapper">
           <div class="filterNumber">
             <span ng-bind="$index + 1"></span>
@@ -75,10 +78,11 @@
         </div>
       </div>
     </div>
-    <a><h4 ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">Show suggestions dismissed</h4></a>
+    <a href="" class="darkGray"><h5 ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">Show suggestions dismissed</h5></a>
     <div collapse="dismissedIsCollapsed">
+      <h3>Dismissed</h3>
       <div class="row" ng-repeat="filter in dismissedFilters | reverse">
-        <div class="col-xs-12 col-md-12">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
           <div class="filterWrapper">
             <div class="filterNumber">
               <span> - </span>
