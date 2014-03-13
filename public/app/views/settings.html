@@ -4,6 +4,7 @@
       <div class="row" ng-repeat="filter in activeFilters | reverse">
         <div class="col-xs-12 col-md-12">
           <div class="filterWrapper">
+            <div ng-bind="filter.rendered"></div>
             <div class="pieceOfDraft" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
               <div ng-bind-html="filter.rendered"></div>
             </div>
