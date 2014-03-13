@@ -12,8 +12,10 @@
               <div ng-bind-html="filter.rendered"></div>
             </div>
           </div>
-          <div class="filterToggleButtonRightWrapper hidden-xs">
-            <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+          <div class="filterToggleButtonRightWrapper">
+            <div class="hidden-xs">
+              <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+            </div>
           </div>
           <div class="visible-xs">
             <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
