@@ -20,6 +20,8 @@ angular.module('wynnoApp.services')
         // save settings in SettingsService
         // after initializing votesRequiredForNextSugg
         data.settings.votesRequiredForNextSugg = 100 - (data.settings.voteCount - Math.floor(data.settings.voteCount / 100) * 100);
+        // add the rendered text versions of the filters, since that doesn't come from the db
+        SettingsService.renderFilters(data.settings);
         SettingsService.settings = data.settings;
 
         // apply filtering rules to the tweets
