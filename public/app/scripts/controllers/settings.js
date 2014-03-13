@@ -157,7 +157,7 @@ angular.module('wynnoApp.controllers')
   $scope.saveFilter = function(draftFilter, originalIndex) {
     SettingsService.saveFilter(draftFilter, originalIndex)
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
+      //$scope.activeFilters = settings.activeFilters;
       $scope.newDraftFilter();
     }, function(reason) {
       console.log('Error saving filter:', reason);
@@ -168,7 +168,7 @@ angular.module('wynnoApp.controllers')
     SettingsService.disableFilter(index)
     .then(function(settings) {
       //$scope.activeFilters = settings.activeFilters;
-      //$scope.disableFilter = settings.disabledFilters;
+      //$scope.disabledFilter = settings.disabledFilters;
       console.log('after binding to controller, disabledFilters looks like:', settings.disabledFilters);
     });
   };
