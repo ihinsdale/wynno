@@ -22,16 +22,26 @@
           </div>
         </div>
       </div>
-      <h3>Disabled</h3>
-      <div class="row" ng-repeat="filter in disabledFilters | reverse">
-        <div class="col-xs-12 col-md-12">
-          <div class="filterWrapper">
-            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-              <div ng-bind="filter.rendered"></div>
+      <a><h4 ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</h4><a>
+      <div collapse="disabledIsCollapsed">
+        <div class="row" ng-repeat="filter in disabledFilters | reverse">
+          <div class="col-xs-12 col-md-12">
+            <div class="filterWrapper">
+              <div class="filterNumber">
+                <span> - </span>
+              </div>
+              <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                <div ng-bind-html="filter.rendered"></div>
+              </div>
             </div>
-          </div>
-          <div class="filterToggleButtonWrapper">
-            <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
+            <div class="filterToggleButtonRightWrapper">
+              <div class="hidden-xs">
+                <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Disable</button>
+              </div>
+            </div>
+            <div class="visible-xs">
+              <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Disable</button>
+            </div>
           </div>
         </div>
       </div>
@@ -44,25 +54,47 @@
       <h3>Suggested Filters</h3>
       <div class="row" ng-repeat="filter in suggestedFilters | reverse">
         <div class="col-xs-12 col-md-12">
-          <div>
-            <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
-          </div>
-          <div>
-            <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-              <div ng-bind="filter.rendered"></div>
+          <div class="filterWrapper">
+            <div class="filterNumber">
+              <span ng-bind="$index + 1"></span>
+              <span> - </span>
+            </div>
+            <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+              <div ng-bind-html="filter.rendered"></div>
             </div>
           </div>
-          <div>
+          <div class="filterToggleButtonRightWrapper">
+            <div class="hidden-xs">
+              <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
+              <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+            </div>
+          </div>
+          <div class="visible-xs">
+            <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
             <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
           </div>
         </div>
       </div>
-      <h4>Suggestions dismissed</h4>
-      <div class="row" ng-repeat="filter in dismissedFilters | reverse">
-        <div class="col-xs-12 col-md-12">
-          <button type="button" class="btn btn-default" ng-click="enableFilter()">Enable</button>
-          <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-            <div ng-bind="filter.rendered"></div>
+      <a><h4 ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">Show suggestions dismissed</h4><a>
+      <div collapse="dismissedIsCollapsed">
+        <div class="row" ng-repeat="filter in dismissedFilters | reverse">
+          <div class="col-xs-12 col-md-12">
+            <div class="filterWrapper">
+              <div class="filterNumber">
+                <span> - </span>
+              </div>
+              <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                <div ng-bind-html="filter.rendered"></div>
+              </div>
+            </div>
+            <div class="filterToggleButtonRightWrapper">
+              <div class="hidden-xs">
+                <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
+              </div>
+            </div>
+            <div class="visible-xs">
+              <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
+            </div>
           </div>
         </div>
       </div>
