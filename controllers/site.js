@@ -101,7 +101,7 @@ var getHistorical = function(req, oldestTweetIdStr, callback) {
       );
     },
     // grab the newly saved tweets
-    function(oldestTweetIdStr, callback2) {
+    function(callback2) {
       db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback2);
     }
   ], function(error, tweets) {
