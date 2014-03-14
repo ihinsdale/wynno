@@ -83,7 +83,7 @@ var getHistorical = function(req, oldestTweetIdStr, callback) {
       twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestTweetIdStr, null, null, callback2)
     },
     // store in the db
-    function(user_id, tweetsArray, null, callback2) {
+    function(user_id, tweetsArray, irrelevant, callback2) {
       async.eachSeries(tweetsArray.reverse(), 
         function(tweet, callback) {
           db.saveTweet(user_id, tweet, callback2);
