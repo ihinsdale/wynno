@@ -306,7 +306,7 @@ angular.module('wynnoApp.controllers')
         // no need to rebind this object to the scope
         //$scope.activeFilters = settings.activeFilters;
         $scope.busySaving = false;
-        $modalInstance.close(settings.activeFilters.[settings.activeFilters.length - 1].rendered);
+        $modalInstance.close(settings.activeFilters[settings.activeFilters.length - 1].rendered);
       }, function(reason) {
         console.log('Error saving filter:', reason);
         $scope.error = { message: reason };
