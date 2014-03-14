@@ -146,7 +146,7 @@ var renderedTweetFields = '_id __p __vote __created_at __user __retweeter __id_s
 
 exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API id
-  // tweetIdStr is a Twitter API id
+  // tweetIdStr is a Twitter API id_str
   var criteria = { user_id: user_id };
   if (tweetIdStr !== '0') {
     criteria.id = {$lt: tweetIdStr};
