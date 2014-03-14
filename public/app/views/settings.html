@@ -1,117 +1,192 @@
+<tabset justified="true">
+  <tab heading="Your Filters">
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <h3 class="darkGray">Active Filters</h3>
+        <div class="panel filterPanel">
+          <div class="container">
+            <div class="row" ng-show="!activeFilters.length">
+              (no filters currently active)
+            </div>
+            <div class="row" ng-repeat="filter in activeFilters | reverse">
+              <div class="col-xs-12 col-md-12">
+                <div class="filterWrapper">
+                  <div class="filterNumber">
+                    <span ng-bind="$index + 1"></span>
+                    <span> - </span>
+                  </div>
+                  <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                    <div ng-bind-html="filter.rendered"></div>
+                  </div>
+                </div>
+                <div class="filterToggleButtonRightWrapper">
+                  <div class="hidden-xs">
+                    <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+                  </div>
+                </div>
+                <div class="visible-xs">
+                  <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="darkGray" ng-show="!!disabledFilters.length" href=""><span ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</span></a>
+        <div collapse="disabledIsCollapsed">
+          <h3 class="darkGray">Disabled Filters</h3>
+          <div class="panel filterPanel">
+            <div class="container">
+              <div class="row" ng-repeat="filter in disabledFilters | reverse">
+                <div class="col-xs-12 col-md-12">
+                  <div class="filterWrapper">
+                    <div class="filterNumber">
+                      <span> - </span>
+                    </div>
+                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                      <div ng-bind-html="filter.rendered"></div>
+                    </div>
+                  </div>
+                  <div class="filterToggleButtonRightWrapper">
+                    <div class="hidden-xs">
+                      <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
+                    </div>
+                  </div>
+                  <div class="visible-xs">
+                    <button type="button" class="btn btn-default" ng-click="enableFilter($index)">Enable</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <tab-heading>
+      <span>Suggestions </span>
+      <span class="badge badgePurpleBadge" ng-show="!!suggestedFilters.length" ng-bind="suggestedFilters.length"></span>
+    </tab-heading>
+
+  </tab>
+</tabset>
+
 <div class="row">
-  <div class="col-md-8 col-md-offset-2 text-center">
-    <h2>Your filters</h2>
-  </div>
-</div>
-<div class="row" ng-repeat="filter in activeFilters | reverse">
-  <div class="col-md-8 col-md-offset-2">
-    <button class="removeSetting" ng-click="disableFilter($index)">
-      <span class="icomoon-cancel-circle"></span>
-    </button>
-    {{filter}}
-  </div>
-</div>
-<div>Filter Suggestions</div>
-<div class="row" ng-repeat="filter in suggestedFilters | reverse">
-  <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Adopt</button>
-  <div class="col-md-8 col-md-offset-2">
-    {{filter}}
-  </div>
-  <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
-</div>
-<div>Dismissed Suggestions</div>
-<div class="row" ng-repeat="filter in dismissedFilters | reverse">
-  <div class="col-md-8 col-md-offset-2">
-    {{filter}}
-  </div>
-</div>
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-10 col-md-offset-1">
-    <div class="text-center">
+  <div class="col-xs-12 col-md-12">
+    <div class="text-center paddingBottom20">
       <button class="btn btn-default btn-lg addNewFilter" ng-click="newDraftFilter()">Add new filter</button>
     </div>
     <div collapse="builderIsCollapsed">
       <div class="container">
-        <div class="row">
-          <div class="col-xs-12 col-md-2">
-            <h3>How</h3>
-            <div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-class="{hear:draftFilter.type == 'hear', mute:draftFilter.type=='mute'}">
-                <span ng-bind="draftFilter.typeDisplayed"></span>
-                <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
-                <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-4">
-            <h3>Who</h3>
-            <div class="dropdown">
-              <a class="btn btn-default dropdown-toggle">
-                <span ng-bind="draftFilter.usersDisplayed"></span>
-                <span class="caret" ng-show="!!draftFilter.users.length"></span>
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="user in draftFilter.users">
-                  <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
-                    <span class="icomoon-cancel-circle"></span>
-                  </button>
-                  <span class="user">@{{user}}</span>
-                </li>
-              </ul>
-            </div>
-            <div class="input-group">
-              <span class="input-group-addon">@</span>
-              <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
-              <span class="input-group-btn">
-                <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
-              </span>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <h3>What</h3>
-            <div class="" ng-repeat="condition in draftFilter.conditions">
-              <form class="form-inline" role="form">
-                <span class="andCondition" ng-show="!$first">and</span>                               
-                <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
-                  <span class="icomoon-cancel-circle"></span>
-                </button>
+        <div class="well well-lg">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-2">
+              <h3 class="wynnoPurple">1. How</h3>
+              <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span ng-bind="condition.typeDisplayed"></span>
+                    <span ng-bind="draftFilter.typeDisplayed" ng-class="{ayeGreen: draftFilter.type == 'hear', nayRed: draftFilter.type =='mute'}"></span>
+                    <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
+                  </button>
+                  <ul class="dropdown-menu textAlignLeft" role="menu">
+                    <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
+                    <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3">
+              <h3 class="wynnoPurple">2. Who</h3>
+              <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+                <div class="dropdown">
+                  <a class="btn btn-default dropdown-toggle">
+                    <span ng-bind="draftFilter.usersDisplayed"></span>
+                    <span class="caret" ng-show="!!draftFilter.users.length"></span>
+                  </a>
+                  <span class="s sentenceText">'s</span>
+                  <ul class="dropdown-menu textAlignLeft" role="menu">
+                    <li ng-show="!draftFilter.users.length" class="paddingLeft10">(default is all users)</li>
+                    <li ng-repeat="user in draftFilter.users">
+                      <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+                        <span class="icomoon-cancel-circle"></span>
+                      </button>
+                      <span class="user">@{{user}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="input-group paddingTop16">
+                <span class="input-group-addon">@</span>
+                <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+              <h3 class="wynnoPurple">3. What</h3>
+              <div class="pieceOfDraft scope" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span ng-bind="draftFilter.scopeDisplayed"></span>
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="" ng-click="condition.type = 'link'; condition.typeDisplayed = 'a link to'" class="">a link to</a></li>
-                    <li><a href="" ng-click="condition.type = 'word'; condition.typeDisplayed = 'the word/phrase'" class="">the word/phrase</a></li>
-                    <li><a href="" ng-click="condition.type = 'hashtag'; condition.typeDisplayed = 'the hashtag'" class="">the hashtag</a></li>
-                    <li><a href="" ng-click="condition.type = 'picture'; condition.typeDisplayed = 'a picture'" class="">a picture</a></li>
-                    <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
+                  <ul class="dropdown-menu textAlignLeft" role="menu">
+                    <li><a href="" ng-click="draftFilter.scope = 'all'; draftFilter.scopeDisplayed = 'tweets + retweets'">tweets + retweets</a></li>
+                    <li><a href="" ng-click="draftFilter.scope = 'tweets'; draftFilter.scopeDisplayed = 'tweets only'">tweets only</a></li>
+                    <li><a href="" ng-click="draftFilter.scope = 'retweets'; draftFilter.scopeDisplayed = 'retweets only'">retweets only</a></li>
                   </ul>
-                </div>   
-                <div class="form-group" ng-show="condition.type == 'link'">  
-                  <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
                 </div>
-                <div class="form-group" ng-show="condition.type == 'word'">
-                  <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
-                </div>
-                <div ng-show="condition.type == 'word'" class="inlineBlock">TODO: add checkbox for case sensitivity</div>
-                <div class="form-group" ng-show="condition.type == 'hashtag'">
-                  <div class="input-group">
-                    <span class="input-group-addon">#</span>
-                    <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+              </div>
+              <div class="visible-xs paddingTop16"></div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-5">
+              <div class="hidden-xs paddingTop56"></div>
+              <div class="thatContain sentenceText" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">that contain ...</div>
+              <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+                <div class="" ng-repeat="condition in draftFilter.conditions">
+                  <div class="">
+                    <div class="andCondition sentenceText" ng-show="!$first">and</div>               
+                    <button class="removeSetting" ng-click="removeCondition($index)" ng-hide="condition.typeDisplayed == '(anything)'">
+                      <span class="icomoon-cancel-circle"></span>
+                    </button>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span ng-bind="condition.typeDisplayed"></span>
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="" ng-click="condition.type = 'link'; condition.typeDisplayed = 'a link to'" class="">a link to</a></li>
+                        <li><a href="" ng-click="condition.type = 'word'; condition.typeDisplayed = 'the word/phrase'" class="">the word/phrase</a></li>
+                        <li><a href="" ng-click="condition.type = 'hashtag'; condition.typeDisplayed = 'the hashtag'" class="">the hashtag</a></li>
+                        <li><a href="" ng-click="condition.type = 'picture'; condition.typeDisplayed = 'a picture'" class="">a picture</a></li>
+                        <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
+                      </ul>
+                    </div>                
+                    <div ng-show="condition.type == 'link'" class="inlineBlock">
+                      <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
+                    </div>
+                    <div ng-show="condition.type == 'word'" class="inlineBlock">
+                      <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+                    </div>
+                    <div ng-show="condition.type == 'word'" class="inlineBlock">TODO: add checkbox for case sensitivity</div>
+                    <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
+                      <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                    </div>
                   </div>
                 </div>
-              </form>
+              </div>
+              <div class="paddingTop16">
+                <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
+                  <span class="icomoon-plus plus"></span>Add another
+                </button>
+              </div>
             </div>
-            <button type-"button" class="btn btn-primary" ng-click="addAnotherCondition()">
-              <span class="icomoon-plus plus"></span>Add another
-            </button>
+          </div>
+          <div class="row paddingTop40">
+            <div class="col-xs-12 col-md-12 text-center">
+              <button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()">Save filter</button>
+            </div>
           </div>
         </div>
       </div>

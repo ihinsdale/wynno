@@ -245,6 +245,10 @@ body > .container {
     padding: 9px 5px;
 }
 
+.customDivider {
+    border-bottom: 1px solid #e7e7e7;
+}
+
 // landing page
 
 .jumbotron {
@@ -736,6 +740,35 @@ $twitterButtonRadius: 3px;
 
 // settings page styling
 
+.filterWrapper {
+    padding: 10px;
+    display: inline-block;
+}
+
+.filterToggleButtonRightWrapper {
+    display: inline-block;
+}
+
+.filterWrapper > .filterText {
+    padding: 10px;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.filterNumber {
+    padding-right: 10px;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.panel.filterPanel {
+    border-color: #ddd;
+}
+
+.nav-tabs > li {
+    cursor: pointer;
+}
+
 .removeSetting {
     display: inline;
     font-size: 16px;
@@ -759,13 +792,73 @@ $twitterButtonRadius: 3px;
     padding-top: 40px;
 }
 
+.paddingTop56 {
+    padding-top: 56px;
+}
+
+.paddingTop16 {
+    padding-top: 16px;
+}
+
+.paddingBottom20 {
+    padding-bottom: 20px;
+}
+
+.paddingLeft10 {
+    padding-left: 10px;
+}
+
 .btn.addNewFilter, .btn.saveFilter {
-    background-color: $deep-purple;
+    background-color: $shallower-purple;
     color: #ffffff;
+    border-color: $deep-purple;
 }
 
 .btn.addNewFilter:hover, .btn.saveFilter:hover {
     background-color: $deep-purple;
+    border-color: $deep-purple;
+}
+
+.btn.saveFilter {
+    width: 200px;
+}
+
+.pieceOfDraft {
+    padding: 5px;
+}
+
+.pieceOfDraft.ayeGreenBackground, .thatContain.ayeGreenBackground {
+    background-color: $aye-green;
+}
+
+.pieceOfDraft.nayRedBackground, .thatContain.nayRedBackground {
+    background-color: $nay-red;
+}
+
+.pieceOfDraft, .thatContain {
+    background-color: $badge-purple;
+}
+
+.pieceOfDraft.scope {
+    padding: 5px 2px;
+}
+
+.thatContain {
+    vertical-align: top;
+    padding: 12px 6px;
+}
+
+.sentenceText {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.textAlignLeft {
+    text-align: left;
+}
+
+.s {
+
 }
 
 .btn.hear, .btn.hear:hover {
@@ -816,8 +909,6 @@ $twitterButtonRadius: 3px;
 
 .andCondition {
     padding: 10px 0;
-    color: $deep-purple;
-    font-weight: bold;
 }
 
 .listOfUsers {

@@ -142,11 +142,11 @@ exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
   });
 };
 
-var renderedTweetFields = '_id __p __vote __created_at __user __retweeter __id_str __entities renderedText id_str gapAfterThis';
+var renderedTweetFields = '_id __p __vote __created_at __user __retweeter __id_str __entities __text renderedText id_str gapAfterThis';
 
 exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API id
-  // tweetIdStr is a Twitter API id
+  // tweetIdStr is a Twitter API id_str
   var criteria = { user_id: user_id };
   if (tweetIdStr !== '0') {
     criteria.id = {$lt: tweetIdStr};
@@ -221,20 +221,31 @@ exports.saveVote = function(user_id, tweet_id, vote, callback) {
 
 exports.saveFilter = function(user_id, draftFilter, revisionOf_id, callback) {
   draftFilter.user_creator = user_id;
-  draftFilter.revision_of = revisionOf_id;
+  if (revisionOf_id) {
+    draftFilter.revision_of = revisionOf_id;
+  }
   Filter.create(draftFilter, function(err, doc) {
     if (err) {
       console.log('Error saving filter to db.');
       callback(err);
     } else {
-      User.findByIdAndUpdate(user_id, { $push: { activeFilters: doc } }, function(err, user) {
+      console.log('Filter doc created is:', doc);
+      console.log('user_id is:', user_id);
+      User.findById(user_id, function(err, user) {
         if (err) {
           console.log('Error finding user whose new filter this is.');
           callback(err);
         } else {
+          user.activeFilters.push(doc);
           console.log('Successfully saved new filter for user.');
           console.log("User's active filters are:", user.activeFilters);
-          callback(null);
+          user.save(function(err) {
+            if (err) {
+              console.log("Error adding filter to user's activeFilters.");
+            } else {
+              callback(null);
+            }
+          });
         }
       });
     }

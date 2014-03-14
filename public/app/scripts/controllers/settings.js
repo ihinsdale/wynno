@@ -13,8 +13,9 @@ angular.module('wynnoApp.controllers')
     // initialize new draft filter
     $scope.draftFilter = { conditions: [{}], users: [], scope: 'all' };
     $scope.draftFilter.typeDisplayed = 'Hear/Mute';
-    $scope.draftFilter.usersDisplayed = 'all users (default)'
+    $scope.draftFilter.usersDisplayed = '(all users)'
     $scope.draftFilter.conditions[0].typeDisplayed = '(anything)';
+    $scope.draftFilter.scopeDisplayed = 'tweets + retweets'
   };
 
   $scope.draftFilterAddUser = function(username) {
@@ -32,25 +33,56 @@ angular.module('wynnoApp.controllers')
       if ($scope.draftFilter.users.length === 1) {
         $scope.draftFilter.usersDisplayed = '@' + username;
       } else if ($scope.draftFilter.users.length === 2) {
-        $scope.draftFilter.usersDisplayed += ', ';
-        $scope.draftFilter.usersDisplayed += '@' + username;
-      } else if ($scope.draftFilter.users.length === 3) {
         $scope.draftFilter.usersDisplayed += ', ...';
+        //$scope.draftFilter.usersDisplayed += ', ';
+        //$scope.draftFilter.usersDisplayed += '@' + username;
+      //} else if ($scope.draftFilter.users.length === 3) {
+      //  $scope.draftFilter.usersDisplayed += ', ...';
       }
     } else {
       $scope.errorAddingUser = 'That user has already been added.';
     }
   };
 
+  $scope.draftFilterIsIncomplete = function() {
+    // if no users have been specified, at least one condition must be valid
+    // if a user has been specified, invalid conditions are okay
+    if ($scope.draftFilter && !$scope.draftFilter.type) {
+      return true;
+    } else if ($scope.draftFilter && !$scope.draftFilter.scope) {
+      return true;
+    } else if ($scope.draftFilter && !$scope.draftFilter.users.length) {
+      // if not all conditions valid, incomplete
+      var oneValid = false;
+      for (var i = 0; i < $scope.draftFilter.conditions.length; i++) {
+        if (!oneValid) {
+          // if the condition has a type that's not 'word', or its type is 'word' and a word has been entered, valid
+          if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
+            || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
+            oneValid = true;
+          }
+        }
+      }
+      if (!oneValid) { 
+        return true;
+      } else {
+      // else, complete
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   $scope.draftFilterRemoveUser = function(userIndex) {
     $scope.draftFilter.users.splice(userIndex, 1);
     if (!$scope.draftFilter.users.length) {
-      $scope.draftFilter.usersDisplayed = 'all users (default)';
+      $scope.draftFilter.usersDisplayed = '(all users)';
     } else {
       $scope.draftFilter.usersDisplayed = '';
       var limit;
-      if ($scope.draftFilter.users.length > 2) {
-        limit = 3;
+      if ($scope.draftFilter.users.length > 1) {
+        limit = 2;
       } else {
         limit = $scope.draftFilter.users.length;
       }
@@ -58,7 +90,7 @@ angular.module('wynnoApp.controllers')
         if (i > 0) {
           $scope.draftFilter.usersDisplayed += ', ';
         }
-        if (i === 2) {
+        if (i === 1) {
           $scope.draftFilter.usersDisplayed += '...';
         } else {
           $scope.draftFilter.usersDisplayed += ('@' + $scope.draftFilter.users[i])
@@ -115,16 +147,19 @@ angular.module('wynnoApp.controllers')
   $scope.injectSettings = function() {
     SettingsService.provideSettings()
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
-      $scope.suggestedFilters = settings.suggestedFilters;
-      $scope.dismissedFilters = settings.dismissedFilters;
+      var filterGroups = ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
+      angular.forEach(filterGroups, function(filterGroup) {
+        $scope[filterGroup] = settings[filterGroup];
+      });
     });
   };
 
   $scope.saveFilter = function(draftFilter, originalIndex) {
     SettingsService.saveFilter(draftFilter, originalIndex)
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
+      // no need to rebind this object to the scope
+      //$scope.activeFilters = settings.activeFilters;
+      $scope.newDraftFilter();
     }, function(reason) {
       console.log('Error saving filter:', reason);
     });
@@ -133,9 +168,18 @@ angular.module('wynnoApp.controllers')
   $scope.disableFilter = function(index) {
     SettingsService.disableFilter(index)
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
+      // no need to rebind these objects to the scope
+      //$scope.activeFilters = settings.activeFilters;
+      //$scope.disabledFilter = settings.disabledFilters;
+      console.log('after binding to controller, disabledFilters looks like:', settings.disabledFilters);
     });
   };
+
+  $scope.enableFilter = function(index) {
+    // to enable a disabled filter
+    // should work with dismissed suggestion or disabled filter
+    // TODO
+  }
 
   $scope.adoptSugg = function(index) {
     SettingsService.adoptSugg(index)

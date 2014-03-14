@@ -1,27 +1,359 @@
 angular.module('wynnoApp.services')
 .factory('SettingsService', ['$q', '$http', 'FilterService', 'TweetService', function($q, $http, FilterService, TweetService) {
   var service = {
-    settings: [],
-    // (this function is obsolete now, because settings are got with the 
-    // first request for old tweets)
+    settings: {},
+    // (this function is essentially obsolete now, because settings are got with the 
+    // first request for old tweets. But it serves as a backup for service.provideSettings)
     getSettingsFromDb: function() {
       var d = $q.defer();
-      if (service.settings.length === 0) {
-        $http.get('/settings')
-        .success(function(data, status) {
-          console.log('success getting settings, they look like:', data);
-          service.settings = data;
-          d.resolve(service.settings);
-        })
-        .error(function(reason, status) {
-          console.log('error getting settings');
-          d.reject(reason);
-        })
-      }
+      $http.get('/settings')
+      .success(function(data, status) {
+        console.log('success getting settings, they look like:', data);
+        // add the rendered text versions of the filters, since that doesn't come from the db
+        service.renderFilters(data);
+        service.settings = data;
+        d.resolve(service.settings);
+      })
+      .error(function(reason, status) {
+        console.log('error getting settings');
+        d.reject(reason);
+      })
       return d.promise;
     },
+    renderFilters: function(settings) {
+      var filterGroups = ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
+      angular.forEach(filterGroups, function(filterGroup) {
+        angular.forEach(settings[filterGroup], function(filter) {
+          filter.rendered = service.renderFilter(filter);
+        });
+      });
+    },
+    renderFilter: function(filter) {
+      var result = '';
+      // filter type
+      if (filter.type === 'hear') {
+        result += 'Hear ';
+      } else if (filter.type === 'mute') {
+        result += 'Mute ';
+      }
+      // filter users
+      if (!filter.users.length) {
+        result += "<span class='wynnoPurple'>all users' </span>"; 
+      } else {
+        for (var i = 0; i < filter.users.length; i++) {
+          result += ('<span class="wynnoPurple">' + '@' + filter.users[i] + '</span>');
+          if (i === filter.users.length - 1) {
+            if (result[result.length - 8] === 's') {
+              result += "' ";
+            } else {
+              result += "'s ";
+            }
+          } else if (i === filter.users.length - 2) {
+            if (filter.users.length === 2) {
+              result += ' and ';
+            } else {
+              result += ', and ';
+            }
+          } else {
+            result += ', ';
+          }
+        }
+      }
+      // filter scope
+      if (filter.scope === 'all') {
+        if (filter.conditions.length) {
+          result += 'tweets and retweets';
+        } else {
+          // if there are no filter conditions, we can keep the rendered filter short
+          // e.g. it would read, Hear @ihinsdale
+          if (result.slice(result.length - 3) === "'s ") {
+            result = result.slice(0, result.length - 3);
+          } else {
+            result = result.slice(0, result.length - 2);
+          }
+        }
+      } else if (filter.scope === 'tweets') {
+        result += 'tweets';
+      } else if (filter.scope === 'retweets') {
+        result += 'retweets';
+      } 
+      // filter conditions
+      if (filter.conditions.length) {
+        result += service.parseConditions(filter.conditions);
+      }
+      return result;
+    },
+    parseConditions: function(conditions) {
+      var result = ' that ';
+      var linksResult = '';
+      var wordsResult = '';
+      var hashtagsResult = '';
+      var picturesResult = '';
+      var quotationResult = '';
+
+      // loop through conditions, updating summary objects about each type
+      var links = { total: 0, specific: { count: 0, domains: {} }, anywhere: { count: 0 } };
+      var hashtags = { total: 0, specific: { count: 0, text: {} }, anything: { count: 0 } };
+      var words = { total: 0, words: {count: 0, text: {} }, phrases: { count: 0, text: {} } };
+      var pictures = 0;
+      var quotations = 0;
+      for (var i = 0; i < conditions.length; i++) {
+        switch(conditions[i].type) {
+          case 'link':
+            if (conditions[i].link) {
+              links.specific.count++;
+              if (links.specific.domains.hasOwnProperty(conditions[i].link)) {
+                links.specific.domains[conditions[i].link]++;
+              } else {
+                links.specific.domains[conditions[i].link] = 1;
+              }
+            } else {
+              links.anywhere.count++;
+            }
+            links.total++;
+            break;
+          case 'word':
+            var type = conditions[i].word.indexOf(' ') === -1 ? 'words' : 'phrases';
+            words[type].count++;
+            if (words[type].text.hasOwnProperty(conditions[i].word)) {
+              words[type].text[conditions[i].word]++;
+            } else {
+              words[type].text[conditions[i].word] = 1;
+            }
+            words.total++;
+            break;
+          case 'hashtag':
+            if (conditions[i].hashtag) {
+              hashtags.specific.count++;
+              if (hashtags.specific.text.hasOwnProperty(conditions[i].hashtag)) {
+                hashtags.specific.text[conditions[i].hashtag]++;
+              } else {
+                hashtags.specific.text[conditions[i].hashtag] = 1;
+              }
+            } else {
+              hashtags.anything.count++;
+            }
+            hashtags.total++;
+            break;
+          case 'picture':
+            pictures++;
+            break;
+          case 'quotation':
+            quotations++;
+            break;
+        }
+      }
+      // now render text for each type
+
+      // links
+
+      // links are the only type for which the verb might not be 'contain'
+      // so we will add the verb directly in linksResult. Whereas for other condition types
+      // we will wait to see whether the verb 'contain' needs to be added before joining any of them
+
+      var linksResultHasComma = false; // this is used in joining all results together
+      // if there are link conditions but nowhere specific specified
+      if (links.total && !links.specific.count) {
+        if (links.total === 1) {
+          linksResult = 'contain a link';
+        } else {
+          linksResult = 'contain ' + links.total + ' links';
+        }
+
+      // otherwise if there are link conditions and somewhere specific has been specified
+      } else if (links.total) {
+        var specificDomains = Object.keys(links.specific.domains);
+        // if no link domain has a count > 1
+        var countsLessThan1 = true;
+        if (links.anywhere.count > 1) {
+          countsLessThan1 = false;
+        }
+        for (var j = 0; j < specificDomains.length; j++) {
+          if (countsLessThan1) {
+            if (links.specific.domains[specificDomains[j]] > 1) {
+              countsLessThan1 = false;
+            }
+          }
+        }
+        if (countsLessThan1) {
+          linksResult = 'link to ';
+          for (var k = 0; k < specificDomains.length; k++) {
+            linksResult += specificDomains[k];
+            if (k !== specificDomains.length - 1) {
+              linksResult += ' and ';
+            }
+          }
+          if (links.anywhere.count) {
+            linksResult += ' and anywhere else';
+          }
+        // otherwise
+        } else {
+          linksResult = 'contain ' + links.total + ' links';
+          if (specificDomains.length === 1) {
+            linksResult += ' to ' + specificDomains[0];
+          } else {
+            linksResult += ', ';
+            linksResultHasComma = true;
+            for (var m = 0; m < specificDomains.length; m++) {
+              linksResult += (links.specific.domains[specificDomains[m]] + ' to ' + specificDomains[m]);
+              if (m !== specificDomains.length - 1) {
+                linksResult += ' and ';
+              }
+            }
+            if (links.anywhere.count) {
+              linksResult += (' and ' + links.anywhere.count + ' anywhere else');
+            }
+          }
+        }
+      }
+
+      // hashtags
+
+      if (hashtags.total && !hashtags.specific.count) {
+        if (hashtags.total === 1) {
+          hashtagsResult += 'a hashtag';
+        } else {
+          hashtagsResult += hashtags.total + ' hashtags';
+        }
+      } else if (hashtags.total) {
+        var specificHashtags = Object.keys(hashtags.specific.text);
+        if (specificHashtags.length === 1) {
+          hashtagsResult += 'the hashtag ' + specificHashtags[0];
+        } else {
+          hashtagsResult += 'the hashtags ';
+          var count;
+          for (var p = 0; p < specificHashtags.length; p++) {
+            hashtagsResult += specificHashtags[p];
+            count = hashtags.specific.text[specificHashtags[p]];
+            if (count > 1) {
+              if (count === 2) {
+                hashtagsResult += ' (twice)';
+              } else {
+                hashtagsResult += ' (' + count + ' times)';
+              }
+            }
+            if (p !== specificHashtags.length - 1) {
+              hashtagsResult += ' and ';
+            }
+          }
+        }
+        if (hashtags.anything.count) {
+          if (hashtags.anything.count === 1) {
+            hashtagsResult += ' and any other hashtag';
+          } else {
+            hashtagsResult += ' and any ' + hashtags.anything.count + ' others'
+          }
+        }
+      }
+
+      // words
+
+      if (words.total) {
+        // words
+        if (words.words.count) {
+          wordsResult += service.wordsRender(words.words, false);
+          if (words.phrases.count) {
+            wordsResult += ' and ';
+          }
+        }
+        // phrases
+        if (words.phrases.count) {
+          wordsResult += service.wordsRender(words.phrases, true);
+        }
+      }
+
+      // picture
+
+      if (pictures) {
+        var noun = ' picture';
+        if (pictures > 1) {
+          picturesResult += (pictures + noun + 's');
+        } else {
+          picturesResult += 'a' + noun
+        }
+      }
+
+      // quotation
+
+      if (quotations) {
+        quotationResult = 'a quotation';
+      }
+
+
+      // now join the results
+      result += linksResult;
+      if (linksResult.slice(0,7) === 'link to'
+          && (wordsResult || hashtagsResult || picturesResult || quotationResult)) {
+        result += ' and contain ';
+      } else if (linksResult && (wordsResult || hashtagsResult || picturesResult || quotationResult)) {
+        if (linksResultHasComma) {
+          result += ', and ';
+        } else {
+          result += ' and ';
+        }
+      } else {
+        if (!linksResult) {
+          result += 'contain ';
+        }
+      }
+      result += wordsResult;
+      if (wordsResult && (hashtagsResult || picturesResult || quotationResult)) {
+        result += ' and ';
+      }
+      result += hashtagsResult;
+      if (hashtagsResult && (picturesResult || quotationResult)) {
+        result += ' and ';
+      }
+      result += picturesResult;
+      if (picturesResult && quotationResult) {
+        result += ' and ';
+      }
+      result += quotationResult;
+
+      return result;
+    },
+    wordsRender: function(wordsOrPhrasesObject, isPhrases) {
+      var result = '';
+      var type;
+      if (isPhrases) {
+        type = 'phrase';
+      } else {
+        type = 'word';
+      }
+      var specific = Object.keys(wordsOrPhrasesObject.text);
+      var count;
+      if (specific.length > 1) {
+        result = 'the ' + type + 's ';
+        for (var n = 0; n < specific.length; n++) {
+          result += specific[n];
+          count = wordsOrPhrasesObject.text[specific[n]];
+          if (count > 1) {
+            if (count === 2) {
+              result += ' (twice)';
+            } else {
+              result += ' (' + count + ' times)';
+            }
+          }
+          if (n !== specific.length - 1) {
+            result += ' and ';
+          }
+        }
+      } else {
+        result = 'the ' + type + ' ';
+        result += specific[0];
+        count = wordsOrPhrasesObject.text[specific[0]];
+        if (count > 1) {
+          if (count === 2) {
+            result += ' (twice)';
+          } else {
+            result += ' (' + count + ' times)';
+          }
+        }
+      }
+      return result;
+    },
     provideSettings: function() {
-      if (service.settings.length === 0) {
+      if (!Object.keys(service.settings).length) {
         return service.getSettingsFromDb();
       } else {
         var d = $q.defer();
@@ -43,6 +375,11 @@ angular.module('wynnoApp.services')
             delete draftFilter.conditions[j].link;
             delete draftFilter.conditions[j].hashtag;
           } else if (draftFilter.conditions[j].type === 'hashtag') {
+            // strip a leading # character from the hashtag input
+            // this is necessary because I could not get the Bootstrap # input add-on to display inline
+            if (draftFilter.conditions[j].hashtag && draftFilter.conditions[j].hashtag[0] === '#') {
+              draftFilter.conditions[j].hashtag = draftFilter.conditions[j].hashtag.slice(1);
+            }
             delete draftFilter.conditions[j].link;
             delete draftFilter.conditions[j].word;
           }
@@ -85,6 +422,9 @@ angular.module('wynnoApp.services')
       } else {
         // update filters on the client side, to be undone if POST request fails
         var orig = service.settings.activeFilters.slice();
+        // add rendered version to draftFilter
+        draftFilter.rendered = service.renderFilter(draftFilter);
+        // add draftFilter to the activeFilters
         service.settings.activeFilters.push(draftFilter);
         // remove previous version, if this save was a revision
         if (originalIndex) {
@@ -118,8 +458,9 @@ angular.module('wynnoApp.services')
       // get _id of the filter to be disabled, before updating client side
       var filterId = service.settings.activeFilters[index]._id;
       // update filters on the client side, to be undone if POST request fails
-      var orig = service.settings.activeFilters.slice();
-      service.settings.disabledFilters.push(service.settings.activeFilters.splice(index, 1));
+      var origActive = service.settings.activeFilters.slice();
+      var origDisabled = service.settings.disabledFilters.slice();
+      service.settings.disabledFilters.push(service.settings.activeFilters.splice(index, 1)[0]);
 
       // now POST the disable
       $http({ method: 'POST', url: '/disablefilter', data: {
@@ -135,7 +476,8 @@ angular.module('wynnoApp.services')
       .error(function(reason, status) {
         console.log('Error disabling filter.');
         // reset to original filters
-        service.settings.activeFilters = orig;
+        service.settings.activeFilters = origActive;
+        service.settings.disabledFilters = origDisabled;
         d.reject(reason);
       });
       return d.promise;
@@ -167,7 +509,7 @@ angular.module('wynnoApp.services')
       var origSuggested = service.settings.suggestedFilters.slice();
       var origActive = service.settings.activeFilters.slice();
       var origUndismissedSugg = service.settings.undismissedSugg;
-      service.settings.activeFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      service.settings.activeFilters.push(service.settings.suggestedFilters.splice(index, 1)[0]);
       if (!service.settings.suggestedFilters.length) {
         service.settings.undismissedSugg = false;
       }
@@ -196,7 +538,7 @@ angular.module('wynnoApp.services')
       var origSuggested = service.settings.suggestedFilters.slice();
       var origDismissed = service.settings.dismissedFilters.slice();
       var origUndismissedSugg = service.settings.undismissedSugg;
-      service.settings.dismissedFilters.push(service.settings.suggestedFilters.splice(index, 1));
+      service.settings.dismissedFilters.push(service.settings.suggestedFilters.splice(index, 1)[0]);
       if (!service.settings.suggestedFilters.length) {
         service.settings.undismissedSugg = false;
       }

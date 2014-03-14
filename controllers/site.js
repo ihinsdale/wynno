@@ -35,21 +35,32 @@ exports.logout = function(req, res) {
 };
 
 exports.old = function(req, res) {
-  var oldestTweetId = req.query.oldestTweetId;
-  console.log('oldestTweetId sent in request looks like:', oldestTweetId);
-  console.log('typeof oldestTweetId:', typeof oldestTweetId);
+  var oldestTweetIdStr = req.query.oldestTweetIdStr;
+  console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
+  console.log('typeof oldestTweetId:', typeof oldestTweetIdStr);
   async.waterfall([
     function(callback) {
-      db.findTweetsBeforeId(req.user._id, oldestTweetId, callback);
+      db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback);
     },
     function(tweets, callback) {
-      // if settings were requested too, get those
-      if (req.query.settings) {
+      // if no tweets were found in the db, and yet a nonzero oldestTweetIdStr was provided,
+      // meaning that a previous call to the db had successfully grabbed old tweets,
+      // then we know oldestTweetIdStr is the boundary for the oldest tweet ever received for the user,
+      // so we need to go back to Twitter and get even older tweets
+      if (!tweets.length && oldestTweetIdStr !== '0') {
+        getHistorical(req, oldestTweetIdStr, callback);
+      // otherwise we found tweets, so proceed: if settings were requested too, as would be the case,
+      // upon initial loading of wynno by user, get those
+      // (we don't need to worry about combining getHistorical with an additional request for settings,
+      //  because that case would never occur:  getHistorical is only called if oldestTweetIdStr !== '0',
+      //  meaning the user had previously gotten some tweets successfully, in which case they would also
+      //  have already gotten settings)
+      } else if (req.query.settings) {
         db.getSettings(req.user._id, tweets, callback);
       } else {
         callback(null, tweets, null);
       }
-    }
+    },
   ], function(error, tweets, settings) {
     if (error) {
       console.log(error);
@@ -59,8 +70,46 @@ exports.old = function(req, res) {
       if (settings) {
         data.settings = settings;
       }
-      console.log('sending results for /old:', data);
+      console.log('sending results for /old');
       res.send(data);
+    }
+  });
+};
+
+var getHistorical = function(req, oldestTweetIdStr, callback) {
+  console.log('inside getHistorical, oldestTweetIdStr looks like:', oldestTweetIdStr);
+  async.waterfall([
+    // fetch the tweets from twitter
+    function(callback2) {
+      twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestTweetIdStr, null, null, callback2)
+    },
+    // store in the db
+    function(user_id, tweetsArray, irrelevant, callback2) {
+      async.eachSeries(tweetsArray.reverse(), 
+        function(tweet, callback2) {
+          db.saveTweet(user_id, tweet, callback2);
+        }, 
+        function(err) {
+          if (err) {
+            console.log('Error saving historical tweets:', err);
+            callback2(err);
+          } else {
+            console.log('Successfully saved batch of historical tweets');
+            callback2(null);
+          }
+        }
+      );
+    },
+    // grab the newly saved tweets
+    function(callback2) {
+      db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback2);
+    }
+  ], function(error, tweets) {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, tweets, null); // arguments match the signature within the 
+      // second function of exports.old()'s waterfall
     }
   });
 };
@@ -96,6 +145,8 @@ exports.fresh = function(req, res) {
           // tweetsArray here is in reverse chronological order, so the last item in array is the oldest tweet
           console.log('No gap remaining between this fetch and previous.');
           tweetsArray.pop();
+        } else if (latestid_str === null) {
+          // this is the case of a new user, so we're done
         } else {
           console.log('Gap exists between this fetch and previous.');
           tweetsArray[tweetsArray.length - 1].gapAfterThis = true;
@@ -247,14 +298,14 @@ exports.saveFilter = function(req, res) {
   console.log('/savefilter request data look like', data)
   async.waterfall([
     function(callback) {
-      db.saveFilter(req.user._id, data.draftFilter, data.revisionOf, callback);
+      db.saveFilter(req.user._id, data.draftFilter, data.revisionOfFilter_id, callback);
     }
   ], function(error) {
     if (error) {
       console.log(error);
       res.send(500);
     } else {
-      res.send('Success saving filter:' + data.draftFilter + ', revision of filter:' + data.revisionOf);
+      res.send('Success saving filter:' + data.draftFilter + ', revision of filter:' + data.revisionOfFilter_id);
     }
   });
 };

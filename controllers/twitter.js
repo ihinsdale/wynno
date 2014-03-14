@@ -18,9 +18,11 @@ exports.fetchNew = function(user_id, token, tokenSecret, secondLatestid_str, lat
 exports.fetchMiddle = function(user_id, token, tokenSecret, oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr, newestOfOlderTweetsIdStr, callback) {
   console.log('fetching tweets since', secondNewestOfOlderTweetsIdStr, 'and before', oldestOfMoreRecentTweetsIdStr);
   var options = {
-    since_id: secondNewestOfOlderTweetsIdStr,
-    max_id: decStrNum(oldestOfMoreRecentTweetsIdStr)
+    max_id: decStrNum(oldestOfMoreRecentTweetsIdStr) // need to decrement because max_id is inclusive
   };
+  if (secondNewestOfOlderTweetsIdStr) {
+    options.since_id = secondNewestOfOlderTweetsIdStr;
+  }
   twitGet(user_id, token, tokenSecret, options, newestOfOlderTweetsIdStr, callback);
 };
 

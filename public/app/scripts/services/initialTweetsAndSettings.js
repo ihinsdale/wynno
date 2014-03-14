@@ -4,14 +4,13 @@ angular.module('wynnoApp.services')
   // from trying to set initial settings using the TweetService
 
   var service = {
-    getInitialOldTweetsAndSettings: function(oldestTweetId) {
+    getInitialOldTweetsAndSettings: function() {
       // for the first load of MainCtrl, we want to get old tweets
       // and the user's filtering rules to apply to all tweets
-      oldestTweetId = oldestTweetId || 0;
       var d = $q.defer();
       $http.get('/old', {
         params: {
-          oldestTweetId: oldestTweetId,
+          oldestTweetIdStr: '0',
           settings: true
         }
       })
@@ -20,6 +19,8 @@ angular.module('wynnoApp.services')
         // save settings in SettingsService
         // after initializing votesRequiredForNextSugg
         data.settings.votesRequiredForNextSugg = 100 - (data.settings.voteCount - Math.floor(data.settings.voteCount / 100) * 100);
+        // add the rendered text versions of the filters, since that doesn't come from the db
+        SettingsService.renderFilters(data.settings);
         SettingsService.settings = data.settings;
 
         // apply filtering rules to the tweets
@@ -29,11 +30,11 @@ angular.module('wynnoApp.services')
 
         // now add the tweets to currentTweets
         TweetService.currentTweets = data.tweets;
-        // update oldestTweetId, if any tweets were received
+        // update oldestTweetIdStr, if any tweets were received
         if (data.tweets.length) {
-          TweetService.oldestTweetId = TweetService.currentTweets[TweetService.currentTweets.length - 1].id_str;
+          TweetService.oldestTweetIdStr = TweetService.currentTweets[TweetService.currentTweets.length - 1].id_str;
         }
-        console.log('oldestTweetId after getting batch of tweets is:', TweetService.oldestTweetId);
+        console.log('oldestTweetIdStr after getting batch of tweets is:', TweetService.oldestTweetIdStr);
         d.resolve(TweetService.currentTweets);
       })
       .error(function(reason, status) {
