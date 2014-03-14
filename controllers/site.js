@@ -77,6 +77,7 @@ exports.old = function(req, res) {
 };
 
 var getHistorical = function(req, oldestTweetIdStr, callback) {
+  console.log('inside getHistorical, oldestTweetIdStr looks like:', oldestTweetIdStr);
   async.waterfall([
     // fetch the tweets from twitter
     function(oldestTweetIdStr, callback2) {
