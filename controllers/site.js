@@ -80,7 +80,7 @@ var getHistorical = function(req, oldestTweetIdStr, callback) {
   console.log('inside getHistorical, oldestTweetIdStr looks like:', oldestTweetIdStr);
   async.waterfall([
     // fetch the tweets from twitter
-    function(oldestTweetIdStr, callback2) {
+    function(callback2) {
       twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestTweetIdStr, null, null, callback2)
     },
     // store in the db
