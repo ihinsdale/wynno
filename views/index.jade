@@ -21,6 +21,9 @@ block nav
       a.navbar-toggle.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
         .badge.badgePurpleBadge
           span.icomoon-trophy
+      a.navbar-toggle(href='', ng-show="currentPathNeedsAuth")
+        .wynnoPurple
+          span.icomoon-add-to-list
       a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           span.icomoon-twitter.twitterBlue
@@ -71,6 +74,9 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
+        a.btn.btn-default.navbar-btn.(href='', ng-show="currentPathNeedsAuth")
+          .wynnoPurple
+            span.icomoon-add-to-list
         span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next filter suggestion", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
