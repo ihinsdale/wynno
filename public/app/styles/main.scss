@@ -263,10 +263,12 @@ a.navbar-toggle.glyphButton:hover {
 
 a.btn.btn-default.navbar-btn.glyphButton {
     padding: 4px 10px;
+    margin-right: 15px;
 }
 
 button.navbar-toggle.noBorder {
     border-color: transparent;
+    margin-right: 0;
 }
 
 .customDivider {
