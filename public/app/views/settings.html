@@ -92,36 +92,38 @@
             </div>
           </div>
           <div class="col-xs-12 col-md-5">
-          <div class="hidden-xs paddingTop60"></div>
+            <div class="hidden-xs paddingTop60"></div>
             <span>that contain</span>
-            <div class="" ng-repeat="condition in draftFilter.conditions">
-              <form class="form-inline" role="form">
-                <span class="andCondition" ng-show="!$first">and</span>                               
-                <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
-                  <span class="icomoon-cancel-circle"></span>
-                </button>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span ng-bind="condition.typeDisplayed"></span>
-                    <span class="caret"></span>
+            <div class="inlineBlock">
+              <div class="" ng-repeat="condition in draftFilter.conditions">
+                <span class="andCondition" ng-show="!$first">and</span>
+                <div class="inlineBlock">                
+                  <button class="removeSetting" ng-click="removeCondition($index)" ng-show="!!condition.type">
+                    <span class="icomoon-cancel-circle"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="" ng-click="condition.type = 'link'; condition.typeDisplayed = 'a link to'" class="">a link to</a></li>
-                    <li><a href="" ng-click="condition.type = 'word'; condition.typeDisplayed = 'the word/phrase'" class="">the word/phrase</a></li>
-                    <li><a href="" ng-click="condition.type = 'hashtag'; condition.typeDisplayed = 'the hashtag'" class="">the hashtag</a></li>
-                    <li><a href="" ng-click="condition.type = 'picture'; condition.typeDisplayed = 'a picture'" class="">a picture</a></li>
-                    <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
-                  </ul>
-                </div>   
-                <div class="form-group" ng-show="condition.type == 'link'">  
-                  <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
-                </div>
-                <div class="form-group" ng-show="condition.type == 'word'">
-                  <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
-                </div>
-                <div ng-show="condition.type == 'word'" class="inlineBlock">TODO: add checkbox for case sensitivity</div>
-                <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
-                  <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <span ng-bind="condition.typeDisplayed"></span>
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="" ng-click="condition.type = 'link'; condition.typeDisplayed = 'a link to'" class="">a link to</a></li>
+                      <li><a href="" ng-click="condition.type = 'word'; condition.typeDisplayed = 'the word/phrase'" class="">the word/phrase</a></li>
+                      <li><a href="" ng-click="condition.type = 'hashtag'; condition.typeDisplayed = 'the hashtag'" class="">the hashtag</a></li>
+                      <li><a href="" ng-click="condition.type = 'picture'; condition.typeDisplayed = 'a picture'" class="">a picture</a></li>
+                      <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
+                    </ul>
+                  </div>                
+                  <div ng-show="condition.type == 'link'" class="inlineBlock">
+                    <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
+                  </div>
+                  <div ng-show="condition.type == 'word'" class="inlineBlock">
+                    <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+                  </div>
+                  <div ng-show="condition.type == 'word'" class="inlineBlock">TODO: add checkbox for case sensitivity</div>
+                  <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
+                    <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                  </div>
                 </div>
               </form>
             </div>
