@@ -42,9 +42,9 @@ exports.old = function(req, res) {
     function(callback) {
       db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback);
     },
-    function(tweets, callback) {
-      if (!tweets.length && )
-    },
+    // function(tweets, callback) {
+    //   if (!tweets.length && )
+    // },
     function(tweets, callback) {
       // if settings were requested too, get those
       if (req.query.settings) {
