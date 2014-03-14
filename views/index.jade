@@ -74,7 +74,7 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        a.btn.btn-default.navbar-btn.(href='', ng-show="currentPathNeedsAuth")
+        a.btn.btn-default.navbar-btn(href='', ng-show="currentPathNeedsAuth", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
           .wynnoPurple
             span.icomoon-add-to-list
         span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next filter suggestion", tooltip-popup-delay='400')
