@@ -86,7 +86,7 @@ var getHistorical = function(req, oldestTweetIdStr, callback) {
     // store in the db
     function(user_id, tweetsArray, irrelevant, callback2) {
       async.eachSeries(tweetsArray.reverse(), 
-        function(tweet, callback) {
+        function(tweet, callback2) {
           db.saveTweet(user_id, tweet, callback2);
         }, 
         function(err) {
