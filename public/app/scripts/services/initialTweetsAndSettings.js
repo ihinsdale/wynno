@@ -4,14 +4,13 @@ angular.module('wynnoApp.services')
   // from trying to set initial settings using the TweetService
 
   var service = {
-    getInitialOldTweetsAndSettings: function(oldestTweetId) {
+    getInitialOldTweetsAndSettings: function() {
       // for the first load of MainCtrl, we want to get old tweets
       // and the user's filtering rules to apply to all tweets
-      oldestTweetId = oldestTweetId || 0;
       var d = $q.defer();
       $http.get('/old', {
         params: {
-          oldestTweetId: oldestTweetId,
+          oldestTweetId: 0,
           settings: true
         }
       })

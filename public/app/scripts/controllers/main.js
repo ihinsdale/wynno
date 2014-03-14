@@ -45,7 +45,7 @@ angular.module('wynnoApp.controllers')
     // set $scope.busy to true so that no additional requests for old tweets are triggered
     // until this first one is finished
     $scope.busy = true;
-    InitialTweetsAndSettingsService.getInitialOldTweetsAndSettings(TweetService.oldestTweetId)
+    InitialTweetsAndSettingsService.getInitialOldTweetsAndSettings()
     .then(function(tweets) {
       // set the indicators displayed in the navbar
       $scope.$emit('setSuggIndicators', SettingsService.settings.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);

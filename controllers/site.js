@@ -35,12 +35,15 @@ exports.logout = function(req, res) {
 };
 
 exports.old = function(req, res) {
-  var oldestTweetId = req.query.oldestTweetId;
-  console.log('oldestTweetId sent in request looks like:', oldestTweetId);
-  console.log('typeof oldestTweetId:', typeof oldestTweetId);
+  var oldestTweetIdStr = req.query.oldestTweetId;
+  console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
+  console.log('typeof oldestTweetId:', typeof oldestTweetIdStr);
   async.waterfall([
     function(callback) {
-      db.findTweetsBeforeId(req.user._id, oldestTweetId, callback);
+      db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback);
+    },
+    function(tweets, callback) {
+      if (!tweets.length && )
     },
     function(tweets, callback) {
       // if settings were requested too, get those
@@ -59,7 +62,7 @@ exports.old = function(req, res) {
       if (settings) {
         data.settings = settings;
       }
-      console.log('sending results for /old:', data);
+      console.log('sending results for /old');
       res.send(data);
     }
   });

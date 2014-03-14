@@ -48,6 +48,7 @@ angular.module('wynnoApp.services')
           // in which case we want to update oldestTweetId after receiving the new tweets
           if (!service.currentTweets.length) {
             service.oldestTweetId = data.tweets[data.tweets.length - 1].id_str;
+            console.log('oldestTweetId after getting batch of tweets is:', service.oldestTweetId);
           }
 
           // apply filtering rules to the tweets
