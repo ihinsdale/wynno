@@ -41,7 +41,7 @@ html
     script(src='/app/scripts/services/initialTweetsAndSettings.js')
     script(src='/app/scripts/filters/reverse.js')
 
-  body(ng-app='wynnoApp',ng-controller='NavCtrl')
+  body(ng-app='wynnoApp',ng-controller='NavCtrl', ng-class="{filterBuilderOpen: filterBuilderOpen}")
       block nav
       block content
       block footer

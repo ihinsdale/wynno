@@ -704,6 +704,10 @@ $twitterButtonRadius: 3px;
     margin-top: 0;
 }
 
+body.filterBuilderOpen .modal-dialog {
+    width: 100%;
+}
+
 .bigBird {
     color: $twitter-blue;
     font-size: 2em;

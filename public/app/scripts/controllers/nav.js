@@ -5,6 +5,7 @@ angular.module('wynnoApp.controllers')
   $scope.currentPathNeedsAuth = false;
   $scope.votesRequiredForNextSugg = null;
   $scope.undismissedSugg = null;
+  $scope.filterBuilderOpen = false;
 
   // if there is a current user, set the value of username in the scope
   if (AuthService.getCurrentUser()) {
@@ -121,6 +122,7 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.openFilterBuilder = function() {
+    $scope.filterBuilderOpen = true; // used by ng-class on body element, for css targeting of modal-dialog
     var modalInstance = $modal.open({
       templateUrl: '/app/views/filterbuilder.html',
       controller: 'CreateFilterCtrl'
@@ -129,8 +131,10 @@ angular.module('wynnoApp.controllers')
       console.log('Created filter successfully.');
       // display alert containing the rendered filter
       console.log('the rendered filter text is:', modalResult);
+      $scope.filterBuilderOpen = false;
     }, function(reason) {
       console.log('Filter creation canceled.');
+      $scope.filterBuilderOpen = false;
     });
   };
 })
