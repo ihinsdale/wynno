@@ -3,13 +3,13 @@ angular.module('wynnoApp.services')
   var service = {
     timeOfLastFetch: null,
     currentTweets: [],
-    oldestTweetId: 0,
-    getOldTweets: function(oldestTweetId) {
-      oldestTweetId = oldestTweetId || 0;
+    oldestTweetIdStr: 0,
+    getOldTweets: function(oldestTweetIdStr) {
+      oldestTweetIdStr = oldestTweetIdStr || '0';
       var d = $q.defer();
       $http.get('/old', {
         params: {
-          oldestTweetId: oldestTweetId,
+          oldestTweetIdStr: oldestTweetIdStr,
           settings: false
         }
       })
@@ -19,11 +19,11 @@ angular.module('wynnoApp.services')
         FilterService.applyFilterRules(data.tweets);
         // now add the tweets to currentTweets
         service.currentTweets = service.currentTweets.concat(data.tweets);
-        // update oldestTweetId, if any tweets were received
+        // update oldestTweetIdStr, if any tweets were received
         if (data.tweets.length) {
-          service.oldestTweetId = service.currentTweets[service.currentTweets.length - 1].id_str;
+          service.oldestTweetIdStr = service.currentTweets[service.currentTweets.length - 1].id_str;
         }
-        console.log('oldestTweetId after getting batch of tweets is:', service.oldestTweetId);
+        console.log('oldestTweetIdStr after getting batch of tweets is:', service.oldestTweetIdStr);
         d.resolve(service.currentTweets);
       })
       .error(function(reason, status) {
@@ -45,10 +45,10 @@ angular.module('wynnoApp.services')
           console.log('success getting new tweets, they look like:', data.tweets);
           // since the initial request for old tweets is always completed before getNewTweets is called for the first time,
           // we know that if service.currentTweets is empty we are dealing with a new user,
-          // in which case we want to update oldestTweetId after receiving the new tweets
+          // in which case we want to update oldestTweetIdStr after receiving the new tweets
           if (!service.currentTweets.length) {
-            service.oldestTweetId = data.tweets[data.tweets.length - 1].id_str;
-            console.log('oldestTweetId after getting batch of tweets is:', service.oldestTweetId);
+            service.oldestTweetIdStr = data.tweets[data.tweets.length - 1].id_str;
+            console.log('oldestTweetIdStr after getting batch of tweets is:', service.oldestTweetIdStr);
           }
 
           // apply filtering rules to the tweets

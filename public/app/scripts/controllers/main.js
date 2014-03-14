@@ -41,7 +41,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.firstGet = function() {
     console.log('firstGet firing');
-    console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
+    console.log('oldestTweetIdStr at this point is:', TweetService.oldestTweetIdStr);
     // set $scope.busy to true so that no additional requests for old tweets are triggered
     // until this first one is finished
     $scope.busy = true;
@@ -61,8 +61,8 @@ angular.module('wynnoApp.controllers')
 
   $scope.getMoreOldTweets = function() {
     console.log('getMoreOldTweets firing');
-    console.log('oldestTweetId at this point is:', TweetService.oldestTweetId);
-    TweetService.getOldTweets(TweetService.oldestTweetId)
+    console.log('oldestTweetIdStr at this point is:', TweetService.oldestTweetIdStr);
+    TweetService.getOldTweets(TweetService.oldestTweetIdStr)
     .then(function(tweets) {
       $scope.renderInOrOut();
     }, function(reason) {

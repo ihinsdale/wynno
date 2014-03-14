@@ -10,7 +10,7 @@ angular.module('wynnoApp.services')
       var d = $q.defer();
       $http.get('/old', {
         params: {
-          oldestTweetId: 0,
+          oldestTweetIdStr: '0',
           settings: true
         }
       })
@@ -30,11 +30,11 @@ angular.module('wynnoApp.services')
 
         // now add the tweets to currentTweets
         TweetService.currentTweets = data.tweets;
-        // update oldestTweetId, if any tweets were received
+        // update oldestTweetIdStr, if any tweets were received
         if (data.tweets.length) {
-          TweetService.oldestTweetId = TweetService.currentTweets[TweetService.currentTweets.length - 1].id_str;
+          TweetService.oldestTweetIdStr = TweetService.currentTweets[TweetService.currentTweets.length - 1].id_str;
         }
-        console.log('oldestTweetId after getting batch of tweets is:', TweetService.oldestTweetId);
+        console.log('oldestTweetIdStr after getting batch of tweets is:', TweetService.oldestTweetIdStr);
         d.resolve(TweetService.currentTweets);
       })
       .error(function(reason, status) {
