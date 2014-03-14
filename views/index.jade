@@ -11,9 +11,9 @@ block nav
         span o
       button.navbar-toggle(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
         span.sr-only Toggle navigation
-        span.icomoon-filter.ayeGreen(ng-show="active[0]")
-        span.icomoon-filter.nayRed(ng-show="active[1]")
-        span.icomoon-cogs(ng-show="active[2]")
+        span.icomoon-filter.ayeGreen.mobileButton(ng-show="active[0]")
+        span.icomoon-filter.nayRed.mobileButton(ng-show="active[1]")
+        span.icomoon-cogs.mobileButton(ng-show="active[2]")
       button.navbar-toggle(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!")
         .badge.badgePurpleBadge
           span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
@@ -21,9 +21,9 @@ block nav
       a.navbar-toggle.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
         .badge.badgePurpleBadge
           span.icomoon-trophy
-      a.navbar-toggle(href='', ng-show="currentPathNeedsAuth")
+      a.navbar-toggle.glyphButton(href='', ng-show="currentPathNeedsAuth")
         .wynnoPurple
-          span.icomoon-add-to-list
+          span.icomoon-add-to-list.mobileButton
       a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
         .twitterBird
           span.icomoon-twitter.twitterBlue
@@ -74,9 +74,6 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        a.btn.btn-default.navbar-btn(href='', ng-show="currentPathNeedsAuth", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
-          .wynnoPurple
-            span.icomoon-add-to-list
         span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next filter suggestion", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
@@ -84,6 +81,9 @@ block nav
         a.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", tooltip-placement="bottom", tooltip="You have new filtering suggestions!", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span.icomoon-trophy
+        a.btn.btn-default.navbar-btn.glyphButton(href='', ng-show="currentPathNeedsAuth", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
+          .wynnoPurple
+            span.icomoon-add-to-list.desktopButton
         .dropdown.inlineBlock
           a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
           ul.dropdown-menu

@@ -214,12 +214,12 @@ body > .container {
 
 .navbar .navbar-btn {
     background-image: none;
-    border-color: $deep-purple;
     background-color: whitesmoke;
 }
 
 .navbar .navbar-btn:hover {
     background-color: whitesmoke;
+    border-color: $deep-purple;
 }
 
 .navbar .navbar-btn:focus {
@@ -243,6 +243,26 @@ body > .container {
 
 .navMobileSignIn {
     padding: 9px 5px;
+}
+
+.mobileButton {
+    font-size: 24px;
+}
+
+.desktopButton {
+    font-size: 21px;
+}
+
+a.navbar-toggle.glyphButton {
+    padding: 5px 8px;
+}
+
+a.navbar-toggle.glyphButton:hover {
+    text-decoration: none;
+}
+
+a.btn.btn-default.navbar-btn.glyphButton {
+    padding: 4px 10px;
 }
 
 .customDivider {
