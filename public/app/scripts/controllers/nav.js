@@ -119,6 +119,21 @@ angular.module('wynnoApp.controllers')
       }
     });
   };
+
+  $scope.openFilterBuilder = function() {
+    var modalInstance = $modal.open({
+      templateUrl: '/app/views/filterbuilder.html',
+      controller: 'CreateFilterCtrl'
+    });
+    modalInstance.result.then(function(modalResult) {
+      console.log('Created filter successfully.');
+      // display alert containing the rendered filter
+      console.log('the rendered filter text is:', modalResult);
+    }, function(reason) {
+      console.log('Filter creation canceled.');
+    });
+  };
+
 })
 .controller('FeedbackModalInstanceCtrl', function($scope, $modalInstance) {
   $scope.form = {};

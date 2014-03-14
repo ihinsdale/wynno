@@ -14,7 +14,7 @@ block nav
         span.icomoon-filter.ayeGreen.mobileButton(ng-show="active[0]")
         span.icomoon-filter.nayRed.mobileButton(ng-show="active[1]")
         span.icomoon-cogs.mobileButton(ng-show="active[2]")
-      a.navbar-toggle.glyphButton(href='', ng-show="currentPathNeedsAuth")
+      button.navbar-toggle.glyphButton(ng-show="currentPathNeedsAuth", ng-click="openFilterBuilder()")
         .wynnoPurple
           span.icomoon-add-to-list.mobileButton
       button.navbar-toggle.noBorder(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!")
@@ -81,7 +81,7 @@ block nav
         a.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", tooltip-placement="bottom", tooltip="You have new filtering suggestions!", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span.icomoon-trophy
-        a.btn.btn-default.navbar-btn.glyphButton(href='', ng-show="currentPathNeedsAuth", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
+        a.btn.btn-default.navbar-btn.glyphButton(href='', ng-click="openFilterBuilder()", ng-show="currentPathNeedsAuth", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
           .wynnoPurple
             span.icomoon-add-to-list.desktopButton
         .dropdown.inlineBlock

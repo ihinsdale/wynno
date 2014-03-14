@@ -253,7 +253,12 @@ body > .container {
     font-size: 21px;
 }
 
-a.navbar-toggle.glyphButton, button.navbar-toggle.glyphButton {
+a.navbar-toggle.glyphButton {
+    padding: 5px 8px;
+    margin-left: 5px;
+}
+
+button.navbar-toggle.glyphButton {
     padding: 5px 8px;
 }
 
@@ -264,6 +269,7 @@ a.navbar-toggle.glyphButton:hover {
 a.btn.btn-default.navbar-btn.glyphButton {
     padding: 4px 10px;
     margin-right: 15px;
+    margin-left: 5px;
 }
 
 button.navbar-toggle.noBorder {
