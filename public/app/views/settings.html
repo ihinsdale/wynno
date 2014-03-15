@@ -69,6 +69,29 @@
     </tab-heading>
     <span>TODO: copy structure of Your filters</span>
   </tab>
+  <tab>
+    <tab-heading>
+      <span>Automatic wynnoing</span>
+      <span class="badge badgePurpleBadge" ng-bind="200 - voteCount" ng-show="voteCount < 200"></span>
+    </tab-heading>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span>Turn automatic wynnoing on/off</span>
+          <span class="icomoon-info"></span>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="btn-group" ng-show="voteCount >= 200">
+          <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="true">On</button>
+          <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="false">Off</button>
+        </div>
+        <div ng-show="voteCount < 200">
+          <span>In order to make helpful predictions, automatic wynnoing requires at least 200 votes.<strong><span ng-bind="200 - voteCount"></span></strong> more to go!</span>
+        </div>
+      </div>
+    </div>
+  </tab>
 </tabset>
 
 

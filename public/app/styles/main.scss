@@ -708,6 +708,10 @@ body.filterBuilderOpen .modal-dialog {
     width: 100%;
 }
 
+body.filterBuilderOpen .modal-footer {
+    text-align: center;
+}
+
 .bigBird {
     color: $twitter-blue;
     font-size: 2em;

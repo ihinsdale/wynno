@@ -380,7 +380,7 @@ exports.registerUser = function(user, callback) {
 };
 
 exports.getSettings = function(user_id, tweetsToPassOn, callback) {
-  User.findById(user_id, 'activeFilters disabledFilters voteCount suggestedFilters dismissedFilters undismissedSugg', function(err, doc) {
+  User.findById(user_id, 'activeFilters disabledFilters voteCount autoWynnoing suggestedFilters dismissedFilters undismissedSugg', function(err, doc) {
     if (err) {
       console.log('error finding user', user_id, 'settings');
       callback(err);

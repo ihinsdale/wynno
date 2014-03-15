@@ -9,6 +9,8 @@ angular.module('wynnoApp.controllers')
       angular.forEach(filterGroups, function(filterGroup) {
         $scope[filterGroup] = settings[filterGroup];
       });
+      $scope.autoWynnoing = settings.autoWynnoing;
+      $scope.voteCount = settings.voteCount;
     });
   };
 

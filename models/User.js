@@ -22,7 +22,8 @@ exports.userSchema = userSchema = new Schema({
   joined_at: { type: Date, default: Date.now },
   agreed_terms: { type: Boolean, default: false },
   agreed_terms_at: { type: Date, default: null },
-  voteCount: { type: Number, default: 0 }
+  voteCount: { type: Number, default: 0 },
+  autoWynnoing: { type: Boolean, default: false }
 });
 
 exports.User = mongoose.model('User', userSchema);
