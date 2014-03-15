@@ -36,12 +36,19 @@ angular.module('wynnoApp.services')
       } else if (filter.type === 'mute') {
         result += 'Mute ';
       }
-      // filter users
+
+      // if filter applies to all users
       if (!filter.users.length) {
-        result += "<span class='wynnoPurple'>all users' </span>"; 
+        if (filter.scope === 'all') {
+          result += "all tweets";
+        } else if (filter.scope === 'tweets') {
+          result += 'tweets (but not retweets)';
+        } else if (filter.scope === 'retweets') {
+          result += 'retweets';
+        } 
       } else {
         for (var i = 0; i < filter.users.length; i++) {
-          result += ('<span class="wynnoPurple">' + '@' + filter.users[i] + '</span>');
+          result += ('<strong class="darkGray">' + '@' + filter.users[i] + '</strong>');
           if (i === filter.users.length - 1) {
             if (result[result.length - 8] === 's') {
               result += "' ";
@@ -58,25 +65,24 @@ angular.module('wynnoApp.services')
             result += ', ';
           }
         }
-      }
-      // filter scope
-      if (filter.scope === 'all') {
-        if (filter.conditions.length) {
-          result += 'tweets and retweets';
-        } else {
-          // if there are no filter conditions, we can keep the rendered filter short
-          // e.g. it would read, Hear @ihinsdale
-          if (result.slice(result.length - 3) === "'s ") {
-            result = result.slice(0, result.length - 3);
+        if (filter.scope === 'all') {
+          if (filter.conditions.length) {
+            result += 'tweets and retweets';
           } else {
-            result = result.slice(0, result.length - 2);
+            // if there are no filter conditions, we can keep the rendered filter short
+            // e.g. it would read, Hear @ihinsdale
+            if (result.slice(result.length - 3) === "'s ") {
+              result = result.slice(0, result.length - 3);
+            } else {
+              result = result.slice(0, result.length - 2);
+            }
           }
-        }
-      } else if (filter.scope === 'tweets') {
-        result += 'tweets';
-      } else if (filter.scope === 'retweets') {
-        result += 'retweets';
-      } 
+        } else if (filter.scope === 'tweets') {
+          result += 'tweets';
+        } else if (filter.scope === 'retweets') {
+          result += 'retweets';
+        } 
+      }
       // filter conditions
       if (filter.conditions.length) {
         result += service.parseConditions(filter.conditions);
@@ -155,9 +161,9 @@ angular.module('wynnoApp.services')
       // if there are link conditions but nowhere specific specified
       if (links.total && !links.specific.count) {
         if (links.total === 1) {
-          linksResult = 'contain a link';
+          linksResult = 'contain <strong class="darkGray">a link</strong>';
         } else {
-          linksResult = 'contain ' + links.total + ' links';
+          linksResult = 'contain <strong class="darkGray">' + links.total + ' links</strong>';
         }
 
       // otherwise if there are link conditions and somewhere specific has been specified
@@ -178,30 +184,30 @@ angular.module('wynnoApp.services')
         if (countsLessThan1) {
           linksResult = 'link to ';
           for (var k = 0; k < specificDomains.length; k++) {
-            linksResult += specificDomains[k];
+            linksResult += '<strong class="darkGray">' + specificDomains[k] + '</strong>';
             if (k !== specificDomains.length - 1) {
               linksResult += ' and ';
             }
           }
           if (links.anywhere.count) {
-            linksResult += ' and anywhere else';
+            linksResult += ' and <strong class="darkGray">anywhere else</strong>';
           }
         // otherwise
         } else {
-          linksResult = 'contain ' + links.total + ' links';
+          linksResult = 'contain <strong class="darkGray">' + links.total + ' links</strong>';
           if (specificDomains.length === 1) {
-            linksResult += ' to ' + specificDomains[0];
+            linksResult += ' to <strong class="darkGray">' + specificDomains[0] + '</strong>';
           } else {
             linksResult += ', ';
             linksResultHasComma = true;
             for (var m = 0; m < specificDomains.length; m++) {
-              linksResult += (links.specific.domains[specificDomains[m]] + ' to ' + specificDomains[m]);
+              linksResult += (links.specific.domains[specificDomains[m]] + ' to <strong class="darkGray">' + specificDomains[m] + '</strong>');
               if (m !== specificDomains.length - 1) {
                 linksResult += ' and ';
               }
             }
             if (links.anywhere.count) {
-              linksResult += (' and ' + links.anywhere.count + ' anywhere else');
+              linksResult += (' and ' + links.anywhere.count + ' <strong class="darkGray">anywhere else</strong>');
             }
           }
         }
@@ -211,19 +217,19 @@ angular.module('wynnoApp.services')
 
       if (hashtags.total && !hashtags.specific.count) {
         if (hashtags.total === 1) {
-          hashtagsResult += 'a hashtag';
+          hashtagsResult += '<strong class="darkGray">a hashtag</strong>';
         } else {
-          hashtagsResult += hashtags.total + ' hashtags';
+          hashtagsResult += '<strong class="darkGray">' + hashtags.total + ' hashtags</strong>';
         }
       } else if (hashtags.total) {
         var specificHashtags = Object.keys(hashtags.specific.text);
         if (specificHashtags.length === 1) {
-          hashtagsResult += 'the hashtag ' + specificHashtags[0];
+          hashtagsResult += 'the hashtag <strong class="darkGray">' + specificHashtags[0] + '</strong>';
         } else {
           hashtagsResult += 'the hashtags ';
           var count;
           for (var p = 0; p < specificHashtags.length; p++) {
-            hashtagsResult += specificHashtags[p];
+            hashtagsResult += '<strong class="darkGray">' + specificHashtags[p] + '</strong>';
             count = hashtags.specific.text[specificHashtags[p]];
             if (count > 1) {
               if (count === 2) {
@@ -239,9 +245,9 @@ angular.module('wynnoApp.services')
         }
         if (hashtags.anything.count) {
           if (hashtags.anything.count === 1) {
-            hashtagsResult += ' and any other hashtag';
+            hashtagsResult += ' and <strong class="darkGray">any other hashtag</strong>';
           } else {
-            hashtagsResult += ' and any ' + hashtags.anything.count + ' others'
+            hashtagsResult += ' and <strong class="darkGray">any ' + hashtags.anything.count + ' others</strong>'
           }
         }
       }
@@ -267,16 +273,16 @@ angular.module('wynnoApp.services')
       if (pictures) {
         var noun = ' picture';
         if (pictures > 1) {
-          picturesResult += (pictures + noun + 's');
+          picturesResult += ('<strong class="darkGray">' + pictures + noun + 's</strong>');
         } else {
-          picturesResult += 'a' + noun
+          picturesResult += ('<strong class="darkGray">a' + noun + '</strong>');
         }
       }
 
       // quotation
 
       if (quotations) {
-        quotationResult = 'a quotation';
+        quotationResult = '<strong class="darkGray">a quotation</strong>';
       }
 
 
@@ -325,7 +331,7 @@ angular.module('wynnoApp.services')
       if (specific.length > 1) {
         result = 'the ' + type + 's ';
         for (var n = 0; n < specific.length; n++) {
-          result += specific[n];
+          result += '<strong class="darkGray">' + specific[n] + '</strong>';
           count = wordsOrPhrasesObject.text[specific[n]];
           if (count > 1) {
             if (count === 2) {
@@ -340,7 +346,7 @@ angular.module('wynnoApp.services')
         }
       } else {
         result = 'the ' + type + ' ';
-        result += specific[0];
+        result += '<strong class="darkGray">' + specific[0] + '</strong>';
         count = wordsOrPhrasesObject.text[specific[0]];
         if (count > 1) {
           if (count === 2) {

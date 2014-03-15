@@ -116,7 +116,7 @@
     <strong ng-bind="error.message"></strong>
   </div>
   <button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()">
-    <span>Save filter</span>
+    <span ng-hide="busySaving">Save filter</span>
     <span class="icomoon-spinner3" ng-class="{spinner: busySaving}" ng-show="busySaving"></span>
   </button>
 </div>

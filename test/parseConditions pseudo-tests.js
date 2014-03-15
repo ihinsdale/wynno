@@ -75,7 +75,7 @@
     console.log(parseConditions(test));
     var test =[{type:'quotation'},{type:'quotation'}]
     console.log(parseConditions(test));
-    */
+
     
     console.log('COMBINATIONS')
     var test = [{type:'link'},{type:'picture'}];
