@@ -3,7 +3,7 @@ var zerorpc = require("zerorpc");
 var client = new zerorpc.Client();
 client.connect("tcp://127.0.0.1:4242");
 
-exports.crunchTheNumbers = function(user_id, tweets, settings, callback) {
+exports.crunchTheNumbers = function(user_id, tweets, settingsPassingOn, callback) {
   // need to stringify the user_id ObjectId object before sending to Python
   client.invoke("predict", user_id.toString(), JSON.stringify(tweets), function(error, res, more) {
     if (error) {
@@ -15,7 +15,7 @@ exports.crunchTheNumbers = function(user_id, tweets, settings, callback) {
       console.log(res);
       // could conceivably just have Python send back the p values in an array, then zip them together
       // with the tweets object here
-      callback(null, tweets, settings);
+      callback(null, tweets, settingsPassingOn);
     }
   });
 };

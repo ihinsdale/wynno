@@ -29,7 +29,7 @@ logging.basicConfig();
 
 # connect to db
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
-client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['localhost'] + '/wynno-dev')
+client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['host'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
 
@@ -238,50 +238,32 @@ def binarize_feature_dicts(feature_dicts):
         dict[key] = 1
   return binarized
 
-def crunch(votedTweets, nonvotedTweets):
-  votedFeatureSets = [(tweet_features(tweet), tweet['__vote']) for tweet in votedTweets]
-  random.shuffle(votedFeatureSets)
+def crunch(voted_tweets, tweets_to_predict):
+  # crucial that voted_tweets and tweets_to_predict have feature vectors with the exact same signature
+  # to ensure that, we'll join them together, then split them after vectorizing
+  all_tweets = voted_tweets.extend(tweets_to_predict)
+  # create feature dictionaries of voted_tweets
+  feature_dicts = extract_features(all_tweets, with_ngrams=False)
+  pprint(feature_dicts)
 
-  twoThirds = int(math.floor(len(votedFeatureSets)*2/3))
-  print 'Size of training set:'
-  print twoThirds
-  halfOfRemaining = int(math.floor(len(votedFeatureSets)*5/6))
-  print 'Size of devtest set:'
-  print halfOfRemaining - twoThirds
-  print 'Size of test set:'
-  print len(votedFeatureSets) - halfOfRemaining
+  # define array of votes, i.e. class labels, also known as Y array for scikit classifiers
+  votes = [tweet['__vote'] for tweet in voted_tweets]
 
-  trainSet = votedFeatureSets[:twoThirds]
-  devtestSet = votedFeatureSets[twoThirds:halfOfRemaining]
-  testSet = votedFeatureSets[halfOfRemaining:]
+  # use Bernoulli naive Bayes from scikit
+  binarized_feature_dicts = binarize_feature_dicts(feature_dicts)
+  # vectorize the binarized feature dicts
+  vec = DictVectorizer()
+  binarized_vectorized_features = vec.fit_transform(binarized_feature_dicts).toarray()
+  feature_names = vec.get_feature_names()
+  binarized_vectorized_voted_tweets = binarized_vectorized_features[:len(voted_tweets)]
+  print 'Length of binarized_vectorized_voted_tweets: ' + str(len(binarized_vectorized_voted_tweets))
+  print 'Length of votes: ' + str(len(votes))
+  sk_naive_bayes(binarized_vectorized_voted_tweets, votes, feature_names)
 
-  classifier = nltk.NaiveBayesClassifier.train(trainSet)
-  print nltk.classify.accuracy(classifier, devtestSet)
-  print nltk.classify.accuracy(classifier, testSet)
-  classifier.show_most_informative_features(10)
-
-  # errors = []
-  # for (tweet, tag) in devtestSet:
-  #   guess = classifier.classify(tweet)
-  #   if guess != tag:
-  #     errors.append( (tag, guess, tweet) )
-
-  # for (tag, guess, tweet) in sorted(errors):
-  #   print 'correct=%-8s guess=%-8s features=%-30s' % (tag, guess, tweet)
-
-  guesses = []
-  for tweet in nonvotedTweets:
-    guesses.append([tweet['_id'], round(classifier.prob_classify(tweet_features(tweet)).prob(1), 3)])
+  # # compare with naive Bayes from nltk
+  # nltk_naive_bayes(binarized_vectorized_features, votes, feature_names)
 
   return guesses
-
-def save_guesses(guesses):
-  for pair in guesses:
-    result = db.tweets.update({"_id": pair[0]}, {"$set": {"__p": pair[1]}})
-    if result['err']: # is this test formulated correctly?
-      raise SaveError('There was an error saving the prediction.')
-  #return guesses
-  return
 
 def save_suggested_filters(user_id, filters):
   """ Save filter suggestions to the user's record in the database. """
@@ -325,6 +307,9 @@ def sk_naive_bayes(X, Y, feature_names):
   clf = naive_bayes.BernoulliNB() # binarize turns count features like number of urls into binary indicator
   clf.fit(X, Y)
   show_most_informative_features(feature_names, clf)
+  pprint(clf.predict(X))
+  pprint(clf.predict_proba(X))
+
 
 def nltk_naive_bayes(X, Y, feature_names):
   # need to convert from X back into feature dict
@@ -669,18 +654,6 @@ def from_votes_to_filters(user_id, tweets):
   # decision tree classifier 
   #decision_tree(feature_dicts, votes)
 
-  # [THIS BLOCK WORKS, JUST COMMENTING IT OUT FOR EFFICIENCY WHILE EXPERIMENTING WITH OTHER STUFF]
-  # # use Bernoulli naive Bayes from scikit
-  # binarized_feature_dicts = binarize_feature_dicts(feature_dicts)
-  # # vectorize the binarized feature dicts
-  # vec = DictVectorizer()
-  # binarized_vectorized_features = vec.fit_transform(binarized_feature_dicts).toarray()
-  # feature_names = vec.get_feature_names()
-  # sk_naive_bayes(binarized_vectorized_features, votes, feature_names)
-
-  # # compare with naive Bayes from nltk
-  # nltk_naive_bayes(binarized_vectorized_features, votes, feature_names)
-
   # make filter suggestions, using compute custom approach
   filters = custom(feature_dicts, votes)
   # filters at this point are ranked in descending order of accuracy/quality: the 0th element is the one we're most confident in.
@@ -695,18 +668,20 @@ def from_votes_to_filters(user_id, tweets):
   return filters
 
 class RPC(object):
-  def predict(self, user_id):
+  def predict(self, user_id, tweets_to_predict):
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
     user_id = ObjectId(user_id) 
+    # when computing resources become more scarce, because of more users, can implement saving of classifiers
+    # using joblib (http://stackoverflow.com/a/11169797) - e.g. refit the classifier after every 20 votes
     print 'Tweets voted on: ' + str(tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }).count())
     print 'Out of ' + str(tweets.find({ "user_id": user_id }).count()) + ' total tweets'
-    votedTweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
-    nonvotedTweets = tweets.find({ "user_id": user_id, "__vote": None })
-    if votedTweets.count():
-      save_guesses(crunch(votedTweets, nonvotedTweets))
-    return 'success'
+    voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
+    nonvoted_tweets = tweets.find({ "user_id": user_id, "__vote": None })
+    if voted_tweets.count():
+      crunch(voted_tweets, tweets_to_predict)
+    except:
+      return 'Error crunching predictions.'
     # this will return the p's for all nonvoted tweets which have just been crunched
-    # requires save_guesses to return the guesses
     # return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
   def suggest(self, user_id):
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
@@ -721,10 +696,9 @@ class RPC(object):
 
     return dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
-s = zerorpc.Server(RPC())
-s.bind("tcp://0.0.0.0:4242")
-s.run()
+# s = zerorpc.Server(RPC())
+# s.bind("tcp://0.0.0.0:4242")
+# s.run()
 
 # test = RPC()
-# #test.suggest("5310690f1264b0ac1b000005")
 # test.suggest("5311704f0970b2d421000006")
