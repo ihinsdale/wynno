@@ -27,6 +27,8 @@ module.exports = function(app) {
   app.post('/adoptsuggestion', ensureAuthenticated, ensureAgreedTerms, site.adoptSuggestion);
   // POST request to /dismisssuggestion
   app.post('/dismisssuggestion', ensureAuthenticated, ensureAgreedTerms, site.dismissSuggestion);
+  // POST request to /autowynnoing
+  app.post('/autowynnoing', ensureAuthenticated, ensureAgreedTerms, site.toggleAutoWynnoing);
   // GET request to /checkin after authenticating with Twitter
   app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'

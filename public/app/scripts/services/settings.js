@@ -564,6 +564,29 @@ angular.module('wynnoApp.services')
         d.reject(reason);
       });
       return d.promise;
+    },
+    toggleAutoWynnoing: function() {
+      var d = $q.defer();
+      if (service.settings.voteCount < 200) {
+        d.reject(200 - service.settings.voteCount + " more votes required before auto-wynnoing can be turned on.");
+      } else {
+        $http({ method: 'POST', url: '/autowynnoing', data: {
+          autoWynnoing: !service.settings.autoWynnoing
+        } })
+        .success(function(data, status) {
+          service.settings.autoWynnoing = !service.settings.autoWynnoing;
+          // if auto-wynnoing has just been turned on, we will have received tweets with p-values
+          // so we apply filters to the tweets received and then replace the currentTweets with them
+          if (service.settings.autoWynnoing) {
+            TweetService.replaceCurrentTweets(data.tweets);
+          }
+          d.resolve('Successfully switched auto-wynnoing to', service.settings.autoWynnoing);
+        })
+        .error(function(reason, status) {
+          d.reject(reason);
+        });
+      }
+      return d.promise;
     }
   };
 

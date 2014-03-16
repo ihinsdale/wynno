@@ -149,6 +149,10 @@ angular.module('wynnoApp.services')
         }
       });
       return tweetsToDisplay;
+    },
+    replaceCurrentTweets: function(tweets) {
+      FilterService.applyFilterRules(tweets);
+      service.currentTweets = tweets;
     }
   };
 

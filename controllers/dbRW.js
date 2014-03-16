@@ -418,4 +418,16 @@ exports.saveAgreement = function(user_id, agreement, callback) {
       callback(null);
     }
   });
+};
+
+exports.updateAutoWynnoing = function(user_id, autoWynnoing, callback) {
+  User.findByIdAndUpdate(user_id, { autoWynnoing: autoWynnoing }, function(err, doc) {
+    if (err) {
+      console.log('Error toggling auto wynnoing.');
+      callback(err);
+    } else {
+      console.log('Toggled auto wynnoing to:', autoWynnoing);
+      callback(null);
+    }
+  });
 }

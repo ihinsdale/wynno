@@ -34,8 +34,8 @@ exports.logout = function(req, res) {
   res.send('Logged out of wynno.');
 };
 
-exports.old = function(req, res) {
-  var oldestTweetIdStr = req.query.oldestTweetIdStr;
+exports.old = old = function(req, res) {
+  var oldestTweetIdStr = req.query.oldestTweetIdStr || '0';
   console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
   console.log('typeof oldestTweetId:', typeof oldestTweetIdStr);
   async.waterfall([
@@ -61,6 +61,11 @@ exports.old = function(req, res) {
         callback(null, tweets, null);
       }
     },
+    function(tweets, settings, callback) {
+      if (req.user.autoWynnoing || res.local.autoWynnoingJustToggledOn) {
+        algo.crunchTheNumbers(tweets, settings, callback);
+      }
+    }
   ], function(error, tweets, settings) {
     if (error) {
       console.log(error);
@@ -175,16 +180,16 @@ exports.fresh = function(req, res) {
     // after saving new batch of tweets, update latestTweetId in User doc
     db.updateSecondLatestTweetId,
 
-    // calculate p-values for the new batch of tweets
-    // currently this command crunches the numbers for all tweets which haven't been voted on
-    // which does some unnecessary processing: we don't need to recrunch numbers for old tweets
-    // until the user has done some new voting--e.g. implement a vote counter so that numbers
-    // only get crunched every 50 votes
-    // (MACHINE LEARNING CURRENTLY DISABLED, by commenting out line below:)
-    // algo.crunchTheNumbers,
-
     // get this new batch of tweets out of the database
-    db.findTweetsSinceId
+    db.findTweetsSinceId,
+    // calculate p values for tweets, if auto-wynnoing is on
+    function(tweets, callback) {
+      if (req.user.autoWynnoing) {
+        algo.crunchTheNumbers(req.user._id, tweets, callback);
+      } else {
+        callback(null, tweets);
+      }
+    }
   ], function(error, tweets) {
     if (error) {
       if (error === 'No new tweets have occurred.') {
@@ -247,9 +252,16 @@ exports.middle = function(req, res) {
     },
     // could consolidate the updateGapMarker query with the findTweetsSinceIdAndBeforeId query, may be faster
     db.updateGapMarker,
-    // (MACHINE LEARNING CURRENTLY DISABLED, by commenting out line below:)
-    // algo.crunchTheNumbers,
-    db.findTweetsSinceIdAndBeforeId
+    // grab tweets from the db
+    db.findTweetsSinceIdAndBeforeId,
+    // calculate p values for tweets, if auto-wynnoing is on
+    function(tweets, callback) {
+      if (req.user.autoWynnoing) {
+        algo.crunchTheNumbers(req.user._id, tweets, callback);
+      } else {
+        callback(null, tweets);
+      }
+    }
   ], function(error, tweets) {
     if (error) {
       if (error.slice(0,20) === 'Please try again in ') {
@@ -451,3 +463,27 @@ exports.processAgreement = function(req, res) {
     }
   });
 };
+
+exports.toggleAutoWynnoing = function(req, res) {
+  var data = req.body;
+  if (req.user.voteCount < 200) {
+    res.send(429, (200 - req.user.voteCount) + " more votes required before auto-wynnoing can be turned on.");
+  }
+  async.waterfall([
+    function(callback) {
+      db.updateAutoWynnoing(req.user._id, req.body.autoWynnoing, callback);
+    }
+  ], function(error) {
+    if (error) {
+      res.send(500);
+    } else {
+      if (!req.body.autoWynnoing) {
+        res.send("Auto-wynnoing has been turned off.");
+      } else {
+        res.local.autoWynnoingJustToggledOn = true; // this is used by old()
+        old(req, res);
+      }
+    }
+  });
+};
+

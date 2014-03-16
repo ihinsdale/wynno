@@ -51,6 +51,19 @@ angular.module('wynnoApp.controllers')
     })
   }
 
+  $scope.toggleAutoWynnoing = function(newSetting) {
+    if (SettingsService.settings.autoWynnoing !== newSetting) {
+      SettingsService.toggleAutoWynnoing()
+      .then(function() {
+        // if successful in saving toggling, we are done;
+      }, function(error) {
+        // if there was an error toggling, then we need to reset the value of autoWynnoing on the scope
+        // to its original
+        $scope.autoWynnoing = !newSetting;
+      });
+    }
+  };
+
   window.scrollTo(0, 0);
   $scope.injectSettings();
 
