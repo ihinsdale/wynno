@@ -62,9 +62,10 @@ exports.old = old = function(req, res) {
       }
     },
     function(tweets, settings, callback) {
-      console.log('inside new fcn');
       if (req.user.autoWynnoing || req.session.autoWynnoingJustToggledOn) {
         algo.crunchTheNumbers(tweets, settings, callback);
+      } else {
+        callback(null, tweets, settings);
       }
     }
   ], function(error, tweets, settings) {
@@ -479,6 +480,7 @@ exports.toggleAutoWynnoing = function(req, res) {
       res.send(500);
     } else {
       if (!req.body.autoWynnoing) {
+        req.session.autoWynnoingJustToggledOn = false; // this is relevant to old()
         res.send("Auto-wynnoing has been turned off.");
       } else {
         req.session.autoWynnoingJustToggledOn = true; // this is used by old()
