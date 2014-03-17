@@ -63,7 +63,7 @@ exports.old = old = function(req, res) {
     },
     function(tweets, settings, callback) {
       if (req.user.autoWynnoing || req.session.autoWynnoingJustToggledOn) {
-        algo.crunchTheNumbers(tweets, settings, callback);
+        algo.crunchTheNumbers(req.user._id, tweets, settings, callback);
       } else {
         callback(null, tweets, settings);
       }
@@ -187,7 +187,7 @@ exports.fresh = function(req, res) {
     // calculate p values for tweets, if auto-wynnoing is on
     function(tweets, callback) {
       if (req.user.autoWynnoing) {
-        algo.crunchTheNumbers(req.user._id, tweets, callback);
+        algo.crunchTheNumbers(req.user._id, tweets, null, callback);
       } else {
         callback(null, tweets);
       }
@@ -259,7 +259,7 @@ exports.middle = function(req, res) {
     // calculate p values for tweets, if auto-wynnoing is on
     function(tweets, callback) {
       if (req.user.autoWynnoing) {
-        algo.crunchTheNumbers(req.user._id, tweets, callback);
+        algo.crunchTheNumbers(req.user._id, tweets, null, callback);
       } else {
         callback(null, tweets);
       }
