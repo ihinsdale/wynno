@@ -579,6 +579,9 @@ angular.module('wynnoApp.services')
           // so we apply filters to the tweets received and then replace the currentTweets with them
           if (service.settings.autoWynnoing) {
             TweetService.replaceCurrentTweets(data.tweets);
+          // if auto-wynnoing has just been turned off, we want to remove p-values from currentTweets
+          } else {
+            TweetService.removePredictions();
           }
           d.resolve('Successfully switched auto-wynnoing to', service.settings.autoWynnoing);
         })

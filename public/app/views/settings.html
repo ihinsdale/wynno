@@ -85,7 +85,7 @@
         <div class="panel-body">
           <div class="btn-group" ng-show="voteCount >= 200">
             <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="true" ng-click="toggleAutoWynnoing(true)">On</button>
-            <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(true)">Off</button>
+            <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(false)">Off</button>
           </div>
           <div ng-show="voteCount < 200">
             <span>In order to make helpful predictions, automatic wynnoing requires at least 200 votes. <strong><span ng-bind="200 - voteCount"></span></strong> more to go!</span>

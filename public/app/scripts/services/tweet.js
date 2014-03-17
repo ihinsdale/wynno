@@ -149,6 +149,12 @@ angular.module('wynnoApp.services')
     replaceCurrentTweets: function(tweets) {
       FilterService.applyFilterRules(tweets);
       service.currentTweets = tweets;
+    },
+    removePredictions: function() {
+      angular.forEach(service.currentTweets, function(tweet) {
+        tweet.__p = null;
+        tweet.__pScore = null;
+      })
     }
   };
 
