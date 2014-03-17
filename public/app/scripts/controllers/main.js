@@ -164,13 +164,11 @@ angular.module('wynnoApp.controllers')
     $scope.renderInOrOut();
   };
 
-  $scope.threshold = 0.5;
-
   $scope.renderInOrOut = function() {
     if ($location.path() === '/in') {
-      $scope.display(TweetService.getPassingTweets($scope.threshold));
+      $scope.display(TweetService.getPassingTweets());
     } else if ($location.path() === '/out') {
-      $scope.display(TweetService.getFailingTweets($scope.threshold));
+      $scope.display(TweetService.getFailingTweets());
     }
   };
 
@@ -208,11 +206,15 @@ angular.module('wynnoApp.controllers')
       return approx;
     };
     var elegantizeP = function(p) {
-      return Math.round(p * 100);
-    }
+      if (p === null) {
+        return null;
+      } else {
+        return Math.round(p * 100);
+      }
+    };
     for (var i = 0; i < tweets.length; i++) {
       tweets[i].__elegant_time = elegantizeTimestamp(tweets[i].__created_at);
-      tweets[i].__pScore = elegantizeP(tweets[i].__p)
+      tweets[i].__pScore = elegantizeP(tweets[i].__p);
     }
   };
 

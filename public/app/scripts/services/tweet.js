@@ -100,7 +100,7 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
-    getPassingTweets: function(threshold) {
+    getPassingTweets: function() {
       var tweetsToDisplay = [];
       angular.forEach(service.currentTweets, function(tweet) {
         // reset this property to false, so it is only made true by a new contrary vote
@@ -111,10 +111,8 @@ angular.module('wynnoApp.services')
           } else if (tweet.__isMuted) {
             //do nothing
           } else {
-            if (tweet.__p >= threshold || tweet.__p === null) {
+            if (tweet.__p === 1 || tweet.__p === null) {
               tweetsToDisplay.push(tweet);
-            } else {
-              //do nothing
             }
           }
         } else {
@@ -125,7 +123,7 @@ angular.module('wynnoApp.services')
       });
       return tweetsToDisplay;
     },
-    getFailingTweets: function(threshold) {
+    getFailingTweets: function() {
       var tweetsToDisplay = [];
       angular.forEach(service.currentTweets, function(tweet) {
         // reset this property to false, so it is only made true by a new contrary vote
@@ -136,9 +134,7 @@ angular.module('wynnoApp.services')
           } else if (tweet.__isMuted) {
             tweetsToDisplay.push(tweet);
           } else {
-            if (tweet.__p >= threshold || tweet.__p === null) {
-              //do nothing
-            } else {
+            if (tweet.__p === 0) {
               tweetsToDisplay.push(tweet);
             }
           }
