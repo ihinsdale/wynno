@@ -20,6 +20,7 @@ from pymongo import MongoClient
 from sklearn import tree
 from sklearn.feature_extraction import DictVectorizer
 from sklearn import naive_bayes
+from sklearn import cross_validation
 from pprint import pprint
 from StringIO import StringIO
 from sklearn.externals.six import StringIO as sk_StringIO
@@ -241,10 +242,10 @@ def binarize_feature_dicts(feature_dicts):
 def crunch(voted_tweets, tweets_to_predict):
   # crucial that voted_tweets and tweets_to_predict have feature vectors with the exact same signature
   # to ensure that, we'll join them together, then split them after vectorizing
-  all_tweets = voted_tweets.extend(tweets_to_predict)
+  all_tweets = voted_tweets[:]
+  all_tweets.extend(tweets_to_predict)
   # create feature dictionaries of voted_tweets
   feature_dicts = extract_features(all_tweets, with_ngrams=False)
-  pprint(feature_dicts)
 
   # define array of votes, i.e. class labels, also known as Y array for scikit classifiers
   votes = [tweet['__vote'] for tweet in voted_tweets]
@@ -258,12 +259,22 @@ def crunch(voted_tweets, tweets_to_predict):
   binarized_vectorized_voted_tweets = binarized_vectorized_features[:len(voted_tweets)]
   print 'Length of binarized_vectorized_voted_tweets: ' + str(len(binarized_vectorized_voted_tweets))
   print 'Length of votes: ' + str(len(votes))
-  sk_naive_bayes(binarized_vectorized_voted_tweets, votes, feature_names)
+  clf = sk_naive_bayes(binarized_vectorized_voted_tweets, votes, feature_names)
+  predictions = clf.predict(binarized_vectorized_features[len(voted_tweets):])
+  probabilities = clf.predict_proba(binarized_vectorized_features[len(voted_tweets):])
+  pprint([(round(pair[1]/pair[0], 2), round(pair[1], 2), round(pair[0]/pair[1], 2), round(pair[0], 2)) for pair in probabilities])
+  log_probabilities = clf.predict_log_proba(binarized_vectorized_features[len(voted_tweets):])
+  pprint([round(pair[1]/pair[0], 2) for pair in log_probabilities])
+  # per https://github.com/scikit-learn/scikit-learn/issues/2508 and https://github.com/scikit-learn/scikit-learn/pull/2694,
+  # votes needs to be converted from a list to a numpy array
+
+  scores = cross_validation.cross_val_score(clf, binarized_vectorized_voted_tweets, np.array(votes), cv=10)
+  print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
   # # compare with naive Bayes from nltk
   # nltk_naive_bayes(binarized_vectorized_features, votes, feature_names)
 
-  return guesses
+  return
 
 def save_suggested_filters(user_id, filters):
   """ Save filter suggestions to the user's record in the database. """
@@ -307,8 +318,7 @@ def sk_naive_bayes(X, Y, feature_names):
   clf = naive_bayes.BernoulliNB() # binarize turns count features like number of urls into binary indicator
   clf.fit(X, Y)
   show_most_informative_features(feature_names, clf)
-  pprint(clf.predict(X))
-  pprint(clf.predict_proba(X))
+  return clf
 
 
 def nltk_naive_bayes(X, Y, feature_names):
@@ -678,9 +688,9 @@ class RPC(object):
     voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
     nonvoted_tweets = tweets.find({ "user_id": user_id, "__vote": None })
     if voted_tweets.count():
-      crunch(voted_tweets, tweets_to_predict)
-    except:
-      return 'Error crunching predictions.'
+      crunch(list(voted_tweets), tweets_to_predict) # using list() necessary to convert from PyMongo cursor
+    else:
+      return 'No tweets have been voted on yet.'
     # this will return the p's for all nonvoted tweets which have just been crunched
     # return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
   def suggest(self, user_id):
@@ -700,5 +710,6 @@ class RPC(object):
 # s.bind("tcp://0.0.0.0:4242")
 # s.run()
 
-# test = RPC()
-# test.suggest("5311704f0970b2d421000006")
+unvoted = list(tweets.find({ "user_id": ObjectId("53256f304c02bf7521103344") }).sort("_id",1).limit(50))
+test = RPC()
+test.predict("53256f304c02bf7521103344", unvoted)
