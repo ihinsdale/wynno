@@ -12,9 +12,13 @@ exports.crunchTheNumbers = function(user_id, tweets, settingsPassingOn, callback
     } else if (more) {
       console.log('there is more to come:', more);
     } else {
+      // response is an array of predictions (0 or 1) for whether the user will like the tweets
       console.log(res);
-      // could conceivably just have Python send back the p values in an array, then zip them together
-      // with the tweets object here
+      res = JSON.parse(res)
+      // add these predictions to the tweets
+      for (var i = 0; i < res.length; i++) {
+        tweets[i].__p = res[i];
+      }
       callback(null, tweets, settingsPassingOn);
     }
   });

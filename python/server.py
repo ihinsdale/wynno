@@ -21,6 +21,7 @@ from sklearn import tree
 from sklearn.feature_extraction import DictVectorizer
 from sklearn import naive_bayes
 from sklearn import cross_validation
+from sklearn.metrics import make_scorer
 from pprint import pprint
 from StringIO import StringIO
 from sklearn.externals.six import StringIO as sk_StringIO
@@ -30,7 +31,7 @@ logging.basicConfig();
 
 # connect to db
 keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
-client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['host'] + '/wynno-dev')
+client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['localhost'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
 
@@ -262,19 +263,59 @@ def crunch(voted_tweets, tweets_to_predict):
   clf = sk_naive_bayes(binarized_vectorized_voted_tweets, votes, feature_names)
   predictions = clf.predict(binarized_vectorized_features[len(voted_tweets):])
   probabilities = clf.predict_proba(binarized_vectorized_features[len(voted_tweets):])
-  pprint([(round(pair[1]/pair[0], 2), round(pair[1], 2), round(pair[0]/pair[1], 2), round(pair[0], 2)) for pair in probabilities])
-  log_probabilities = clf.predict_log_proba(binarized_vectorized_features[len(voted_tweets):])
-  pprint([round(pair[1]/pair[0], 2) for pair in log_probabilities])
+  # probabilities is a list of pairs of probabilities the tweet belongs to vote classes 0 and 1
+  multiples_threshold_for_confidence_of_dislike = 1
+  wynno_predictions = [0 if (pair[0]/pair[1]) >= multiples_threshold_for_confidence_of_dislike else None for pair in probabilities]
+  #pprint([(round(pair[1]/pair[0], 2), round(pair[1], 2), round(pair[0]/pair[1], 2), round(pair[0], 2)) for pair in probabilities])
+
+  #evaluate_accuracy(clf, binarized_vectorized_voted_tweets, votes, multiples_threshold_for_confidence_of_dislike)
+
+  #tweet_ids = [tweet["_id"] for tweet in tweets_to_predict]
+  #return zip(tweet_ids, wynno_predictions)
+  return wynno_predictions
+
+def evaluate_accuracy(NB_classifier, binarized_vectorized_voted_tweets, votes, multiples_threshold_for_confidence_of_dislike):
+  # Score the classifier, i.e. see how well it performs
   # per https://github.com/scikit-learn/scikit-learn/issues/2508 and https://github.com/scikit-learn/scikit-learn/pull/2694,
   # votes needs to be converted from a list to a numpy array
 
-  scores = cross_validation.cross_val_score(clf, binarized_vectorized_voted_tweets, np.array(votes), cv=10)
+  # we will define a custom scorer function (Cf. http://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter): 
+  # we only want to make use of classifier predictions where
+  # the classifier is very very sure the user won't like a tweet
+  def custom_score_fcn(ground_truth, probs):
+    # probs contains the classifier's prediction probabilities rather than the predictions themselves
+    # this is achieved by setting needs_threshold=True in make_scorer() below
+
+    # we're erring on the side of caution and only trying to identify tweets the user definitely won't like
+    # so my custom predictor predicts a 0 for vote/like (meaning dislike) whenever
+    # the predicted probability of dislike is 100 times greater than the probability of like
+    # otherwise the predictor abstains, via None
+    my_custom_predictions = [0 if (1-conf_vote1)/conf_vote1 >= multiples_threshold_for_confidence_of_dislike else None for conf_vote1 in probs]
+    # this line would be the opposite, an attempt to predict tweets the user will like:
+    #my_custom_predictions = [1 if (conf_vote1)/(1-conf_vote1) >= 200000 else None for conf_vote1 in probs]
+    print my_custom_predictions
+    # now compare the custom predictions to the ground truth
+    correct = 0
+    total_pred = 0
+    for index, each in enumerate(my_custom_predictions):
+      if each is not None:
+        if each == ground_truth[index]:
+          # 1 indicates a correct prediction--this means our custom_score_fcn is a score function
+          # so we set greater_is_better to True in make_scorer()
+          correct += 1
+          total_pred += 1
+        else:
+          total_pred += 1
+    return correct * 1.0 / total_pred
+
+  custom_scorer = make_scorer(custom_score_fcn, greater_is_better=True, needs_threshold=True)
+
+  scores = cross_validation.cross_val_score(NB_classifier, binarized_vectorized_voted_tweets, np.array(votes), cv=5, scoring=custom_scorer)
   print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
   # # compare with naive Bayes from nltk
   # nltk_naive_bayes(binarized_vectorized_features, votes, feature_names)
-
-  return
+  return {'mean': scores.mean(), 'std': scores.std()}
 
 def save_suggested_filters(user_id, filters):
   """ Save filter suggestions to the user's record in the database. """
@@ -315,11 +356,10 @@ def decision_tree(feature_dicts, votes):
   graph.write_pdf("graph_" + criterion + ".pdf") 
 
 def sk_naive_bayes(X, Y, feature_names):
-  clf = naive_bayes.BernoulliNB() # binarize turns count features like number of urls into binary indicator
+  clf = naive_bayes.BernoulliNB() # using my own binarization of feature dicts
   clf.fit(X, Y)
-  show_most_informative_features(feature_names, clf)
+  #show_most_informative_features(feature_names, clf)
   return clf
-
 
 def nltk_naive_bayes(X, Y, feature_names):
   # need to convert from X back into feature dict
@@ -686,13 +726,10 @@ class RPC(object):
     print 'Tweets voted on: ' + str(tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }).count())
     print 'Out of ' + str(tweets.find({ "user_id": user_id }).count()) + ' total tweets'
     voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
-    nonvoted_tweets = tweets.find({ "user_id": user_id, "__vote": None })
-    if voted_tweets.count():
-      crunch(list(voted_tweets), tweets_to_predict) # using list() necessary to convert from PyMongo cursor
-    else:
-      return 'No tweets have been voted on yet.'
-    # this will return the p's for all nonvoted tweets which have just been crunched
-    # return dumps(save_guesses(crunch(votedTweets, nonvotedTweets)))
+    predictions = crunch(list(voted_tweets), tweets_to_predict) # using list() necessary to convert from PyMongo cursor
+    predictions_json = json.dumps(predictions)
+    return predictions_json
+
   def suggest(self, user_id):
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
     user_id = ObjectId(user_id)
@@ -706,10 +743,10 @@ class RPC(object):
 
     return dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
 
-# s = zerorpc.Server(RPC())
-# s.bind("tcp://0.0.0.0:4242")
-# s.run()
+s = zerorpc.Server(RPC())
+s.bind("tcp://0.0.0.0:4242")
+s.run()
 
-unvoted = list(tweets.find({ "user_id": ObjectId("53256f304c02bf7521103344") }).sort("_id",1).limit(50))
-test = RPC()
-test.predict("53256f304c02bf7521103344", unvoted)
+# unvoted = list(tweets.find({ "user_id": ObjectId("53256f304c02bf7521103344") }).sort("_id",1).limit(50))
+# test = RPC()
+# test.predict("53256f304c02bf7521103344", unvoted)
