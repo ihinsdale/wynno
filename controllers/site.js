@@ -35,7 +35,7 @@ exports.logout = function(req, res) {
 };
 
 exports.old = old = function(req, res) {
-  var oldestTweetIdStr = req.query.oldestTweetIdStr || '0';
+  var oldestTweetIdStr = req.query.oldestTweetIdStr;
   console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
   console.log('typeof oldestTweetId:', typeof oldestTweetIdStr);
   async.waterfall([
