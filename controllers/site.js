@@ -35,7 +35,7 @@ exports.logout = function(req, res) {
 };
 
 exports.old = old = function(req, res) {
-  var oldestTweetIdStr = req.query.oldestTweetIdStr;
+  var oldestTweetIdStr = req.query.oldestTweetIdStr || '0';
   console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
   console.log('typeof oldestTweetId:', typeof oldestTweetIdStr);
   async.waterfall([
@@ -62,6 +62,7 @@ exports.old = old = function(req, res) {
       }
     },
     function(tweets, settings, callback) {
+      console.log('inside new fcn');
       if (req.user.autoWynnoing || res.locals.autoWynnoingJustToggledOn) {
         algo.crunchTheNumbers(tweets, settings, callback);
       }
