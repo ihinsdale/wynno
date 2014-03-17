@@ -63,7 +63,7 @@ exports.old = old = function(req, res) {
     },
     function(tweets, settings, callback) {
       console.log('inside new fcn');
-      if (req.user.autoWynnoing || res.locals.autoWynnoingJustToggledOn) {
+      if (req.user.autoWynnoing || req.session.autoWynnoingJustToggledOn) {
         algo.crunchTheNumbers(tweets, settings, callback);
       }
     }
@@ -481,7 +481,7 @@ exports.toggleAutoWynnoing = function(req, res) {
       if (!req.body.autoWynnoing) {
         res.send("Auto-wynnoing has been turned off.");
       } else {
-        res.local.autoWynnoingJustToggledOn = true; // this is used by old()
+        req.session.autoWynnoingJustToggledOn = true; // this is used by old()
         old(req, res);
       }
     }
