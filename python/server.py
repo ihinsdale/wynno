@@ -719,12 +719,12 @@ def from_votes_to_filters(user_id, tweets):
 
 class RPC(object):
   def predict(self, user_id, tweets_to_predict):
+    print 'Auto-wynnoing for user ' + str(user_id)
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
     user_id = ObjectId(user_id) 
     # when computing resources become more scarce, because of more users, can implement saving of classifiers
     # using joblib (http://stackoverflow.com/a/11169797) - e.g. refit the classifier after every 20 votes
     print 'Tweets voted on: ' + str(tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }).count())
-    print 'Out of ' + str(tweets.find({ "user_id": user_id }).count()) + ' total tweets'
     voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
     predictions = crunch(list(voted_tweets), tweets_to_predict) # using list() necessary to convert from PyMongo cursor
     predictions_json = json.dumps(predictions)
