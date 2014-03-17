@@ -726,6 +726,7 @@ class RPC(object):
     # using joblib (http://stackoverflow.com/a/11169797) - e.g. refit the classifier after every 20 votes
     print 'Tweets voted on: ' + str(tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }).count())
     voted_tweets = tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } })
+    tweets_to_predict = json.load(tweets_to_predict)
     predictions = crunch(list(voted_tweets), tweets_to_predict) # using list() necessary to convert from PyMongo cursor
     predictions_json = json.dumps(predictions)
     return predictions_json
