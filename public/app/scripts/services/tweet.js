@@ -149,6 +149,10 @@ angular.module('wynnoApp.services')
     replaceCurrentTweets: function(tweets) {
       FilterService.applyFilterRules(tweets);
       service.currentTweets = tweets;
+      // update oldestTweetIdStr, if any tweets were received
+      if (tweets.length) {
+        service.oldestTweetIdStr = service.currentTweets[service.currentTweets.length - 1].id_str;
+      }
     },
     removePredictions: function() {
       angular.forEach(service.currentTweets, function(tweet) {
