@@ -62,7 +62,7 @@ exports.old = old = function(req, res) {
       }
     },
     function(tweets, settings, callback) {
-      if (req.user.autoWynnoing || res.local.autoWynnoingJustToggledOn) {
+      if (req.user.autoWynnoing || res.locals.autoWynnoingJustToggledOn) {
         algo.crunchTheNumbers(tweets, settings, callback);
       }
     }
