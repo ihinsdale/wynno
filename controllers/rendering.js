@@ -49,7 +49,7 @@ var handleType = function(type, tweet) {
 };
 
 var insertHTML = function(tweet) {
-  var types = ['urls', 'media', 'user_mentions'];
+  var types = ['urls', 'media', 'user_mentions', 'hashtags'];
   for (var i = 0; i < types.length; i++) {
     if (tweet.__entities[types[i]]) {
       handleType(types[i], tweet);
