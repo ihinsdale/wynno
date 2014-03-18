@@ -1,0 +1,27 @@
+*** BEFORE HASHTAGS
+invalid:
+&
+_
+digits
+letters
+
+*** BEFORE URLS
+invalid:
+@
+#
+$
+digits
+letters
+
+*** BEFORE MENTIONS
+invalid:
+digits
+letters
+!
+@
+#
+$
+%
+&
+*
+_
