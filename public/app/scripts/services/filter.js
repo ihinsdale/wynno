@@ -36,10 +36,24 @@ angular.module('wynnoApp.services')
       // our default result will be true and we'll test for failure
       // this enables us to break out of the testing as soon as a condition is failed
       var result = true;
+
+      // initialize variables for links conditions
       var linksCounted = 0;
       var numUrls = tweet.__entities.urls.length;
       var urlsCopy = tweet.__entities.urls.slice();
       var urlsCopyCopy;
+
+      // initialize variables for picture conditions
+      var picturesCounted = 0;
+      var numPictures = 0;
+      if (tweet.__entities.hasOwnProperty('media')) {
+        for (var j = 0; j < tweet.__entities.media.length; j++) {
+          if (tweet.__entities.media[j].type === 'photo') {
+            numPictures++;
+          }
+        }
+      }
+
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
           switch(filterConditions[i].type) {
@@ -110,20 +124,17 @@ angular.module('wynnoApp.services')
               result = hashtagResult;
               break;
             case 'picture':
-              // if tweet doesn't contain a picture, fail
               var pictureResult = false;
-              if (tweet.__entities.hasOwnProperty('media')) {
-                for (var k = 0; k < tweet.__entities.media.length; k++) {
-                  if (!pictureResult) {
-                    if (tweet.__entities.media[i].type === 'photo') {
-                      pictureResult = true;
-                    }
-                  }
-                }
+              if (picturesCounted < numPictures) {
+                pictureResult = true;
+                picturesCounted++;
               }
               result = pictureResult;
               break;
             case 'quotation':
+              // quotation conditions aren't additive, so we don't need to worry about
+              // keeping track of the total number of quotation conditions
+
               var quotationResult = false;
               // could work on more complicated variations, e.g. if tweet contains 
               // two quotation marks or a quotation mark and ..., pass
