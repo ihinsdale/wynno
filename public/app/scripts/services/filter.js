@@ -187,7 +187,7 @@ angular.module('wynnoApp.services')
               console.log('Did not find matching word/phrase:', searchFor);
             } else {
               // remove the found word
-              referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+              referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch.slice(loc + searchFor.length);
             }
           }
         }
