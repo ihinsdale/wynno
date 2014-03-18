@@ -15,14 +15,13 @@ var handleType = function(type, tweet) {
       case 'media':
         uniquelyInvalidPrecedingChars = '@#$';
         for (var i = 0; i < items.length; i++) {
-          foundProperLocation = false;
           if (i === 0) {
             after = 0;
           } else {
             // so that we always search for items[i].url after our last insertion (assumes urls come in order from Twitter API, which they appear to be)
             after = start + 30 + items[i-1].url.length + items[i-1].display_url.length; // 30 is length of the static link html minus 1
           }
-          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, items[i].url, tweet.renderedText, after);
+          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, items[i].url, tweet, after);
           end = start + items[i].url.length;
           tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a href='" + items[i].url + "' target='_blank'>" + items[i].display_url + "</a>");
         }
@@ -30,7 +29,6 @@ var handleType = function(type, tweet) {
       case 'user_mentions':
         uniquelyInvalidPrecedingChars = '!@#$%&*_';
         for (var i = 0; i < items.length; i++) {
-          foundProperLocation = false;
           if (i === 0) {
             after = 0;
           } else {
@@ -45,7 +43,6 @@ var handleType = function(type, tweet) {
       case 'hashtags':
         uniquelyInvalidPrecedingChars = '&_';
         for (var i = 0; i < items.length; i++) {
-          foundProperLocation = false;
           if (i === 0) {
             after = 0;
           } else {
@@ -61,7 +58,7 @@ var handleType = function(type, tweet) {
   }
 };
 
-var findProperInsertionLocation = function(uniquelyInvalidPrecedingChars, targetText, renderedText, after) {
+var findProperInsertionLocation = function(uniquelyInvalidPrecedingChars, targetText, tweet, after) {
   // invalid preceding characters common to all entity types
   var invalidPrecedingChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   invalidPrecedingChars += uniquelyInvalidPrecedingChars;
@@ -69,8 +66,8 @@ var findProperInsertionLocation = function(uniquelyInvalidPrecedingChars, target
   var loc;
   var precedingChar;
   while (!foundProperLocation) {
-    loc = renderedText.indexOf(targetText, after)
-    precedingChar = renderedText[loc - 1];
+    loc = tweet.renderedText.indexOf(targetText, after)
+    precedingChar = tweet.renderedText[loc - 1];
     if (precedingChar) {
       precedingChar = precedingChar.toLowerCase(); // so that invalidPrecedingChars effectively includes capital letters too
     }
