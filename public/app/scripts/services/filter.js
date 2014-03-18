@@ -170,7 +170,6 @@ angular.module('wynnoApp.services')
             loc = stringToSearch.indexOf(searchFor);
             if (loc === -1) {
               wordResult = false;
-              console.log('Did not find matching word/phrase:', searchFor);
             } else {
               // remove the found word
               referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
@@ -184,7 +183,6 @@ angular.module('wynnoApp.services')
             loc = stringToSearch.indexOf(searchFor);
             if (loc === -1) {
               wordResult = false;
-              console.log('Did not find matching word/phrase:', searchFor);
             } else {
               // remove the found word
               referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch.slice(loc + searchFor.length);
