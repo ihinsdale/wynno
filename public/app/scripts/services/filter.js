@@ -36,6 +36,10 @@ angular.module('wynnoApp.services')
       // our default result will be true and we'll test for failure
       // this enables us to break out of the testing as soon as a condition is failed
       var result = true;
+      var linksCounted = 0;
+      var numUrls = tweet.__entities.urls.length;
+      var urlsCopy = tweet.__entities.urls.slice();
+      var urlsCopyCopy;
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
           switch(filterConditions[i].type) {
@@ -43,18 +47,29 @@ angular.module('wynnoApp.services')
             case 'link':
               var linkResult = false;
               var parser = document.createElement('a');
-              // if no link string specified and tweet contains any link, pass
-              if (!filterConditions[i].link && tweet.__entities.urls.length) {
-                linkResult = true;
-              }
-              // if a link string is specified and tweet doesn't link to it, fail
-              for (var m = 0; m < tweet.__entities.urls.length; m++) {
-                if (!linkResult) {
-                  parser.href = tweet.__entities.urls[m].extended_url
-                  // it appears extended_url always has the same domain as display_url, so we can search
-                  // extended_url which has the benefit that we can use the parser
-                  if (parser.hostname.indexOf(filterConditions[i].link) !== -1) {
-                    linkResult = true;
+              // if we haven't already counted as many links as the tweet contains
+              if (linksCounted < numUrls) {
+                // if no link string specified, pass
+                if (!filterConditions[i].link) {
+                  linkResult = true;
+                  linksCounted++;
+                // otherwise there must be a link string specified
+                } else {
+                  urlsCopyCopy = urlsCopy.slice();
+                  // if tweet links to the specified domain, pass
+                  for (var m = 0; m < urlsCopyCopy.length; m++) {
+                    if (!linkResult) {
+                      parser.href = urlsCopyCopy[m].extended_url
+                      // it appears extended_url always has the same domain as display_url, so we can search
+                      // extended_url which has the benefit that we can use the parser
+                      if (parser.hostname.indexOf(filterConditions[i].link) !== -1) {
+                        linkResult = true;
+                        linksCounted++;
+                        // remove the url from what will be searched next time
+                        urlsCopy.splice(m, 1); // we splice from urlsCopy rather than what we're looping through
+                        // because changing an array while looping through it can cause problems
+                      }
+                    }
                   }
                 }
               }
