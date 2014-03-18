@@ -35,7 +35,7 @@ var handleType = function(type, tweet) {
             // so that we always search for items[i].screen_name after our last insertion (assumes screen_names come in order from Twitter API, which they appear to be)
             after = start + 50 + 2 * items[i-1].screen_name.length;
           }
-          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, '@' + items[i].screen_name, tweet.renderedText, after) + 1;
+          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, '@' + items[i].screen_name, tweet, after) + 1;
           end = start + items[i].screen_name.length;
           tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a href='https://twitter.com/" + items[i].screen_name + "' target='_blank'>" + items[i].screen_name + "</a>");
         }
@@ -49,7 +49,7 @@ var handleType = function(type, tweet) {
             // so that we always search for items[i].screen_name after our last insertion (assumes screen_names come in order from Twitter API, which they appear to be)
             after = start + 71 + 2 * items[i-1].text.length; // 71 is the length of the static link html minus 1 (--minus 1 because of zero-indexing)
           }
-          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, '#' + items[i].text, tweet.renderedText, after) + 1; // + 1 because our link won't include the #
+          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, '#' + items[i].text, tweet, after) + 1; // + 1 because our link won't include the #
           end = start + items[i].text.length;
           tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a href='https://twitter.com/search?q=%23" + items[i].text + "&src=hash' target='_blank'>" + items[i].text + "</a>");
         }

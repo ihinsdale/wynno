@@ -66,7 +66,7 @@ var processTweet = function(user_id, tweet) {
   tweet.id = tweet.id_str;
   // store a fully HTML rendered version of the tweet text in the db
   // renderedText starts off the same as __text
-  tweet.renderedText = tweet.__text
+  tweet.renderedText = tweet.__text;
   // escape the text back to how it came from Twitter
   tweet.renderedText = _.escape(tweet.renderedText);
   // then insert html for urls, media, and user mentions into renderedText
