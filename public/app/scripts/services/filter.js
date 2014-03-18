@@ -65,6 +65,7 @@ angular.module('wynnoApp.services')
           }
         }
       }
+
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
           switch(filterConditions[i].type) {
@@ -155,38 +156,43 @@ angular.module('wynnoApp.services')
                 quotationResult = true;
               }
               result = quotationResult;
+              break;
           }
         }
       }
-      // process word conditions here
-      var wordResult = false;
-      for (var n = 0; n < caseSensitive.length; n++) {
-        if (wordResult) {
-          stringToSearch = referenceStringToSearch;
-          searchFor = filterConditions[caseSensitive[n]].word;
-          loc = stringToSearch.indexOf(searchFor);
-          if (loc !== -1) {
-            wordResult = true;
-            console.log('Found matching word/phrase:', searchFor);
-            // remove the found word
-            referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+      // if we have gotten this far with a true result, test whether the tweet satisfies the word conditions
+      if (result) {
+        var wordResult = true;
+        for (var n = 0; n < caseSensitive.length; n++) {
+          if (wordResult) {
+            stringToSearch = referenceStringToSearch;
+            searchFor = filterConditions[caseSensitive[n]].word;
+            loc = stringToSearch.indexOf(searchFor);
+            if (loc === -1) {
+              wordResult = false;
+              console.log('Did not find matching word/phrase:', searchFor);
+            } else {
+              // remove the found word
+              referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+            }
           }
         }
-      }
-      for (var p = 0; p < caseInsensitive.length; p++) {
-        if (wordResult) {
-          stringToSearch = referenceStringToSearch.toLowerCase();
-          searchFor = filterConditions[caseInsensitive[p]].word.toLowerCase();
-          loc = stringToSearch.indexOf(searchFor);
-          if (loc !== -1) {
-            wordResult = true;
-            console.log('Found matching word/phrase:', searchFor);
-            // remove the found word
-            referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+        for (var p = 0; p < caseInsensitive.length; p++) {
+          if (wordResult) {
+            stringToSearch = referenceStringToSearch.toLowerCase();
+            searchFor = filterConditions[caseInsensitive[p]].word.toLowerCase();
+            loc = stringToSearch.indexOf(searchFor);
+            if (loc === -1) {
+              wordResult = false;
+              console.log('Did not find matching word/phrase:', searchFor);
+            } else {
+              // remove the found word
+              referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+            }
           }
         }
+        result = wordResult;
       }
-      result = wordResult;
 
       return result;
     },
