@@ -39,7 +39,7 @@ var handleType = function(type, tweet) {
           } else {
             after = start + 71 + 2 * items[i-1].text.length; // 71 is the length of the static link html minus 1 (--minus 1 because of zero-indexing)
           }  // so that we always search for items[i].screen_name after our last insertion (assumes screen_names come in order from Twitter API, which they appear to be)
-          start = tweet.renderedText.indexOf('@', after) + 1;
+          start = tweet.renderedText.indexOf('#', after) + 1;
           end = start + items[i].text.length;
           tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a href='https://twitter.com/search?q=%23" + items[i].text + "&src=hash' target='_blank'>" + items[i].text + "</a>");
         }
