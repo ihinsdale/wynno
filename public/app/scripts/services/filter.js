@@ -44,6 +44,11 @@ angular.module('wynnoApp.services')
       var urlsCopy = tweet.__entities.urls.slice();
       var urlsCopyCopy;
 
+      // words conditions
+      var referenceStringToSearch = tweet.__text;
+      var caseSensitive = [];
+      var caseInsensitive = [];
+
       // hashtags conditions
       var hashtagsCounted = 0;
       var numHashtags = tweet.__entities.hashtags.length;
@@ -60,7 +65,6 @@ angular.module('wynnoApp.services')
           }
         }
       }
-
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
           switch(filterConditions[i].type) {
@@ -97,21 +101,12 @@ angular.module('wynnoApp.services')
               result = linkResult;
               break;
             case 'word':
-              var wordResult = false;
-              var stringToSearch;
-              var searchFor;
               if (filterConditions[i].wordIsCaseSensitive) {
-                stringToSearch = tweet.__text
-                searchFor = filterConditions[i].word
+                caseSensitive.push(i);
               } else {
-                stringToSearch = tweet.__text.toLowerCase()
-                searchFor = filterConditions[i].word.toLowerCase()
+                caseInsensitive.push(i);
               }
-              if (stringToSearch.indexOf(searchFor) !== -1) {
-                wordResult = true;
-                console.log('Found matching word/phrase:', searchFor, 'in tweet text:', stringToSearch);
-              }
-              result = wordResult;
+              // word condition processing to be continued outside the switch statement
               break;
             case 'hashtag':
               var hashtagResult = false;
@@ -124,7 +119,7 @@ angular.module('wynnoApp.services')
                 // otherwise a hashtag must be specified
                 } else {
                   hashtagsCopyCopy = hashtagsCopy.slice();
-                  // if tweet doesn't contain specified hashtag, fail
+                  // if tweet contains specified hashtag, pass
                   for (var j = 0; j < hashtagsCopyCopy.length; j++) {
                     if (!hashtagResult) {
                       // using toLowerCase() ensures case insensitivity
@@ -163,6 +158,36 @@ angular.module('wynnoApp.services')
           }
         }
       }
+      // process word conditions here
+      var wordResult = false;
+      for (var n = 0; n < caseSensitive.length; n++) {
+        if (wordResult) {
+          stringToSearch = referenceStringToSearch;
+          searchFor = filterConditions[caseSensitive[n]].word;
+          loc = stringToSearch.indexOf(searchFor);
+          if (loc !== -1) {
+            wordResult = true;
+            console.log('Found matching word/phrase:', searchFor);
+            // remove the found word
+            referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+          }
+        }
+      }
+      for (var p = 0; p < caseInsensitive.length; p++) {
+        if (wordResult) {
+          stringToSearch = referenceStringToSearch.toLowerCase();
+          searchFor = filterConditions[caseInsensitive[p]].word.toLowerCase();
+          loc = stringToSearch.indexOf(searchFor);
+          if (loc !== -1) {
+            wordResult = true;
+            console.log('Found matching word/phrase:', searchFor);
+            // remove the found word
+            referenceStringToSearch = referenceStringToSearch.slice(0, loc) + referenceStringToSearch(loc + searchFor.length);
+          }
+        }
+      }
+      result = wordResult;
+
       return result;
     },
     applyHearOrMute: function(tweet, filterType) {
