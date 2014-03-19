@@ -34,6 +34,7 @@ keys = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"..
 client = MongoClient('mongodb://' + keys['db']['username'] + ':' + keys['db']['password'] + '@' + keys['db']['localhost'] + '/wynno-dev')
 db = client['wynno-dev']
 tweets = db.tweets
+users = db.users
 
 def strip_accents(s):
   """ Removes accents from string.
@@ -320,6 +321,8 @@ def evaluate_accuracy(NB_classifier, binarized_vectorized_voted_tweets, votes, m
 def save_suggested_filters(user_id, filters):
   """ Save filter suggestions to the user's record in the database. """
   print 'Saving filter suggestions to the db.'
+  print 'Filters about to be saved look like:'
+  pprint(filters)
   try:
     filter_ids = db.filters.insert(filters)
     saved_filters = []
@@ -408,7 +411,7 @@ def show_most_prevalent_originators_of_tweets(feature_dicts):
   most_prevalent_users = sorted(originators.iterkeys(), key=lambda k: -1 * originators[k]['total'])
   return most_prevalent_users
 
-def custom(feature_dicts, votes_vector):
+def custom(feature_dicts, votes_vector, user_id):
   # binarize the feature_dicts
   binarized_feature_dicts = binarize_feature_dicts(feature_dicts)
 
@@ -491,9 +494,8 @@ def custom(feature_dicts, votes_vector):
   print 'Number of results before trimming duplicates: ' + str(len(results))
   results = remove_any_remaining_duplicate_results(results)
   print 'Number of results after trimming duplicates: ' + str(len(results))
-  pprint(results)
 
-  return select_winning_results(results)
+  return select_winning_results(results, user_id)
 
 def remove_unimplementable_results(results):
   """ Removes from results list the feature combinations which cannot be the basis of filters
@@ -527,56 +529,49 @@ def remove_unimplementable_results(results):
   return trimmed_results
 
 def remove_redundant_hashtag_text_words(result):
-  """ Removes from results list the word feature of a hashtag's text, 
+  """ Removes from result the word feature of a hashtag's text, 
       if that specific hashtag feature is also present. Necessary because hashtag text is
       currently used to create a word feature for tweet. Assumes, as is currently the case,
       that word feature text is always lowercase but hashtag text might not be. """
-  trimmed_results = []
-  for result in results:
-    hashtag_text_words_to_remove = []
-    found_redundancy = False
-    word_features = [feature[3:] for feature in result['features'] if feature[:3] == 'w__']
-    hashtag_features = [feature for feature in result['features'] if feature[:8] == 'hashtag_']
-    for feature in hashtag_features:
-      hashtag_text_word = feature[8:].lower()
-      if hashtag_text_word in word_features:
-        found_redundancy = True
-        print 'Removing a redundant hashtag text word feature.'
-        hashtag_text_words_to_remove.append('w__' + hashtag_text_word)
-    if found_redundancy:
-      new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
-      # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
-      for word in hashtag_text_words_to_remove:
-        new_result['features'].remove(word)
-      trimmed_results.append(new_result)
-    else:
-      trimmed_results.append(result)
-  return trimmed_results
+  hashtag_text_words_to_remove = []
+  found_redundancy = False
+  word_features = [feature[3:] for feature in result['features'] if feature[:3] == 'w__']
+  hashtag_features = [feature for feature in result['features'] if feature[:8] == 'hashtag_']
+  for feature in hashtag_features:
+    hashtag_text_word = feature[8:].lower()
+    if hashtag_text_word in word_features:
+      found_redundancy = True
+      print 'Removing a redundant hashtag text word feature.'
+      hashtag_text_words_to_remove.append('w__' + hashtag_text_word)
+  if found_redundancy:
+    new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
+    # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
+    for word in hashtag_text_words_to_remove:
+      new_result['features'].remove(word)
+    return new_result
+  else:
+    return result
 
 def remove_redundant_entity_type_indicator_features(entity_type_indicator_feature, result):
   """ Removes redundant features from feature combinations, e.g. for 'features': [u'hashtag_Oscar', 'hashtags'],
       the 'hashtags' features should be removed since it is currently a binary indicator of hashtags
       and is therefore implied by 'hashtag_Oscar'. """
-  trimmed_results = []
-  for result in results:
-    if entity_type_indicator_feature in result['features']:
-      # look for a specific feature of the general_feature's type
-      for feature in result['features']:
-        specific_feature_prefix = entity_type_indicator_feature[:-1] + '_'
-        if feature[:len(specific_feature_prefix)] == specific_feature_prefix:
-          print 'Removing a redundant ' + entity_type_indicator_feature + ' feature.'
-          new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
-          # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
-          new_result['features'].remove(entity_type_indicator_feature)
-          trimmed_results.append(new_result)
-          break
-      # if we looped through every feature without hitting a break, i.e. without finding a matching specific feature
-      # then the result is valid, so add it to trimmed_results
-      else:
-        trimmed_results.append(result)
+  if entity_type_indicator_feature in result['features']:
+    # look for a specific feature of the general_feature's type
+    for feature in result['features']:
+      specific_feature_prefix = entity_type_indicator_feature[:-1] + '_'
+      if feature[:len(specific_feature_prefix)] == specific_feature_prefix:
+        print 'Removing a redundant ' + entity_type_indicator_feature + ' feature.'
+        new_result = copy.deepcopy(result) # have to use deepcopy so that we get a copy of result['features'] as well
+        # and we need that new copy of result['features'] because we don't want to remove from a list we're iterating through
+        new_result['features'].remove(entity_type_indicator_feature)
+        return new_result
+    # if we looped through every feature without hitting a break, i.e. without finding a matching specific feature
+    # then the result is valid, so add it to trimmed_results
     else:
-      trimmed_results.append(result)
-  return trimmed_results
+      return result
+  else:
+    return result
 
 def remove_any_remaining_duplicate_results(results):
   """ Safeguard to remove any remaining duplicate results. Duplicates could result
@@ -589,12 +584,13 @@ def remove_any_remaining_duplicate_results(results):
   trimmed_results = [dict(tupleized) for tupleized in set(tuple(sorted(result.items())) for result in results)]
   return trimmed_results
 
-def select_winning_results(results, n=3):
+def select_winning_results(results, user_id, n=5):
   """ Selects up to n results from batch of candidate results. These are the results that will be
       suggested to the user as filters. """
   possible_winners = []
   # sort results first on number of votes, then on number of features in result
   sorted_results = sorted(results, key=lambda k: (-1 * k['num_votes'], -1 * len(k['features'])))
+  pprint(sorted_results)
   # select most specific result
   # we can ascertain the most specific results just by looking at length of 'features' (note this requires not removing redundant features first)
   last_unique_result = None
@@ -612,21 +608,63 @@ def select_winning_results(results, n=3):
       last_unique_result = result
 
   winning_filters = [];
-  activeFilters = 
-  suggestedFilters = 
-  dismissedFilters = 
+  user = users.find_one({ "_id": user_id })
+  activeFilters = minimum_defining_aspects_of_filters(user['activeFilters'])
+  suggestedFilters = minimum_defining_aspects_of_filters(user['suggestedFilters'])
+  print 'suggestedFilters looks like:'
+  pprint(suggestedFilters)
+  dismissedFilters = minimum_defining_aspects_of_filters(user['dismissedFilters'])
   # now go through sorted_results, parsing into filters, checking to see if that filter already exists
   # in activeFilters or suggestedFilters or dismissedFilters
   for result in possible_winners:
     filter = parse_result_into_filter(result)
     # if it doesn't, it's a winner
-    if filter not in activeFilters and filter not in suggestedFilters and filter not in dismissedFilters:
+    if not filter in activeFilters and not filter in suggestedFilters and not filter in dismissedFilters:
       winning_filters.append(filter)
       # keep adding to winning_filters until we have n of them
       if len(winning_filters) == n:
         break
+    else:
+      print 'Proposed filter is a duplicate.'
+      print 'That duplicate is:'
+      pprint(filter)
+
+  # add the attribute wynno_created: true to each winning filter
+  # (we don't want to do this in parse_result_into_filter because we only want that fcn to create
+  # the bare minimum features for comparison to the active and previously suggested filters)
+  for filter in winning_filters:
+    filter['wynno_created'] = True
 
   return winning_filters
+
+def minimum_defining_aspects_of_filters(filters):
+  """ Builds an array of filters with the minimum aspects necessary to define them, for use in determining
+      whether filter suggestions match filters that already have been suggested or are active."""
+  results = []
+  for filter in filters:
+    # the filter created here follows the filter format described in parse_result_into_filter()
+    new_filter = {}
+    new_filter['type'] = filter['type']
+    new_filter['users'] = filter['users']
+    new_filter['scope'] = filter['scope']
+    new_filter['conditions'] = []
+    for condition in filter['conditions']:
+      new_condition = {};
+      new_condition['type'] = condition['type']
+      if new_condition['type'] == 'link':
+        if 'link' in condition:
+          new_condition['link'] = condition['link']
+      elif new_condition['type'] == 'word':
+        if 'word' in condition:
+          new_condition['word'] = condition['word']
+        if 'wordIsCaseSensitive' in condition:
+          new_condition['wordIsCaseSensitive'] = condition['wordIsCaseSensitive']
+      elif new_condition['type'] == 'hashtag':
+        if 'hashtag' in condition:
+          new_condition['hashtag'] = condition['hashtag']
+      new_filter['conditions'].append(new_condition)
+    results.append(new_filter)
+  return results
 
 def parse_result_into_filter(result):
   """ Converts a list of result dictionaries into a list of filter dictionaries, i.e. dictionaries
@@ -653,7 +691,7 @@ def parse_result_into_filter(result):
   result = remove_redundant_entity_type_indicator_features('hashtags', result)
   result = remove_redundant_entity_type_indicator_features('urls', result)
   result = remove_redundant_entity_type_indicator_features('user_mentions', result)
-  filter = {'wynno_created': True, 'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
+  filter = {'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
   # set the filter type
   if result['like_pct'] == 0:
     filter['type'] = 'mute'
@@ -715,7 +753,7 @@ def from_votes_to_filters(user_id, tweets):
   #decision_tree(feature_dicts, votes)
 
   # make filter suggestions, using compute custom approach
-  filters = custom(feature_dicts, votes)
+  filters = custom(feature_dicts, votes, user_id)
   # filters at this point are ranked in descending order of accuracy/quality: the 0th element is the one we're most confident in.
   # So we want to reverse filters, to rank filters in ascending order of accuracy/certainty/quality.
   # This is because
@@ -748,16 +786,19 @@ class RPC(object):
     print 'User has voted on ' + str(voted_tweets.count()) + ' tweets'
     # tweets used by excluding ones to which filters apply
     if voted_tweets.count():
-      suggestedFilters = from_votes_to_filters(user_id, list(voted_tweets)) # using list() necessary to convert from cursor
+      suggestions = from_votes_to_filters(user_id, list(voted_tweets)) # using list() necessary to convert from cursor
       # save filter suggestions before returning them
-      save_suggested_filters(user_id, suggestedFilters)
+      save_suggested_filters(user_id, suggestions)
 
-    return dumps({'suggestedFilters': suggestedFilters, 'undismissedSugg': True })
+    return dumps({'suggestedFilters': suggestions, 'undismissedSugg': True })
 
-s = zerorpc.Server(RPC())
-s.bind("tcp://0.0.0.0:4242")
-s.run()
+# s = zerorpc.Server(RPC())
+# s.bind("tcp://0.0.0.0:4242")
+# s.run()
 
 # unvoted = list(tweets.find({ "user_id": ObjectId("53256f304c02bf7521103344") }).sort("_id",1).limit(50))
 # test = RPC()
 # test.predict("53256f304c02bf7521103344", unvoted)
+
+test = RPC()
+test.suggest("53256f304c02bf7521103344")
