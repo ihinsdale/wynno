@@ -103,6 +103,10 @@ $footer-height: 30px;
     padding-left: 5px;
 }
 
+.leftPadding40 {
+    padding-left: 40px;
+}
+
 .rightMargin10 {
     margin-right: 10px;
 }
@@ -383,10 +387,6 @@ button.navbar-toggle.noBorder {
 
 .fullRule {
     border-top-color: $shallower-purple;
-}
-
-row iframe#twitter-widget-0 {
-    width: 103px;
 }
 
 // tweet styling
