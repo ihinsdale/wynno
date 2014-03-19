@@ -564,6 +564,39 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
+    enableFilterOrSugg: function(disabledOrDismissed, index) {
+      var d = $q.defer();
+      var orig;
+      var origActive = service.settings.activeFilters.slice();
+      // update filters on the client side, to be undone if POST request fails
+      if (disabledOrDismissed === 'disabled') {
+        orig = service.settings.disabledFilters.slice();
+        service.settings.activeFilters.push(service.settings.disabledFilters.splice(index, 1)[0]);
+      } else if (disabledOrDismissed === 'dismissed') {
+        orig = service.settings.dismissedFilters.slice();
+        service.settings.activeFilters.push(service.settings.dismissedFilters.splice(index, 1)[0]);
+      }
+      $http({ method: 'POST', url: '/enablefilterorsuggestion', data: {
+        which: disabledOrDismissed,
+        index: index
+      } })
+      .success(function(data, status) {
+        console.log('Success enabling filter.');
+        d.resolve(service.settings);
+      })
+      .error(function(reason, status) {
+        console.log('Error enabling filter.');
+        // reset to original filters
+        service.settings.activeFilters = origActive;
+        if (disabledOrDismissed === 'disabled') {
+          service.settings.disabledFilters = orig;
+        } else if (disabledOrDismissed === 'dismissed') {
+          service.settings.dismissedFilters = orig;
+        }
+        d.reject(reason);
+      });
+      return d.promise;
+    },
     toggleAutoWynnoing: function() {
       var d = $q.defer();
       if (service.settings.voteCount < 200) {

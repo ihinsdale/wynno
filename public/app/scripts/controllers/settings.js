@@ -19,29 +19,50 @@ angular.module('wynnoApp.controllers')
     var index = SettingsService.settings.activeFilters.length - indexInReversedArray - 1;
     SettingsService.disableFilter(index)
     .then(function(settings) {
-      // no need to rebind these objects to the scope
+      // no need to rebind these objects to the scope, because the arrays have just been mutated
       //$scope.activeFilters = settings.activeFilters;
-      //$scope.disabledFilter = settings.disabledFilters;
+      //$scope.disabledFilters = settings.disabledFilters;
       console.log('after binding to controller, disabledFilters looks like:', settings.disabledFilters);
+    }, function(reason) {
+      // need to rebind filter arrays to the scope because in resetting them within SettingsService, the old array is replaced.
+      $scope.activeFilters = SettingsService.settings.activeFilters;
+      $scope.disabledFilters = SettingsService.settings.disabledFilters;
     });
   };
 
-  $scope.enableFilter = function(indexInReversedArray) {
-    // to enable a disabled filter
-    // should work with dismissed suggestion or disabled filter
-    // TODO
-  }
+  $scope.enableFilter = function(disabledOrDismissed, indexInReversedArray) {
+    var index;
+    if (disabledOrDismissed === 'disabled') {
+      index = SettingsService.settings.disabledFilters.length - indexInReversedArray - 1;
+    } else if (disabledOrDismissed === 'dismissed') {
+      index = SettingsService.settings.dismissedFilters.length - indexInReversedArray - 1;
+    }
+    SettingsService.enableFilterOrSugg(disabledOrDismissed, index)
+    .then(function(settings){
+      // don't need to do anything more
+    }, function(reason) {
+      // rebind the relevant filter arrays on the scope to their originals
+      $scope.activeFilters = SettingsService.settings.activeFilters;
+      if (disabledOrDismissed === 'disabled') {
+        $scope.disabledFilters = SettingsService.settings.disabledFilters;
+      } else if (disabledOrDismissed === 'dismissed') {
+        $scope.dismissedFilters = SettingsService.settings.dismissedFilters;
+      }
+    });
+  };
 
   $scope.adoptSugg = function(indexInReversedArray) {
     // translate indexInReversedArray to an index in the original array
     var index = SettingsService.settings.suggestedFilters.length - indexInReversedArray - 1;
     SettingsService.adoptSugg(index)
     .then(function(settings) {
-      $scope.activeFilters = settings.activeFilters;
-      $scope.suggestedFilters = settings.suggestedFilters;
       if (!settings.undismissedSugg) {
         $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
       }
+    }, function(reason) {
+      // rebind the relevant filter arrays on the scope to their originals
+      $scope.suggestedFilters = service.settings.suggestedFilters;
+      $scope.activeFilters = service.settings.activeFilters;
     })
   };
 
@@ -50,10 +71,13 @@ angular.module('wynnoApp.controllers')
     var index = SettingsService.settings.suggestedFilters.length - indexInReversedArray - 1;
     SettingsService.dismissSugg(index)
     .then(function(settings) {
-      $scope.suggestedFilters = settings.suggestedFilters;
       if (!settings.undismissedSugg) {
         $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
       }
+    }, function(reason) {
+      // rebind the relevant filter arrays on the scope to their originals
+      $scope.suggestedFilters = service.settings.suggestedFilters;
+      $scope.dismissedFilters = service.settings.dismissedFilters;
     })
   };
 
