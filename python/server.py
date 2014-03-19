@@ -493,7 +493,7 @@ def custom(feature_dicts, votes_vector):
   print 'Number of results after trimming duplicates: ' + str(len(results))
   pprint(results)
 
-  return parse_results_into_filters(select_winning_results(results))
+  return select_winning_results(results)
 
 def remove_unimplementable_results(results):
   """ Removes from results list the feature combinations which cannot be the basis of filters
@@ -526,7 +526,7 @@ def remove_unimplementable_results(results):
       trimmed_results.append(result)
   return trimmed_results
 
-def remove_redundant_hashtag_text_words(results):
+def remove_redundant_hashtag_text_words(result):
   """ Removes from results list the word feature of a hashtag's text, 
       if that specific hashtag feature is also present. Necessary because hashtag text is
       currently used to create a word feature for tweet. Assumes, as is currently the case,
@@ -553,7 +553,7 @@ def remove_redundant_hashtag_text_words(results):
       trimmed_results.append(result)
   return trimmed_results
 
-def remove_redundant_entity_type_indicator_features(entity_type_indicator_feature, results):
+def remove_redundant_entity_type_indicator_features(entity_type_indicator_feature, result):
   """ Removes redundant features from feature combinations, e.g. for 'features': [u'hashtag_Oscar', 'hashtags'],
       the 'hashtags' features should be removed since it is currently a binary indicator of hashtags
       and is therefore implied by 'hashtag_Oscar'. """
@@ -592,16 +592,15 @@ def remove_any_remaining_duplicate_results(results):
 def select_winning_results(results, n=3):
   """ Selects up to n results from batch of candidate results. These are the results that will be
       suggested to the user as filters. """
-  winning_results = []
+  possible_winners = []
   # sort results first on number of votes, then on number of features in result
   sorted_results = sorted(results, key=lambda k: (-1 * k['num_votes'], -1 * len(k['features'])))
   # select most specific result
-  # commenting out invocations of remove_redundant_hashtag_text_words() and remove_redundant_entity_type_indicator_features()
-  # in recur_find allows us to now ascertain the most specific results just by looking at length of 'features'
+  # we can ascertain the most specific results just by looking at length of 'features' (note this requires not removing redundant features first)
   last_unique_result = None
   for result in sorted_results:
     if not last_unique_result:
-      winning_results.append(result)
+      possible_winners.append(result)
       last_unique_result = result
       continue
     # if all features in result are features of the last_unique_result, and both results have same number of votes, 
@@ -609,13 +608,27 @@ def select_winning_results(results, n=3):
     if result['num_votes'] == last_unique_result['num_votes'] and set(result['features']) < set(last_unique_result['features']):
       continue
     else:
-      winning_results.append(result)
+      possible_winners.append(result)
       last_unique_result = result
-    if len(winning_results) == n:
-      break
-  return winning_results
 
-def parse_results_into_filters(results):
+  winning_filters = [];
+  activeFilters = 
+  suggestedFilters = 
+  dismissedFilters = 
+  # now go through sorted_results, parsing into filters, checking to see if that filter already exists
+  # in activeFilters or suggestedFilters or dismissedFilters
+  for result in possible_winners:
+    filter = parse_result_into_filter(result)
+    # if it doesn't, it's a winner
+    if filter not in activeFilters and filter not in suggestedFilters and filter not in dismissedFilters:
+      winning_filters.append(filter)
+      # keep adding to winning_filters until we have n of them
+      if len(winning_filters) == n:
+        break
+
+  return winning_filters
+
+def parse_result_into_filter(result):
   """ Converts a list of result dictionaries into a list of filter dictionaries, i.e. dictionaries
       in the format of a filter parsed by client-side. Removes redundant features before doing so. 
       Filter format is: 
@@ -632,66 +645,63 @@ def parse_results_into_filters(results):
         }, ...], 
         scope: 'all' or 'tweets' or 'retweets'
       } """
-  filters = []
-  # remove redundant features from results
+  # remove redundant features from result
   # first we need to convert the 'features' tuples in each result into a list, because
   # the remove_redundant_* methods use list.remove()
-  for result in results:
-    result['features'] = list(result['features'])
-  results = remove_redundant_hashtag_text_words(results)
-  results = remove_redundant_entity_type_indicator_features('hashtags', results)
-  results = remove_redundant_entity_type_indicator_features('urls', results)
-  results = remove_redundant_entity_type_indicator_features('user_mentions', results)
-  for result in results:
-    filter = {'wynno_created': True, 'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
-    # set the filter type
-    if result['like_pct'] == 0:
-      filter['type'] = 'mute'
-    elif result['like_pct'] == 1:
-      filter['type'] = 'hear'
-    # populate the filter with other features
-    for feature in result['features']:
-      # tweeter=
-      if feature[:8] == 'tweeter=':
-        filter['users'].append(feature[8:])
-      # retweeter=
-      elif feature[:10] == 'retweeter=':
-        filter['users'].append('feature'[10:])
-        filter['scope'] = 'retweets'
-      # hashtags
-      elif feature[:8] == 'hashtags':
-        filter['conditions'].append({'type': 'hashtag'})
-      # hashtag_
-      elif feature[:8] == 'hashtag_':
-        filter['conditions'].append({'type': 'hashtag', 'hashtag': feature[8:]})
-      # urls
-      elif feature[:4] == 'urls':
-        filter['conditions'].append({'type': 'link'})
-      # url_
-      elif feature[:4] == 'url_':
-        filter['conditions'].append({'type': 'link', 'link': feature[4:]})
-      # photo
-      elif feature[:5] == 'photo':
-        filter['conditions'].append({'type': 'picture'})
-      # has_quotation
-      elif feature == 'has_quotation':
-        filter['conditions'].append({'type': 'quotation'})
-      # w__
-      elif feature[:3] == 'w__':
-        filter['conditions'].append({'type': 'word', 'word': feature[3:], 'wordIsCaseSensitive': False})
+  result['features'] = list(result['features'])
+  result = remove_redundant_hashtag_text_words(result)
+  result = remove_redundant_entity_type_indicator_features('hashtags', result)
+  result = remove_redundant_entity_type_indicator_features('urls', result)
+  result = remove_redundant_entity_type_indicator_features('user_mentions', result)
+  filter = {'wynno_created': True, 'type': None, 'users': [], 'conditions': [], 'scope': 'all'}
+  # set the filter type
+  if result['like_pct'] == 0:
+    filter['type'] = 'mute'
+  elif result['like_pct'] == 1:
+    filter['type'] = 'hear'
+  # populate the filter with other features
+  for feature in result['features']:
+    # tweeter=
+    if feature[:8] == 'tweeter=':
+      filter['users'].append(feature[8:])
+    # retweeter=
+    elif feature[:10] == 'retweeter=':
+      filter['users'].append('feature'[10:])
+      filter['scope'] = 'retweets'
+    # hashtags
+    elif feature[:8] == 'hashtags':
+      filter['conditions'].append({'type': 'hashtag'})
+    # hashtag_
+    elif feature[:8] == 'hashtag_':
+      filter['conditions'].append({'type': 'hashtag', 'hashtag': feature[8:]})
+    # urls
+    elif feature[:4] == 'urls':
+      filter['conditions'].append({'type': 'link'})
+    # url_
+    elif feature[:4] == 'url_':
+      filter['conditions'].append({'type': 'link', 'link': feature[4:]})
+    # photo
+    elif feature[:5] == 'photo':
+      filter['conditions'].append({'type': 'picture'})
+    # has_quotation
+    elif feature == 'has_quotation':
+      filter['conditions'].append({'type': 'quotation'})
+    # w__
+    elif feature[:3] == 'w__':
+      filter['conditions'].append({'type': 'word', 'word': feature[3:], 'wordIsCaseSensitive': False})
 
-      # NOT IMPLEMENTABLE YET:
-      # tweeter= and retweeter=
-      # user_mentions
-      # user_mention_
-      # favorite_count
-      # retweet_count
-      # is_geotagged
-      # num_followers_orig_tweeter
-      # b__
-      # t__
-    filters.append(filter)
-  return filters
+    # NOT IMPLEMENTABLE YET:
+    # tweeter= and retweeter=
+    # user_mentions
+    # user_mention_
+    # favorite_count
+    # retweet_count
+    # is_geotagged
+    # num_followers_orig_tweeter
+    # b__
+    # t__
+
+  return filter
 
 def from_votes_to_filters(user_id, tweets):
   # create feature dictionaries
