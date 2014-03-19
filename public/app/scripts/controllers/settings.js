@@ -14,7 +14,9 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.disableFilter = function(index) {
+  $scope.disableFilter = function(indexInReversedArray) {
+    // translate indexInReversedArray to an index in the original array
+    var index = SettingsService.settings.activeFilters.length - indexInReversedArray - 1;
     SettingsService.disableFilter(index)
     .then(function(settings) {
       // no need to rebind these objects to the scope
@@ -24,13 +26,15 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.enableFilter = function(index) {
+  $scope.enableFilter = function(indexInReversedArray) {
     // to enable a disabled filter
     // should work with dismissed suggestion or disabled filter
     // TODO
   }
 
-  $scope.adoptSugg = function(index) {
+  $scope.adoptSugg = function(indexInReversedArray) {
+    // translate indexInReversedArray to an index in the original array
+    var index = SettingsService.settings.suggestedFilters.length - indexInReversedArray - 1;
     SettingsService.adoptSugg(index)
     .then(function(settings) {
       $scope.activeFilters = settings.activeFilters;
@@ -41,7 +45,9 @@ angular.module('wynnoApp.controllers')
     })
   };
 
-  $scope.dismissSugg = function(index) {
+  $scope.dismissSugg = function(indexInReversedArray) {
+    // translate indexInReversedArray to an index in the original array
+    var index = SettingsService.settings.suggestedFilters.length - indexInReversedArray - 1;
     SettingsService.dismissSugg(index)
     .then(function(settings) {
       $scope.suggestedFilters = settings.suggestedFilters;
@@ -49,7 +55,7 @@ angular.module('wynnoApp.controllers')
         $scope.$emit('setSuggIndicators', null, settings.undismissedSugg);
       }
     })
-  }
+  };
 
   $scope.toggleAutoWynnoing = function(newSetting) {
     if (SettingsService.settings.autoWynnoing !== newSetting) {

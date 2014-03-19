@@ -458,10 +458,8 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
-    disableFilter: function(indexInReversedArray) {
+    disableFilter: function(index) {
       var d = $q.defer();
-      // translate indexInReversedArray to an index in the original array
-      var index = service.settings.activeFilters.length - indexInReversedArray - 1;
       // get _id of the filter to be disabled, before updating client side
       var filterId = service.settings.activeFilters[index]._id;
       // update filters on the client side, to be undone if POST request fails
@@ -510,10 +508,8 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
-    adoptSugg: function(indexInReversedArray) {
+    adoptSugg: function(index) {
       var d = $q.defer();
-      // translate indexInReversedArray to an index in the original array
-      var index = service.settings.suggestedFilters.length - indexInReversedArray - 1;
       // update filters on the client side, to be undone if POST request fails
       var origSuggested = service.settings.suggestedFilters.slice();
       var origActive = service.settings.activeFilters.slice();
@@ -541,10 +537,8 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
-    dismissSugg: function(indexInReversedArray) {
+    dismissSugg: function(index) {
       var d = $q.defer();
-      // translate indexInReversedArray to an index in the original array
-      var index = service.settings.suggestedFilters.length - indexInReversedArray - 1;
       // update filters on the client side, to be undone if POST request fails
       var origSuggested = service.settings.suggestedFilters.slice();
       var origDismissed = service.settings.dismissedFilters.slice();
