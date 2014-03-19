@@ -430,4 +430,34 @@ exports.updateAutoWynnoing = function(user_id, autoWynnoing, callback) {
       callback(null);
     }
   });
-}
+};
+
+exports.enableDisFilterOrSugg = function(user_id, disabledOrDismissed, index, callback) {
+  User.findById(user_id, function(err, doc) {
+    if (err) {
+      console.log('Error finding user to enable filter for.');
+      callback(err);
+    } else {
+      var filterSource;
+      if (disabledOrDismissed === 'disabled') {
+        filterSource = 'disabledFilters';
+      } else if (disabledOrDismissed === 'dismissed') {
+        filterSource = 'dismissedFilters';
+      } else {
+        callback('Improperly specified source of filter.');
+      }
+      var filter = doc[filterSource][index];
+      doc.activeFilters.push(filter);
+      doc[filterSource][index].remove();
+      doc.save(function(err) {
+        if (err) {
+          console.log('Error updating active filters with ' + disabledOrDismissed + ' filter.');
+          callback(err);
+        } else {
+          console.log('Successfully enabled ' + disabledOrDismissed + ' filter.');
+          callback(null);
+        }
+      });
+    }
+  });
+};

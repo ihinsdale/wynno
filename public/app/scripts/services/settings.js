@@ -564,7 +564,7 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
-    enableFilterOrSugg: function(disabledOrDismissed, index) {
+    enableDisFilterOrSugg: function(disabledOrDismissed, index) {
       var d = $q.defer();
       var orig;
       var origActive = service.settings.activeFilters.slice();
@@ -576,7 +576,7 @@ angular.module('wynnoApp.services')
         orig = service.settings.dismissedFilters.slice();
         service.settings.activeFilters.push(service.settings.dismissedFilters.splice(index, 1)[0]);
       }
-      $http({ method: 'POST', url: '/enablefilterorsuggestion', data: {
+      $http({ method: 'POST', url: '/enabledisfilterorsugg', data: {
         which: disabledOrDismissed,
         index: index
       } })

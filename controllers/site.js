@@ -490,3 +490,19 @@ exports.toggleAutoWynnoing = function(req, res) {
   });
 };
 
+exports.enableDisFilterOrSugg = function(req, res) {
+  var data = req.body;
+  async.waterfall([
+    function(callback) {
+      db.enableDisFilterOrSugg(req.user._id, data.which, data.index, callback);
+    }
+  ], function(error) {
+    if (error) {
+      console.log(error);
+      res.send(500);
+    } else {
+      res.send('Successfully enabled ' + data.which + ' filter.');
+    }
+  });
+}
+

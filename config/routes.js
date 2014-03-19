@@ -27,8 +27,8 @@ module.exports = function(app) {
   app.post('/adoptsuggestion', ensureAuthenticated, ensureAgreedTerms, site.adoptSuggestion);
   // POST request to /dismisssuggestion
   app.post('/dismisssuggestion', ensureAuthenticated, ensureAgreedTerms, site.dismissSuggestion);
-  // POST request to /enablefilterorsuggestion disables a filter
-  app.post('/enablefilterorsuggestion', ensureAuthenticated, ensureAgreedTerms, site.enableFilterOrSuggestion);
+  // POST request to /enabledisfilterorsugg disables a filter
+  app.post('/enabledisfilterorsugg', ensureAuthenticated, ensureAgreedTerms, site.enableDisFilterOrSugg);
   // POST request to /autowynnoing
   app.post('/autowynnoing', ensureAuthenticated, ensureAgreedTerms, site.toggleAutoWynnoing);
   // GET request to /checkin after authenticating with Twitter

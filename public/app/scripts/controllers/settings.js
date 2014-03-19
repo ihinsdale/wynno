@@ -30,14 +30,14 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.enableFilter = function(disabledOrDismissed, indexInReversedArray) {
+  $scope.enableDisFilter = function(disabledOrDismissed, indexInReversedArray) {
     var index;
     if (disabledOrDismissed === 'disabled') {
       index = SettingsService.settings.disabledFilters.length - indexInReversedArray - 1;
     } else if (disabledOrDismissed === 'dismissed') {
       index = SettingsService.settings.dismissedFilters.length - indexInReversedArray - 1;
     }
-    SettingsService.enableFilterOrSugg(disabledOrDismissed, index)
+    SettingsService.enableDisFilterOrSugg(disabledOrDismissed, index)
     .then(function(settings){
       // don't need to do anything more
     }, function(reason) {
