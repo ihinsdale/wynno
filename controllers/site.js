@@ -492,7 +492,6 @@ exports.toggleAutoWynnoing = function(req, res) {
 
 exports.enableDisFilterOrSugg = function(req, res) {
   var data = req.body;
-  console.log('data inside enableDisFilterOrSugg look like:', data);
   async.waterfall([
     function(callback) {
       db.enableDisFilterOrSugg(req.user._id, data.which, data.index, callback);
