@@ -792,13 +792,13 @@ class RPC(object):
 
     return dumps({'suggestedFilters': suggestions, 'undismissedSugg': True })
 
-# s = zerorpc.Server(RPC())
-# s.bind("tcp://0.0.0.0:4242")
-# s.run()
+s = zerorpc.Server(RPC())
+s.bind("tcp://0.0.0.0:4242")
+s.run()
 
 # unvoted = list(tweets.find({ "user_id": ObjectId("53256f304c02bf7521103344") }).sort("_id",1).limit(50))
 # test = RPC()
 # test.predict("53256f304c02bf7521103344", unvoted)
 
-test = RPC()
-test.suggest("53256f304c02bf7521103344")
+# test = RPC()
+# test.suggest("53256f304c02bf7521103344")

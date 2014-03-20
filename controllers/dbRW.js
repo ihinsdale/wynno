@@ -329,6 +329,10 @@ exports.dismissSuggestion = function(user_id, suggestedFiltersIndex, callback) {
 };
 
 exports.findUser = function(user_id, callback) {
+  // this function is only used by passport.deserializeUser
+  // it may improve performance for this query only to return the select fields
+  // necessary for references to req.user used in site.js route handlers
+  // currently these fields are: tw_screen_name, tw_profile_image_url, agreed_terms, _id, autoWynnoing, voteCount
   User.findById(user_id, function(err, user) {
     console.log('findUser found user:', user);
     if(!err) {
