@@ -91,12 +91,12 @@
               <div ng-show="condition.type == 'link'" class="inlineBlock">
                 <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
               </div>
-              <div ng-show="condition.type == 'word'" class="inlineBlock">
+              <div ng-show="condition.type == 'word'" class="inlineBlock vertAlignTop">
                 <div>
                   <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
                 </div>
                 <div>
-                  <label class="checkbox">
+                  <label class="checkbox caseSensitiveLabel">
                     <input type="checkbox" ng-model="condition.wordIsCaseSensitive">Case-sensitive
                   </label>
                 </div>

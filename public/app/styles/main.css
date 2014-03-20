@@ -7720,28 +7720,17 @@ td.visible-print {
 }
 
 /* line 118, main.scss */
-.customInlineAddOn {
-  width: 40px;
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1;
-  color: #555555;
-  text-align: center;
-  background-color: #eeeeee;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
+.vertAlignTop {
+  vertical-align: top;
 }
 
-/* line 135, main.scss */
+/* line 124, main.scss */
 html {
   position: relative;
   min-height: 100%;
 }
 
-/* line 140, main.scss */
+/* line 129, main.scss */
 body {
   background: white;
   font-family: "Open Sans", sans-serif;
@@ -7749,18 +7738,18 @@ body {
   margin-bottom: 30px;
 }
 
-/* line 150, main.scss */
+/* line 139, main.scss */
 body > .container {
   padding-top: 70px;
 }
 
-/* line 154, main.scss */
+/* line 143, main.scss */
 .navbar-default {
   background-color: white;
   border-bottom: 1px solid #a166d5;
 }
 
-/* line 159, main.scss */
+/* line 148, main.scss */
 .nav.wynnoButtons li a {
   font-size: 24px;
   line-height: 24px;
@@ -7768,12 +7757,12 @@ body > .container {
   padding-bottom: 12px;
 }
 
-/* line 166, main.scss */
+/* line 155, main.scss */
 .navbar .nav > li > a:hover {
   background-color: #f8f8f8;
 }
 
-/* line 172, main.scss */
+/* line 161, main.scss */
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
@@ -7781,20 +7770,20 @@ body > .container {
   box-shadow: none;
 }
 
-/* line 187, main.scss */
+/* line 176, main.scss */
 .funnel {
   display: inline;
   font-size: 20px;
   padding-right: 16px;
 }
 
-/* line 193, main.scss */
+/* line 182, main.scss */
 .navbar-brand {
   font-size: 36px;
   line-height: 18px;
 }
 
-/* line 200, main.scss */
+/* line 189, main.scss */
 .wynno,
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
@@ -7802,130 +7791,130 @@ body > .container {
   color: #a166d5;
 }
 
-/* line 205, main.scss */
+/* line 194, main.scss */
 .y {
   color: #62d7a5;
 }
 
-/* line 209, main.scss */
+/* line 198, main.scss */
 .n {
   color: #ff9c74;
 }
 
-/* line 214, main.scss */
+/* line 203, main.scss */
 .navbar .nav > .passing > a,
 .navbar .nav > .passing > a:hover {
   color: #62d7a5;
 }
 
-/* line 219, main.scss */
+/* line 208, main.scss */
 .navbar .nav > .failing > a,
 .navbar .nav > .failing > a:hover {
   color: #ff9c74;
 }
 
-/* line 223, main.scss */
+/* line 212, main.scss */
 .navbar .navbar-btn {
   background-image: none;
   background-color: whitesmoke;
 }
 
-/* line 228, main.scss */
+/* line 217, main.scss */
 .navbar .navbar-btn:hover {
   background-color: whitesmoke;
   border-color: #a166d5;
 }
 
-/* line 233, main.scss */
+/* line 222, main.scss */
 .navbar .navbar-btn:focus {
   background-color: #e6e6e6;
 }
 
-/* line 240, main.scss */
+/* line 229, main.scss */
 .navbar .navbar-btn .icon-bar.firstBar {
   background-color: #62d7a5;
 }
 
-/* line 244, main.scss */
+/* line 233, main.scss */
 .navbar .navbar-btn .icon-bar.secondBar {
   background-color: #ff9c74;
 }
 
-/* line 248, main.scss */
+/* line 237, main.scss */
 .navbar .navbar-btn .icon-bar.thirdBar {
   background-color: #62d7a5;
 }
 
-/* line 252, main.scss */
+/* line 241, main.scss */
 .navMobileSignIn {
   padding: 9px 5px;
 }
 
-/* line 256, main.scss */
+/* line 245, main.scss */
 .mobileButton {
   font-size: 24px;
 }
 
-/* line 260, main.scss */
+/* line 249, main.scss */
 .desktopButton {
   font-size: 21px;
 }
 
-/* line 264, main.scss */
+/* line 253, main.scss */
 a.navbar-toggle.glyphButton {
   padding: 5px 8px;
   margin-left: 5px;
 }
 
-/* line 269, main.scss */
+/* line 258, main.scss */
 button.navbar-toggle.glyphButton {
   padding: 5px 8px;
 }
 
-/* line 273, main.scss */
+/* line 262, main.scss */
 a.navbar-toggle.glyphButton:hover {
   text-decoration: none;
 }
 
-/* line 277, main.scss */
+/* line 266, main.scss */
 a.btn.btn-default.navbar-btn.glyphButton {
   padding: 4px 10px;
   margin-right: 15px;
   margin-left: 5px;
 }
 
-/* line 283, main.scss */
+/* line 272, main.scss */
 button.navbar-toggle.noBorder {
   border-color: transparent;
   margin-right: 0;
 }
 
-/* line 288, main.scss */
+/* line 277, main.scss */
 .customDivider {
   border-bottom: 1px solid #e7e7e7;
 }
 
-/* line 294, main.scss */
+/* line 283, main.scss */
 .jumbotron {
   background-color: #dbc3f0;
 }
 
-/* line 298, main.scss */
+/* line 287, main.scss */
 .jumbotron > .headline {
   color: #a166d5;
 }
 
-/* line 302, main.scss */
+/* line 291, main.scss */
 .jumbotron > h1 {
   margin: 0;
 }
 
-/* line 306, main.scss */
+/* line 295, main.scss */
 .landingMainBig {
   font-size: 6em;
 }
 
-/* line 310, main.scss */
+/* line 299, main.scss */
 .landingMainSmall {
   position: relative;
   left: -20px;
@@ -7933,54 +7922,54 @@ button.navbar-toggle.noBorder {
   vertical-align: 22px;
 }
 
-/* line 317, main.scss */
+/* line 306, main.scss */
 .landingFeatureSmall {
   font-size: 5em;
   vertical-align: 18px;
 }
 
-/* line 322, main.scss */
+/* line 311, main.scss */
 .landingBird {
   color: #55acee;
 }
 
-/* line 326, main.scss */
+/* line 315, main.scss */
 .landingFilter {
   color: #62d7a5;
 }
 
-/* line 330, main.scss */
+/* line 319, main.scss */
 .landingGrin {
   color: #a166d5;
 }
 
-/* line 334, main.scss */
+/* line 323, main.scss */
 .landingBannerBackground {
   background-color: moccasin;
 }
 
-/* line 338, main.scss */
+/* line 327, main.scss */
 .buzzword {
   color: orangered;
 }
 
-/* line 342, main.scss */
+/* line 331, main.scss */
 .topAndBottomPadding {
   padding-top: 20px;
   padding-bottom: 10px;
 }
 
-/* line 347, main.scss */
+/* line 336, main.scss */
 .landingFeature {
   font-size: 5em;
 }
 
-/* line 351, main.scss */
+/* line 340, main.scss */
 .tryItContainer {
   padding-top: 30px;
 }
 
-/* line 355, main.scss */
+/* line 344, main.scss */
 .tryIt {
   font-size: 20px;
   background-color: #b578ea;
@@ -7988,58 +7977,58 @@ button.navbar-toggle.noBorder {
   border-color: #a166d5;
 }
 
-/* line 363, main.scss */
+/* line 352, main.scss */
 .tryIt:hover {
   background-color: #a166d5;
   border-color: #a166d5;
 }
 
-/* line 368, main.scss */
+/* line 357, main.scss */
 .trainGlyph {
   display: inline-block;
 }
 
-/* line 372, main.scss */
+/* line 361, main.scss */
 .beaker {
   padding-top: 10px;
 }
 
-/* line 376, main.scss */
+/* line 365, main.scss */
 .landingCopy {
   font-size: 20px;
   line-height: 28px;
 }
 
-/* line 381, main.scss */
+/* line 370, main.scss */
 .welcomeCopy {
   font-size: 22px;
   line-height: 36px;
 }
 
-/* line 386, main.scss */
+/* line 375, main.scss */
 .halfRule {
   width: 100px;
   margin: 40px auto;
   border-top-color: #b578ea;
 }
 
-/* line 392, main.scss */
+/* line 381, main.scss */
 .fullRule {
   border-top-color: #b578ea;
 }
 
-/* line 398, main.scss */
+/* line 387, main.scss */
 .tweet {
   padding-bottom: 5px;
 }
 
-/* line 402, main.scss */
+/* line 391, main.scss */
 .tweetColPadding {
   padding-left: 7px;
   padding-right: 7px;
 }
 
-/* line 407, main.scss */
+/* line 396, main.scss */
 .tweetStuff {
   padding: 5px;
   background-color: white;
@@ -8051,194 +8040,194 @@ button.navbar-toggle.noBorder {
   overflow: auto;
 }
 
-/* line 418, main.scss */
+/* line 407, main.scss */
 .leftColumn {
   height: 100%;
   float: left;
 }
 
-/* line 426, main.scss */
+/* line 415, main.scss */
 .tweeterImage > img {
   vertical-align: inherit;
 }
 
-/* line 430, main.scss */
+/* line 419, main.scss */
 .rightColumn {
   height: 100%;
   padding-left: 10px;
   overflow: hidden;
 }
 
-/* line 436, main.scss */
+/* line 425, main.scss */
 .tweetMeta {
   width: 100%;
   display: inline-block;
 }
 
-/* line 441, main.scss */
+/* line 430, main.scss */
 .tweeterName, .tweeterScreenName {
   float: left;
 }
 
-/* line 445, main.scss */
+/* line 434, main.scss */
 .tweetTimestamp {
   float: right;
 }
 
-/* line 449, main.scss */
+/* line 438, main.scss */
 .tweeterName {
   font-size: 14px;
   font-weight: bold;
   color: #000000;
 }
 
-/* line 455, main.scss */
+/* line 444, main.scss */
 .tweeterScreenName {
   vertical-align: bottom;
   color: #989898;
 }
 
-/* line 460, main.scss */
+/* line 449, main.scss */
 .tweeterScreenName:hover {
   text-decoration: underline;
 }
 
-/* line 467, main.scss */
+/* line 456, main.scss */
 .pvalue {
   padding-left: 8px;
 }
 
-/* line 471, main.scss */
+/* line 460, main.scss */
 .pvalue > .badge {
   background-color: #c7a9e1;
 }
 
-/* line 475, main.scss */
+/* line 464, main.scss */
 .tweetText {
   font-size: 14px;
   display: inline-block;
 }
 
-/* line 480, main.scss */
+/* line 469, main.scss */
 .tweetFooter {
   color: #989898;
   padding-top: 5px;
 }
 
-/* line 488, main.scss */
+/* line 477, main.scss */
 .tweetMeta, .tweetFooter {
   font-size: 12px;
   line-height: 14px;
 }
 
-/* line 503, main.scss */
+/* line 492, main.scss */
 .voteButtons .btn {
   padding: 3px 12px;
 }
 
-/* line 507, main.scss */
+/* line 496, main.scss */
 .voteButtons .btn-default {
   border-color: #e0e0e0;
 }
 
-/* line 511, main.scss */
+/* line 500, main.scss */
 .voteAye {
   border-right: 1px dotted #e0e0e0;
 }
 
-/* line 520, main.scss */
+/* line 509, main.scss */
 .aye {
   font-size: 24px;
   color: #62d7a5;
 }
 
-/* line 525, main.scss */
+/* line 514, main.scss */
 .nay {
   font-size: 24px;
   color: #ff9c74;
 }
 
-/* line 532, main.scss */
+/* line 521, main.scss */
 .wynnoButtonDesc {
   padding-left: 10px;
 }
 
-/* line 536, main.scss */
+/* line 525, main.scss */
 .wideVoteButton {
   width: 50%;
 }
 
-/* line 540, main.scss */
+/* line 529, main.scss */
 .left, .right {
   border-top: 0;
 }
 
-/* line 544, main.scss */
+/* line 533, main.scss */
 .left {
   border-top-left-radius: 0;
 }
 
-/* line 548, main.scss */
+/* line 537, main.scss */
 .right {
   border-top-right-radius: 0;
 }
 
-/* line 552, main.scss */
+/* line 541, main.scss */
 .noVoteAlertAbove {
   margin-top: 20px;
 }
 
-/* line 556, main.scss */
+/* line 545, main.scss */
 .page-header {
   border-color: #a166d5;
 }
 
-/* line 560, main.scss */
+/* line 549, main.scss */
 .settingHeader {
   color: #ffffff;
   padding-left: 5px;
 }
 
-/* line 565, main.scss */
+/* line 554, main.scss */
 .innerSettingsBlock {
   margin-left: 10px;
 }
 
-/* line 569, main.scss */
+/* line 558, main.scss */
 .settingInputContainer {
   padding-top: 10px;
   padding-left: 10px;
 }
 
-/* line 581, main.scss */
+/* line 570, main.scss */
 .twitterBird {
   display: inline-block;
   font-size: 14px;
   padding-right: 5px;
 }
 
-/* line 587, main.scss */
+/* line 576, main.scss */
 .signIn {
   display: inline-block;
 }
 
-/* line 594, main.scss */
+/* line 583, main.scss */
 .fetchNew {
   margin-bottom: 10px;
 }
 
-/* line 598, main.scss */
+/* line 587, main.scss */
 .fetchMiddle {
   margin: 20px 0;
 }
 
-/* line 602, main.scss */
+/* line 591, main.scss */
 .loadEarlier {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-/* line 607, main.scss */
+/* line 596, main.scss */
 .lastUpdateTime {
   vertical-align: top;
   position: relative;
@@ -8247,7 +8236,7 @@ button.navbar-toggle.noBorder {
   color: #808080;
 }
 
-/* line 615, main.scss */
+/* line 604, main.scss */
 .feedbackContainer {
   position: fixed;
   visibility: visible !important;
@@ -8266,20 +8255,20 @@ button.navbar-toggle.noBorder {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 633, main.scss */
+/* line 622, main.scss */
 .feedback {
   padding-left: 6px;
   display: none;
 }
 
 @keyframes anim-rotate {
-  /* line 639, main.scss */
+  /* line 628, main.scss */
   from {
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 643, main.scss */
+  /* line 632, main.scss */
   to {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
@@ -8287,25 +8276,25 @@ button.navbar-toggle.noBorder {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 650, main.scss */
+  /* line 639, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 653, main.scss */
+  /* line 642, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes anim-rotate-backward {
-  /* line 659, main.scss */
+  /* line 648, main.scss */
   from {
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
   }
 
-  /* line 663, main.scss */
+  /* line 652, main.scss */
   to {
     transform: rotate(0);
     -ms-transform: rotate(0);
@@ -8313,18 +8302,18 @@ button.navbar-toggle.noBorder {
 }
 
 @-webkit-keyframes anim-rotate-backward {
-  /* line 670, main.scss */
+  /* line 659, main.scss */
   from {
     -webkit-transform: rotate(360deg);
   }
 
-  /* line 673, main.scss */
+  /* line 662, main.scss */
   to {
     -webkit-transform: rotate(0);
   }
 }
 
-/* line 678, main.scss */
+/* line 667, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8334,7 +8323,7 @@ button.navbar-toggle.noBorder {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
-/* line 687, main.scss */
+/* line 676, main.scss */
 .backwardSpinner {
   display: inline-block;
   line-height: 1;
@@ -8344,12 +8333,12 @@ button.navbar-toggle.noBorder {
   -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
-/* line 696, main.scss */
+/* line 685, main.scss */
 .loadingText {
   padding-left: 4px;
 }
 
-/* line 700, main.scss */
+/* line 689, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8357,71 +8346,71 @@ button.navbar-toggle.noBorder {
   top: 10px;
 }
 
-/* line 707, main.scss */
+/* line 696, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 711, main.scss */
+/* line 700, main.scss */
 .modal-footer {
   margin-top: 0;
 }
 
-/* line 715, main.scss */
+/* line 704, main.scss */
 body.filterBuilderOpen .modal-dialog {
   width: 100%;
 }
 
-/* line 719, main.scss */
+/* line 708, main.scss */
 body.filterBuilderOpen .modal-footer {
   text-align: center;
 }
 
-/* line 723, main.scss */
+/* line 712, main.scss */
 .bigBird {
   color: #55acee;
   font-size: 2em;
 }
 
-/* line 728, main.scss */
+/* line 717, main.scss */
 .bigBirdText {
   font-size: 24px;
 }
 
-/* line 732, main.scss */
+/* line 721, main.scss */
 .size20 {
   font-size: 20px;
 }
 
-/* line 736, main.scss */
+/* line 725, main.scss */
 .oops {
   margin-bottom: 16px;
 }
 
-/* line 740, main.scss */
+/* line 729, main.scss */
 .centeredText {
   text-align: center;
 }
 
-/* line 744, main.scss */
+/* line 733, main.scss */
 .tosCheckbox {
   margin: 0;
   position: relative;
   bottom: 1px;
 }
 
-/* line 750, main.scss */
+/* line 739, main.scss */
 .agree {
   font-size: 18px;
   font-weight: normal;
 }
 
-/* line 755, main.scss */
+/* line 744, main.scss */
 .disagree:hover {
   background-color: #ffffff;
 }
 
-/* line 762, main.scss */
+/* line 751, main.scss */
 .footer {
   position: absolute;
   bottom: 0;
@@ -8429,13 +8418,13 @@ body.filterBuilderOpen .modal-footer {
   height: 30px;
 }
 
-/* line 769, main.scss */
+/* line 758, main.scss */
 .footer {
   border-top: 1px solid #a166d5;
   background-color: white;
 }
 
-/* line 774, main.scss */
+/* line 763, main.scss */
 .footerItem {
   display: inline-block;
   padding-top: 4px;
@@ -8443,52 +8432,52 @@ body.filterBuilderOpen .modal-footer {
   color: #777777;
 }
 
-/* line 781, main.scss */
+/* line 770, main.scss */
 .footerBrand {
   padding-left: 6px;
 }
 
-/* line 785, main.scss */
+/* line 774, main.scss */
 .wynnoDefinition {
   margin-bottom: 20px;
 }
 
-/* line 791, main.scss */
+/* line 780, main.scss */
 .filterWrapper {
   padding: 10px;
   display: inline-block;
 }
 
-/* line 796, main.scss */
+/* line 785, main.scss */
 .filterToggleButtonRightWrapper {
   display: inline-block;
 }
 
-/* line 800, main.scss */
+/* line 789, main.scss */
 .filterWrapper > .filterText {
   padding: 10px;
   display: inline-block;
   border-radius: 4px;
 }
 
-/* line 806, main.scss */
+/* line 795, main.scss */
 .filterNumber {
   padding-right: 10px;
   display: inline-block;
   font-size: 20px;
 }
 
-/* line 812, main.scss */
+/* line 801, main.scss */
 .panel.filterPanel {
   border-color: #ddd;
 }
 
-/* line 816, main.scss */
+/* line 805, main.scss */
 .nav-tabs > li {
   cursor: pointer;
 }
 
-/* line 820, main.scss */
+/* line 809, main.scss */
 .removeSetting {
   display: inline;
   font-size: 16px;
@@ -8497,12 +8486,12 @@ body.filterBuilderOpen .modal-footer {
   border: 0;
 }
 
-/* line 828, main.scss */
+/* line 817, main.scss */
 .removeSetting:hover {
   color: #555555;
 }
 
-/* line 832, main.scss */
+/* line 821, main.scss */
 .user {
   display: inline;
   font-size: 18px;
@@ -8510,237 +8499,245 @@ body.filterBuilderOpen .modal-footer {
   color: #a166d5;
 }
 
-/* line 839, main.scss */
+/* line 828, main.scss */
 .paddingTop40 {
   padding-top: 40px;
 }
 
-/* line 843, main.scss */
+/* line 832, main.scss */
 .paddingTop56 {
   padding-top: 56px;
 }
 
-/* line 847, main.scss */
+/* line 836, main.scss */
 .paddingTop16 {
   padding-top: 16px;
 }
 
-/* line 851, main.scss */
+/* line 840, main.scss */
 .paddingBottom20 {
   padding-bottom: 20px;
 }
 
-/* line 855, main.scss */
+/* line 844, main.scss */
 .paddingLeft10 {
   padding-left: 10px;
 }
 
-/* line 859, main.scss */
+/* line 848, main.scss */
 .btn.addNewFilter, .btn.saveFilter {
   background-color: #b578ea;
   color: #ffffff;
   border-color: #a166d5;
 }
 
-/* line 865, main.scss */
+/* line 854, main.scss */
 .btn.addNewFilter:hover, .btn.saveFilter:hover {
   background-color: #a166d5;
   border-color: #a166d5;
 }
 
-/* line 870, main.scss */
+/* line 859, main.scss */
 .btn.saveFilter {
   width: 200px;
 }
 
-/* line 874, main.scss */
+/* line 863, main.scss */
 .pieceOfDraft {
   padding: 5px;
 }
 
-/* line 878, main.scss */
+/* line 867, main.scss */
 .pieceOfDraft.ayeGreenBackground, .thatContain.ayeGreenBackground {
   background-color: #62d7a5;
 }
 
-/* line 882, main.scss */
+/* line 871, main.scss */
 .pieceOfDraft.nayRedBackground, .thatContain.nayRedBackground {
   background-color: #ff9c74;
 }
 
-/* line 886, main.scss */
+/* line 875, main.scss */
 .pieceOfDraft, .thatContain {
   background-color: #c7a9e1;
 }
 
-/* line 890, main.scss */
+/* line 879, main.scss */
 .pieceOfDraft.scope {
   padding: 5px 2px;
 }
 
-/* line 894, main.scss */
+/* line 883, main.scss */
 .thatContain {
   vertical-align: top;
   padding: 12px 6px;
 }
 
-/* line 899, main.scss */
+/* line 888, main.scss */
 .sentenceText {
   font-size: 16px;
   color: #ffffff;
 }
 
-/* line 904, main.scss */
+/* line 893, main.scss */
 .textAlignLeft {
   text-align: left;
 }
 
-/* line 912, main.scss */
+/* line 901, main.scss */
 .btn.hear, .btn.hear:hover {
   background-color: #62d7a5;
   color: #ffffff;
 }
 
-/* line 917, main.scss */
+/* line 906, main.scss */
 .btn.mute, .btn.mute:hover {
   background-color: #ff9c74;
   color: #ffffff;
 }
 
-/* line 922, main.scss */
+/* line 911, main.scss */
 .dropdown-menu > li > a.ayeGreen {
   color: #62d7a5;
 }
 
-/* line 926, main.scss */
+/* line 915, main.scss */
 .dropdown-menu > li > a.nayRed {
   color: #ff9c74;
 }
 
-/* line 930, main.scss */
+/* line 919, main.scss */
 .btn.active.toggledPurple {
   background-color: #c7a9e1;
   color: #ffffff;
 }
 
-/* line 935, main.scss */
+/* line 924, main.scss */
 .conditionSideBorder {
   display: inline-block;
   border-left: 4px solid #a166d5;
   padding-left: 10px;
 }
 
-/* line 941, main.scss */
+/* line 930, main.scss */
 .conditionInputPaddingTop {
   padding-top: 10px;
 }
 
-/* line 945, main.scss */
+/* line 934, main.scss */
 .downRightArrow {
   font-size: 2em;
   padding-right: 20px;
 }
 
-/* line 950, main.scss */
+/* line 939, main.scss */
 .downRightArrow.link {
   padding-left: 20px;
 }
 
-/* line 954, main.scss */
+/* line 943, main.scss */
 .downRightArrow.hashtag {
   padding-left: 20px;
 }
 
-/* line 958, main.scss */
+/* line 947, main.scss */
 .andCondition {
   padding: 10px 0;
+  display: inline-block;
 }
 
-/* line 962, main.scss */
+/* line 952, main.scss */
 .listOfUsers {
   padding-top: 20px;
 }
 
-/* line 966, main.scss */
+/* line 956, main.scss */
 .addConditionRow {
   padding-top: 10px;
 }
 
-/* line 970, main.scss */
+/* line 960, main.scss */
 .addCondition {
   float: right;
 }
 
-/* line 974, main.scss */
+/* line 964, main.scss */
 .plus {
   padding-right: 10px;
 }
 
-/* line 978, main.scss */
+/* line 968, main.scss */
 .stepStatus {
   padding-right: 40px;
 }
 
-/* line 982, main.scss */
+/* line 972, main.scss */
 .conditionSelectorWidth {
   display: inline-block;
   width: 165px;
 }
 
+/* line 977, main.scss */
+.caseSensitiveLabel {
+  color: #ffffff;
+  font-weight: normal;
+  margin: 5px 0;
+}
+
 @media (min-width: 768px) {
-  /* line 990, main.scss */
+  /* line 986, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 994, main.scss */
+  /* line 990, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 998, main.scss */
+  /* line 994, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 
-  /* line 1002, main.scss */
+  /* line 998, main.scss */
   .landingMainBig {
     font-size: 10em;
   }
 
-  /* line 1006, main.scss */
+  /* line 1002, main.scss */
   .landingFeature {
     font-size: 8em;
   }
 
-  /* line 1010, main.scss */
+  /* line 1006, main.scss */
   .tryIt {
     font-size: 26px;
     width: 50%;
   }
 }
 @media (min-width: 992px) {
-  /* line 1017, main.scss */
+  /* line 1013, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 1021, main.scss */
+  /* line 1017, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 1026, main.scss */
+  /* line 1022, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 1030, main.scss */
+  /* line 1026, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 1034, main.scss */
+  /* line 1030, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8748,44 +8745,44 @@ body.filterBuilderOpen .modal-footer {
     border-bottom: 0;
   }
 
-  /* line 1041, main.scss */
+  /* line 1037, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1045, main.scss */
+  /* line 1041, main.scss */
   .gapBelow {
     border-bottom: 1px dashed #e0e0e0;
   }
 
-  /* line 1049, main.scss */
+  /* line 1045, main.scss */
   .gapAbove {
     border-top: 1px dashed #e0e0e0;
   }
 
-  /* line 1053, main.scss */
+  /* line 1049, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1057, main.scss */
+  /* line 1053, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 1062, main.scss */
+  /* line 1058, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 1070, main.scss */
+  /* line 1066, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 1074, main.scss */
+  /* line 1070, main.scss */
   .bigBirdText {
     font-size: 28px;
   }

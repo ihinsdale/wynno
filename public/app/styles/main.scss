@@ -115,19 +115,8 @@ $footer-height: 30px;
     margin-right: 10px;
 }
 
-.customInlineAddOn {
-    width: 40px;
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1;
-    color: #555555;
-    text-align: center;
-    background-color: #eeeeee;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
+.vertAlignTop {
+    vertical-align: top;
 }
 
 // navbar
@@ -957,6 +946,7 @@ body.filterBuilderOpen .modal-footer {
 
 .andCondition {
     padding: 10px 0;
+    display: inline-block;
 }
 
 .listOfUsers {
@@ -982,6 +972,12 @@ body.filterBuilderOpen .modal-footer {
 .conditionSelectorWidth {
     display: inline-block;
     width: 165px;
+}
+
+.caseSensitiveLabel {
+    color: #ffffff;
+    font-weight: normal;
+    margin: 5px 0;
 }
 
 // media query-based styling
