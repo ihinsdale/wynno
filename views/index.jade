@@ -9,11 +9,14 @@ block nav
         span n
         span n
         span o
-      button.navbar-toggle.glyphButton(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth")
+      button.navbar-toggle.glyphButton(ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed", ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)")
         span.sr-only Toggle navigation
         span.icomoon-filter.ayeGreen.mobileButton(ng-show="active[0]")
         span.icomoon-filter.nayRed.mobileButton(ng-show="active[1]")
         span.icomoon-cogs.mobileButton(ng-show="active[2]")
+        span.icon-bar(ng-show="!currentPathNeedsAuth")
+        span.icon-bar(ng-show="!currentPathNeedsAuth")
+        span.icon-bar(ng-show="!currentPathNeedsAuth")
       button.navbar-toggle.glyphButton(ng-show="currentPathNeedsAuth", ng-click="openFilterBuilder()")
         .wynnoPurple
           span.icomoon-add-to-list.mobileButton
@@ -24,14 +27,14 @@ block nav
       a.navbar-toggle.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings")
         .badge.badgePurpleBadge
           span.icomoon-trophy
-      a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth")
+      a.navbar-toggle.navMobileSignIn(href='/auth/twitter', ng-show="!currentPathNeedsAuth && !username")
         .twitterBird
           span.icomoon-twitter.twitterBlue
         .signIn Sign in with Twitter
 
     // Collect the stuff that gets toggled hidden
     .collapse.navbar-collapse(collapse="navCollapsed")
-      ul.nav.navbar-nav.navbar-left.wynnoButtons(ng-show="currentPathNeedsAuth")
+      ul.nav.navbar-nav.navbar-left.wynnoButtons(ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)")
         // these items displayed on mobile
         li.passing.visible-xs(ng-class='{active: active[0]}')
           a(href='#/in', ng-click='doCollapse()')
@@ -70,7 +73,7 @@ block nav
             span.icomoon-cogs
 
       .userButtons.navbar-right.hidden-xs
-        a.btn.btn-default.navbar-btn.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth")
+        a.btn.btn-default.navbar-btn.signInContainer(ng-cloak, href='/auth/twitter', ng-if="!currentPathNeedsAuth && !username")
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
@@ -108,7 +111,7 @@ block content
 
 block footer
   .footer
-    .footerItem.footerBrand &copy; 2014 wynno
+    .footerItem.footerBrand &copy; 2014 Wynno, Inc.
     .footerItem
       a(href="#/terms") Terms
     .footerItem
