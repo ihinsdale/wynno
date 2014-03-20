@@ -18,6 +18,8 @@
 
 
     console.log('WORDS');
+
+    console.log('case insensitive only');
     
     console.log('words only');
     var test =[{type:'word',word:'asdf'}]
@@ -46,6 +48,67 @@
     console.log(parseConditions(test));
     var test =[{type:'word',word:'asdf'},{type:'word',word:'asdf'},{type:'word',word:'bingo'},{type:'word',word:'blah blah'},{type:'word',word:'blah blah'}];
     console.log(parseConditions(test));
+
+    console.log('case sensitive only');
+
+    console.log('words only');
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    
+    console.log('phrases only');
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'zeep zeep',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'zeep zeep',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'zeep zeep',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    
+    console.log('words and phrases');
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true}];
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'bingo',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true}];
+    console.log(parseConditions(test));
+
+    console.log('mixed case insensitive and sensitive');
+
+    console.log('words only');
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:false}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:false}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:false},{type:'word',word:'qwer',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:false},{type:'word',word:'qwer',wordIsCaseSensitive:false}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:false},{type:'word',word:'qwer',wordIsCaseSensitive:true},{type:'word',word:'qwer',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    
+    console.log('phrases only');
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:false}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'zeep zeep',wordIsCaseSensitive:false}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:false},{type:'word',word:'zeep zeep',wordIsCaseSensitive:true}]
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:true},{type:'word',word:'zeep zeep',wordIsCaseSensitive:false}]
+    console.log(parseConditions(test));
+    
+    console.log('words and phrases');
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:false},{type:'word',word:'blah blah',wordIsCaseSensitive:true}];
+    console.log(parseConditions(test));
+    var test =[{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'asdf',wordIsCaseSensitive:true},{type:'word',word:'bingo',wordIsCaseSensitive:true},{type:'word',word:'blah blah',wordIsCaseSensitive:false},{type:'word',word:'blah blah',wordIsCaseSensitive:true}];
+    console.log(parseConditions(test));
+
 
 
     console.log('HASHTAGS');

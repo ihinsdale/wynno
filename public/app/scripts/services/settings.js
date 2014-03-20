@@ -100,7 +100,7 @@ angular.module('wynnoApp.services')
       // loop through conditions, updating summary objects about each type
       var links = { total: 0, specific: { count: 0, domains: {} }, anywhere: { count: 0 } };
       var hashtags = { total: 0, specific: { count: 0, text: {} }, anything: { count: 0 } };
-      var words = { total: 0, words: {count: 0, text: {} }, phrases: { count: 0, text: {} } };
+      var words = { total: 0, words: { count: 0, text: {} }, words_cs: { count: 0, text: {} }, phrases: { count: 0, text: {} }, phrases_cs: { count: 0, text: {} } };
       var pictures = 0;
       var quotations = 0;
       for (var i = 0; i < conditions.length; i++) {
@@ -120,11 +120,13 @@ angular.module('wynnoApp.services')
             break;
           case 'word':
             var type = conditions[i].word.indexOf(' ') === -1 ? 'words' : 'phrases';
-            words[type].count++;
-            if (words[type].text.hasOwnProperty(conditions[i].word)) {
-              words[type].text[conditions[i].word]++;
+            var cs = conditions[i].wordIsCaseSensitive ? '_cs' : '';
+            var cat = type + cs;
+            words[cat].count++;
+            if (words[cat].text.hasOwnProperty(conditions[i].word)) {
+              words[cat].text[conditions[i].word]++;
             } else {
-              words[type].text[conditions[i].word] = 1;
+              words[cat].text[conditions[i].word] = 1;
             }
             words.total++;
             break;
@@ -255,16 +257,27 @@ angular.module('wynnoApp.services')
       // words
 
       if (words.total) {
+        // console.log('words objects look like:');
+        // console.log('words.words:');
+        // console.log(words.words);
+        // console.log('words.words_cs:');
+        // console.log(words.words_cs);
+        // console.log('words.phrases:');
+        // console.log(words.phrases);
+        // console.log('words.phrases_cs:');
+        // console.log(words.phrases_cs);
+        var hasWords = words.words.count || words.words_cs.count;
+        var hasPhrases = words.phrases.count || words.phrases_cs.count;
         // words
-        if (words.words.count) {
-          wordsResult += service.wordsRender(words.words, false);
-          if (words.phrases.count) {
+        if (hasWords) {
+          wordsResult += service.wordsRender(words.words, words.words_cs, false);
+          if (hasPhrases) {
             wordsResult += ' and ';
           }
         }
         // phrases
-        if (words.phrases.count) {
-          wordsResult += service.wordsRender(words.phrases, true);
+        if (hasPhrases) {
+          wordsResult += service.wordsRender(words.phrases, words.phrases_cs, true);
         }
       }
 
@@ -318,44 +331,64 @@ angular.module('wynnoApp.services')
 
       return result;
     },
-    wordsRender: function(wordsOrPhrasesObject, isPhrases) {
+    wordsRender: function(wordsOrPhrasesObject, wordsOrPhrases_csObject, isPhrases) {
       var result = '';
-      var type;
-      if (isPhrases) {
-        type = 'phrase';
-      } else {
-        type = 'word';
-      }
+      var type = isPhrases ? 'phrase' : 'word';
       var specific = Object.keys(wordsOrPhrasesObject.text);
+      var specific_cs = Object.keys(wordsOrPhrases_csObject.text);
+      var totalUniqueSpecific = specific.length + specific_cs.length;
+      if (!totalUniqueSpecific) {
+        return '';
+      }
       var count;
-      if (specific.length > 1) {
-        result = 'the ' + type + 's ';
-        for (var n = 0; n < specific.length; n++) {
-          result += '<strong class="darkGray">' + specific[n] + '</strong>';
-          count = wordsOrPhrasesObject.text[specific[n]];
+      result += 'the ' + type;
+      if (totalUniqueSpecific > 1) {
+        result += 's ';
+      } else {
+        result += ' ';
+      }
+      var catRender = function(isCaseSensitive) {
+        var which;
+        var sourceObject;
+        if (isCaseSensitive) {
+          which = specific_cs;
+          sourceObject = wordsOrPhrases_csObject;
+        } else {
+          which = specific;
+          sourceObject = wordsOrPhrasesObject;
+        }
+        for (var n = 0; n < which.length; n++) {
+          result += '<strong class="darkGray">' + which[n] + '</strong>';
+          count = sourceObject.text[which[n]];
           if (count > 1) {
             if (count === 2) {
-              result += ' (twice)';
+              result += ' (twice'
+              if (isCaseSensitive) {
+                result += '; case-sensitive';
+              }
+              result += ')';
             } else {
-              result += ' (' + count + ' times)';
+              result += ' (' + count + ' times';
+              if (isCaseSensitive) {
+                result += '; case-sensitive';
+              }
+              result += ')';
+            }
+          } else {
+            if (isCaseSensitive) {
+              result += ' (case-sensitive)';
             }
           }
-          if (n !== specific.length - 1) {
+          if (n !== which.length - 1) {
             result += ' and ';
           }
         }
-      } else {
-        result = 'the ' + type + ' ';
-        result += '<strong class="darkGray">' + specific[0] + '</strong>';
-        count = wordsOrPhrasesObject.text[specific[0]];
-        if (count > 1) {
-          if (count === 2) {
-            result += ' (twice)';
-          } else {
-            result += ' (' + count + ' times)';
-          }
-        }
+      };
+      catRender(false);
+      if (specific.length && specific_cs.length) {
+        result += ' and ';
       }
+      catRender(true);
       return result;
     },
     provideSettings: function() {
@@ -377,6 +410,7 @@ angular.module('wynnoApp.services')
           if (draftFilter.conditions[j].type === 'link') {
             delete draftFilter.conditions[j].hashtag;
             delete draftFilter.conditions[j].word;
+            delete draftFilter.conditions[j].wordIsCaseSensitive;
           } else if (draftFilter.conditions[j].type === 'word') {
             delete draftFilter.conditions[j].link;
             delete draftFilter.conditions[j].hashtag;
@@ -388,6 +422,7 @@ angular.module('wynnoApp.services')
             }
             delete draftFilter.conditions[j].link;
             delete draftFilter.conditions[j].word;
+            delete draftFilter.conditions[j].wordIsCaseSensitive;
           }
           cleanConditions.push(draftFilter.conditions[j]);
         }
