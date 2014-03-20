@@ -136,8 +136,10 @@ angular.module('wynnoApp.controllers')
       // so that the filter that was just created gets applied to what they're viewing
       var currentLocation = $location.path();
       if (currentLocation === '/in') {
+        console.log('Refreshing /in');
         $location.path('/in');
       } else if (currentLocation === '/out') {
+        console.log('Refreshing /out');
         $location.path('/out');
       }
     }, function(reason) {
