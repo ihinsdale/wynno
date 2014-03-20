@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
+.controller('NavCtrl', function($scope, $route, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
   $scope.votesRequiredForNextSugg = null;
   $scope.undismissedSugg = null;
@@ -135,12 +135,9 @@ angular.module('wynnoApp.controllers')
       // if user is currently viewing /in or /out, we need to reload the page
       // so that the filter that was just created gets applied to what they're viewing
       var currentLocation = $location.path();
-      if (currentLocation === '/in') {
-        console.log('Refreshing /in');
-        $location.path('/in');
-      } else if (currentLocation === '/out') {
-        console.log('Refreshing /out');
-        $location.path('/out');
+      if (currentLocation === '/in' || currentLocation === '/out') {
+        console.log('Refreshing ' + currentLocation);
+        $route.reload();
       }
     }, function(reason) {
       console.log('Filter creation canceled.');
