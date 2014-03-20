@@ -7,10 +7,6 @@ angular.module('wynnoApp.controllers')
   $scope.undismissedSugg = null;
   $scope.filterBuilderOpen = false;
 
-  // if there is a current user, set the value of username in the scope
-  if (AuthService.getCurrentUser()) {
-    $scope.username = AuthService.getCurrentUser().username;
-  }
   console.log('navctrl line evaluated');
 
   // It is crucial that this listener gets set up before the $locationChangeSuccess
@@ -28,6 +24,11 @@ angular.module('wynnoApp.controllers')
     var nextPath = urlParsingNode.hash.slice(1); // slicing at index 1 because 0th character is #
     $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath);
     $scope.active = AuthService.whatPageIsActive(nextPath);
+
+    // if there is a current user, set the value of username in the scope
+    if (AuthService.getCurrentUser()) {
+      $scope.username = AuthService.getCurrentUser().username;
+    }
 
     // if the user hasn't agreed to ToS, and the view requires authentication,
     // open Welcome modal where they can agree to ToS
