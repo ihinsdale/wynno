@@ -8643,45 +8643,45 @@ body.filterBuilderOpen .modal-footer {
 /* line 947, main.scss */
 .andCondition {
   padding: 10px 0;
-  display: inline-block;
 }
 
-/* line 952, main.scss */
+/* line 951, main.scss */
 .listOfUsers {
   padding-top: 20px;
 }
 
-/* line 956, main.scss */
+/* line 955, main.scss */
 .addConditionRow {
   padding-top: 10px;
 }
 
-/* line 960, main.scss */
+/* line 959, main.scss */
 .addCondition {
   float: right;
 }
 
-/* line 964, main.scss */
+/* line 963, main.scss */
 .plus {
   padding-right: 10px;
 }
 
-/* line 968, main.scss */
+/* line 967, main.scss */
 .stepStatus {
   padding-right: 40px;
 }
 
-/* line 972, main.scss */
+/* line 971, main.scss */
 .conditionSelectorWidth {
   display: inline-block;
   width: 165px;
 }
 
-/* line 977, main.scss */
+/* line 976, main.scss */
 .caseSensitiveLabel {
-  color: #ffffff;
+  color: #333333;
   font-weight: normal;
-  margin: 5px 0;
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 
 @media (min-width: 768px) {

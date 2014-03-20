@@ -132,6 +132,14 @@ angular.module('wynnoApp.controllers')
       // display alert containing the rendered filter
       console.log('the rendered filter text is:', modalResult);
       $scope.filterBuilderOpen = false;
+      // if user is currently viewing /in or /out, we need to reload the page
+      // so that the filter that was just created gets applied to what they're viewing
+      var currentLocation = $location.path();
+      if (currentLocation === '/in') {
+        $location.path('/in');
+      } else if (currentLocation === '/out') {
+        $location.path('/out');
+      }
     }, function(reason) {
       console.log('Filter creation canceled.');
       $scope.filterBuilderOpen = false;
