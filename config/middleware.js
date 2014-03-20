@@ -14,17 +14,17 @@ exports.init = function(app) {
   app.use(express.methodOverride());
   app.use(express.cookieParser(credentials.secrets.cookieParser));
   app.use(express.session({ secret: credentials.secrets.session }));
+  app.use(require('stylus').middleware(__dirname + '/public'));
+  console.log('dirname is', __dirname);
+  console.log('path', path.join(__dirname, '..', 'public'));
+  app.use(express.static(path.join(__dirname, '..', 'public')));
+  app.use(express.favicon(path.join(__dirname, '..', 'public/app/images/favicon.ico')));
 
   // initialize passport.js and its session support
   app.use(passport.initialize());
   app.use(passport.session());
   
   app.use(app.router);
-  app.use(require('stylus').middleware(__dirname + '/public'));
-  console.log('dirname is', __dirname);
-  console.log('path', path.join(__dirname, '..', 'public'));
-  app.use(express.static(path.join(__dirname, '..', 'public')));
-  app.use(express.favicon(path.join(__dirname, '..', 'public/app/images/favicon.ico')));
 
   // define passport.js Twitter auth strategy
   passport.use(new TwitterStrategy({
