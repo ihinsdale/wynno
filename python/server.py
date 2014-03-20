@@ -704,7 +704,7 @@ def parse_result_into_filter(result):
       filter['users'].append(feature[8:])
     # retweeter=
     elif feature[:10] == 'retweeter=':
-      filter['users'].append('feature'[10:])
+      filter['users'].append(feature[10:])
       filter['scope'] = 'retweets'
     # hashtags
     elif feature[:8] == 'hashtags':
