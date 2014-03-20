@@ -25,14 +25,16 @@ angular.module('wynnoApp.controllers')
     $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath);
     $scope.active = AuthService.whatPageIsActive(nextPath);
 
+    var currentUser = AuthService.getCurrentUser();
     // if there is a current user, set the value of username in the scope
-    if (AuthService.getCurrentUser()) {
-      $scope.username = AuthService.getCurrentUser().username;
+    if (currentUser) {
+      $scope.username = currentUser.username;
+    } else {
+      $scope.username = null;
     }
 
     // if the user hasn't agreed to ToS, and the view requires authentication,
     // open Welcome modal where they can agree to ToS
-    var currentUser = AuthService.getCurrentUser();
     console.log('inside locationChangeSuccess listener, currentUser looks like:', currentUser);
     if (currentUser && !currentUser.agreed_terms && $scope.currentPathNeedsAuth) {
       $scope.openWelcome();
