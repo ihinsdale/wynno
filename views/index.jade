@@ -77,18 +77,19 @@ block nav
           .twitterBird
             span.icomoon-twitter.twitterBlue
           .signIn Sign in with Twitter
-        span.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next filter suggestion", tooltip-popup-delay='400')
+        span(ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)")
+        span.navbar-btn.whiteBackground(ng-show="undismissedSugg != null && !undismissedSugg", tooltip-placement="bottom", tooltip="# votes until next filter suggestion", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span(ng-bind="votesRequiredForNextSugg", ng-show="votesRequiredForNextSugg > 0")
             span.icomoon-spinner3(ng-show="votesRequiredForNextSugg == 0", ng-class="{spinner: votesRequiredForNextSugg == 0}")
-        a.navbar-btn.whiteBackground(ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg", href="#/settings", tooltip-placement="bottom", tooltip="You have new filtering suggestions!", tooltip-popup-delay='400')
+        a.navbar-btn.whiteBackground(ng-show="undismissedSugg != null && undismissedSugg", href="#/settings", tooltip-placement="bottom", tooltip="You have new filtering suggestions!", tooltip-popup-delay='400')
           .badge.badgePurpleBadge.rightMargin10
             span.icomoon-trophy
-        a.btn.btn-default.navbar-btn.glyphButton(href='', ng-click="openFilterBuilder()", ng-show="currentPathNeedsAuth", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
+        a.btn.btn-default.navbar-btn.glyphButton(href='', ng-click="openFilterBuilder()", tooltip-placement="bottom", tooltip="Create filter", tooltip-popup-delay='400')
           .wynnoPurple
             span.icomoon-add-to-list.desktopButton
         .dropdown.inlineBlock
-          a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, ng-if="currentPathNeedsAuth", href='', ng-bind="username")
+          a.btn.btn-default.navbar-btn.username.dropdown-toggle(ng-cloak, href='', ng-bind="username")
           ul.dropdown-menu
             li
               a(href="https://twitter.com/intent/tweet", target="_blank")
