@@ -10,6 +10,13 @@
     "username": "Ian",
     "password": "gHz32KplsW5241431fdsa234234aiwieqiwue"
   },
+  "redis": {
+    "host": "54.201.54.173",
+    "localhost": "127.0.0.1",
+    "port": 6379,
+    "db": 2,
+    "pass": "redisPASS"
+  },
   "secrets": {
     "cookieParser": "in the middle of a shave 234234235",
     "session": "oh yoko 239239r8131"

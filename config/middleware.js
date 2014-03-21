@@ -5,7 +5,8 @@ var passport = require('passport')
 var TwitterStrategy = require('passport-twitter').Strategy;
 var User = require('../models/User.js').User;
 var db = require('../controllers/dbRW.js');
-var expressValidator = require('express-validator')
+var expressValidator = require('express-validator');
+var RedisStore = require('connect-redis')(express);
 
 exports.init = function(app) {
   app.use(express.logger('dev'));
@@ -13,7 +14,15 @@ exports.init = function(app) {
   app.use(expressValidator());
   app.use(express.methodOverride());
   app.use(express.cookieParser(credentials.secrets.cookieParser));
-  app.use(express.session({ secret: credentials.secrets.session }));
+  app.use(express.session({ 
+    store: new RedisStore({
+      host: credentials.redis.localhost,
+      port: credentials.redis.port,
+      db: credentials.redis.db,
+      pass: credentials.redis.pass
+    }),
+    secret: credentials.secrets.session 
+  }));
   app.use(require('stylus').middleware(__dirname + '/public'));
   console.log('dirname is', __dirname);
   console.log('path', path.join(__dirname, '..', 'public'));
