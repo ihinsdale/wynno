@@ -38,7 +38,7 @@
     "grunt-google-cdn": "^0.2.2",
     "grunt-contrib-imagemin": "^0.2.1",
     "grunt-contrib-cssmin": "^0.6.2",
-    "connect-redis": "^1.4.7"
+    "connect-redis": "1.4.7"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
