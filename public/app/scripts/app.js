@@ -50,8 +50,8 @@ angular.module('wynnoApp', [
   $httpProvider.interceptors.push('wynnoInterceptor');
 })
 .run(function($rootScope, $location, AuthService) {
-  $rootScope.$on("$locationChangeStart", function(evt, next, current) {
-    console.log("$locationChangeStart event fired");
+  $rootScope.$on('$locationChangeStart', function(evt, next, current) {
+    console.log('$locationChangeStart event fired');
     console.log('according to client-side, user is authenticated:', AuthService.isAuthenticated());
     console.log('next looks like:', next);
     if (!AuthService.isAuthenticated()) {

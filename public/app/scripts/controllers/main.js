@@ -8,11 +8,11 @@ angular.module('wynnoApp.controllers')
   $scope.remaining = {}; // initialize this object used by $scope.countdownTimer;
   $scope.busy = false; // used by infinite-scroll directive, to know not to trigger another scroll/load event
   if ($location.path() === '/in') {
-    $scope.currentStream = "Good Stuff";
-    $scope.oppositeStream = "The Rest";
+    $scope.currentStream = 'Good Stuff';
+    $scope.oppositeStream = 'The Rest';
   } else if ($location.path() === '/out') {
-    $scope.currentStream = "The Rest";
-    $scope.oppositeStream = "Good Stuff";
+    $scope.currentStream = 'The Rest';
+    $scope.oppositeStream = 'Good Stuff';
   }
 
   $scope.refreshRequest = function() {
