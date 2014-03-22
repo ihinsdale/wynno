@@ -22,7 +22,8 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: {
       // configurable paths
-      app: require('./bower.json').appPath || 'app',
+      app: 'public/app',
+      express_views: 'views',
       dist: 'dist'
     },
     express: {
@@ -131,16 +132,6 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      heroku: {
-        files: [{
-          dot: true,
-          src: [
-            'heroku/*',
-            '!heroku/.git*',
-            '!heroku/Procfile'
-          ]
-        }]
-      },
       server: '.tmp'
     },
 
@@ -193,14 +184,14 @@ module.exports = function (grunt) {
       }
     },
 
-    // Automatically inject Bower components into the app
-    'bower-install': {
-      app: {
-        html: '<%= yeoman.app %>/views/index.html',
-        ignorePath: '<%= yeoman.app %>/',
-        exclude: ['bootstrap-sass']
-      }
-    },
+    // // Automatically inject Bower components into the app
+    // 'bower-install': {
+    //   app: {
+    //     html: '<%= yeoman.app %>/views/index.html',
+    //     ignorePath: '<%= yeoman.app %>/',
+    //     exclude: ['bootstrap-sass']
+    //   }
+    // },
 
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
@@ -249,8 +240,8 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: ['<%= yeoman.app %>/views/index.html',
-             '<%= yeoman.app %>/views/index.jade'],
+      html: ['<%= yeoman.express_views %>/layout.jade',
+             '<%= yeoman.express_views %>/index.jade'],
       options: {
         dest: '<%= yeoman.dist %>/public'
       }
@@ -292,7 +283,7 @@ module.exports = function (grunt) {
     htmlmin: {
       dist: {
         options: {
-          //collapseWhitespace: true,
+          collapseWhitespace: true,
           //collapseBooleanAttributes: true,
           //removeCommentsFromCDATA: true,
           //removeOptionalTags: true
@@ -467,7 +458,7 @@ module.exports = function (grunt) {
     if (target === 'debug') {
       return grunt.task.run([
         'clean:server',
-        'bower-install',
+        //'bower-install',
         'concurrent:server',
         'autoprefixer',
         'concurrent:debug'
@@ -476,7 +467,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'bower-install',
+      //'bower-install',
       'concurrent:server',
       'autoprefixer',
       'express:dev',
@@ -519,7 +510,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'bower-install',
+    //'bower-install',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -532,11 +523,6 @@ module.exports = function (grunt) {
     'rev',
     'usemin'
   ]);
-
-  grunt.registerTask('heroku', function () {
-    grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');
-    grunt.task.run(['build']);
-  });
 
   grunt.registerTask('default', [
     'newer:jshint',
