@@ -165,6 +165,7 @@ angular.module('wynnoApp.services')
       // if we have gotten this far with a true result, test whether the tweet satisfies the word conditions
       if (result) {
         var wordResult = true;
+        var stringToSearch;
         for (var n = 0; n < caseSensitive.length; n++) {
           if (wordResult) {
             stringToSearch = referenceStringToSearch;
