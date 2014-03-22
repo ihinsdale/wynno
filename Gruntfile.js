@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: {
       // configurable paths
-      app: 'public/app',
+      app: 'public',
       express_views: 'views',
       dist: 'dist'
     },
