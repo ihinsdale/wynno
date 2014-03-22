@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Create a Filter Schema
+var filterSchema;
 exports.filterSchema = filterSchema = new Schema({
   type: String,
   users: [ String ],

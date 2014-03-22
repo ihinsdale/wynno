@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var filterSchema = require('./Filter.js').filterSchema;
 
 // Create a User Schema
+var userSchema;
 exports.userSchema = userSchema = new Schema({
   tw_id: Number,
   tw_id_str: String,

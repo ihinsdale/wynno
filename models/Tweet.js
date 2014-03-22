@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 require('mongoose-long')(mongoose);
 var Schema = mongoose.Schema;
 
+var tweetSchema;
 exports.tweetSchema = tweetSchema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
   __p: Number,
