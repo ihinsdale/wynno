@@ -15,31 +15,31 @@ angular.module('wynnoApp', [
 .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: '/app/views/landing.html',
+      templateUrl: '/views/landing.html',
       controller: 'LandingCtrl'
     })
     .when('/signinwithtwitter', {
-      templateUrl: '/app/views/signinwithtwitter.html',
+      templateUrl: '/views/signinwithtwitter.html',
       controller: 'LandingCtrl'
     })
     .when('/in', {
-      templateUrl: '/app/views/main.html',
+      templateUrl: '/views/main.html',
       controller: 'MainCtrl'
     })
     .when('/out', {
-      templateUrl: '/app/views/main.html',
+      templateUrl: '/views/main.html',
       controller: 'MainCtrl'
     })
     .when('/settings', {
-      templateUrl: '/app/views/settings.html',
+      templateUrl: '/views/settings.html',
       controller: 'SettingsCtrl'
     })
     .when('/terms', {
-      templateUrl:'/app/views/termsofservice.html',
+      templateUrl:'/views/termsofservice.html',
       controller: 'StaticCtrl'
     })
     .when('/privacy', {
-      templateUrl:'/app/views/privacypolicy.html',
+      templateUrl:'/views/privacypolicy.html',
       controller: 'StaticCtrl'
     })
     .otherwise({
