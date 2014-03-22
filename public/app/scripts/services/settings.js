@@ -251,7 +251,7 @@ angular.module('wynnoApp.services')
           if (hashtags.anything.count === 1) {
             hashtagsResult += ' and <strong class="darkGray">any other hashtag</strong>';
           } else {
-            hashtagsResult += ' and <strong class="darkGray">any ' + hashtags.anything.count + ' others</strong>'
+            hashtagsResult += ' and <strong class="darkGray">any ' + hashtags.anything.count + ' others</strong>';
           }
         }
       }

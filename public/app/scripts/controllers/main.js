@@ -68,7 +68,7 @@ angular.module('wynnoApp.controllers')
     }, function(reason) {
       console.log('error getting more old tweets:', reason);
       $scope.busy = false;
-    })
+    });
   };
 
   $scope.getNewTweets = function() {
@@ -87,12 +87,12 @@ angular.module('wynnoApp.controllers')
       if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait.new = true;
         $scope.waitNew = parseInt(reason.slice(20,22), 10);
-        $scope.countdownTimer("new", $scope.waitNew, $scope.getNewTweets);
+        $scope.countdownTimer('new', $scope.waitNew, $scope.getNewTweets);
       } else {
         $scope.activeTwitterRequest.new = false; // to stop the spinner
         $scope.twitterError.new = true;
       }
-    })
+    });
   };
 
   $scope.fillGapRequest = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
@@ -121,7 +121,7 @@ angular.module('wynnoApp.controllers')
       if (reason.slice(0,20) === 'Please try again in ') {
         $scope.mustWait.middle = true;
         $scope.waitMiddle = parseInt(reason.slice(20,22), 10);
-        $scope.countdownTimer("middle", $scope.waitMiddle, function() {
+        $scope.countdownTimer('middle', $scope.waitMiddle, function() {
           $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
         });
       } else {
@@ -139,7 +139,7 @@ angular.module('wynnoApp.controllers')
       $timeout(function() {
         $scope.decr(middleOrNew, $scope.remaining[middleOrNew], next);
       }, 1000);
-    } 
+    }
   };
 
   $scope.countdownTimer = function(middleOrNew, wait, next) {
@@ -184,7 +184,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.elegantize = function(tweets, presentTime) {
     var elegantizeTimestamp = function(UTCtimestamp) {
-      var numMilliseconds = presentTime - Date.parse(UTCtimestamp); 
+      var numMilliseconds = presentTime - Date.parse(UTCtimestamp);
       var numSeconds = numMilliseconds/1000;
       var numMinutes = numSeconds/60;
       var numHours = numMinutes/60;
@@ -226,8 +226,6 @@ angular.module('wynnoApp.controllers')
     // is crucial for rendering quickly in Safari (desktop and mobile).
     // in Chrome and firefox it worked fine not to do that until inside
     // the success callback, but in Safari that created an extremely long delay (minutes)
-    var origVoteCount = SettingsService.settings.voteCount;
-    var origVotesRequiredForNextSugg = SettingsService.settings.votesRequiredForNextSugg;
     var origVote = tweet.__vote;
     var origTweets = $scope.tweets.slice();
 
@@ -240,7 +238,7 @@ angular.module('wynnoApp.controllers')
       console.log('removing a nayed tweet from the passing tweets');
       // $scope.tweets.splice(index, 1); // can't do this because it triggers $locationChangeStart
       // angular seems to think because the DOM is changing that the browser location is being changed
-      tweet.hideGivenNewContraryVote = true; 
+      tweet.hideGivenNewContraryVote = true;
     } else if ($location.path() === '/out' && vote === 1) {
       console.log('removing a yeaed tweet from the failing tweets');
       // $scope.tweets.splice(index, 1); // can't do this, see above
@@ -250,19 +248,19 @@ angular.module('wynnoApp.controllers')
     SettingsService.settings.voteCount++;
     SettingsService.settings.votesRequiredForNextSugg--;
     // update the count displayed in the navbar
-    $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg, null);
+    $scope.$emit('setSuggIndicators', SettingsService.settings.votesRequiredForNextSugg, null);
 
     // now pass the vote on to the server
     VoteService.vote(tweet, vote)
     .then(function(newVote) {
-      console.log("vote recorded");
+      console.log('vote recorded');
       if (SettingsService.settings.votesRequiredForNextSugg === 0) {
         console.log('Enough votes for new filter suggestion. Requesting...');
         SettingsService.requestSugg()
         .then(function() {
           console.log('Received new suggestion.');
           // update indicators on the navbar
-          $scope.$emit("setSuggIndicators", SettingsService.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);
+          $scope.$emit('setSuggIndicators', SettingsService.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);
         }, function(error) {
           console.log('Error receiving new suggestion.');
           // TODO: should figure out something to display when error getting suggestions.
@@ -278,7 +276,7 @@ angular.module('wynnoApp.controllers')
       SettingsService.settings.voteCount--;
       SettingsService.settings.votesRequiredForNextSugg++;
       // update the count displayed in the navbar
-      $scope.$emit("setSuggIndicators", SettingsService.settings.votesRequiredForNextSugg, null);
+      $scope.$emit('setSuggIndicators', SettingsService.settings.votesRequiredForNextSugg, null);
     });
   };
 
@@ -294,12 +292,12 @@ angular.module('wynnoApp.controllers')
   window.scrollTo(0, 0);
   $scope.initialLoad();
 
-  $scope.$on("sendingAgreement", function() {
+  $scope.$on('sendingAgreement', function() {
     $scope.activeTwitterRequest.new = true;
     $scope.busy = true;
   });
 
-  $scope.$on("agreementSaved", function() {
+  $scope.$on('agreementSaved', function() {
     $scope.initialLoad();
   });
 

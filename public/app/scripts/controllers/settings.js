@@ -63,7 +63,7 @@ angular.module('wynnoApp.controllers')
       // rebind the relevant filter arrays on the scope to their originals
       $scope.suggestedFilters = SettingsService.settings.suggestedFilters;
       $scope.activeFilters = SettingsService.settings.activeFilters;
-    })
+    });
   };
 
   $scope.dismissSugg = function(indexInReversedArray) {
@@ -78,7 +78,7 @@ angular.module('wynnoApp.controllers')
       // rebind the relevant filter arrays on the scope to their originals
       $scope.suggestedFilters = SettingsService.settings.suggestedFilters;
       $scope.dismissedFilters = SettingsService.settings.dismissedFilters;
-    })
+    });
   };
 
   $scope.toggleAutoWynnoing = function(newSetting) {
@@ -97,7 +97,7 @@ angular.module('wynnoApp.controllers')
   window.scrollTo(0, 0);
   $scope.injectSettings();
 
-  $scope.$on("agreementSaved", function() {
+  $scope.$on('agreementSaved', function() {
     $scope.injectSettings();
   });
 });

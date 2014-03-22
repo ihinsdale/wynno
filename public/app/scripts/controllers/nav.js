@@ -15,7 +15,7 @@ angular.module('wynnoApp.controllers')
   // get set for the initial page. The primary case in mind here is for #/in,
   // where the user is redirected after successful login with Twitter. Fortunately,
   // it appears this listener does get set up before the success event of the initial page is fired.
-  $scope.$on("$locationChangeSuccess", function(evt, next, current) {
+  $scope.$on('$locationChangeSuccess', function(evt, next, current) {
     console.log('locationchangesuccess listener in navctrl evaluated');
 
     // update which view is active and whether that view requires authentication
@@ -42,7 +42,7 @@ angular.module('wynnoApp.controllers')
   });
 
   // create listener for update to voteCount and votesRequiredForNextSugg
-  $scope.$on("setSuggIndicators", function(event, votesRequiredForNextSugg, undismissedSugg) {
+  $scope.$on('setSuggIndicators', function(event, votesRequiredForNextSugg, undismissedSugg) {
     console.log('Setting votesRequired and undismissedSugg indicators.');
     if (votesRequiredForNextSugg !== null) {
       $scope.votesRequiredForNextSugg = votesRequiredForNextSugg;
@@ -65,7 +65,7 @@ angular.module('wynnoApp.controllers')
       if (redirectDestination === 'twitter') {
         window.location = 'http://twitter.com/logout'; // redirect user to Twitter where they can logout
       } else {
-        $location.path('/')
+        $location.path('/');
       }
     }, function(err){
       console.log('failed to logout:', err);
@@ -100,14 +100,14 @@ angular.module('wynnoApp.controllers')
       console.log('sending agreement to ToS', modalResult.agreement);
       // broadcast event that agreement is being sent. this will be heard in
       // MainCtrl, which will start spinners
-      $scope.$broadcast("sendingAgreement");
+      $scope.$broadcast('sendingAgreement');
       // send agreement to ToS back to server
       AuthService.sendAgreement(modalResult.agreement)
       .then(function(result) {
         console.log(result);
         // broadcast event that agreement has been saved, so that loading of
         // content can actually be kicked off
-        $scope.$broadcast("agreementSaved");
+        $scope.$broadcast('agreementSaved');
         // update cookie accordingly
         var user = AuthService.getCurrentUser();
         user.agreed_terms = true;
@@ -180,9 +180,9 @@ angular.module('wynnoApp.controllers')
     // initialize new draft filter
     $scope.draftFilter = { conditions: [{}], users: [], scope: 'all' };
     $scope.draftFilter.typeDisplayed = 'Hear/Mute';
-    $scope.draftFilter.usersDisplayed = '(all users)'
+    $scope.draftFilter.usersDisplayed = '(all users)';
     $scope.draftFilter.conditions[0].typeDisplayed = '(anything)';
-    $scope.draftFilter.scopeDisplayed = 'tweets + retweets'
+    $scope.draftFilter.scopeDisplayed = 'tweets + retweets';
   };
 
   $scope.draftFilterAddUser = function(username) {
@@ -225,12 +225,12 @@ angular.module('wynnoApp.controllers')
         if (!oneValid) {
           // if the condition has a type that's not 'word', or its type is 'word' and a word has been entered, valid
           if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
-            || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
+          || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
             oneValid = true;
           }
         }
       }
-      if (!oneValid) { 
+      if (!oneValid) {
         return true;
       } else {
       // else, complete
@@ -260,13 +260,13 @@ angular.module('wynnoApp.controllers')
         if (i === 1) {
           $scope.draftFilter.usersDisplayed += '...';
         } else {
-          $scope.draftFilter.usersDisplayed += ('@' + $scope.draftFilter.users[i])
+          $scope.draftFilter.usersDisplayed += ('@' + $scope.draftFilter.users[i]);
         }
       }
     }
   };
 
-  $scope.dismissError = function(whichError) {
+  $scope.dismissError = function() {
     $scope.error = null;
   };
 
@@ -278,7 +278,7 @@ angular.module('wynnoApp.controllers')
         // if condition type is a word, condition must have a word
         // all other condition types are necessarily valid because they have defaults
         if (($scope.draftFilter.conditions[i].type && $scope.draftFilter.conditions[i].type !== 'word')
-            || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
+        || ($scope.draftFilter.conditions[i].type === 'word' && $scope.draftFilter.conditions[i].word)) {
           hasValidCondition = true;
         }
       }
