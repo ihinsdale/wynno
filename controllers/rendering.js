@@ -1,3 +1,5 @@
+'use strict';
+
 var replaceAt = function(string, start, end, using) {
   return string.substr(0, start) + using + string.substr(end, string.length);
 };

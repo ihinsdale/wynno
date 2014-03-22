@@ -1,12 +1,11 @@
+'use strict';
+
 var credentials = require('./keys.json').db;
 var mongoose = require('mongoose');
-var url = require('url');
 
 module.exports = function(app) {
   // Setup DB connection
   var dbConnUrl = process.env.MONGOHQ_URL || 'mongodb://' + credentials.username + ':' + credentials.password + '@127.0.0.1:27017/wynno-dev';
-  var host = url.parse(dbConnUrl).hostname;
-  var port = new Number(url.parse(dbConnUrl).port);
 
   app.set('dbConnUrl',dbConnUrl);
   mongoose.connect(dbConnUrl);

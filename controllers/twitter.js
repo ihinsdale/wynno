@@ -1,3 +1,5 @@
+'use strict';
+
 var keys = require('../config/keys.json').twitter;
 var Twitter = require('ntwitter');
 

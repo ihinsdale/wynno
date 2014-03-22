@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(app) {
   // Include controllers
   var site = require('../controllers/site.js');
@@ -8,7 +10,7 @@ module.exports = function(app) {
   // GET request to homepage
   app.get('/', site.index);
   // GET request to /old grabs old tweets from database
-  app.get('/old', ensureAuthenticated, ensureAgreedTerms, site.old)
+  app.get('/old', ensureAuthenticated, ensureAgreedTerms, site.old);
   // GET request to /new initiates request to Twitter API, saves tweets to database, send to client
   app.get('/new', ensureAuthenticated, ensureAgreedTerms, site.fresh);
   // GET request to /middle initiates request to Twitter API for old tweets, saves tweets to database, send to client
@@ -36,7 +38,7 @@ module.exports = function(app) {
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
   app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/account' }));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
-  app.get('/auth/twitter/callback', 
+  app.get('/auth/twitter/callback',
     passport.authenticate('twitter', { successRedirect: '/checkin',
                                      failureRedirect: '#/signinwithtwitter' })
   );
@@ -45,5 +47,5 @@ module.exports = function(app) {
   // POST request to /feedback records feedback in the database
   app.post('/feedback', site.processFeedback);
   // POST request to /agreed
-  app.post('/agreed', ensureAuthenticated, site.processAgreement)
+  app.post('/agreed', ensureAuthenticated, site.processAgreement);
 };

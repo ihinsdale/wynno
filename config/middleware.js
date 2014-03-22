@@ -1,9 +1,10 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var credentials = require('./keys.json');
-var passport = require('passport')
+var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
-var User = require('../models/User.js').User;
 var db = require('../controllers/dbRW.js');
 var expressValidator = require('express-validator');
 var RedisStore = require('connect-redis')(express);
@@ -14,14 +15,14 @@ exports.init = function(app) {
   app.use(expressValidator());
   app.use(express.methodOverride());
   app.use(express.cookieParser(credentials.secrets.cookieParser));
-  app.use(express.session({ 
+  app.use(express.session({
     store: new RedisStore({
       host: credentials.redis.localhost,
       port: credentials.redis.port,
       db: credentials.redis.db,
       pass: credentials.redis.pass
     }),
-    secret: credentials.secrets.session 
+    secret: credentials.secrets.session
   }));
   app.use(require('stylus').middleware(__dirname + '/public'));
   console.log('dirname is', __dirname);
@@ -39,8 +40,7 @@ exports.init = function(app) {
   passport.use(new TwitterStrategy({
       consumerKey: credentials.twitter.consumer_key,
       consumerSecret: credentials.twitter.consumer_secret,
-      callbackURL: "http://" + app.get('publicDNS') + ":" + app.get('port') + "/auth/twitter/callback",
-      //callbackURL: "http://127.0.0.1:" + app.get('port') + "/auth/twitter/callback",
+      callbackURL: 'http://' + app.get('publicDNS') + ':' + app.get('port') + '/auth/twitter/callback',
       //userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
       userAuthorizationURL: 'https://api.twitter.com//oauth/authenticate',
       passReqToCallback: true
@@ -48,7 +48,7 @@ exports.init = function(app) {
     function(req, token, tokenSecret, profile, done) {
       // register user with the db, i.e. find and update access_token and access_secret, or create
       console.log('Twitter profile looks like:', profile);
-      user = {
+      var user = {
         tw_id: profile._json.id,
         tw_id_str: profile._json.id_str,
         tw_name: profile._json.name,
@@ -90,5 +90,5 @@ exports.ensureAgreedTerms = function (req, res, next) {
   if (req.user.agreed_terms) { return next(); }
   // can't use 401 code because that gets caught by angular interceptor and
   // redirects user to sign in page
-  res.send(402, "User must first agree to Terms of Service.");
+  res.send(402, 'User must first agree to Terms of Service.');
 };

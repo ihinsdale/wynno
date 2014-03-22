@@ -1,3 +1,5 @@
+'use strict';
+
 var async = require('async');
 var twitter = require('./twitter.js');
 var db = require('./dbRW.js');

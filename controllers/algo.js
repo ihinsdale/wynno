@@ -1,3 +1,5 @@
+'use strict';
+
 var zerorpc = require("zerorpc");
 
 var client = new zerorpc.Client();
