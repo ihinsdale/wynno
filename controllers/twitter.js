@@ -46,6 +46,7 @@ var twitGet = function(user_id, token, tokenSecret, options, latestid_str, callb
   });
 };
 
+var incStrNum;
 exports.incStrNum = incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
   // NB only works for n >= 0
   n = n.toString(); // but n should be passed in as a string
@@ -63,6 +64,7 @@ exports.incStrNum = incStrNum = function(n) { // courtesy of http://webapplog.co
   return result;
 };
 
+var decStrNum;
 exports.decStrNum = decStrNum = function(n) {
   // NB only works for n > 0
   n = n.toString();
