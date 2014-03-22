@@ -61,8 +61,8 @@ angular.module('wynnoApp.controllers')
       }
     }, function(reason) {
       // rebind the relevant filter arrays on the scope to their originals
-      $scope.suggestedFilters = service.settings.suggestedFilters;
-      $scope.activeFilters = service.settings.activeFilters;
+      $scope.suggestedFilters = SettingsService.settings.suggestedFilters;
+      $scope.activeFilters = SettingsService.settings.activeFilters;
     })
   };
 
@@ -76,8 +76,8 @@ angular.module('wynnoApp.controllers')
       }
     }, function(reason) {
       // rebind the relevant filter arrays on the scope to their originals
-      $scope.suggestedFilters = service.settings.suggestedFilters;
-      $scope.dismissedFilters = service.settings.dismissedFilters;
+      $scope.suggestedFilters = SettingsService.settings.suggestedFilters;
+      $scope.dismissedFilters = SettingsService.settings.dismissedFilters;
     })
   };
 

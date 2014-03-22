@@ -26,7 +26,7 @@ angular.module('wynnoApp.services')
         SettingsService.settings = data.settings;
 
         // apply filtering rules to the tweets
-        FilterService.applyFilterRules(data.tweets, data.settings); 
+        FilterService.applyFilterRules(data.tweets, data.settings);
         // it's crucial that we provide these settings to FilterService; if FilterService
         // had to get them from SettingsService, we'd have a circular dependency
 
@@ -42,7 +42,7 @@ angular.module('wynnoApp.services')
       .error(function(reason, status) {
         console.log('error getting old tweets and settings:', reason);
         d.reject(reason);
-      })
+      });
       return d.promise;
     }
   };

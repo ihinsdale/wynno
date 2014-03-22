@@ -19,7 +19,7 @@ angular.module('wynnoApp.services')
       .error(function(reason, status) {
         console.log('error getting settings');
         d.reject(reason);
-      })
+      });
       return d.promise;
     },
     renderFilters: function(settings) {
@@ -42,12 +42,12 @@ angular.module('wynnoApp.services')
       // if filter applies to all users
       if (!filter.users.length) {
         if (filter.scope === 'all') {
-          result += "all tweets";
+          result += 'all tweets';
         } else if (filter.scope === 'tweets') {
           result += 'tweets (but not retweets)';
         } else if (filter.scope === 'retweets') {
           result += 'retweets';
-        } 
+        }
       } else {
         for (var i = 0; i < filter.users.length; i++) {
           result += ('<strong class="darkGray">' + '@' + filter.users[i] + '</strong>');
@@ -83,7 +83,7 @@ angular.module('wynnoApp.services')
           result += 'tweets';
         } else if (filter.scope === 'retweets') {
           result += 'retweets';
-        } 
+        }
       }
       // filter conditions
       if (filter.conditions.length) {

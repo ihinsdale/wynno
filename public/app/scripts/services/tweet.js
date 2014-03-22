@@ -31,16 +31,17 @@ angular.module('wynnoApp.services')
       .error(function(reason, status) {
         console.log('error getting old tweets:', reason);
         d.reject(reason);
-      })
+      });
       return d.promise;
     },
     getNewTweets: function() {
       var d = $q.defer();
+      var timeSinceLastFetch;
       if (service.timeOfLastFetch) {
-        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
+        timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
       }
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
       } else {
         $http.get('/new')
         .success(function(data, status) {
@@ -70,11 +71,12 @@ angular.module('wynnoApp.services')
     },
     getMiddleTweets: function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
       var d = $q.defer();
+      var timeSinceLastFetch;
       if (service.timeOfLastFetch) {
-        var timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
+        timeSinceLastFetch = new Date().getTime() - service.timeOfLastFetch.getTime();
       }
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.')
+        d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
       } else {
         $http.get('/middle', {
           params: {
@@ -160,7 +162,7 @@ angular.module('wynnoApp.services')
       angular.forEach(service.currentTweets, function(tweet) {
         tweet.__p = null;
         tweet.__pScore = null;
-      })
+      });
     }
   };
 
