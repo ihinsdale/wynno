@@ -7,27 +7,6 @@ var Filter = require('../models/Filter.js').Filter;
 var _ = require('../node_modules/underscore/underscore-min.js');
 var rendering = require('./rendering.js');
 
-// function to save a tweet to the db
-exports.saveTweet = function(user_id, tweet, callback) {
-  // *_id must be a db record id, i.e. _id, not a Twitter API id
-  console.log('tweet id', tweet.id_str, 'created at', tweet.created_at);
-
-  // add info to tweet object and clean before storing in db
-  tweet = processTweet(user_id, tweet);
-
-  // create tweet document and save it to the database
-  var tweetDoc = new Tweet(tweet);
-  tweetDoc.save(function(error, tweetDoc) {
-    if (error) {
-      console.log('Error saving tweet', tweetDoc.id_str, 'to db');
-      callback('Error saving tweet', tweetDoc.id_str, 'to db');
-    } else {
-      console.log('Saved tweet',tweetDoc.id_str, 'to db');
-      callback(null);
-    }
-  });
-};
-
 // defines fields on tweet which are used in rendering the tweet
 // also unescapes tweet text like &amp;
 var processTweet = function(user_id, tweet) {
@@ -74,6 +53,27 @@ var processTweet = function(user_id, tweet) {
   return tweet;
 };
 
+// function to save a tweet to the db
+exports.saveTweet = function(user_id, tweet, callback) {
+  // *_id must be a db record id, i.e. _id, not a Twitter API id
+  console.log('tweet id', tweet.id_str, 'created at', tweet.created_at);
+
+  // add info to tweet object and clean before storing in db
+  tweet = processTweet(user_id, tweet);
+
+  // create tweet document and save it to the database
+  var tweetDoc = new Tweet(tweet);
+  tweetDoc.save(function(error, tweetDoc) {
+    if (error) {
+      console.log('Error saving tweet', tweetDoc.id_str, 'to db');
+      callback('Error saving tweet', tweetDoc.id_str, 'to db');
+    } else {
+      console.log('Saved tweet',tweetDoc.id_str, 'to db');
+      callback(null);
+    }
+  });
+};
+
 exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr, newLatestTweetIdStr, callback) {
   User.findById(user_id, function(err, user) {
     if (err) {
@@ -103,7 +103,7 @@ exports.updateSecondLatestTweetId = function(user_id, newSecondLatestTweetIdStr,
 
 exports.updateGapMarker = function(user_id, oldestOfMoreRecentTweetsIdStr, newestOfTheOlderTweetsIdStr, callback) {
   // TODO could consolidate this updateGapMarker query with the findTweetsSinceIdAndBeforeId query
-  Tweet.findOneAndUpdate({ user_id: user_id, id: oldestOfMoreRecentTweetsIdStr }, { 
+  Tweet.findOneAndUpdate({ user_id: user_id, id: oldestOfMoreRecentTweetsIdStr }, {
     gapAfterThis: false,
   }, function(err, doc) {
     if (err) {
@@ -205,7 +205,7 @@ exports.saveVote = function(user_id, tweet_id, vote, callback) {
       console.log('error updating tweet', tweet_id);
       callback(err);
     } else {
-      console.log('Recorded vote', vote, 'on tweet', tweet_id, 'successfully.')
+      console.log('Recorded vote', vote, 'on tweet', tweet_id, 'successfully.');
       User.findByIdAndUpdate(user_id, { $inc: { voteCount: 1 } }, {}, function(err, numberAffected, raw) {
         if (err) {
           console.log('error updating vote count for user', user_id);

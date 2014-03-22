@@ -36,6 +36,44 @@ exports.logout = function(req, res) {
   res.send('Logged out of wynno.');
 };
 
+var getHistorical = function(req, oldestTweetIdStr, callback) {
+  console.log('inside getHistorical, oldestTweetIdStr looks like:', oldestTweetIdStr);
+  async.waterfall([
+    // fetch the tweets from twitter
+    function(callback2) {
+      twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestTweetIdStr, null, null, callback2);
+    },
+    // store in the db
+    function(user_id, tweetsArray, irrelevant, callback2) {
+      async.eachSeries(tweetsArray.reverse(),
+        function(tweet, callback2) {
+          db.saveTweet(user_id, tweet, callback2);
+        }, 
+        function(err) {
+          if (err) {
+            console.log('Error saving historical tweets:', err);
+            callback2(err);
+          } else {
+            console.log('Successfully saved batch of historical tweets');
+            callback2(null);
+          }
+        }
+      );
+    },
+    // grab the newly saved tweets
+    function(callback2) {
+      db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback2);
+    }
+  ], function(error, tweets) {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, tweets, null); // arguments match the signature within the 
+      // second function of exports.old()'s waterfall
+    }
+  });
+};
+
 var old;
 exports.old = old = function(req, res) {
   var oldestTweetIdStr = req.query.oldestTweetIdStr || '0';
@@ -82,44 +120,6 @@ exports.old = old = function(req, res) {
       }
       console.log('sending results for /old');
       res.send(data);
-    }
-  });
-};
-
-var getHistorical = function(req, oldestTweetIdStr, callback) {
-  console.log('inside getHistorical, oldestTweetIdStr looks like:', oldestTweetIdStr);
-  async.waterfall([
-    // fetch the tweets from twitter
-    function(callback2) {
-      twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestTweetIdStr, null, null, callback2)
-    },
-    // store in the db
-    function(user_id, tweetsArray, irrelevant, callback2) {
-      async.eachSeries(tweetsArray.reverse(), 
-        function(tweet, callback2) {
-          db.saveTweet(user_id, tweet, callback2);
-        }, 
-        function(err) {
-          if (err) {
-            console.log('Error saving historical tweets:', err);
-            callback2(err);
-          } else {
-            console.log('Successfully saved batch of historical tweets');
-            callback2(null);
-          }
-        }
-      );
-    },
-    // grab the newly saved tweets
-    function(callback2) {
-      db.findTweetsBeforeId(req.user._id, oldestTweetIdStr, callback2);
-    }
-  ], function(error, tweets) {
-    if (error) {
-      callback(error);
-    } else {
-      callback(null, tweets, null); // arguments match the signature within the 
-      // second function of exports.old()'s waterfall
     }
   });
 };
@@ -212,6 +212,18 @@ exports.fresh = function(req, res) {
   });
 };
 
+var checkTimeOfLastFetch = function(timeOfLastFetch, callback) {
+  console.log('time of last fetch before this one:', timeOfLastFetch);
+  if (timeOfLastFetch) {
+    var timeSinceLastFetch = new Date().getTime() - timeOfLastFetch;
+  }
+  if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
+    callback('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
+  } else {
+    callback(null);
+  }
+};
+
 exports.middle = function(req, res) {
   var oldestOfMoreRecentTweetsIdStr = req.query.oldestOfMoreRecentTweetsIdStr;
   var secondNewestOfOlderTweetsIdStr = req.query.secondNewestOfOlderTweetsIdStr;
@@ -244,7 +256,7 @@ exports.middle = function(req, res) {
       async.eachSeries(tweetsArray.reverse(), 
         function(tweet, callback) {
           db.saveTweet(user_id, tweet, callback);
-        }, 
+        },
         function(err) {
           if (err) {
             console.log('Error saving middle tweets:', err);
@@ -280,18 +292,6 @@ exports.middle = function(req, res) {
       res.send({ tweets: tweets });
     }
   });
-};
-
-var checkTimeOfLastFetch = function(timeOfLastFetch, callback) {
-  console.log('time of last fetch before this one:', timeOfLastFetch);
-  if (timeOfLastFetch) {
-    var timeSinceLastFetch = new Date().getTime() - timeOfLastFetch;
-  }
-  if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-    callback('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
-  } else {
-    callback(null);
-  }
 };
 
 exports.processVote = function(req, res) {
