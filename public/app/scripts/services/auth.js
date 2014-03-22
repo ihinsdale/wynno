@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('wynnoApp.services')
 .factory('AuthService', ['$q', '$http', '$cookieStore', '$location', function($q, $http, $cookieStore, $location) {
   var service = {

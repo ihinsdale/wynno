@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('wynnoApp.services')
 .factory('FeedbackService', ['$q', '$http', function($q, $http) {
   var service = {

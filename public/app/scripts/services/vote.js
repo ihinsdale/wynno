@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('wynnoApp.services')
 .factory('VoteService', ['$q', '$http', function($q, $http) {
   var service = {
@@ -14,7 +16,7 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     }
-  }
+  };
 
   return service;
 }]);

@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('wynnoApp.services')
 .factory('TweetService', ['$q', '$http', 'FilterService', function($q, $http, FilterService) {
   var service = {

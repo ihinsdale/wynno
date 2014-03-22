@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('wynnoApp.services')
 .factory('InitialTweetsAndSettingsService', ['$q', '$http', 'FilterService', 'TweetService', 'SettingsService', function($q, $http, FilterService, TweetService, SettingsService) {
   // this service created to avoid circular dependency between Filter, Tweet, and Settings services that resulted
