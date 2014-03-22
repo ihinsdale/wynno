@@ -166,6 +166,7 @@ angular.module('wynnoApp.services')
       if (result) {
         var wordResult = true;
         var stringToSearch;
+        var searchFor;
         for (var n = 0; n < caseSensitive.length; n++) {
           if (wordResult) {
             stringToSearch = referenceStringToSearch;
