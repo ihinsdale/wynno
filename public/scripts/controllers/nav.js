@@ -74,7 +74,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.openFeedback = function() {
     var modalInstance = $modal.open({
-      templateUrl: '/app/views/feedback.html',
+      templateUrl: '/views/feedback.html',
       controller: 'FeedbackModalInstanceCtrl'
     });
     modalInstance.result.then(function(modalResult) {
@@ -93,7 +93,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.openWelcome = function() {
     var modalInstance = $modal.open({
-      templateUrl: '/app/views/welcome.html',
+      templateUrl: '/views/welcome.html',
       controller: 'WelcomeModalInstanceCtrl'
     });
     modalInstance.result.then(function(modalResult) {
@@ -127,7 +127,7 @@ angular.module('wynnoApp.controllers')
   $scope.openFilterBuilder = function() {
     $scope.filterBuilderOpen = true; // used by ng-class on body element, for css targeting of modal-dialog
     var modalInstance = $modal.open({
-      templateUrl: '/app/views/filterbuilder.html',
+      templateUrl: '/views/filterbuilder.html',
       controller: 'CreateFilterCtrl'
     });
     modalInstance.result.then(function(modalResult) {
