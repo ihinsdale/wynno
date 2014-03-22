@@ -10,6 +10,7 @@ html
     link(rel='stylesheet', href='app/styles/main.css')
     link(rel='stylesheet', href='app/styles/fonts.css')
 
+    <!-- build:js js/scripts.min.js -->
     script(src='/app/bower_components/jquery/dist/jquery.min.js')
     script(src='/app/bower_components/angular/angular.min.js')
     script(src='/app/bower_components/angular-animate/angular-animate.min.js')
@@ -39,6 +40,7 @@ html
     script(src='/app/scripts/services/filter.js')
     script(src='/app/scripts/services/initialTweetsAndSettings.js')
     script(src='/app/scripts/filters/reverse.js')
+    <!-- endbuild -->
 
   body(ng-app='wynnoApp',ng-controller='NavCtrl', ng-class="{filterBuilderOpen: filterBuilderOpen}")
       block nav

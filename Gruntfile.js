@@ -100,7 +100,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        //'<%= yeoman.app %>/scripts/{,*/}*.js',
+        '<%= yeoman.app %>/scripts/{,*/}*.js',
         'config/*.js',
         'controllers/*.js',
         'models/*.js'
@@ -145,17 +145,17 @@ module.exports = function (grunt) {
       }
     },
     useminPrepare: {
-      //html: '<%= yeoman.app %>/index.html',
-      //options: {
-      //  dest: '<%= yeoman.dist %>'
-      //}
+      html: '<%= yeoman.app %>/views/layout.jade',
+      options: {
+       dest: '<%= yeoman.dist %>'
+      }
     },
     usemin: {
-      //html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      //css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-      //options: {
-      //  dirs: ['<%= yeoman.dist %>']
-      //}
+      html: ['<%= yeoman.dist %>/views/layout.jade'],
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      options: {
+       dirs: ['<%= yeoman.dist %>']
+      }
     },
     imagemin: {
       dist: {
@@ -190,27 +190,27 @@ module.exports = function (grunt) {
       //   }
       // }
     },
-    htmlmin: {
-      dist: {
-        options: {
-          /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
-      }
-    },
+    // htmlmin: {
+    //   dist: {
+    //     options: {
+    //       removeCommentsFromCDATA: true,
+    //       // https://github.com/yeoman/grunt-usemin/issues/44
+    //       //collapseWhitespace: true,
+    //       collapseBooleanAttributes: true,
+    //       removeAttributeQuotes: true,
+    //       removeRedundantAttributes: true,
+    //       useShortDoctype: true,
+    //       removeEmptyAttributes: true,
+    //       removeOptionalTags: true
+    //     },
+    //     files: [{
+    //       expand: true,
+    //       cwd: '<%= yeoman.app %>',
+    //       src: ['*.html', 'views/*.html'],
+    //       dest: '<%= yeoman.dist %>'
+    //     }]
+    //   }
+    // },
     // Put files not handled in other tasks here
     copy: {
       dist: {
@@ -280,15 +280,15 @@ module.exports = function (grunt) {
         }]
       }
     },
-    uglify: {
-      dist: {
-        files: {
-          '<%= yeoman.dist %>/scripts/scripts.js': [
-            '<%= yeoman.dist %>/scripts/scripts.js'
-          ]
-        }
-      }
-    }
+    // uglify: {
+    //   dist: {
+    //     files: {
+    //       '<%= yeoman.dist %>/scripts/scripts.min.js': [
+    //         '<%= yeoman.app %>/scripts/{,*/}*.js'
+    //       ]
+    //     }
+    //   }
+    // }
   });
 
   grunt.registerTask('server', function (target) {
