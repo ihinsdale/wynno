@@ -36,6 +36,7 @@ exports.logout = function(req, res) {
   res.send('Logged out of wynno.');
 };
 
+var old;
 exports.old = old = function(req, res) {
   var oldestTweetIdStr = req.query.oldestTweetIdStr || '0';
   console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
