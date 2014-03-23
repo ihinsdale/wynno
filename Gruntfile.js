@@ -228,8 +228,8 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/public/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/public/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/styles/fonts/*'
+            '<%= yeoman.dist %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+            //'<%= yeoman.dist %>/public/styles/fonts/*'
           ]
         }
       }
@@ -289,7 +289,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.app %>/views',
           src: ['*.html', 'partials/**/*.html'],
-          dest: '<%= yeoman.dist %>/views'
+          dest: '<%= yeoman.dist %>/public/views'
         }]
       }
     },
@@ -333,7 +333,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>/views',
-          dest: '<%= yeoman.dist %>/views',
+          dest: '<%= yeoman.dist %>/public/views',
           src: '**/*.jade'
         }, {
           expand: true,
@@ -348,6 +348,18 @@ module.exports = function (grunt) {
             'server.js',
             'lib/**/*'
           ]
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/styles/fonts',
+          dest: '<%= yeoman.dist %>/public/styles/fonts',
+          src: [
+            '**/*',
+          ]
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/images',
+          dest: '<%= yeoman.dist %>/public/images',
+          src: ['*.ico']
         }]
       },
       styles: {
