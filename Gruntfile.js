@@ -280,7 +280,7 @@ module.exports = function (grunt) {
     htmlmin: {
       dist: {
         options: {
-          collapseWhitespace: true,
+          //collapseWhitespace: true, // uncommenting this was causing index.html to be entirely blank!
           //collapseBooleanAttributes: true,
           //removeCommentsFromCDATA: true,
           //removeOptionalTags: true
