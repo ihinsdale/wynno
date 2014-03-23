@@ -329,9 +329,9 @@ def save_suggested_filters(user_id, filters):
     for filter_id in filter_ids:
       saved_filters.append(db.filters.find_one({"_id": filter_id}))
     result = db.users.update({"_id": user_id}, {"$push": {"suggestedFilters": {"$each": saved_filters}}, "$set": {"undismissedSugg": True}})
+    return
   except:
-    raise SaveError('There was an error saving the suggested filters.')
-  return
+    raise
 
 def decision_tree(feature_dicts, votes):
   # vectorize the feature dicts
@@ -788,9 +788,13 @@ class RPC(object):
     if voted_tweets.count():
       suggestions = from_votes_to_filters(user_id, list(voted_tweets)) # using list() necessary to convert from cursor
       # save filter suggestions before returning them
-      save_suggested_filters(user_id, suggestions)
+      if len(suggestions):
+        undismissedSugg = True
+        save_suggested_filters(user_id, suggestions)
+      else:
+        undismissedSugg = False
 
-    return dumps({'suggestedFilters': suggestions, 'undismissedSugg': True })
+    return dumps({'suggestedFilters': suggestions, 'undismissedSugg': undismissedSugg })
 
 s = zerorpc.Server(RPC())
 s.bind("tcp://0.0.0.0:4242")
