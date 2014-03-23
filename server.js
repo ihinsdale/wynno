@@ -4,7 +4,7 @@ var http = require('http');
 var app = express();
 
 // Include our configuration
-require('./config/index.js')(app);
+require('./lib/config/index.js')(app);
 
 module.exports = function(app) {
   http.createServer(app).listen(app.get('port'), function(){
