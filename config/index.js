@@ -9,8 +9,10 @@ module.exports = function(app) {
   app.set('publicDNS', credentials.publicDNS);
   console.log('publicDNS is:', app.get('publicDNS'));
   
-  app.set('views', path.resolve(__dirname, '../views'));
-  app.set('view engine', 'jade');
+  app.set('views', path.resolve(__dirname, '../public/views'));
+  // We're going to use plain old html views (Grunt had trouble trying to minify jade templates)
+  app.engine('.html', require('jade')); // We use the jade engine to serve regular HTML
+  app.set('view engine', 'html');
 
   // Include environments
   require('./environments.js')(app);
