@@ -17,7 +17,7 @@ exports.index = function(req, res) {
       agreed_terms: req.user.agreed_terms
     }));
   }
-  res.render('index', { title: 'wynno' });
+  res.render('index.html', { title: 'wynno' });
 };
 
 // a function for checking in a user after a successful signin
