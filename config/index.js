@@ -11,7 +11,7 @@ module.exports = function(app) {
   
   app.set('views', path.resolve(__dirname, '../public/views'));
   // We're going to use plain old html views (Grunt had trouble trying to minify jade templates)
-  app.engine('.html', require('jade').__express); // We use the jade engine to serve regular HTML
+  app.engine('html', require('ejs').renderFile); // We use the ejs engine to serve regular HTML
   app.set('view engine', 'html');
 
   // Include environments
