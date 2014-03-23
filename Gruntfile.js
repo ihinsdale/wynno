@@ -23,7 +23,6 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: 'public',
-      express_views: 'views',
       dist: 'dist'
     },
     express: {
@@ -240,7 +239,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: ['<%= yeoman.express_views %>/index.html'],
+      html: ['<%= yeoman.app %>/views/index.html'],
       options: {
         dest: '<%= yeoman.dist %>/public'
       }
