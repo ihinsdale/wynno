@@ -388,6 +388,13 @@ button.navbar-toggle.noBorder {
 
 // tweet styling
 
+.twitterLogo {
+    float: right;
+    padding: 8px 0 0 0;
+    font-size: 18px;
+    color: $twitter-blue;
+}
+
 .tweet {
     padding-bottom: 5px;
 }
@@ -431,10 +438,6 @@ button.navbar-toggle.noBorder {
     display: inline-block;
 }
 
-.tweeterName, .tweeterScreenName, .retweeterName {
-    float: left;
-}
-
 .tweetTimestamp {
     float: right;
 }
@@ -471,7 +474,7 @@ button.navbar-toggle.noBorder {
 
 .tweetFooter {
     color: #989898;
-    padding-top: 5px;
+    padding-top: 10px;
     text-align: right;
 }
 
@@ -487,6 +490,23 @@ $tweet-caption-font-size: 14px;
 
 .retweetSpacer {
     height: $tweet-caption-font-size;
+}
+
+.tweetCaptionIcon {
+    padding-right: 4px;
+}
+
+.tweetCaptionAction {
+    padding-right: 6px;
+}
+
+.tweetCaptionAction > a {
+    color: #989898;
+}
+
+.tweetCaptionAction > a:hover {
+    color: #adadad;
+    text-decoration: underline;
 }
 
 // vote button styling
