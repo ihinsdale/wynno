@@ -1,5 +1,4 @@
 'use strict';
-var parseUri = require('parseuri.js').parseUri;
 
 angular.module('wynnoApp.services')
 .factory('FilterService', [function() {
