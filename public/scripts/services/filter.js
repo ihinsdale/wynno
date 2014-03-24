@@ -68,14 +68,17 @@ angular.module('wynnoApp.services')
         }
       }
 
+      var linkResult;
+      var parser = document.createElement('a');
+      var hashtagResult;
+      var pictureResult;
+      var quotationResult;
       for (var i = 0; i < filterConditions.length; i++) {
         if (result) {
           switch(filterConditions[i].type) {
             // TODO add user_mention as a type of condition
             case 'link':
-              console.log('evaluating link condition');
-              var linkResult = false;
-              var parser = document.createElement('a');
+              linkResult = false;
               // if we haven't already counted as many links as the tweet contains
               if (linksCounted < numUrls) {
                 // if no link string specified, pass
@@ -114,7 +117,7 @@ angular.module('wynnoApp.services')
               // word condition processing to be continued outside the switch statement
               break;
             case 'hashtag':
-              var hashtagResult = false;
+              hashtagResult = false;
               // if we haven't counted all of the tweet's hashtags already
               if (hashtagsCounted < numHashtags) {
                 // if no hashtag specified, pass
@@ -140,7 +143,7 @@ angular.module('wynnoApp.services')
               result = hashtagResult;
               break;
             case 'picture':
-              var pictureResult = false;
+              pictureResult = false;
               if (picturesCounted < numPictures) {
                 pictureResult = true;
                 picturesCounted++;
@@ -151,7 +154,7 @@ angular.module('wynnoApp.services')
               // quotation conditions aren't additive, so we don't need to worry about
               // keeping track of the total number of quotation conditions
 
-              var quotationResult = false;
+              quotationResult = false;
               // could work on more complicated variations, e.g. if tweet contains 
               // two quotation marks or a quotation mark and ..., pass
               // currently, I am just using presence of a quotation mark " to indicate
