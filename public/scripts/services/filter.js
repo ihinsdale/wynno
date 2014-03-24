@@ -88,6 +88,7 @@ angular.module('wynnoApp.services')
                   for (var m = 0; m < urlsCopyCopy.length; m++) {
                     if (!linkResult) {
                       parser.href = urlsCopyCopy[m].extended_url;
+                      console.log('hostname is:', parser.hostname);
                       // it appears extended_url always has the same domain as display_url, so we can search
                       // extended_url which has the benefit that we can use the parser
                       if (parser.hostname.indexOf(filterConditions[i].link) !== -1) {
