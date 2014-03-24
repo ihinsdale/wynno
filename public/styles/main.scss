@@ -433,9 +433,10 @@ button.navbar-toggle.noBorder {
 }
 
 .rightColumn {
-    height: 100%;
+    min-height: 79px; // 79 is height of the interior of tweetStuff (i.e. 90px minus 10px padding and 1px border)
     padding-left: 10px;
     overflow: hidden;
+    position: relative;
 }
 
 .tweetMeta {
@@ -474,13 +475,14 @@ button.navbar-toggle.noBorder {
 
 .tweetText {
     font-size: 14px;
-    display: inline-block;
 }
 
 .tweetFooter {
     color: #989898;
     padding-top: 10px;
-    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .retweetedStatus {
@@ -521,6 +523,10 @@ $retweet-header-padding-bottom: 3px;
 
 .tweetFooter > a:hover {
     color: #989898;
+    text-decoration: none;
+}
+
+.tweetFooter > a:hover > tweetCaptionAction {
     text-decoration: underline;
 }
 
