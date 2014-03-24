@@ -1,0 +1,97 @@
+<tabset justified="true">
+  <tab heading="Your Filters">
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <h3 class="darkGray">Active Filters</h3>
+        <div class="panel filterPanel">
+          <div class="container">
+            <div class="row" ng-show="!activeFilters.length">
+              (no filters currently active)
+            </div>
+            <div class="row" ng-repeat="filter in activeFilters | reverse">
+              <div class="col-xs-12 col-md-12">
+                <div class="filterWrapper">
+                  <div class="filterNumber">
+                    <span ng-bind="$index + 1"></span>
+                    <span> - </span>
+                  </div>
+                  <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                    <div ng-bind-html="filter.rendered"></div>
+                  </div>
+                </div>
+                <div class="filterToggleButtonRightWrapper">
+                  <div class="hidden-xs">
+                    <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+                  </div>
+                </div>
+                <div class="visible-xs">
+                  <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="darkGray" ng-show="!!disabledFilters.length" href=""><span ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</span></a>
+        <div collapse="disabledIsCollapsed">
+          <h3 class="darkGray">Disabled Filters</h3>
+          <div class="panel filterPanel">
+            <div class="container">
+              <div class="row" ng-repeat="filter in disabledFilters | reverse">
+                <div class="col-xs-12 col-md-12">
+                  <div class="filterWrapper">
+                    <div class="filterNumber">
+                      <span> - </span>
+                    </div>
+                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                      <div ng-bind-html="filter.rendered"></div>
+                    </div>
+                  </div>
+                  <div class="filterToggleButtonRightWrapper">
+                    <div class="hidden-xs">
+                      <button type="button" class="btn btn-default" ng-click="enableDisFilter('disabled', $index)">Enable</button>
+                    </div>
+                  </div>
+                  <div class="visible-xs">
+                    <button type="button" class="btn btn-default" ng-click="enableDisFilter('disabled', $index)">Enable</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <tab-heading>
+      <span>Suggestions </span>
+      <span class="badge badgePurpleBadge" ng-show="!!suggestedFilters.length" ng-bind="suggestedFilters.length"></span>
+    </tab-heading>
+    <span>TODO: copy structure of Your filters</span>
+  </tab>
+  <tab>
+    <tab-heading>
+      <span>Automatic wynnoing</span>
+      <span class="badge badgePurpleBadge" ng-bind="200 - voteCount" ng-show="voteCount < 200"></span>
+    </tab-heading>
+    <div class="paddingTop40">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <span>Turn automatic wynnoing on/off</span>
+            <span class="icomoon-info"></span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="btn-group" ng-show="voteCount >= 200">
+            <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="true" ng-click="toggleAutoWynnoing(true)">On</button>
+            <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(false)">Off</button>
+          </div>
+          <div ng-show="voteCount < 200">
+            <span>In order to make helpful predictions, automatic wynnoing requires at least 200 votes. <strong><span ng-bind="200 - voteCount"></span></strong> more to go!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+</tabset>
