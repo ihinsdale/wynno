@@ -73,6 +73,7 @@ angular.module('wynnoApp.services')
           switch(filterConditions[i].type) {
             // TODO add user_mention as a type of condition
             case 'link':
+              console.log('evaluating link condition');
               var linkResult = false;
               var parser = document.createElement('a');
               // if we haven't already counted as many links as the tweet contains
