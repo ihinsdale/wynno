@@ -29,6 +29,39 @@ angular.module('wynnoApp.services')
       }
       return result;
     },
+    parseUri: function(str) {
+      // parseUri 1.2.2
+      // (c) Steven Levithan <stevenlevithan.com>
+      // MIT License
+      // Cf. http://blog.stevenlevithan.com/archives/parseuri
+
+      var options = {
+        strictMode: false,
+        key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+        q:   {
+          name:   "queryKey",
+          parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+        },
+        parser: {
+          strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+          loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+        }
+      };
+
+      var o   = options,
+          m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+          uri = {},
+          i   = 14;
+
+      while (i--) uri[o.key[i]] = m[i] || "";
+
+      uri[o.q.name] = {};
+      uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
+        if ($1) uri[o.q.name][$1] = $2;
+      });
+
+      return uri;
+    },
     meetsConditions: function(tweet, filterConditions) {
       // if no conditions specified, all tweets pass
       if (filterConditions.length === 0) {
@@ -92,7 +125,7 @@ angular.module('wynnoApp.services')
                   // if tweet links to the specified domain, pass
                   for (var m = 0; m < urlsCopyCopy.length; m++) {
                     if (!linkResult) {
-                      host = parseUri(urlsCopyCopy[m].extended_url);
+                      host = service.parseUri(urlsCopyCopy[m].extended_url).host;
                       console.log('hostname is:', host);
                       // it appears extended_url always has the same domain as display_url, so we can search
                       // extended_url which has the benefit that we can use parseUri
