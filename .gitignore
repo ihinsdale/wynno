@@ -1,7 +1,7 @@
 node_modules
 .tmp
 .sass-cache
-bower_components
+public/bower_components
 db_admin_steps.txt
 lib/config/keys.json
 dist/lib/config/keys.json
