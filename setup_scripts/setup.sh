@@ -2,6 +2,7 @@
 # Simple setup.sh for configuring Ubuntu 12.04 LTS VPS for wynno
 
 sudo apt-get update
+sudo apt-get upgrade
 sudo apt-get install build-essential
 sudo apt-get install screen
 #sudo apt-get install lvm2
@@ -15,15 +16,7 @@ sudo apt-get install mongodb-10gen
 
 # Install Redis
 # per https://www.digitalocean.com/community/articles/how-to-install-and-use-redis
-sudo apt-get install tcl8.5
-wget http://download.redis.io/redis-stable.tar.gz
-tar xvzf redis-stable.tar.gz
-cd redis-stable
-make
-make test
-sudo make install
-cd utils
-sudo ./install_server.sh
+sudo apt-get install redis-server
 
 # Install Python dependencies
 sudo apt-get install python-setuptools
@@ -33,7 +26,7 @@ sudo apt-get install python-dev
 sudo pip install virtualenv
 
 # create environment for python installations
-virtualenv --distribute wynno
+virtualenv --distribute wynno-env
 cd wynno
 source bin/activate
 
@@ -76,13 +69,10 @@ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 
 # Load nvm and install latest production node
 source $HOME/.nvm/nvm.sh
-sudo nvm install v0.10.26
-sudo nvm use v0.10.26
+nvm install v0.10.26
+nvm use v0.10.26
 # Install node dependencies
 npm install -g
 
-# Install Bower and front-end dependencies
-sudo npm install -g bower
-bower install
 
 
