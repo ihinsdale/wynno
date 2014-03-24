@@ -8,7 +8,7 @@
       </span>
     </button>
     <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
-    <span class="twitterLogo"><span class="icomoon-twitter"></span></span>
+    <span class="twitterLogo"><a><span class="icomoon-twitter"></span></a></span>
   </div>
 </div>
 <div class="row" ng-show="mustWait.new">
@@ -33,7 +33,7 @@
         <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, gapBelow: tweet.gapAfterThis, gapAbove: !$first && tweets[$index-1].gapAfterThis, lastTweet: $last}">
           <div class="leftColumn">
             <div class="retweetSpacer" ng-if="tweet.__retweeter">
-              <span class="icomoon-retweet"></span>
+              <div class="icomoon-retweet"></div>
             </div>
             <div class="tweeterImage">
               <img ng-src="{{tweet.__user.profile_image_url}}">
@@ -55,9 +55,9 @@
             </div>
             <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
             <div class="tweetFooter">
-              <span class="tweetCaptionAction"><a><span class="icomoon-reply tweetCaptionIcon"></span>Reply</a></span>
-              <span class="tweetCaptionAction"><a><span class="icomoon-retweet tweetCaptionIcon"></span>Retweet</a></span>
-              <span class="tweetCaptionAction"><a><span class="icomoon-star tweetCaptionIcon"></span>Favorite</a></span>
+              <span><a><span class="icomoon-reply tweetCaptionIcon"></span><span class="tweetCaptionAction">Reply</span></a></span>
+              <span><a><span class="icomoon-retweet tweetCaptionIcon"></span><span class="tweetCaptionAction">Retweet</span></a></span>
+              <span><a><span class="icomoon-star tweetCaptionIcon"></span><span class="">Favorite</span></a></span>
             </div>
           </div>
         </div>

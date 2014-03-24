@@ -390,9 +390,15 @@ button.navbar-toggle.noBorder {
 
 .twitterLogo {
     float: right;
-    padding: 8px 0 0 0;
+    padding: 10px 0 0 0;
     font-size: 18px;
     color: $twitter-blue;
+}
+
+.twitterLogo > a, .twitterLogo > a:hover {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .tweet {
@@ -479,17 +485,27 @@ button.navbar-toggle.noBorder {
 }
 
 .retweetedStatus {
+    color: #989898;
 }
 
 $tweet-caption-font-size: 14px;
+$retweet-header-padding-bottom: 3px;
 
 .tweetMeta, .tweetFooter, .retweetHeader {
     font-size: 12px;
     line-height: 14px;
 }
 
+.retweetHeader {
+    padding-bottom: $retweet-header-padding-bottom;
+}
+
 .retweetSpacer {
+    float: right;
     height: $tweet-caption-font-size;
+    padding-bottom: $retweet-header-padding-bottom;
+    color: #77b255;
+    height: 100%;
 }
 
 .tweetCaptionIcon {
@@ -500,12 +516,12 @@ $tweet-caption-font-size: 14px;
     padding-right: 6px;
 }
 
-.tweetCaptionAction > a {
+.tweetFooter > a {
     color: #989898;
 }
 
-.tweetCaptionAction > a:hover {
-    color: #adadad;
+.tweetFooter > a:hover {
+    color: #989898;
     text-decoration: underline;
 }
 
