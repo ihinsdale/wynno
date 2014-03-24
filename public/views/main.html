@@ -8,7 +8,7 @@
       </span>
     </button>
     <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
-    <span class="twitterLogo"><a><span class="icomoon-twitter"></span></a></span>
+    <span class="twitterLogo"><a href="https://twitter.com/{{username}}" target="_blank"><span class="icomoon-twitter"></span></a></span>
   </div>
 </div>
 <div class="row" ng-show="mustWait.new">
@@ -55,9 +55,9 @@
             </div>
             <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
             <div class="tweetFooter">
-              <span><a><span class="icomoon-reply tweetCaptionIcon"></span><span class="tweetCaptionAction">Reply</span></a></span>
-              <span><a><span class="icomoon-retweet tweetCaptionIcon"></span><span class="tweetCaptionAction">Retweet</span></a></span>
-              <span><a><span class="icomoon-star tweetCaptionIcon"></span><span class="">Favorite</span></a></span>
+              <a href="https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}"><span class="icomoon-reply tweetCaptionIcon"></span><span class="tweetCaptionAction">Reply</span></a>
+              <a href="https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}"><span class="icomoon-retweet tweetCaptionIcon"></span><span class="tweetCaptionAction">Retweet</span></a>
+              <a href="https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}"><span class="icomoon-star tweetCaptionIcon"></span><span class="">Favorite</span>
             </div>
           </div>
         </div>
