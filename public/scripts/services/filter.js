@@ -125,11 +125,11 @@ angular.module('wynnoApp.services')
                   for (var m = 0; m < urlsCopyCopy.length; m++) {
                     if (!linkResult) {
                       console.log('item in urlsCopyCopy is:', urlsCopyCopy[m]);
-                      console.log('url is:', urlsCopyCopy[m].extended_url);
-                      host = service.parseUri(urlsCopyCopy[m].extended_url).host;
+                      console.log('url is:', urlsCopyCopy[m].expanded_url);
+                      host = service.parseUri(urlsCopyCopy[m].expanded_url).host;
                       console.log('hostname is:', host);
-                      // it appears extended_url always has the same domain as display_url, so we can search
-                      // extended_url which has the benefit that we can use parseUri
+                      // it appears expanded_url always has the same domain as display_url, so we can search
+                      // expanded_url which has the benefit that we can use parseUri
                       if (host.indexOf(filterConditions[i].link) !== -1) {
                         linkResult = true;
                         linksCounted++;
