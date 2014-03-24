@@ -1,4 +1,5 @@
 'use strict';
+var parseUri = require('parseuri.js').parseUri;
 
 angular.module('wynnoApp.services')
 .factory('FilterService', [function() {
@@ -69,7 +70,7 @@ angular.module('wynnoApp.services')
       }
 
       var linkResult;
-      var parser;
+      var host;
       var hashtagResult;
       var pictureResult;
       var quotationResult;
@@ -91,12 +92,11 @@ angular.module('wynnoApp.services')
                   // if tweet links to the specified domain, pass
                   for (var m = 0; m < urlsCopyCopy.length; m++) {
                     if (!linkResult) {
-                      parser = document.createElement('a');
-                      parser.href = urlsCopyCopy[m].extended_url;
-                      console.log('hostname is:', parser.hostname);
+                      host = parseUri(urlsCopyCopy[m].extended_url);
+                      console.log('hostname is:', host);
                       // it appears extended_url always has the same domain as display_url, so we can search
-                      // extended_url which has the benefit that we can use the parser
-                      if (parser.hostname.indexOf(filterConditions[i].link) !== -1) {
+                      // extended_url which has the benefit that we can use parseUri
+                      if (host.indexOf(filterConditions[i].link) !== -1) {
                         linkResult = true;
                         linksCounted++;
                         // remove the url from what will be searched next time
