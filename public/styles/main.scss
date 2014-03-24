@@ -431,7 +431,7 @@ button.navbar-toggle.noBorder {
     display: inline-block;
 }
 
-.tweeterName, .tweeterScreenName {
+.tweeterName, .tweeterScreenName, .retweeterName {
     float: left;
 }
 
@@ -445,12 +445,11 @@ button.navbar-toggle.noBorder {
     color: #000000;
 }
 
-.tweeterScreenName {
-    vertical-align: bottom;
+.tweeterScreenName, .retweeterName {
     color: #989898;
 }
 
-.tweeterScreenName:hover {
+.tweeterScreenName:hover, .retweeterName:hover {
     text-decoration: underline;
 }
 
@@ -473,14 +472,21 @@ button.navbar-toggle.noBorder {
 .tweetFooter {
     color: #989898;
     padding-top: 5px;
+    text-align: right;
 }
 
 .retweetedStatus {
 }
 
-.tweetMeta, .tweetFooter {
+$tweet-caption-font-size: 14px;
+
+.tweetMeta, .tweetFooter, .retweetHeader {
     font-size: 12px;
     line-height: 14px;
+}
+
+.retweetSpacer {
+    height: $tweet-caption-font-size;
 }
 
 // vote button styling

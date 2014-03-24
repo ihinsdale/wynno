@@ -31,6 +31,7 @@
       <div class="shownTweetWrapper row" ng-hide="tweet.hideGivenNewContraryVote">
         <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, gapBelow: tweet.gapAfterThis, gapAbove: !$first && tweets[$index-1].gapAfterThis, lastTweet: $last}">
           <div class="leftColumn">
+            <div class="retweeterSpacer" ng-if="tweet.__retweeter"></div>
             <div class="tweeterImage">
               <img ng-src="{{tweet.__user.profile_image_url}}">
             </div>
@@ -39,6 +40,9 @@
             </div>
           </div>
           <div class="rightColumn">
+            <div class="retweetHeader" ng-if="tweet.__retweeter">
+              <div class="retweetedStatus"><span class="icomoon-retweet"></span>Retweeted by <a class="retweeterName" href="https://twitter.com/{{tweet.__retweeter.screen_name}}" target="_blank">{{tweet.__retweeter.name}}</a></div>
+            </div>
             <div class="tweetMeta">
               <a href="https://twitter.com/{{tweet.__user.screen_name}}" target="_blank">
                 <span class="tweeterName">{{tweet.__user.name}}&nbsp;</span>
@@ -48,7 +52,9 @@
             </div>
             <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
             <div class="tweetFooter">
-              <div ng-if="tweet.__retweeter" class="retweetedStatus">Retweeted by {{tweet.__retweeter.name}}</div>
+              <span><span class="icomoon-reply">Reply</span>
+              <span><span class="icomoon-retweet"></span>Retweet</span>
+              <span><span class="icomoon-star"></span>Favorite</span>
             </div>
           </div>
         </div>
