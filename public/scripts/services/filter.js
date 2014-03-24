@@ -124,9 +124,10 @@ angular.module('wynnoApp.services')
                   // if tweet links to the specified domain, pass
                   for (var m = 0; m < urlsCopyCopy.length; m++) {
                     if (!linkResult) {
-                      console.log('item in urlsCopyCopy is:', urlsCopyCopy[m]);
                       console.log('url is:', urlsCopyCopy[m].expanded_url);
                       host = service.parseUri(urlsCopyCopy[m].expanded_url).host;
+                      // for parsing the url to get the host, could conceivably use the browser-dependent trick
+                      // described here, which involves creating an anchor element: https://gist.github.com/jlong/2428561
                       console.log('hostname is:', host);
                       // it appears expanded_url always has the same domain as display_url, so we can search
                       // expanded_url which has the benefit that we can use parseUri
