@@ -69,7 +69,7 @@ angular.module('wynnoApp.services')
       }
 
       var linkResult;
-      var parser = document.createElement('a');
+      var parser;
       var hashtagResult;
       var pictureResult;
       var quotationResult;
@@ -91,6 +91,7 @@ angular.module('wynnoApp.services')
                   // if tweet links to the specified domain, pass
                   for (var m = 0; m < urlsCopyCopy.length; m++) {
                     if (!linkResult) {
+                      parser = document.createElement('a');
                       parser.href = urlsCopyCopy[m].extended_url;
                       console.log('hostname is:', parser.hostname);
                       // it appears extended_url always has the same domain as display_url, so we can search
