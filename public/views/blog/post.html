@@ -2,4 +2,4 @@
 <div>by <span ng-bind="post.author"></span></div>
 <div><span ng-bind="post.published.month"></span> <span ng-bind="post.published.day"></span>, <span ng-bind="post.published.year"></span></div>
 
-<div btf-markdown ng-include="'{{post.file}}'"></div>
+<div btf-markdown ng-include="post.file"></div>
