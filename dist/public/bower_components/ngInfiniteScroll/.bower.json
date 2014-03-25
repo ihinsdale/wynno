@@ -11,7 +11,6 @@
     "commit": "335220c11a341c2b58e3119a1650b187429c83e2"
   },
   "_source": "git://github.com/BinaryMuse/ngInfiniteScroll-bower.git",
-  "_target": "~1.0.0",
-  "_originalSource": "ngInfiniteScroll",
-  "_direct": true
+  "_target": "1.0.0",
+  "_originalSource": "ngInfiniteScroll"
 }

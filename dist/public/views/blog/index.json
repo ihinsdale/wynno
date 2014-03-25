@@ -1,0 +1,33 @@
+{ "posts":
+  [
+    {
+      "id": 1,
+      "title"    : "Introducing wynno",
+      "slug"     : "introducing-wynno",
+      "file"     : "introducing-wynno.md",
+      "author"   : "Ian",
+      "published": {
+        "day": 25,
+        "month": 3,
+        "year": 2014
+      }
+    },
+    {
+      "id": 2,
+      "title"    : "Filtering Basics",
+      "slug"     : "filtering-basics",
+      "file"     : "filtering-basics.md",
+      "author"   : "Ian",
+      "published": {
+        "day": 2,
+        "month": 4,
+        "year": 2014
+      }
+    }
+  ],
+  "lookup":
+  {
+    "introducing-wynno": 0,
+    "filtering-basics": 1 
+  }
+}

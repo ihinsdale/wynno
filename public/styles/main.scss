@@ -526,7 +526,7 @@ $retweet-header-padding-bottom: 3px;
     text-decoration: none;
 }
 
-.tweetFooter > a:hover > tweetCaptionAction {
+.tweetFooter > a > tweetCaptionAction:hover {
     text-decoration: underline;
 }
 

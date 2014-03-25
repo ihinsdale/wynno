@@ -10,7 +10,8 @@ angular.module('wynnoApp', [
   'wynnoApp.controllers',
   'wynnoApp.filters',
   'infinite-scroll',
-  'ngRoute'
+  'ngRoute',
+  'btford.markdown'
 ])
 .config(function ($routeProvider) {
   $routeProvider
@@ -41,6 +42,14 @@ angular.module('wynnoApp', [
     .when('/privacy', {
       templateUrl:'/views/privacypolicy.html',
       controller: 'StaticCtrl'
+    })
+    .when('/blog', {
+      templateUrl: '/views/blog/blogindex.html',
+      controller: 'BlogCtrl'
+    })
+    .when('/blog/:slug', {
+      templateUrl: '/views/blog/post.html',
+      controller: 'BlogCtrl'
     })
     .otherwise({
       redirectTo: '/'

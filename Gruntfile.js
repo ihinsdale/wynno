@@ -288,7 +288,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/views',
-          src: ['*.html', 'partials/**/*.html'],
+          src: ['**/*.html'],
           dest: '<%= yeoman.dist %>/public/views'
         }]
       }
@@ -348,18 +348,26 @@ module.exports = function (grunt) {
             'server.js',
             'lib/**/*'
           ]
-        }, {
+        }, { // I added this to copy over the icomoon font files
           expand: true,
           cwd: '<%= yeoman.app %>/styles/fonts',
           dest: '<%= yeoman.dist %>/public/styles/fonts',
           src: [
             '**/*',
           ]
-        }, {
+        }, { // I added this to copy over favicon, which is located within /images
           expand: true,
           cwd: '<%= yeoman.app %>/images',
           dest: '<%= yeoman.dist %>/public/images',
           src: ['*.ico']
+        }, { // I added this to copy over blog post .md files, as well as the blog index.json file
+          expand: true,
+          cwd: '<%= yeoman.app %>/views/blog',
+          dest: '<%= yeoman.dist %>/public/views/blog',
+          src: [
+            '*.md',
+            '*.json'
+          ]
         }]
       },
       styles: {
