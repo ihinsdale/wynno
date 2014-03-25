@@ -59,6 +59,9 @@ exports.init = function(app) {
         tw_access_secret: tokenSecret
       };
       // save the token and secret in the session for easy access when using to query Twitter API
+      console.log(' ');
+      console.log("User's access token is:", token);
+      console.log(' ');
       req.session.access_token = token;
       req.session.access_secret = tokenSecret;
 
