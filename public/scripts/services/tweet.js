@@ -64,6 +64,15 @@ angular.module('wynnoApp.services')
         })
         .error(function(reason, status) {
           console.log('error getting new tweets:', reason);
+
+          // update timeOfLastFetch -- we want to update the timeOfLastFetch even though there was an error
+          // because in the current implementation, we don't whether a call to Twitter API was made before
+          // or after the error, so to definitely prevent excessive API calls we need to err on the safe side.
+          // Since timeOfLastFetch is only ever used either (1) by TweetService, to calculate waiting time, 
+          // or (2) by MainCtrl, to determine whether to call firstGet() or getAlreadyGotten(), it's fine to
+          // set a timeOfLastFetch even if we didn't *successfully* fetch anything
+          service.timeOfLastFetch = new Date();
+
           d.reject(reason);
         });
       }
@@ -99,6 +108,10 @@ angular.module('wynnoApp.services')
         })
         .error(function(reason, status) {
           console.log('error getting middle tweets:', reason);
+
+          // update timeOfLastFetch -- see analogous comment in getNewTweets() for why
+          service.timeOfLastFetch = new Date();
+
           d.reject(reason);
         });
       }

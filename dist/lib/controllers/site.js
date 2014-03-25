@@ -5,7 +5,7 @@ var twitter = require('./twitter.js');
 var db = require('./dbRW.js');
 var algo = require('./algo.js');
 var rendering = require('./rendering.js');
-
+var redisDb = require('./redisRW.js');
 
 exports.index = function(req, res) {
   // if user is already in session, send them the cookie again
@@ -130,7 +130,7 @@ exports.old = old = function(req, res) {
 exports.fresh = function(req, res) {
   async.waterfall([
     function(callback) {
-      checkTimeOfLastFetch(req.session.timeOfLastFetch, callback);
+      redisDb.checkRateLimiting(req.user._id, callback);
     },
     // find (Twitter's) tweet id of the last saved tweet
     function(callback) {
@@ -138,8 +138,6 @@ exports.fresh = function(req, res) {
     },
     // use that id to grab new tweets from Twitter API
     function(user_id, secondLatestid_str, latestid_str, callback) {
-      req.session.timeOfLastFetch = new Date().getTime();
-      console.log('time of last fetch now:', req.session.timeOfLastFetch);
       twitter.fetchNew(user_id, req.session.access_token, req.session.access_secret, secondLatestid_str, latestid_str, callback);
     },
     // save each new tweet to the db. this save is synchronous so that our records have _id's in chronological chunks
@@ -215,29 +213,15 @@ exports.fresh = function(req, res) {
   });
 };
 
-var checkTimeOfLastFetch = function(timeOfLastFetch, callback) {
-  console.log('time of last fetch before this one:', timeOfLastFetch);
-  if (timeOfLastFetch) {
-    var timeSinceLastFetch = new Date().getTime() - timeOfLastFetch;
-  }
-  if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
-    callback('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
-  } else {
-    callback(null);
-  }
-};
-
 exports.middle = function(req, res) {
   var oldestOfMoreRecentTweetsIdStr = req.query.oldestOfMoreRecentTweetsIdStr;
   var secondNewestOfOlderTweetsIdStr = req.query.secondNewestOfOlderTweetsIdStr;
   var newestOfOlderTweetsIdStr = req.query.newestOfOlderTweetsIdStr;
   async.waterfall([
     function(callback) {
-      checkTimeOfLastFetch(req.session.timeOfLastFetch, callback);
+      redisDb.checkRateLimiting(req.user._id, callback);
     },
     function(callback) {
-      req.session.timeOfLastFetch = new Date().getTime();
-      console.log('time of last fetch now:', req.session.timeOfLastFetch);
       twitter.fetchMiddle(req.user._id, req.session.access_token, req.session.access_secret, oldestOfMoreRecentTweetsIdStr, secondNewestOfOlderTweetsIdStr, newestOfOlderTweetsIdStr, callback);
     },
     // save each tweet to the db. this save is synchronous so that our records have _id's in chronological chunks

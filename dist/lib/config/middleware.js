@@ -19,7 +19,7 @@ exports.init = function(app) {
     store: new RedisStore({
       host: credentials.redis.localhost,
       port: credentials.redis.port,
-      db: credentials.redis.db,
+      db: credentials.redis.dbs.session,
       pass: credentials.redis.pass
     }),
     secret: credentials.secrets.session,

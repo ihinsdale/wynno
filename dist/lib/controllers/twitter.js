@@ -2,8 +2,7 @@
 
 var keys = require('../config/keys.json').twitter;
 var Twitter = require('ntwitter');
-
-exports.timeOfLastFetch = null;
+var redisDb = require('./redisRW.js');
 
 var incStrNum;
 exports.incStrNum = incStrNum = function(n) { // courtesy of http://webapplog.com/decreasing-64-bit-tweet-id-in-javascript/
@@ -76,6 +75,15 @@ var twitGet = function(user_id, token, tokenSecret, options, latestid_str, callb
     access_token_secret: tokenSecret
   });
   twit.get('https://api.twitter.com/1.1/statuses/home_timeline.json', options, function(error, data) {
+    // record the time of this fetch in the Redis fetching db, to prevent against excessive calls to Twitter
+    // we can do this asynchronously, i.e. not waiting for a successful response, because we know that
+    // previously in the tweet fetching flow, we must have successfully checked with the Redis fetching db
+    // that the user did not need to be rate-limited
+    redisDb.setRateLimiter(user_id, function(err) {
+      if (err) {
+        console.log('There was an error setting the time of the call to the Twitter API in Redis.');
+      }
+    });
     if (error) {
       console.log('there was an error getting tweets from Twitter API:', error);
     } else {

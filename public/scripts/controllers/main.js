@@ -76,12 +76,13 @@ angular.module('wynnoApp.controllers')
     $scope.activeTwitterRequest.new = true;
     TweetService.getNewTweets()
     .then(function(tweets) {
-      $scope.renderInOrOut();
       $scope.activeTwitterRequest.new = false; // to stop the spinner
       // note we don't want to set activeTwitterRequest.new to false inside .renderInOrOut() or .display(),
       // because those functions are also used by functions which fetch old tweets from the db, not the Twitter API
       $scope.mustWait.new = false;
       $scope.twitterError.new = false;
+
+      $scope.renderInOrOut();
     }, function(reason) {
       console.log('error getting new tweets:', reason);
       if (reason.slice(0,20) === 'Please try again in ') {
@@ -179,7 +180,10 @@ angular.module('wynnoApp.controllers')
     $scope.busy = false;
     // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
     // so that it is displayed in both /in and /out streams
-    $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
+    if (!$scope.twitterError.new) { // this guard ensures that the time of last update / fetching of new tweets 
+    // which the user sees is only for the last *successful* attempt
+      $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
+    }
   };
 
   $scope.elegantize = function(tweets, presentTime) {
