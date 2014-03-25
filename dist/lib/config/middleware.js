@@ -72,7 +72,7 @@ exports.init = function(app) {
   ));
 
   passport.serializeUser(function(user, done) {
-    console.log('serializeUser: ' + user._id);
+    // console.log('serializeUser: ' + user._id);
     done(null, user._id);
   });
 
