@@ -517,10 +517,6 @@ $retweet-header-padding-bottom: 3px;
     padding-right: 4px;
 }
 
-.tweetCaptionAction {
-    padding-right: 6px;
-}
-
 .tweetFooter > a {
     color: #989898;
 }
@@ -898,6 +894,10 @@ body.filterBuilderOpen .modal-footer {
 
 .paddingLeft10 {
     padding-left: 10px;
+}
+
+.paddingRight6 {
+    padding-right: 6px;
 }
 
 .btn.addNewFilter, .btn.saveFilter {
