@@ -54,6 +54,7 @@
                 <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}" target="_blank">{{tweet.__elegant_time}}</a></span>
             </div>
             <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
+            <div class="tweetFooterSpacer"></div>
             <div class="tweetFooter">
               <a href="https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}"><span class="icomoon-reply tweetCaptionIcon"></span><span class="tweetCaptionAction">Reply</span></a>
               <a href="https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}"><span class="icomoon-retweet tweetCaptionIcon"></span><span class="tweetCaptionAction">Retweet</span></a>
