@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('BlogCtrl', function($location, BlogService) {
+.controller('BlogCtrl', function($scope, $location, BlogService) {
   var currentLocation = $location.path();
   if (currentLocation === '/blog') {
     BlogService.getPosts()
