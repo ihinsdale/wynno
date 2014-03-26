@@ -1,9 +1,9 @@
+var credentials = require('../lib/config/keys.json');
 var wynnoUrl = 'http://' + credentials.publicDNS + ':' + credentials.port;
 var request = require('supertest')(wynnoUrl);
 var superagent = require('superagent');
 var expect = require('expect.js');
 var Browser = require('zombie');
-var credentials = require('../lib/config/keys.json');
 
 // // 1. END-TO-END TESTS (disabled for now, while focusing on integration tests)
 
@@ -56,6 +56,7 @@ describe('GET protected routes:', function() {
   });
  
   it('/old should return 50 old tweets', function(done) { // 50 is current batch size
+    this.timeout(20e3);
     var req = request.get(wynnoUrl + '/old?oldestTweetId=0');
     agent.attachCookies(req);
     req.end(function(err, res) {
