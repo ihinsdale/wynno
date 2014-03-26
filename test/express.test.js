@@ -1,8 +1,11 @@
+var request = require('supertest');
 var superagent = require('superagent');
 var expect = require('expect.js');
-var Zombie = require('zombie');
+var Browser = require('zombie');
 var credentials = require('../lib/config/keys.json');
 var wynnoUrl = 'http://' + credentials.publicDNS + ':' + credentials.port;
+
+// 1. END-TO-END TESTS
 
 // TODO test clicking Try it now on landing page
 // TODO test clicking Sign in with Twitter on landing page
@@ -12,25 +15,58 @@ var wynnoUrl = 'http://' + credentials.publicDNS + ':' + credentials.port;
 
 // TODO Delete test user from db, so we are mimicking a new user end-to-end
 
+// helpful tutorial on mocha and zombie: http://redotheweb.com/2013/01/15/functional-testing-for-nodejs-using-mocha-and-zombie-js.html
+var browser = new Browser();
 describe('User should be', function(){
   it('able to login successfully and be redirected to the #/in stream of tweets on wynno', function(done){
     this.timeout(20e3);
-    var zombie = new Zombie();
-    zombie.visit(wynnoUrl + '/auth/twitter', function(err){
-      if (err) throw err
-      zombie
-      .fill('#username_or_email', credentials.testing.tw_username)
-      .fill('#password', credentials.testing.tw_password)
-      .pressButton('#allow', function(err){
-        if (err) throw err
-        expect(zombie.location.hash).to.eql('#/in');
-        done();
-      });
-    });
+    browser.visit(wynnoUrl + '/auth/twitter')
+    .then(function(){
+      browser.fill('#username_or_email', credentials.testing.tw_username);
+      browser.fill('#password', credentials.testing.tw_password);
+      return browser.pressButton('#allow');
+    })
+    .then(function() {
+      expect(browser.location.hash).to.eql('#/in');
+      done();
+    }, done);
   });
 });
 
-// If user clicks Cancel or X in the Welcome modal, 
+// If user clicks Cancel or X in the Welcome modal, they should be redirected to the landing page
+// If user accepts ToS in Welcome modal, they should be left on #/in and able to vote on tweets etc.
+// etc.
+
+
+// 2. INTEGRATION TESTS OF SERVER
+
+describe('GET to protected routes:', function() {
+  // Mock passport authentication based on https://gist.github.com/mweibel/5219403
+  var agent = superagent.agent();
+  beforeEach(function(done) {
+    passportMock(app, {
+      passAuthentication: true,
+      userId: 1
+    });
+    request(app)
+      .get('/mock/login')
+      .end(function(err, result) {
+        if (!err) {
+          agent.saveCookies(result.res);
+          done();
+        } else {
+          done(err);
+        }
+      });
+  })
+ 
+  it('should allow access to /protected-resource', function(done) {
+    var req = request(app).get('/protected-resource');
+    agent.attachCookies(req);
+    req.expect(200, done);
+  });
+});
+
 
 describe('express server', function() {
   it('should respond to GET /old with [the most recent] batch of tweets from the db', function(done) {
