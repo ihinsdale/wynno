@@ -42,7 +42,7 @@ exports.init = function(app) {
   // if we are in a testing deployment/environment or using mock authentication has been specified, use a mock Passport authentication strategy which
   // is hard-coded to use a particular test Twitter user, @TimStudebaker
   if (app.get('env') === 'testing' || app.get('mockAuth')) {
-    var StrategyMock = require('strategy-mock.js');
+    var StrategyMock = require('./strategy-mock.js');
     passport.use(new StrategyMock({
         passAuthentication: true,
         userId: credentials.testing.user_id // this is the ObjectId string of the test user in the db
