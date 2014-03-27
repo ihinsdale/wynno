@@ -3,22 +3,22 @@
     <button class="btn btn-default fetchNew" ng-click="refreshRequest()">
       <span class="icomoon-loop2" ng-class="{spinner: activeTwitterRequest.new}"></span>
       <span class="loadingText">
-        <span ng-show="!activeTwitterRequest.new">Fetch new</span>
-        <span ng-show="activeTwitterRequest.new">Fetching...</span>
+        <span ng-if="!activeTwitterRequest.new">Fetch new</span>
+        <span ng-if="activeTwitterRequest.new">Fetching...</span>
       </span>
     </button>
-    <span class="lastUpdateTime" ng-show="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
+    <span class="lastUpdateTime" ng-if="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
     <span class="twitterLogo"><a href="https://twitter.com/{{username}}" target="_blank"><span class="icomoon-twitter"></span></a></span>
   </div>
 </div>
-<div class="row" ng-show="mustWait.new">
+<div class="row" ng-if="mustWait.new">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
     <div class="alert alert-warning refreshAlert">
       <strong>Waiting {{remaining.new}} seconds,</strong> due to Twitter API rate limiting.
     </div>
   </div>
 </div>
-<div class="row" ng-show="twitterError.new">
+<div class="row" ng-if="twitterError.new">
   <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
     <div class="alert alert-danger alert-dismissable refreshAlert">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissAlert('error', 'new')">&times;</button>
@@ -29,7 +29,7 @@
 <div infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1" infinite-scroll-immediate-check="false">
   <div class="tweet row" ng-repeat="tweet in tweets">
     <div class="container">
-      <div class="shownTweetWrapper row" ng-hide="tweet.hideGivenNewContraryVote">
+      <div class="shownTweetWrapper row" ng-if="!tweet.hideGivenNewContraryVote">
         <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, gapBelow: tweet.gapAfterThis, gapAbove: !$first && tweets[$index-1].gapAfterThis, lastTweet: $last}">
           <div class="leftColumn">
             <div class="retweetSpacer" ng-if="tweet.__retweeter">
@@ -62,7 +62,7 @@
             </a></div>
           </div>
         </div>
-        <div class="col-md-1 voteButtons" ng-show="tweet.__vote == null && !tweet.__isHeard && !tweet.__isMuted">
+        <div class="col-md-1 voteButtons" ng-if="tweet.__vote == null && !tweet.__isHeard && !tweet.__isMuted">
           <div class="btn-group-vertical hidden-xs hidden-sm">
               <button type="button" class="btn btn-default" ng-click="vote(tweet, 1, $index)">
                 <div class="aye">
@@ -89,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div class="row" ng-show="tweet.hideGivenNewContraryVote">
+      <div class="row" ng-if="tweet.hideGivenNewContraryVote">
         <div class="col-md-7 col-md-offset-2">
           <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
             <strong>Better wynnoing is on the way!</strong> Tweet moved to {{oppositeStream}}. 
@@ -101,8 +101,8 @@
           <button type="button" class="btn btn-default fetchMiddle" ng-click="fillGapRequest($index, $index + 2, $index + 1)">
             <span class="icomoon-loop2" ng-class="{spinner: activeTwitterRequest.middle}"></span>
             <span class="loadingText">
-              <span ng-show="!activeTwitterRequest.middle">Load more tweets</span>
-              <span ng-show="activeTwitterRequest.middle">Loading...</span>
+              <span ng-if="!activeTwitterRequest.middle">Load more tweets</span>
+              <span ng-if="activeTwitterRequest.middle">Loading...</span>
             </span>
           </button>
         </div>
@@ -130,8 +130,8 @@
         <button class="btn btn-default loadEarlier" ng-click="nextPage()">
           <span class="icomoon-spinner" ng-class="{spinner: busy}"></span>
           <span class="loadingText">
-            <span ng-show="!busy">Load earlier tweets</span>
-            <span ng-show="busy">Loading...</span>
+            <span ng-if="!busy">Load earlier tweets</span>
+            <span ng-if="busy">Loading...</span>
           </span>
         </button>
       </div>
