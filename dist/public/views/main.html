@@ -8,7 +8,7 @@
       </span>
     </button>
     <span class="lastUpdateTime" ng-if="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
-    <span class="twitterLogo"><a bo-href-i="https://twitter.com/{{username}}" target="_blank"><span class="icomoon-twitter"></span></a></span>
+    <span class="twitterLogo"><a ng-href="https://twitter.com/{{username}}" target="_blank"><span class="icomoon-twitter"></span></a></span>
   </div>
 </div>
 <div class="row" ng-if="mustWait.new">
@@ -36,7 +36,7 @@
               <div class="icomoon-retweet"></div>
             </div>
             <div class="tweeterImage">
-              <img bo-src="{{tweet.__user.profile_image_url}}">
+              <img bo-src="tweet.__user.profile_image_url">
             </div>
             <div class="pvalue" ng-if="tweet.__p!=null">
               <span class="badge" bo-text="tweet.__pScore"></span>
