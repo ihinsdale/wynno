@@ -20,7 +20,7 @@ angular.module('wynnoApp.services')
         // apply filtering rules to the tweets using whatever settings are current in the FilterService
         FilterService.applyFilterRules(data.tweets);
         // now add the tweets to currentTweets
-        service.currentTweets = service.currentTweets.concat(data.tweets);
+        service.currentTweets = service.currentTweets.concat(data.tweets); // do we need to reassign service.currentTweets here or can we just .concat()?
         // update oldestTweetIdStr, if any tweets were received
         if (data.tweets.length) {
           service.oldestTweetIdStr = service.currentTweets[service.currentTweets.length - 1].id_str;

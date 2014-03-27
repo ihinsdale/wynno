@@ -23,6 +23,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
+    $scope.numDisplayed = 40;
     if (!TweetService.timeOfLastFetch) {
       $scope.firstGet();
     } else {
@@ -35,8 +36,13 @@ angular.module('wynnoApp.controllers')
     if ($scope.busy) {
       return;
     }
-    $scope.busy = true;
-    $scope.getMoreOldTweets();
+    if ($scope.numDisplayed < TweetService.currentTweets.length - 40) {
+      $scope.numDisplayed += 40;
+    } else {
+      $scope.busy = true;
+      $scope.getMoreOldTweets();
+      $scope.numDisplayed += 40; // we may need to move this and do this after the tweets are bound again to the scope;
+    }
   };
 
   $scope.firstGet = function() {

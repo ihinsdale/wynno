@@ -27,7 +27,7 @@
   </div>
 </div>
 <div infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1" infinite-scroll-immediate-check="false">
-  <div class="tweet row" ng-repeat="tweet in tweets" bindonce="">
+  <div class="tweet row" ng-repeat="tweet in tweets | limitTo: numDisplayed" bindonce="">
     <div class="container">
       <div class="shownTweetWrapper row" ng-if="!tweet.hideGivenNewContraryVote">
         <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, gapBelow: tweet.gapAfterThis, gapAbove: !$first && tweets[$index-1].gapAfterThis, lastTweet: $last}">
