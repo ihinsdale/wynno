@@ -128,7 +128,8 @@ angular.module('wynnoApp.controllers')
     $scope.filterBuilderOpen = true; // used by ng-class on body element, for css targeting of modal-dialog
     var modalInstance = $modal.open({
       templateUrl: '/views/filterbuilder.html',
-      controller: 'CreateFilterCtrl'
+      controller: 'CreateFilterCtrl',
+      windowClass: 'filterBuilderOpen'
     });
     modalInstance.result.then(function(modalResult) {
       console.log('Created filter successfully.');
