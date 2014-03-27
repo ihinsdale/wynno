@@ -750,14 +750,11 @@ $twitterButtonRadius: 3px;
 
 .modal-footer {
     margin-top: 0;
-}
-
-body.filterBuilderOpen .modal-dialog {
-    width: 100%;
-}
-
-body.filterBuilderOpen .modal-footer {
     text-align: center;
+}
+
+.modal-dialog {
+    width: 100%;
 }
 
 .bigBird {
