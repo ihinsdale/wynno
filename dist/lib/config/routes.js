@@ -1,12 +1,12 @@
 'use strict';
 
-module.exports = function(app) {
-  // Include controllers
-  var site = require('../controllers/site.js');
-  var passport = require('passport');
-  var ensureAuthenticated = require('./middleware.js').ensureAuthenticated;
-  var ensureAgreedTerms = require('./middleware.js').ensureAgreedTerms;
+// Include controllers
+var site = require('../controllers/site.js');
+var passport = require('passport');
+var ensureAuthenticated = require('./middleware.js').ensureAuthenticated;
+var ensureAgreedTerms = require('./middleware.js').ensureAgreedTerms;
 
+module.exports = function(app) {
   // GET request to homepage
   app.get('/', site.index);
   // GET request to /old grabs old tweets from database
@@ -36,7 +36,7 @@ module.exports = function(app) {
   // GET request to /checkin after authenticating with Twitter
   app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
-  app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/account' }));
+  app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/' }));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API
   app.get('/auth/twitter/callback',
     passport.authenticate('twitter', { successRedirect: '/checkin',
@@ -48,4 +48,8 @@ module.exports = function(app) {
   app.post('/feedback', site.processFeedback);
   // POST request to /agreed
   app.post('/agreed', ensureAuthenticated, site.processAgreement);
+  if (app.get('env') === 'testing' || app.get('mockAuth')) {
+    app.get('/mock/login', passport.authenticate('mock', { successRedirect: '/checkin',
+                                                         failureRedirect: '#/signinwithtwitter' }));
+  }
 };

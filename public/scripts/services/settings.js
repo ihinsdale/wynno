@@ -4,7 +4,7 @@ angular.module('wynnoApp.services')
 .factory('SettingsService', ['$q', '$http', 'FilterService', 'TweetService', function($q, $http, FilterService, TweetService) {
   var service = {
     settings: {},
-    // (this function is essentially obsolete now, because settings are got with the 
+    // (this function is essentially deprecated now, because settings are got with the 
     // first request for old tweets. But it serves as a backup for service.provideSettings)
     getSettingsFromDb: function() {
       var d = $q.defer();
