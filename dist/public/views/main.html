@@ -8,7 +8,7 @@
       </span>
     </button>
     <span class="lastUpdateTime" ng-if="!!timeOfLastFetch">Last updated: {{ timeOfLastFetch | date:'h:mm a' }}</span>
-    <span class="twitterLogo"><a href="https://twitter.com/{{username}}" target="_blank"><span class="icomoon-twitter"></span></a></span>
+    <span class="twitterLogo"><a bo-href-i="https://twitter.com/{{username}}" target="_blank"><span class="icomoon-twitter"></span></a></span>
   </div>
 </div>
 <div class="row" ng-if="mustWait.new">
@@ -27,7 +27,7 @@
   </div>
 </div>
 <div infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1" infinite-scroll-immediate-check="false">
-  <div class="tweet row" ng-repeat="tweet in tweets">
+  <div class="tweet row" ng-repeat="tweet in tweets" bindonce="">
     <div class="container">
       <div class="shownTweetWrapper row" ng-if="!tweet.hideGivenNewContraryVote">
         <div class="tweetStuff col-md-7 col-md-offset-2" ng-class="{tweetBelowHiddenGivenVote: tweets[$index+1].hideGivenNewContraryVote, gapBelow: tweet.gapAfterThis, gapAbove: !$first && tweets[$index-1].gapAfterThis, lastTweet: $last}">
@@ -36,29 +36,29 @@
               <div class="icomoon-retweet"></div>
             </div>
             <div class="tweeterImage">
-              <img ng-src="{{tweet.__user.profile_image_url}}">
+              <img bo-src="{{tweet.__user.profile_image_url}}">
             </div>
             <div class="pvalue" ng-if="tweet.__p!=null">
-              <span class="badge">{{tweet.__pScore}}</span>
+              <span class="badge" bo-text="tweet.__pScore"></span>
             </div>
           </div>
           <div class="rightColumn">
             <div class="retweetHeader" ng-if="tweet.__retweeter">
-              <div class="retweetedStatus">Retweeted by <a class="retweeterName" href="https://twitter.com/{{tweet.__retweeter.screen_name}}" target="_blank">{{tweet.__retweeter.name}}</a></div>
+              <div class="retweetedStatus">Retweeted by <a class="retweeterName" bo-href-i="https://twitter.com/{{tweet.__retweeter.screen_name}}" target="_blank" bo-text="tweet.__retweeter.name"></a></div>
             </div>
             <div class="tweetMeta">
-              <a href="https://twitter.com/{{tweet.__user.screen_name}}" target="_blank">
-                <span class="tweeterName">{{tweet.__user.name}}&nbsp;</span>
-                <span class="tweeterScreenName">@{{tweet.__user.screen_name}}</span>
+              <a bo-href-i="https://twitter.com/{{tweet.__user.screen_name}}" target="_blank">
+                <span class="tweeterName" bo-text="tweet.__user.name"></span>
+                <span class="tweeterScreenName" bo-text="'@' + tweet.__user.screen_name"></span>
               </a>
-                <span class="tweetTimestamp"><a href="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}" target="_blank">{{tweet.__elegant_time}}</a></span>
+                <span class="tweetTimestamp"><a bo-href-i="https://twitter.com/{{tweet.__user.screen_name}}/status/{{tweet.__id_str}}" target="_blank" bo-text="tweet.__elegant_time"></a></span>
             </div>
-            <div class="tweetText" ng-bind-html="tweet.renderedText"></div>
+            <div class="tweetText" bo-html="tweet.renderedText"></div>
             <div class="tweetFooterSpacer"></div>
             <div class="tweetFooter">
-              <a href="https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}"><span class="icomoon-reply tweetCaptionIcon"></span><span class="tweetCaptionAction paddingRight6">Reply</span></a>
-              <a href="https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}"><span class="icomoon-retweet tweetCaptionIcon"></span><span class="tweetCaptionAction paddingRight6">Retweet</span></a>
-              <a href="https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}"><span class="icomoon-star tweetCaptionIcon"></span><span class="tweetCaptionAction">Favorite</span>
+              <a bo-href-i="https://twitter.com/intent/tweet?in_reply_to={{tweet.id_str}}"><span class="icomoon-reply tweetCaptionIcon"></span><span class="tweetCaptionAction paddingRight6">Reply</span></a>
+              <a bo-href-i="https://twitter.com/intent/retweet?tweet_id={{tweet.id_str}}"><span class="icomoon-retweet tweetCaptionIcon"></span><span class="tweetCaptionAction paddingRight6">Retweet</span></a>
+              <a bo-href-i="https://twitter.com/intent/favorite?tweet_id={{tweet.id_str}}"><span class="icomoon-star tweetCaptionIcon"></span><span class="tweetCaptionAction">Favorite</span>
             </a></div>
           </div>
         </div>
@@ -92,7 +92,7 @@
       <div class="row" ng-if="tweet.hideGivenNewContraryVote">
         <div class="col-md-7 col-md-offset-2">
           <div class="alert alert-info" ng-class="{noVoteAlertAbove: $first || !tweets[$index-1].hideGivenNewContraryVote}">
-            <strong>Better wynnoing is on the way!</strong> Tweet moved to {{oppositeStream}}. 
+            <strong>Better wynnoing is on the way!</strong> Tweet moved to <span bo-text="oppositeStream"></span>. 
           </div>
         </div>
       </div>
