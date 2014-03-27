@@ -69,7 +69,7 @@ exports.fetchMiddle = function(user_id, token, tokenSecret, oldestOfMoreRecentTw
 var twitGet = function(user_id, token, tokenSecret, options, latestid_str, callback) {
   // all calls to Twitter are made through this twitGet function, so we set up the 
   // rate limiting gate here
-  redisDb.checkRateLimiting(user_id, function(err) {
+  redisDb.checkRateLimitingAndSetIfNone(user_id, function(err) {
     if (err) {
       callback(err);
     } else {
