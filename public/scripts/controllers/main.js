@@ -23,7 +23,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
-    $scope.numDisplayed = 15;
+    $scope.currentLimit = 15;
     if (!TweetService.timeOfLastFetch) {
       $scope.firstGet();
     } else {
@@ -36,14 +36,29 @@ angular.module('wynnoApp.controllers')
     if ($scope.busy) {
       return;
     }
-    if ($scope.numDisplayed < TweetService.currentTweets.length - 30) {
-      $scope.numDisplayed += 15;
-    } else {
-      $scope.numDisplayed += 15;
-      $scope.busy = true;
-      $scope.getMoreOldTweets();
+    $scope.busy = true;
 
+    // var origNumDisplayed = $scope.tweets.length;
+    // // keep repeating the following loop until additional tweets are displayed on the page
+    // // TODO: but if user has never voted nay on an earlier tweet and doesn't have any active mute filters
+    // // this will lead to an infinite loop
+    // while ($scope.tweets.length === origNumDisplayed) {
+
+    // if the current limit of tweets displayed on the page is not very close to exhausting
+    // the total number of tweets we've received from the server, just increment currentLimit
+    if ($scope.currentLimit < TweetService.currentTweets.length - 30) {
+      console.log('incrementing limit');
+      $scope.currentLimit += 15;
+      $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
+      $scope.busy = false;
+    // otherwise get more old tweets from the server
+    } else {
+      console.log('incrementing limit and getting more old tweets from server');
+      $scope.currentLimit += 15;
+      $scope.getMoreOldTweets(); // $scope.busy gets reset to false once getMoreOldTweets completes
     }
+
+    // }
   };
 
   $scope.firstGet = function() {
@@ -185,6 +200,8 @@ angular.module('wynnoApp.controllers')
     $scope.tweets = tweets;
     console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
+    // set the value of oldestScanned here
+    $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
     // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
     // so that it is displayed in both /in and /out streams
     if (!$scope.twitterError.new) { // this guard ensures that the time of last update / fetching of new tweets 

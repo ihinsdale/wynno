@@ -34,7 +34,9 @@ var processTweet = function(user_id, tweet) {
     tweet.__user = tweet.user;
     delete tweet.user;
     tweet.__created_at = tweet.created_at;
-    delete tweet.created_at;
+    //note that we do not want to delete the top-level created_at because
+    //that tracks how far back in time we've scanned (namely in the case of a tweet which is a retweet)
+    //which is important for telling the user Load tweets earlier than hh:mm dd:MM
     tweet.__id_str = tweet.id_str;
     //note we do not want to delete the id_str of the retweeting tweet
     //because that is our marker for requests to the API
