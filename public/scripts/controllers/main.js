@@ -61,7 +61,7 @@ angular.module('wynnoApp.controllers')
         // then if our currentLimit is trying to show us more tweets than are actually bound to the scope
         if ($scope.tweets.length < $scope.currentLimit) {
           // we know we have searched in currentTweets as far as the index of the last tweet in $scope.tweets plus the difference between currentLimit and the length of $scope.tweets
-          $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - tweets.length, currentTweetsLength - 1)].created_at);
+          $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - $scope.tweets.length, currentTweetsLength - 1)].created_at);
         // otherwise we have searched as far as the currentLimit'eth tweet of the tweets bound to the scope
         } else {
           $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
