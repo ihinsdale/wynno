@@ -33,11 +33,11 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.nextPage = function() {
-    console.log('nextPage firing');
     if ($scope.busy) {
       return;
     }
     $scope.busy = true;
+    console.log('nextPage firing');
 
     // var origNumDisplayed = $scope.tweets.length;
     // // keep repeating the following loop until additional tweets are displayed on the page
