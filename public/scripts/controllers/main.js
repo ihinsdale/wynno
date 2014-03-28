@@ -201,7 +201,7 @@ angular.module('wynnoApp.controllers')
     console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
     // set the value of oldestScanned here
-    if (tweets) {
+    if (tweets.length) {
       $scope.oldestScanned = Date.parse(tweets[$scope.currentLimit - 1].created_at);
     }
     // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
