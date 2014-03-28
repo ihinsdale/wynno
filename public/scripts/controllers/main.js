@@ -33,9 +33,7 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.nextPage = function() {
-    if ($scope.busy) {
-      return;
-    }
+    if ($scope.busy) return;
     $scope.busy = true;
     console.log('nextPage firing');
 
