@@ -26,7 +26,7 @@
     </div>
   </div>
 </div>
-<div infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="1" infinite-scroll-immediate-check="false">
+<div infinite-scroll="nextPage()" infinite-scroll-disabled="busy" infinite-scroll-distance="2" infinite-scroll-immediate-check="false">
   <div class="tweet row" ng-repeat="tweet in tweets | limitTo: currentLimit" bindonce="">
     <div class="container">
       <div class="shownTweetWrapper row" ng-if="!tweet.hideGivenNewContraryVote">

@@ -2,6 +2,7 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetsAndSettingsService) {
+  var limitIncrement = 10;
   $scope.activeTwitterRequest = { new: false, middle: false }; // used by spinner, to keep track of an active request to the Twitter API
   $scope.mustWait = { new: false, middle: false };
   $scope.twitterError = { new: false, middle: false };
@@ -23,7 +24,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
-    $scope.currentLimit = 15;
+    $scope.currentLimit = limitIncrement;
     if (!TweetService.timeOfLastFetch) {
       $scope.firstGet();
     } else {
@@ -48,10 +49,10 @@ angular.module('wynnoApp.controllers')
     // the total number of tweets we've received from the server, just increment currentLimit
     if ($scope.currentLimit < TweetService.currentTweets.length - 30) {
       console.log('incrementing limit');
-      $scope.currentLimit += 15;
+      $scope.currentLimit += limitIncrement;
       // Update the value showing how far back in history what's displayed represents
       // If there aren't any tweets bound to the scope but there are tweets in TweetService.currentTweets
-      // then we know nextPage is incrementing through currentTweets in blocks of 15 (or however much currentLimit gets incremented by)
+      // then we know nextPage is incrementing through currentTweets in blocks of limitIncrement
       if ($scope.tweets && !$scope.tweets.length && TweetService.currentTweets.length) {
         $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
       // If there are tweets bound to the scope
@@ -69,7 +70,7 @@ angular.module('wynnoApp.controllers')
     // otherwise get more old tweets from the server
     } else {
       console.log('incrementing limit and getting more old tweets from server');
-      $scope.currentLimit += 15;
+      $scope.currentLimit += limitIncrement;
       $scope.getMoreOldTweets(); // $scope.busy gets reset to false once getMoreOldTweets completes
     }
 
