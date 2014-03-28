@@ -106,30 +106,35 @@ angular.module('wynnoApp.services')
     },
     getPassingTweets: function() {
       var tweetsToDisplay = [];
-      angular.forEach(service.currentTweets, function(tweet) {
+      var indexOfLast = null;
+      angular.forEach(service.currentTweets, function(tweet, index) {
         // reset this property to false, so it is only made true by a new contrary vote
         tweet.hideGivenNewContraryVote = false;
         if (tweet.__vote === null) {
           if (tweet.__isHeard) {
             tweetsToDisplay.push(tweet);
+            indexOfLast = index;
           } else if (tweet.__isMuted) {
             //do nothing
           } else {
             if (tweet.__p === 1 || tweet.__p === null) {
               tweetsToDisplay.push(tweet);
+              indexOfLast = index;
             }
           }
         } else {
           if (!!tweet.__vote) {
             tweetsToDisplay.push(tweet);
+            indexOfLast = index;
           }
         }
       });
-      return tweetsToDisplay;
+      return { tweets: tweetsToDisplay, indexOfLast: indexOfLast};
     },
     getFailingTweets: function() {
       var tweetsToDisplay = [];
-      angular.forEach(service.currentTweets, function(tweet) {
+      var indexOfLast = null;
+      angular.forEach(service.currentTweets, function(tweet, index) {
         // reset this property to false, so it is only made true by a new contrary vote
         tweet.hideGivenNewContraryVote = false;
         if (tweet.__vote === null) {
@@ -137,18 +142,21 @@ angular.module('wynnoApp.services')
             //do nothing
           } else if (tweet.__isMuted) {
             tweetsToDisplay.push(tweet);
+            indexOfLast = index;
           } else {
             if (tweet.__p === 0) {
               tweetsToDisplay.push(tweet);
+              indexOfLast = index;
             }
           }
         } else {
           if (!tweet.__vote) {
             tweetsToDisplay.push(tweet);
+            indexOfLast = index;
           }
         }
       });
-      return tweetsToDisplay;
+      return { tweets: tweetsToDisplay, indexOfLast: indexOfLast};
     },
     replaceCurrentTweets: function(tweets) {
       FilterService.applyFilterRules(tweets);

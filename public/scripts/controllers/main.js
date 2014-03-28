@@ -51,15 +51,15 @@ angular.module('wynnoApp.controllers')
       $scope.currentLimit += 15;
       // Update the value showing how far back in history what's displayed represents
       // If there aren't any tweets bound to the scope but there are tweets in TweetService.currentTweets
-      // then we know we have searched as far back as the last of the currentTweets
+      // then we know nextPage is incrementing through currentTweets in blocks of 15 (or however much currentLimit gets incremented by)
       if ($scope.tweets && !$scope.tweets.length && TweetService.currentTweets.length) {
-        $scope.oldestScanned = Date.parse(TweetService.currentTweets[TweetService.currentTweets.length - 1].created_at);
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
       // If there are tweets bound to the scope
       } else if ($scope.tweets && $scope.tweets.length) {
         // then if our currentLimit is trying to show us more tweets than are actually bound to the scope
-        if ($scope.currentLimit > $scope.tweets.length) {
-          // we know we have searched as far back as the last of the currentTweets
-          $scope.oldestScanned = Date.parse(TweetService.currentTweets[TweetService.currentTweets.length - 1].created_at);
+        if ($scope.tweets.length < $scope.currentLimit) {
+          // we know we have searched in currentTweets as far as the index of the last tweet in $scope.tweets plus the difference between currentLimit and the length of $scope.tweets
+          $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.indexOfLast + $scope.currentLimit - $scope.tweets.length].created_at);
         // otherwise we have searched as far as the currentLimit'eth tweet of the tweets bound to the scope
         } else {
           $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
@@ -203,11 +203,14 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.renderInOrOut = function() {
+    var results;
     if ($location.path() === '/in') {
-      $scope.display(TweetService.getPassingTweets());
+      results = TweetService.getPassingTweets();
     } else if ($location.path() === '/out') {
-      $scope.display(TweetService.getFailingTweets());
+      results = TweetService.getFailingTweets();
     }
+    $scope.indexOfLast = results.indexOfLast;
+    $scope.display(results.tweets);
   };
 
   $scope.display = function(tweets) {
@@ -217,8 +220,10 @@ angular.module('wynnoApp.controllers')
     $scope.busy = false;
     // set the value of oldestScanned here
     if (TweetService.currentTweets.length) {
-      if (tweets.length < $scope.currentLimit) {
-        $scope.oldestScanned = Date.parse(TweetService.currentTweets[TweetService.currentTweets.length - 1].created_at);
+      if (!tweets.length) {
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
+      } else if (tweets.length < $scope.currentLimit) {
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.indexOfLast + $scope.currentLimit - tweets.length].created_at);
       } else {
         $scope.oldestScanned = Date.parse(tweets[$scope.currentLimit - 1].created_at);
       }
