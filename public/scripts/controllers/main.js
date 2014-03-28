@@ -224,6 +224,9 @@ angular.module('wynnoApp.controllers')
       if (!tweets.length) {
         $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
       } else if (tweets.length < $scope.currentLimit) {
+        console.log('indexOfLast:', $scope.indexOfLast);
+        console.log('currentLimit:', $scope.currentLimit);
+        console.log('tweets.length:', tweets.length);
         $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.indexOfLast + $scope.currentLimit - tweets.length].created_at);
       } else {
         $scope.oldestScanned = Date.parse(tweets[$scope.currentLimit - 1].created_at);
