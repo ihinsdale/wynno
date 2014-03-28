@@ -108,6 +108,7 @@ angular.module('wynnoApp.services')
       var tweetsToDisplay = [];
       var indexOfLast = null;
       angular.forEach(service.currentTweets, function(tweet, index) {
+        console.log('index:', index);
         // reset this property to false, so it is only made true by a new contrary vote
         tweet.hideGivenNewContraryVote = false;
         if (tweet.__vote === null) {
@@ -135,6 +136,7 @@ angular.module('wynnoApp.services')
       var tweetsToDisplay = [];
       var indexOfLast = null;
       angular.forEach(service.currentTweets, function(tweet, index) {
+        console.log('index:', index);
         // reset this property to false, so it is only made true by a new contrary vote
         tweet.hideGivenNewContraryVote = false;
         if (tweet.__vote === null) {
