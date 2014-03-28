@@ -144,7 +144,7 @@ exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
   });
 };
 
-var renderedTweetFields = '_id __p __vote __created_at __user __retweeter __id_str __entities __text renderedText id_str gapAfterThis retweeted_status retweet_count favorite_count coordinates';
+var renderedTweetFields = '_id __p __vote created_at __created_at __user __retweeter __id_str __entities __text renderedText id_str gapAfterThis retweeted_status retweet_count favorite_count coordinates';
 
 exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API id
