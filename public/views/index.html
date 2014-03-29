@@ -106,12 +106,12 @@
             <div class="signIn">Sign in with Twitter</div>
           </a>
           <span ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)">
-            <a href="" ng-click="openFilterBuilder()" tooltip-placement="bottom" tooltip="Create filter" tooltip-popup-delay="400" class="btn btn-default navbar-btn glyphButton">
+            <button href="" ng-click="openFilterBuilder()" tooltip-placement="bottom" tooltip="Create filter" tooltip-popup-delay="400" class="btn btn-default navbar-btn glyphButton">
               <div class="wynnoPurple">
                 <span class="icomoon-add-to-list desktopButton"></span>
               </div>
-            </a>
-            <button ng-show="undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-btn whiteBackground">
+            </button>
+            <button ng-show="undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="btn navbar-btn whiteBackground">
               <div class="badge badgePurpleBadge rightMargin10">
                 <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
                 <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
