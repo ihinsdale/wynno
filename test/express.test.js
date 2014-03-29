@@ -1,5 +1,6 @@
 var credentials = require('../lib/config/keys.json');
-var wynnoUrl = 'http://' + credentials.publicDNS + ':' + credentials.port;
+var env = process.env.NODE_ENV;
+var wynnoUrl = 'http://' + credentials[env].publicDNS + ':' + credentials[env].port;
 var request = require('supertest');
 var superagent = require('superagent');
 var expect = require('expect.js');

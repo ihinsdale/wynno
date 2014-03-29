@@ -4,10 +4,11 @@ var path = require('path');
 var credentials = require('./keys.json');
 
 module.exports = function(app) {
-  app.set('env', process.env.NODE_ENV || 'development');
-  app.set('port', process.env.PORT || 8080);
-  app.set('mockAuth', credentials.testing.mockAuth || false);
-  app.set('publicDNS', credentials.publicDNS);
+  app.set('env', process.env.NODE_ENV || 'dev');
+  var env = app.get('env');
+  app.set('port', credentials[env].port);
+  app.set('mockAuth', credentials[env].testing.mockAuth || false);
+  app.set('publicDNS', credentials[env].publicDNS);
   console.log('publicDNS is:', app.get('publicDNS'));
   
   app.set('views', path.resolve(__dirname, '../../public/views'));

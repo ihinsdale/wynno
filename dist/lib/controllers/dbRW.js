@@ -34,7 +34,9 @@ var processTweet = function(user_id, tweet) {
     tweet.__user = tweet.user;
     delete tweet.user;
     tweet.__created_at = tweet.created_at;
-    delete tweet.created_at;
+    //note that we do not want to delete the top-level created_at because
+    //that tracks how far back in time we've scanned (namely in the case of a tweet which is a retweet)
+    //which is important for telling the user Load tweets earlier than hh:mm dd:MM
     tweet.__id_str = tweet.id_str;
     //note we do not want to delete the id_str of the retweeting tweet
     //because that is our marker for requests to the API
@@ -142,7 +144,7 @@ exports.getSecondLatestTweetIdForFetching = function(user_id, callback) {
   });
 };
 
-var renderedTweetFields = '_id __p __vote __created_at __user __retweeter __id_str __entities __text renderedText id_str gapAfterThis retweeted_status retweet_count favorite_count coordinates';
+var renderedTweetFields = '_id __p __vote created_at __created_at __user __retweeter __id_str __entities __text renderedText id_str gapAfterThis retweeted_status retweet_count favorite_count coordinates';
 
 exports.findTweetsBeforeId = function(user_id, tweetIdStr, callback) {
   // user_id must be a db record id, i.e. _id, not a Twitter API id

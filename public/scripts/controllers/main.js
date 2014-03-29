@@ -2,6 +2,7 @@
 
 angular.module('wynnoApp.controllers')
 .controller('MainCtrl', function($scope, $location, $timeout, AuthService, TweetService, SettingsService, VoteService, InitialTweetsAndSettingsService) {
+  var limitIncrement = 10;
   $scope.activeTwitterRequest = { new: false, middle: false }; // used by spinner, to keep track of an active request to the Twitter API
   $scope.mustWait = { new: false, middle: false };
   $scope.twitterError = { new: false, middle: false };
@@ -23,6 +24,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.initialLoad = function() {
     console.log('initialLoad firing');
+    $scope.currentLimit = limitIncrement;
     if (!TweetService.timeOfLastFetch) {
       $scope.firstGet();
     } else {
@@ -31,12 +33,47 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.nextPage = function() {
-    console.log('nextPage firing');
-    if ($scope.busy) {
-      return;
-    }
+    if ($scope.busy) return;
     $scope.busy = true;
-    $scope.getMoreOldTweets();
+    console.log('nextPage firing');
+
+    // var origNumDisplayed = $scope.tweets.length;
+    // // keep repeating the following loop until additional tweets are displayed on the page
+    // // TODO: but if user has never voted nay on an earlier tweet and doesn't have any active mute filters
+    // // this will lead to an infinite loop
+    // while ($scope.tweets.length === origNumDisplayed) {
+
+    // if the current limit of tweets displayed on the page is not very close to exhausting
+    // the total number of tweets we've received from the server, just increment currentLimit
+    if ($scope.currentLimit < TweetService.currentTweets.length - 30) {
+      console.log('incrementing limit');
+      $scope.currentLimit += limitIncrement;
+      // Update the value showing how far back in history what's displayed represents
+      // If there aren't any tweets bound to the scope but there are tweets in TweetService.currentTweets
+      // then we know nextPage is incrementing through currentTweets in blocks of limitIncrement
+      var currentTweetsLength = TweetService.currentTweets.length;
+      if ($scope.tweets && !$scope.tweets.length && currentTweetsLength) {
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
+      // If there are tweets bound to the scope
+      } else if ($scope.tweets && $scope.tweets.length) {
+        // then if our currentLimit is trying to show us more tweets than are actually bound to the scope
+        if ($scope.tweets.length < $scope.currentLimit) {
+          // we know we have searched in currentTweets as far as the index of the last tweet in $scope.tweets plus the difference between currentLimit and the length of $scope.tweets
+          $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - $scope.tweets.length, currentTweetsLength - 1)].created_at);
+        // otherwise we have searched as far as the currentLimit'eth tweet of the tweets bound to the scope
+        } else {
+          $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
+        }
+      }
+      $scope.busy = false;
+    // otherwise get more old tweets from the server
+    } else {
+      console.log('incrementing limit and getting more old tweets from server');
+      $scope.currentLimit += limitIncrement;
+      $scope.getMoreOldTweets(); // $scope.busy gets reset to false once getMoreOldTweets completes
+    }
+
+    // }
   };
 
   $scope.firstGet = function() {
@@ -166,11 +203,14 @@ angular.module('wynnoApp.controllers')
   };
 
   $scope.renderInOrOut = function() {
+    var results;
     if ($location.path() === '/in') {
-      $scope.display(TweetService.getPassingTweets());
+      results = TweetService.getPassingTweets();
     } else if ($location.path() === '/out') {
-      $scope.display(TweetService.getFailingTweets());
+      results = TweetService.getFailingTweets();
     }
+    $scope.indexOfLast = results.indexOfLast;
+    $scope.display(results.tweets);
   };
 
   $scope.display = function(tweets) {
@@ -178,6 +218,17 @@ angular.module('wynnoApp.controllers')
     $scope.tweets = tweets;
     console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
+    // set the value of oldestScanned here
+    var currentTweetsLength = TweetService.currentTweets.length;
+    if (currentTweetsLength) {
+      if (!tweets.length) {
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
+      } else if (tweets.length < $scope.currentLimit) {
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - tweets.length, currentTweetsLength - 1)].created_at);
+      } else {
+        $scope.oldestScanned = Date.parse(tweets[$scope.currentLimit - 1].created_at);
+      }
+    }
     // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
     // so that it is displayed in both /in and /out streams
     if (!$scope.twitterError.new) { // this guard ensures that the time of last update / fetching of new tweets 

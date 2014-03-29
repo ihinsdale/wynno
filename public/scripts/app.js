@@ -11,7 +11,8 @@ angular.module('wynnoApp', [
   'wynnoApp.filters',
   'infinite-scroll',
   'ngRoute',
-  'btford.markdown'
+  'btford.markdown',
+  'pasvaz.bindonce'
 ])
 .config(function ($routeProvider) {
   $routeProvider

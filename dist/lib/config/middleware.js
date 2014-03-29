@@ -10,19 +10,20 @@ var expressValidator = require('express-validator');
 var RedisStore = require('connect-redis')(express);
 
 exports.init = function(app) {
+  var env = app.get('env');
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(expressValidator());
   app.use(express.methodOverride());
-  app.use(express.cookieParser(credentials.secrets.cookieParser));
+  app.use(express.cookieParser(credentials[env].secrets.cookieParser));
   app.use(express.session({
     store: new RedisStore({
-      host: credentials.redis.localhost,
-      port: credentials.redis.port,
-      db: credentials.redis.dbs.session,
-      pass: credentials.redis.pass
+      host: credentials[env].redis.host,
+      port: credentials[env].redis.port,
+      db: credentials[env].redis.dbs.session,
+      pass: credentials[env].redis.pass
     }),
-    secret: credentials.secrets.session,
+    secret: credentials[env].secrets.session,
     cookie: { path: '/', maxAge: 3600000 } // secure option for HTTPS? investigate this...
   }));
   app.use(require('stylus').middleware(__dirname + '/public'));
@@ -41,28 +42,28 @@ exports.init = function(app) {
 
   // if we are in a testing deployment/environment or using mock authentication has been specified, use a mock Passport authentication strategy which
   // is hard-coded to use a particular test Twitter user, @TimStudebaker
-  if (app.get('env') === 'testing' || app.get('mockAuth')) {
+  if (app.get('mockAuth')) {
     var StrategyMock = require('./strategy-mock.js');
     passport.use(new StrategyMock({
         passAuthentication: true,
-        userId: credentials.testing.user_id // this is the ObjectId string of the test user in the db
+        userId: credentials[env].testing.user_id // this is the ObjectId string of the test user in the db
         // it gets overwritten in the verify function just below, but I'm preserving the structure of
         // Weibel's example (https://gist.github.com/mweibel/5219403) in case in future we want to
         // use multiple test users, who have different userIds, in which case this options object
         // would be passed from the test suite file
       }, function(req, user, done) {
         user = {
-          _id: credentials.testing.user_id,
-          tw_id: credentials.testing.tw_id,
+          _id: credentials[env].testing.user_id,
+          tw_id: credentials[env].testing.tw_id,
           //tw_id_str: profile._json.id_str, // this isn't actually used by db.registerUser in the real auth flow...
-          tw_name: credentials.testing.tw_name,
-          tw_screen_name: credentials.testing.tw_screen_name,
-          tw_profile_image_url: credentials.testing.tw_profile_image_url,
-          tw_access_token: credentials.testing.tw_access_token,
-          tw_access_secret: credentials.testing.tw_access_secret
+          tw_name: credentials[env].testing.tw_name,
+          tw_screen_name: credentials[env].testing.tw_screen_name,
+          tw_profile_image_url: credentials[env].testing.tw_profile_image_url,
+          tw_access_token: credentials[env].testing.tw_access_token,
+          tw_access_secret: credentials[env].testing.tw_access_secret
         };
-        req.session.access_token = credentials.testing.tw_access_token;
-        req.session.access_secret = credentials.testing.tw_access_secret;
+        req.session.access_token = credentials[env].testing.tw_access_token;
+        req.session.access_secret = credentials[env].testing.tw_access_secret;
         done(null, user);
       }
     ));
@@ -70,8 +71,8 @@ exports.init = function(app) {
     // otherwise we are in a development/staging environment, or the actual production environment,
     // so use a real TwitterStrategy
     passport.use(new TwitterStrategy({
-        consumerKey: credentials.twitter.consumer_key,
-        consumerSecret: credentials.twitter.consumer_secret,
+        consumerKey: credentials[env].twitter.consumer_key,
+        consumerSecret: credentials[env].twitter.consumer_secret,
         callbackURL: 'http://' + app.get('publicDNS') + ':' + app.get('port') + '/auth/twitter/callback',
         //userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
         userAuthorizationURL: 'https://api.twitter.com/oauth/authenticate',

@@ -52,4 +52,7 @@ module.exports = function(app) {
     app.get('/mock/login', passport.authenticate('mock', { successRedirect: '/checkin',
                                                          failureRedirect: '#/signinwithtwitter' }));
   }
+  app.all('*', function(req, res) {
+    res.status(404).render('404.html', { title: 'wynno - Page not found' });
+  });
 };

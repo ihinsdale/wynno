@@ -75,7 +75,8 @@ angular.module('wynnoApp.controllers')
   $scope.openFeedback = function() {
     var modalInstance = $modal.open({
       templateUrl: '/views/feedback.html',
-      controller: 'FeedbackModalInstanceCtrl'
+      controller: 'FeedbackModalInstanceCtrl',
+      windowClass: 'noFade'
     });
     modalInstance.result.then(function(modalResult) {
       console.log('sending feedback', modalResult.feedback, 'and email', modalResult.email);
@@ -94,7 +95,8 @@ angular.module('wynnoApp.controllers')
   $scope.openWelcome = function() {
     var modalInstance = $modal.open({
       templateUrl: '/views/welcome.html',
-      controller: 'WelcomeModalInstanceCtrl'
+      controller: 'WelcomeModalInstanceCtrl',
+      windowClass: 'noFade'
     });
     modalInstance.result.then(function(modalResult) {
       console.log('sending agreement to ToS', modalResult.agreement);
@@ -128,7 +130,8 @@ angular.module('wynnoApp.controllers')
     $scope.filterBuilderOpen = true; // used by ng-class on body element, for css targeting of modal-dialog
     var modalInstance = $modal.open({
       templateUrl: '/views/filterbuilder.html',
-      controller: 'CreateFilterCtrl'
+      controller: 'CreateFilterCtrl',
+      windowClass: 'filterBuilderOpen noFade'
     });
     modalInstance.result.then(function(modalResult) {
       console.log('Created filter successfully.');
@@ -182,7 +185,7 @@ angular.module('wynnoApp.controllers')
     $scope.draftFilter.typeDisplayed = 'Hear/Mute';
     $scope.draftFilter.usersDisplayed = '(all users)';
     $scope.draftFilter.conditions[0].typeDisplayed = '(anything)';
-    $scope.draftFilter.scopeDisplayed = 'tweets + retweets';
+    $scope.draftFilter.scopeDisplayed = 'tweets and retweets';
   };
 
   $scope.draftFilterAddUser = function(username) {

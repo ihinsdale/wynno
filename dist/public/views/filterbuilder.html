@@ -1,6 +1,6 @@
 <div class="modal-header">
   <button class="close cancelFeedback" title="Close" ng-click="cancel()" aria-hidden="true">&times;</button>
-  <h3 class="wynnoPurple"><span class="icomoon-filter"></span>Create a filter</h3>
+  <h1 class="wynnoPurple"><span class="icomoon-filter rightPadding10"></span>Create a filter</h1>
 </div>
 <div class="modal-body">
   <div class="container">
@@ -52,12 +52,12 @@
         <h3 class="darkGray">3. What</h3>
         <div class="pieceOfDraft scope" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
           <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="scopeBtn btn btn-default dropdown-toggle" data-toggle="dropdown">
               <span ng-bind="draftFilter.scopeDisplayed"></span>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu textAlignLeft" role="menu">
-              <li><a href="" ng-click="draftFilter.scope = 'all'; draftFilter.scopeDisplayed = 'tweets + retweets'">tweets + retweets</a></li>
+              <li><a href="" ng-click="draftFilter.scope = 'all'; draftFilter.scopeDisplayed = 'tweets and retweets'">tweets and retweets</a></li>
               <li><a href="" ng-click="draftFilter.scope = 'tweets'; draftFilter.scopeDisplayed = 'tweets only'">tweets only</a></li>
               <li><a href="" ng-click="draftFilter.scope = 'retweets'; draftFilter.scopeDisplayed = 'retweets only'">retweets only</a></li>
             </ul>

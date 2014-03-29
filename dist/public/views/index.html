@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Ubuntu|Open+Sans">
 
-    <link rel="stylesheet" href="styles/efffc925.main.css"/>
+    <link rel="stylesheet" href="styles/dd4c84a7.main.css"/>
 
-    <script src="scripts/5ad09cd6.scripts.js"></script>
+    <script src="scripts/2a11d705.scripts.js"></script>
   </head>
-  <body ng-app="wynnoApp" ng-controller="NavCtrl" ng-class="{filterBuilderOpen: filterBuilderOpen}">
+  <body ng-app="wynnoApp" ng-controller="NavCtrl">
     <div role="navigation" class="navbar navbar-default navbar-fixed-top">
       <div class="navbar-header">
         <a href="#" class="navbar-brand wynno">
@@ -27,10 +27,7 @@
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
         </button>
-        <button ng-show="currentPathNeedsAuth" ng-click="openFilterBuilder()" class="navbar-toggle glyphButton">
-          <div class="wynnoPurple"><span class="icomoon-add-to-list mobileButton"></span></div>
-        </button>
-        <button ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder">
+        <button ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder notDropdown">
           <div class="badge badgePurpleBadge">
             <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
             <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
@@ -41,6 +38,9 @@
             <span class="icomoon-trophy"></span>
           </div>
         </a>
+        <button ng-show="currentPathNeedsAuth" ng-click="openFilterBuilder()" class="navbar-toggle glyphButton notDropdown">
+          <div class="wynnoPurple"><span class="icomoon-add-to-list mobileButton"></span></div>
+        </button>
         <a href="/auth/twitter" ng-show="!currentPathNeedsAuth && !username" class="navbar-toggle navMobileSignIn">
           <div class="twitterBird"><span class="icomoon-twitter twitterBlue"></span></div>
           <div class="signIn">Sign in with Twitter</div>
@@ -67,21 +67,21 @@
             <div class="twitterBird"><span class="icomoon-twitter twitterBlue"></span></div>
             <div class="signIn">Sign in with Twitter</div>
           </a>
-          <span ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)">
-            <span ng-show="undismissedSugg != null && !undismissedSugg" tooltip-placement="bottom" tooltip="# votes until next filter suggestion" tooltip-popup-delay="400" class="navbar-btn whiteBackground">
-              <div class="badge badgePurpleBadge rightMargin10">
+          <div ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)">
+            <button href="" ng-click="openFilterBuilder()" tooltip-placement="bottom" tooltip="Create filter" tooltip-popup-delay="400" class="btn btn-default navbar-btn glyphButton">
+              <div class="wynnoPurple">
+                <span class="icomoon-add-to-list desktopButton"></span>
+              </div>
+            </button>
+            <button ng-show="undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="btn navbar-btn whiteBackground">
+              <div class="badge badgePurpleBadge">
                 <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
                 <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
               </div>
-            </span>
+            </button>
             <a ng-show="undismissedSugg != null && undismissedSugg" href="#/settings" tooltip-placement="bottom" tooltip="You have new filtering suggestions!" tooltip-popup-delay="400" class="navbar-btn whiteBackground">
-              <div class="badge badgePurpleBadge rightMargin10">
+              <div class="badge badgePurpleBadge sideMargins10">
                 <span class="icomoon-trophy"></span>
-              </div>
-            </a>
-            <a href="" ng-click="openFilterBuilder()" tooltip-placement="bottom" tooltip="Create filter" tooltip-popup-delay="400" class="btn btn-default navbar-btn glyphButton">
-              <div class="wynnoPurple">
-                <span class="icomoon-add-to-list desktopButton"></span>
               </div>
             </a>
             <div class="dropdown inlineBlock">
@@ -91,7 +91,7 @@
                 <li><a ng-click="logout('twitter')"><span class="icomoon-exit"></span><span>Sign out</span></a></li>
               </ul>
             </div>
-          </span>
+          </div>
         </div>
       </div>
     </div>
