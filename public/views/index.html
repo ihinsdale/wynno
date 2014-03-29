@@ -105,14 +105,14 @@
             <div class="twitterBird"><span class="icomoon-twitter twitterBlue"></span></div>
             <div class="signIn">Sign in with Twitter</div>
           </a>
-          <span ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)">
+          <div ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)">
             <button href="" ng-click="openFilterBuilder()" tooltip-placement="bottom" tooltip="Create filter" tooltip-popup-delay="400" class="btn btn-default navbar-btn glyphButton">
               <div class="wynnoPurple">
                 <span class="icomoon-add-to-list desktopButton"></span>
               </div>
             </button>
             <button ng-show="undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="btn navbar-btn whiteBackground">
-              <div class="badge badgePurpleBadge rightMargin10">
+              <div class="badge badgePurpleBadge">
                 <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
                 <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
               </div>
@@ -129,7 +129,7 @@
                 <li><a ng-click="logout('twitter')"><span class="icomoon-exit"></span><span>Sign out</span></a></li>
               </ul>
             </div>
-          </span>
+          </div>
         </div>
       </div>
     </div>
