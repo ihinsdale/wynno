@@ -129,7 +129,7 @@ angular.module('wynnoApp.controllers')
     var modalInstance = $modal.open({
       templateUrl: '/views/filterbuilder.html',
       controller: 'CreateFilterCtrl',
-      windowClass: 'filterBuilderOpen'
+      windowClass: ['filterBuilderOpen', 'noFade']
     });
     modalInstance.result.then(function(modalResult) {
       console.log('Created filter successfully.');

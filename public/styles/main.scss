@@ -757,6 +757,10 @@ $twitterButtonRadius: 3px;
     text-align: center;
 }
 
+.noFade {
+    transition: none;   
+}
+
 .bigBird {
     color: $twitter-blue;
     font-size: 2em;
