@@ -6,8 +6,7 @@ import nltk
 import random
 import math
 import json
-import os.environ
-import os.path
+import os
 import unicodedata
 import copy
 import pydot

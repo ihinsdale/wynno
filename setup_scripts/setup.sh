@@ -1,6 +1,9 @@
 #!/bin/bash
 # Simple setup.sh for configuring Ubuntu 12.04 LTS VPS for wynno
 
+# set the NODE_ENV environment variable to 'dev'
+export NODE_ENV=dev
+
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install build-essential
