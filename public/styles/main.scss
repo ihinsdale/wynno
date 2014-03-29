@@ -254,9 +254,17 @@ body > .container {
     font-size: 21px;
 }
 
+a.navbar-btn.whiteBackground:hover {
+    text-decoration: none;
+}
+
 a.navbar-toggle.glyphButton {
     padding: 5px 8px;
     margin-left: 5px;
+}
+
+a.navbar-toggle.whiteBackground {
+    margin-right: 5px;
 }
 
 button.navbar-toggle.glyphButton {

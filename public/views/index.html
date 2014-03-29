@@ -65,7 +65,7 @@
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
         </button>
-        <button ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder">
+        <button ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder notDropdown">
           <div class="badge badgePurpleBadge">
             <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
             <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
