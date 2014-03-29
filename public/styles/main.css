@@ -7665,7 +7665,7 @@ body {
 
 /* line 143, main.scss */
 body > .container {
-  padding-top: 60px;
+  padding-top: 70px;
 }
 
 /* line 147, main.scss */
@@ -8721,58 +8721,63 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 @media (min-width: 768px) {
   /* line 1078, main.scss */
+  body > .container {
+    padding-top: 60px;
+  }
+
+  /* line 1082, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 1082, main.scss */
+  /* line 1086, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 1086, main.scss */
+  /* line 1090, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 
-  /* line 1090, main.scss */
+  /* line 1094, main.scss */
   .landingMainBig {
     font-size: 10em;
   }
 
-  /* line 1094, main.scss */
+  /* line 1098, main.scss */
   .landingFeature {
     font-size: 8em;
   }
 
-  /* line 1098, main.scss */
+  /* line 1102, main.scss */
   .tryIt {
     font-size: 26px;
     width: 50%;
   }
 }
 @media (min-width: 992px) {
-  /* line 1105, main.scss */
+  /* line 1109, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 1109, main.scss */
+  /* line 1113, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 1114, main.scss */
+  /* line 1118, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 1118, main.scss */
+  /* line 1122, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 1122, main.scss */
+  /* line 1126, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8780,44 +8785,44 @@ button.btn.btn-default.navbar-btn.glyphButton {
     border-bottom: 0;
   }
 
-  /* line 1129, main.scss */
+  /* line 1133, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1133, main.scss */
+  /* line 1137, main.scss */
   .gapBelow {
     border-bottom: 1px dashed #e0e0e0;
   }
 
-  /* line 1137, main.scss */
+  /* line 1141, main.scss */
   .gapAbove {
     border-top: 1px dashed #e0e0e0;
   }
 
-  /* line 1141, main.scss */
+  /* line 1145, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1145, main.scss */
+  /* line 1149, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 1150, main.scss */
+  /* line 1154, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 1158, main.scss */
+  /* line 1162, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 1162, main.scss */
+  /* line 1166, main.scss */
   .bigBirdText {
     font-size: 28px;
   }

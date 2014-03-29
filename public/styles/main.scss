@@ -141,7 +141,7 @@ body {
 }
 
 body > .container {
-    padding-top: 60px;
+    padding-top: 70px;
 }
 
 .navbar-default {
@@ -1075,6 +1075,10 @@ $twitterButtonRadius: 3px;
 // media query-based styling
 
 @media (min-width: 768px) {
+    body > .container {
+        padding-top: 60px;
+    }
+
     .navbar-brand {
         line-height: 12px;
     }
