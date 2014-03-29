@@ -12,7 +12,7 @@ angular.module('wynnoApp.services')
       .success(function(data, status) {
         console.log('success getting settings, they look like:', data);
         // after initializing votesRequiredForNextSugg
-        data.settings.votesRequiredForNextSugg = 100 - (data.settings.voteCount - Math.floor(data.settings.voteCount / 100) * 100);
+        data.settings.votesRequiredForNextSugg = 100 - (data.voteCount - Math.floor(data.voteCount / 100) * 100);
         // add the rendered text versions of the filters, since that doesn't come from the db
         service.renderFilters(data);
         service.settings = data;
