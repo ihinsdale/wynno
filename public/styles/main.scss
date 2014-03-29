@@ -137,7 +137,7 @@ body {
 }
 
 body > .container {
-    padding-top: 70px;
+    padding-top: 60px;
 }
 
 .navbar-default {
@@ -407,7 +407,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 .twitterLogo {
     float: right;
-    padding: 10px 0 0 0;
+    padding-top: 17px;
     font-size: 18px;
     color: $twitter-blue;
 }
@@ -650,6 +650,7 @@ $twitterButtonRadius: 3px;
 
 .fetchNew {
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .fetchMiddle {
@@ -662,6 +663,7 @@ $twitterButtonRadius: 3px;
 }
 
 .lastUpdateTime {
+    vertical-align: middle;
     padding-left: 10px;
     color: #808080;
 }
@@ -784,6 +786,7 @@ $twitterButtonRadius: 3px;
 
 .scopeBtn.btn {
     padding: 6px;
+    white-space: normal;
 }
 
 .noFade {
