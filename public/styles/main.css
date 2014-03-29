@@ -7635,27 +7635,28 @@ td.visible-print {
 }
 
 /* line 114, main.scss */
-.rightMargin10 {
+.sideMargins10 {
   margin-right: 10px;
+  margin-left: 10px;
 }
 
-/* line 118, main.scss */
+/* line 119, main.scss */
 .vertAlignTop {
   vertical-align: top;
 }
 
-/* line 122, main.scss */
+/* line 123, main.scss */
 .rightPadding10 {
   padding-right: 10px;
 }
 
-/* line 128, main.scss */
+/* line 129, main.scss */
 html {
   position: relative;
   min-height: 100%;
 }
 
-/* line 133, main.scss */
+/* line 134, main.scss */
 body {
   background: white;
   font-family: "Open Sans", sans-serif;
@@ -7663,18 +7664,18 @@ body {
   margin-bottom: 30px;
 }
 
-/* line 143, main.scss */
+/* line 144, main.scss */
 body > .container {
   padding-top: 70px;
 }
 
-/* line 147, main.scss */
+/* line 148, main.scss */
 .navbar-default {
   background-color: white;
   border-bottom: 1px solid #a166d5;
 }
 
-/* line 152, main.scss */
+/* line 153, main.scss */
 .nav.wynnoButtons li a {
   font-size: 24px;
   line-height: 24px;
@@ -7682,12 +7683,12 @@ body > .container {
   padding-bottom: 12px;
 }
 
-/* line 159, main.scss */
+/* line 160, main.scss */
 .navbar .nav > li > a:hover {
   background-color: #f8f8f8;
 }
 
-/* line 165, main.scss */
+/* line 166, main.scss */
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
 .navbar .nav > .active > a:focus {
@@ -7695,20 +7696,20 @@ body > .container {
   box-shadow: none;
 }
 
-/* line 180, main.scss */
+/* line 181, main.scss */
 .funnel {
   display: inline;
   font-size: 20px;
   padding-right: 16px;
 }
 
-/* line 186, main.scss */
+/* line 187, main.scss */
 .navbar-brand {
   font-size: 36px;
   line-height: 18px;
 }
 
-/* line 193, main.scss */
+/* line 194, main.scss */
 .wynno,
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
@@ -7716,157 +7717,157 @@ body > .container {
   color: #a166d5;
 }
 
-/* line 198, main.scss */
+/* line 199, main.scss */
 .y {
   color: #62d7a5;
 }
 
-/* line 202, main.scss */
+/* line 203, main.scss */
 .n {
   color: #ff9c74;
 }
 
-/* line 207, main.scss */
+/* line 208, main.scss */
 .navbar .nav > .passing > a,
 .navbar .nav > .passing > a:hover {
   color: #62d7a5;
 }
 
-/* line 212, main.scss */
+/* line 213, main.scss */
 .navbar .nav > .failing > a,
 .navbar .nav > .failing > a:hover {
   color: #ff9c74;
 }
 
-/* line 216, main.scss */
+/* line 217, main.scss */
 .navbar-btn {
   margin-top: 7px;
 }
 
-/* line 220, main.scss */
+/* line 221, main.scss */
 .navbar .navbar-btn {
   background-image: none;
   background-color: whitesmoke;
 }
 
-/* line 225, main.scss */
+/* line 226, main.scss */
 .navbar .navbar-btn:hover {
   background-color: whitesmoke;
   border-color: #a166d5;
 }
 
-/* line 230, main.scss */
+/* line 231, main.scss */
 .navbar .navbar-btn:focus {
   background-color: #e6e6e6;
 }
 
-/* line 237, main.scss */
+/* line 238, main.scss */
 .navbar .navbar-btn .icon-bar.firstBar {
   background-color: #62d7a5;
 }
 
-/* line 241, main.scss */
+/* line 242, main.scss */
 .navbar .navbar-btn .icon-bar.secondBar {
   background-color: #ff9c74;
 }
 
-/* line 245, main.scss */
+/* line 246, main.scss */
 .navbar .navbar-btn .icon-bar.thirdBar {
   background-color: #62d7a5;
 }
 
-/* line 249, main.scss */
+/* line 250, main.scss */
 .navMobileSignIn {
   padding: 9px 5px;
 }
 
-/* line 253, main.scss */
+/* line 254, main.scss */
 a.navMobileSignIn:active, a.navMobileSignIn:hover {
   text-decoration: none;
 }
 
-/* line 257, main.scss */
+/* line 258, main.scss */
 .mobileButton {
   font-size: 24px;
 }
 
-/* line 261, main.scss */
+/* line 262, main.scss */
 .desktopButton {
   font-size: 21px;
 }
 
-/* line 265, main.scss */
+/* line 266, main.scss */
 a.navbar-btn.whiteBackground:hover {
   text-decoration: none;
 }
 
-/* line 269, main.scss */
+/* line 270, main.scss */
 a.navbar-toggle.glyphButton {
   padding: 5px 8px;
   margin-left: 5px;
 }
 
-/* line 274, main.scss */
+/* line 275, main.scss */
 a.navbar-toggle.glyphButton:hover {
   text-decoration: none;
 }
 
-/* line 278, main.scss */
+/* line 279, main.scss */
 a.navbar-toggle.whiteBackground {
   margin-right: 5px;
 }
 
-/* line 282, main.scss */
+/* line 283, main.scss */
 button.navbar-toggle.glyphButton {
   padding: 6px 8px 4px 8px;
 }
 
-/* line 286, main.scss */
+/* line 287, main.scss */
 button.navbar-toggle.notDropdown {
   margin-right: 5px;
 }
 
-/* line 290, main.scss */
+/* line 291, main.scss */
 button.navbar-toggle.noBorder {
   border-color: transparent;
 }
 
-/* line 294, main.scss */
+/* line 295, main.scss */
 button.btn.btn-default.navbar-btn.glyphButton {
   padding: 4px 10px 2px 10px;
 }
 
-/* line 298, main.scss */
+/* line 299, main.scss */
 .customDivider {
   border-bottom: 1px solid #e7e7e7;
 }
 
-/* line 304, main.scss */
+/* line 305, main.scss */
 .jumbotron {
   background-color: #dbc3f0;
 }
 
-/* line 308, main.scss */
+/* line 309, main.scss */
 .jumbotron > .headline {
   color: #a166d5;
 }
 
-/* line 312, main.scss */
+/* line 313, main.scss */
 .jumbotron h1, .jumbotron h2 {
   font-family: "Open Sans", sans-serif;
 }
 
-/* line 316, main.scss */
+/* line 317, main.scss */
 .jumbotron > h1 {
   margin: 0;
 }
 
-/* line 320, main.scss */
+/* line 321, main.scss */
 .landingMainBig {
   font-size: 6em;
 }
 
-/* line 324, main.scss */
+/* line 325, main.scss */
 .landingMainSmall {
   position: relative;
   left: -20px;
@@ -7874,54 +7875,54 @@ button.btn.btn-default.navbar-btn.glyphButton {
   vertical-align: 22px;
 }
 
-/* line 331, main.scss */
+/* line 332, main.scss */
 .landingFeatureSmall {
   font-size: 5em;
   vertical-align: 18px;
 }
 
-/* line 336, main.scss */
+/* line 337, main.scss */
 .landingBird {
   color: #55acee;
 }
 
-/* line 340, main.scss */
+/* line 341, main.scss */
 .landingFilter {
   color: #62d7a5;
 }
 
-/* line 344, main.scss */
+/* line 345, main.scss */
 .landingGrin {
   color: #a166d5;
 }
 
-/* line 348, main.scss */
+/* line 349, main.scss */
 .landingBannerBackground {
   background-color: moccasin;
 }
 
-/* line 352, main.scss */
+/* line 353, main.scss */
 .buzzword {
   color: orangered;
 }
 
-/* line 356, main.scss */
+/* line 357, main.scss */
 .topAndBottomPadding {
   padding-top: 20px;
   padding-bottom: 10px;
 }
 
-/* line 361, main.scss */
+/* line 362, main.scss */
 .landingFeature {
   font-size: 5em;
 }
 
-/* line 365, main.scss */
+/* line 366, main.scss */
 .tryItContainer {
   padding-top: 30px;
 }
 
-/* line 369, main.scss */
+/* line 370, main.scss */
 .tryIt {
   font-size: 20px;
   background-color: #b578ea;
@@ -7929,47 +7930,47 @@ button.btn.btn-default.navbar-btn.glyphButton {
   border-color: #a166d5;
 }
 
-/* line 377, main.scss */
+/* line 378, main.scss */
 .tryIt:hover {
   background-color: #a166d5;
   border-color: #a166d5;
 }
 
-/* line 382, main.scss */
+/* line 383, main.scss */
 .trainGlyph {
   display: inline-block;
 }
 
-/* line 386, main.scss */
+/* line 387, main.scss */
 .beaker {
   padding-top: 10px;
 }
 
-/* line 390, main.scss */
+/* line 391, main.scss */
 .landingCopy {
   font-size: 20px;
   line-height: 28px;
 }
 
-/* line 395, main.scss */
+/* line 396, main.scss */
 .welcomeCopy {
   font-size: 22px;
   line-height: 36px;
 }
 
-/* line 400, main.scss */
+/* line 401, main.scss */
 .halfRule {
   width: 100px;
   margin: 40px auto;
   border-top-color: #b578ea;
 }
 
-/* line 406, main.scss */
+/* line 407, main.scss */
 .fullRule {
   border-top-color: #b578ea;
 }
 
-/* line 412, main.scss */
+/* line 413, main.scss */
 .twitterLogo {
   float: right;
   padding-top: 17px;
@@ -7977,24 +7978,24 @@ button.btn.btn-default.navbar-btn.glyphButton {
   color: #55acee;
 }
 
-/* line 419, main.scss */
+/* line 420, main.scss */
 .twitterLogo > a, .twitterLogo > a:hover {
   color: inherit;
   text-decoration: none;
 }
 
-/* line 424, main.scss */
+/* line 425, main.scss */
 .tweet {
   padding-bottom: 5px;
 }
 
-/* line 428, main.scss */
+/* line 429, main.scss */
 .tweetColPadding {
   padding-left: 7px;
   padding-right: 7px;
 }
 
-/* line 433, main.scss */
+/* line 434, main.scss */
 .tweetStuff {
   padding: 5px;
   background-color: white;
@@ -8006,18 +8007,18 @@ button.btn.btn-default.navbar-btn.glyphButton {
   overflow: auto;
 }
 
-/* line 444, main.scss */
+/* line 445, main.scss */
 .leftColumn {
   height: 100%;
   float: left;
 }
 
-/* line 452, main.scss */
+/* line 453, main.scss */
 .tweeterImage > img {
   vertical-align: inherit;
 }
 
-/* line 456, main.scss */
+/* line 457, main.scss */
 .rightColumn {
   min-height: 79px;
   padding-left: 10px;
@@ -8025,50 +8026,50 @@ button.btn.btn-default.navbar-btn.glyphButton {
   position: relative;
 }
 
-/* line 463, main.scss */
+/* line 464, main.scss */
 .tweetMeta {
   width: 100%;
   display: inline-block;
 }
 
-/* line 468, main.scss */
+/* line 469, main.scss */
 .tweetTimestamp {
   float: right;
 }
 
-/* line 472, main.scss */
+/* line 473, main.scss */
 .tweeterName {
   font-size: 14px;
   font-weight: bold;
   color: #000000;
 }
 
-/* line 478, main.scss */
+/* line 479, main.scss */
 .tweeterScreenName, .retweeterName {
   color: #989898;
 }
 
-/* line 482, main.scss */
+/* line 483, main.scss */
 .tweeterScreenName:hover, .retweeterName:hover {
   text-decoration: underline;
 }
 
-/* line 489, main.scss */
+/* line 490, main.scss */
 .pvalue {
   padding-left: 8px;
 }
 
-/* line 493, main.scss */
+/* line 494, main.scss */
 .pvalue > .badge {
   background-color: #c7a9e1;
 }
 
-/* line 497, main.scss */
+/* line 498, main.scss */
 .tweetText {
   font-size: 14px;
 }
 
-/* line 501, main.scss */
+/* line 502, main.scss */
 .tweetFooter {
   color: #989898;
   padding-top: 10px;
@@ -8077,28 +8078,28 @@ button.btn.btn-default.navbar-btn.glyphButton {
   right: 0;
 }
 
-/* line 509, main.scss */
+/* line 510, main.scss */
 .tweetFooterSpacer {
   height: 18px;
 }
 
-/* line 513, main.scss */
+/* line 514, main.scss */
 .retweetedStatus {
   color: #989898;
 }
 
-/* line 520, main.scss */
+/* line 521, main.scss */
 .tweetMeta, .tweetFooter, .retweetHeader {
   font-size: 12px;
   line-height: 14px;
 }
 
-/* line 525, main.scss */
+/* line 526, main.scss */
 .retweetHeader {
   padding-bottom: 3px;
 }
 
-/* line 529, main.scss */
+/* line 530, main.scss */
 .retweetSpacer {
   float: right;
   height: 14px;
@@ -8107,143 +8108,143 @@ button.btn.btn-default.navbar-btn.glyphButton {
   height: 100%;
 }
 
-/* line 537, main.scss */
+/* line 538, main.scss */
 .tweetCaptionIcon {
   padding-right: 4px;
 }
 
-/* line 541, main.scss */
+/* line 542, main.scss */
 .tweetFooter > a {
   color: #989898;
 }
 
-/* line 545, main.scss */
+/* line 546, main.scss */
 .tweetFooter > a:hover {
   color: #989898;
   text-decoration: none;
 }
 
-/* line 550, main.scss */
+/* line 551, main.scss */
 .tweetFooter > a > .tweetCaptionAction:hover {
   text-decoration: underline;
 }
 
-/* line 564, main.scss */
+/* line 565, main.scss */
 .voteButtons .btn {
   padding: 3px 12px;
 }
 
-/* line 568, main.scss */
+/* line 569, main.scss */
 .voteButtons .btn-default {
   border-color: #e0e0e0;
 }
 
-/* line 572, main.scss */
+/* line 573, main.scss */
 .voteAye {
   border-right: 1px dotted #e0e0e0;
 }
 
-/* line 581, main.scss */
+/* line 582, main.scss */
 .aye {
   font-size: 24px;
   color: #62d7a5;
 }
 
-/* line 586, main.scss */
+/* line 587, main.scss */
 .nay {
   font-size: 24px;
   color: #ff9c74;
 }
 
-/* line 593, main.scss */
+/* line 594, main.scss */
 .wynnoButtonDesc {
   padding-left: 10px;
 }
 
-/* line 597, main.scss */
+/* line 598, main.scss */
 .wideVoteButton {
   width: 50%;
 }
 
-/* line 601, main.scss */
+/* line 602, main.scss */
 .left, .right {
   border-top: 0;
 }
 
-/* line 605, main.scss */
+/* line 606, main.scss */
 .left {
   border-top-left-radius: 0;
 }
 
-/* line 609, main.scss */
+/* line 610, main.scss */
 .right {
   border-top-right-radius: 0;
 }
 
-/* line 613, main.scss */
+/* line 614, main.scss */
 .noVoteAlertAbove {
   margin-top: 20px;
 }
 
-/* line 617, main.scss */
+/* line 618, main.scss */
 .page-header {
   border-color: #a166d5;
 }
 
-/* line 621, main.scss */
+/* line 622, main.scss */
 .settingHeader {
   color: #ffffff;
   padding-left: 5px;
 }
 
-/* line 626, main.scss */
+/* line 627, main.scss */
 .innerSettingsBlock {
   margin-left: 10px;
 }
 
-/* line 630, main.scss */
+/* line 631, main.scss */
 .settingInputContainer {
   padding-top: 10px;
   padding-left: 10px;
 }
 
-/* line 642, main.scss */
+/* line 643, main.scss */
 .twitterBird {
   display: inline-block;
   font-size: 14px;
   padding-right: 5px;
 }
 
-/* line 648, main.scss */
+/* line 649, main.scss */
 .signIn {
   display: inline-block;
 }
 
-/* line 655, main.scss */
+/* line 656, main.scss */
 .fetchNew {
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
-/* line 660, main.scss */
+/* line 661, main.scss */
 .fetchMiddle {
   margin: 20px 0;
 }
 
-/* line 664, main.scss */
+/* line 665, main.scss */
 .loadEarlier {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-/* line 669, main.scss */
+/* line 670, main.scss */
 .lastUpdateTime {
   vertical-align: middle;
   padding-left: 10px;
   color: #808080;
 }
 
-/* line 675, main.scss */
+/* line 676, main.scss */
 .feedbackContainer {
   position: fixed;
   visibility: visible !important;
@@ -8260,21 +8261,21 @@ button.btn.btn-default.navbar-btn.glyphButton {
   border-radius: 5px 5px 0 0;
 }
 
-/* line 693, main.scss */
+/* line 694, main.scss */
 .feedback {
   padding-left: 6px;
   display: none;
 }
 
 @keyframes anim-rotate {
-  /* line 699, main.scss */
+  /* line 700, main.scss */
   from {
     -webkit-transform: rotate(0);
     transform: rotate(0);
     -ms-transform: rotate(0);
   }
 
-  /* line 703, main.scss */
+  /* line 704, main.scss */
   to {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -8283,26 +8284,26 @@ button.btn.btn-default.navbar-btn.glyphButton {
 }
 
 @-webkit-keyframes anim-rotate {
-  /* line 710, main.scss */
+  /* line 711, main.scss */
   from {
     -webkit-transform: rotate(0);
   }
 
-  /* line 713, main.scss */
+  /* line 714, main.scss */
   to {
     -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes anim-rotate-backward {
-  /* line 719, main.scss */
+  /* line 720, main.scss */
   from {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
     -ms-transform: rotate(360deg);
   }
 
-  /* line 723, main.scss */
+  /* line 724, main.scss */
   to {
     -webkit-transform: rotate(0);
     transform: rotate(0);
@@ -8311,18 +8312,18 @@ button.btn.btn-default.navbar-btn.glyphButton {
 }
 
 @-webkit-keyframes anim-rotate-backward {
-  /* line 730, main.scss */
+  /* line 731, main.scss */
   from {
     -webkit-transform: rotate(360deg);
   }
 
-  /* line 733, main.scss */
+  /* line 734, main.scss */
   to {
     -webkit-transform: rotate(0);
   }
 }
 
-/* line 738, main.scss */
+/* line 739, main.scss */
 .spinner {
   display: inline-block;
   line-height: 1;
@@ -8332,7 +8333,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
   -o-animation: anim-rotate 2s infinite linear;
 }
 
-/* line 747, main.scss */
+/* line 748, main.scss */
 .backwardSpinner {
   display: inline-block;
   line-height: 1;
@@ -8342,12 +8343,12 @@ button.btn.btn-default.navbar-btn.glyphButton {
   -o-animation: anim-rotate-backward 2s infinite linear;
 }
 
-/* line 756, main.scss */
+/* line 757, main.scss */
 .loadingText {
   padding-left: 4px;
 }
 
-/* line 760, main.scss */
+/* line 761, main.scss */
 .cancelFeedback {
   position: absolute;
   font-size: 28px;
@@ -8355,92 +8356,92 @@ button.btn.btn-default.navbar-btn.glyphButton {
   top: 10px;
 }
 
-/* line 767, main.scss */
+/* line 768, main.scss */
 .sendButton {
   width: 100%;
 }
 
-/* line 771, main.scss */
+/* line 772, main.scss */
 .modal-body > .container {
   width: 100%;
 }
 
-/* line 775, main.scss */
+/* line 776, main.scss */
 .modal-footer {
   margin-top: 0;
 }
 
-/* line 779, main.scss */
+/* line 780, main.scss */
 .modal-dialog {
   transition: none;
 }
 
-/* line 783, main.scss */
+/* line 784, main.scss */
 .filterBuilderOpen .modal-dialog {
   width: 100%;
 }
 
-/* line 787, main.scss */
+/* line 788, main.scss */
 .filterBuilderOpen .modal-footer {
   text-align: center;
 }
 
-/* line 791, main.scss */
+/* line 792, main.scss */
 .scopeBtn.btn {
   padding: 6px;
   white-space: normal;
 }
 
-/* line 796, main.scss */
+/* line 797, main.scss */
 .noFade {
   transition: none;
 }
 
-/* line 800, main.scss */
+/* line 801, main.scss */
 .bigBird {
   color: #55acee;
   font-size: 2em;
 }
 
-/* line 805, main.scss */
+/* line 806, main.scss */
 .bigBirdText {
   font-size: 24px;
 }
 
-/* line 809, main.scss */
+/* line 810, main.scss */
 .size20 {
   font-size: 20px;
 }
 
-/* line 813, main.scss */
+/* line 814, main.scss */
 .oops {
   margin-bottom: 16px;
 }
 
-/* line 817, main.scss */
+/* line 818, main.scss */
 .centeredText {
   text-align: center;
 }
 
-/* line 821, main.scss */
+/* line 822, main.scss */
 .tosCheckbox {
   margin: 0;
   position: relative;
   bottom: 1px;
 }
 
-/* line 827, main.scss */
+/* line 828, main.scss */
 .agree {
   font-size: 18px;
   font-weight: normal;
 }
 
-/* line 832, main.scss */
+/* line 833, main.scss */
 .disagree:hover {
   background-color: #ffffff;
 }
 
-/* line 839, main.scss */
+/* line 840, main.scss */
 .footer {
   position: absolute;
   bottom: 0;
@@ -8448,13 +8449,13 @@ button.btn.btn-default.navbar-btn.glyphButton {
   height: 30px;
 }
 
-/* line 846, main.scss */
+/* line 847, main.scss */
 .footer {
   border-top: 1px solid #a166d5;
   background-color: white;
 }
 
-/* line 851, main.scss */
+/* line 852, main.scss */
 .footerItem {
   display: inline-block;
   padding-top: 4px;
@@ -8462,52 +8463,52 @@ button.btn.btn-default.navbar-btn.glyphButton {
   color: #777777;
 }
 
-/* line 858, main.scss */
+/* line 859, main.scss */
 .footerBrand {
   padding-left: 6px;
 }
 
-/* line 862, main.scss */
+/* line 863, main.scss */
 .wynnoDefinition {
   margin-bottom: 20px;
 }
 
-/* line 868, main.scss */
+/* line 869, main.scss */
 .filterWrapper {
   padding: 10px;
   display: inline-block;
 }
 
-/* line 873, main.scss */
+/* line 874, main.scss */
 .filterToggleButtonRightWrapper {
   display: inline-block;
 }
 
-/* line 877, main.scss */
+/* line 878, main.scss */
 .filterWrapper > .filterText {
   padding: 10px;
   display: inline-block;
   border-radius: 4px;
 }
 
-/* line 883, main.scss */
+/* line 884, main.scss */
 .filterNumber {
   padding-right: 10px;
   display: inline-block;
   font-size: 20px;
 }
 
-/* line 889, main.scss */
+/* line 890, main.scss */
 .panel.filterPanel {
   border-color: #ddd;
 }
 
-/* line 893, main.scss */
+/* line 894, main.scss */
 .nav-tabs > li {
   cursor: pointer;
 }
 
-/* line 897, main.scss */
+/* line 898, main.scss */
 .removeSetting {
   display: inline;
   font-size: 16px;
@@ -8516,12 +8517,12 @@ button.btn.btn-default.navbar-btn.glyphButton {
   border: 0;
 }
 
-/* line 905, main.scss */
+/* line 906, main.scss */
 .removeSetting:hover {
   color: #555555;
 }
 
-/* line 909, main.scss */
+/* line 910, main.scss */
 .user {
   display: inline;
   font-size: 18px;
@@ -8529,189 +8530,189 @@ button.btn.btn-default.navbar-btn.glyphButton {
   color: #a166d5;
 }
 
-/* line 916, main.scss */
+/* line 917, main.scss */
 .paddingTop40 {
   padding-top: 40px;
 }
 
-/* line 920, main.scss */
+/* line 921, main.scss */
 .paddingTop56 {
   padding-top: 56px;
 }
 
-/* line 924, main.scss */
+/* line 925, main.scss */
 .paddingTop16 {
   padding-top: 16px;
 }
 
-/* line 928, main.scss */
+/* line 929, main.scss */
 .paddingBottom20 {
   padding-bottom: 20px;
 }
 
-/* line 932, main.scss */
+/* line 933, main.scss */
 .paddingLeft10 {
   padding-left: 10px;
 }
 
-/* line 936, main.scss */
+/* line 937, main.scss */
 .paddingRight6 {
   padding-right: 6px;
 }
 
-/* line 940, main.scss */
+/* line 941, main.scss */
 .btn.addNewFilter, .btn.saveFilter {
   background-color: #b578ea;
   color: #ffffff;
   border-color: #a166d5;
 }
 
-/* line 946, main.scss */
+/* line 947, main.scss */
 .btn.addNewFilter:hover, .btn.saveFilter:hover {
   background-color: #a166d5;
   border-color: #a166d5;
 }
 
-/* line 951, main.scss */
+/* line 952, main.scss */
 .btn.saveFilter {
   width: 200px;
 }
 
-/* line 955, main.scss */
+/* line 956, main.scss */
 .pieceOfDraft {
   padding: 5px;
 }
 
-/* line 959, main.scss */
+/* line 960, main.scss */
 .pieceOfDraft.ayeGreenBackground, .thatContain.ayeGreenBackground {
   background-color: #62d7a5;
 }
 
-/* line 963, main.scss */
+/* line 964, main.scss */
 .pieceOfDraft.nayRedBackground, .thatContain.nayRedBackground {
   background-color: #ff9c74;
 }
 
-/* line 967, main.scss */
+/* line 968, main.scss */
 .pieceOfDraft, .thatContain {
   background-color: #c7a9e1;
 }
 
-/* line 971, main.scss */
+/* line 972, main.scss */
 .pieceOfDraft.scope {
   padding: 5px 2px;
 }
 
-/* line 975, main.scss */
+/* line 976, main.scss */
 .thatContain {
   vertical-align: top;
   padding: 12px 6px;
 }
 
-/* line 980, main.scss */
+/* line 981, main.scss */
 .sentenceText {
   font-size: 16px;
   color: #ffffff;
 }
 
-/* line 985, main.scss */
+/* line 986, main.scss */
 .textAlignLeft {
   text-align: left;
 }
 
-/* line 993, main.scss */
+/* line 994, main.scss */
 .btn.hear, .btn.hear:hover {
   background-color: #62d7a5;
   color: #ffffff;
 }
 
-/* line 998, main.scss */
+/* line 999, main.scss */
 .btn.mute, .btn.mute:hover {
   background-color: #ff9c74;
   color: #ffffff;
 }
 
-/* line 1003, main.scss */
+/* line 1004, main.scss */
 .dropdown-menu > li > a.ayeGreen {
   color: #62d7a5;
 }
 
-/* line 1007, main.scss */
+/* line 1008, main.scss */
 .dropdown-menu > li > a.nayRed {
   color: #ff9c74;
 }
 
-/* line 1011, main.scss */
+/* line 1012, main.scss */
 .btn.active.toggledPurple {
   background-color: #c7a9e1;
   color: #ffffff;
 }
 
-/* line 1016, main.scss */
+/* line 1017, main.scss */
 .conditionSideBorder {
   display: inline-block;
   border-left: 4px solid #a166d5;
   padding-left: 10px;
 }
 
-/* line 1022, main.scss */
+/* line 1023, main.scss */
 .conditionInputPaddingTop {
   padding-top: 10px;
 }
 
-/* line 1026, main.scss */
+/* line 1027, main.scss */
 .downRightArrow {
   font-size: 2em;
   padding-right: 20px;
 }
 
-/* line 1031, main.scss */
+/* line 1032, main.scss */
 .downRightArrow.link {
   padding-left: 20px;
 }
 
-/* line 1035, main.scss */
+/* line 1036, main.scss */
 .downRightArrow.hashtag {
   padding-left: 20px;
 }
 
-/* line 1039, main.scss */
+/* line 1040, main.scss */
 .andCondition {
   padding: 10px 0;
 }
 
-/* line 1043, main.scss */
+/* line 1044, main.scss */
 .listOfUsers {
   padding-top: 20px;
 }
 
-/* line 1047, main.scss */
+/* line 1048, main.scss */
 .addConditionRow {
   padding-top: 10px;
 }
 
-/* line 1051, main.scss */
+/* line 1052, main.scss */
 .addCondition {
   float: right;
 }
 
-/* line 1055, main.scss */
+/* line 1056, main.scss */
 .plus {
   padding-right: 10px;
 }
 
-/* line 1059, main.scss */
+/* line 1060, main.scss */
 .stepStatus {
   padding-right: 40px;
 }
 
-/* line 1063, main.scss */
+/* line 1064, main.scss */
 .conditionSelectorWidth {
   display: inline-block;
   width: 165px;
 }
 
-/* line 1068, main.scss */
+/* line 1069, main.scss */
 .caseSensitiveLabel {
   color: #333333;
   font-weight: normal;
@@ -8720,64 +8721,64 @@ button.btn.btn-default.navbar-btn.glyphButton {
 }
 
 @media (min-width: 768px) {
-  /* line 1078, main.scss */
+  /* line 1079, main.scss */
   body > .container {
     padding-top: 60px;
   }
 
-  /* line 1082, main.scss */
+  /* line 1083, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 1086, main.scss */
+  /* line 1087, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 1090, main.scss */
+  /* line 1091, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 
-  /* line 1094, main.scss */
+  /* line 1095, main.scss */
   .landingMainBig {
     font-size: 10em;
   }
 
-  /* line 1098, main.scss */
+  /* line 1099, main.scss */
   .landingFeature {
     font-size: 8em;
   }
 
-  /* line 1102, main.scss */
+  /* line 1103, main.scss */
   .tryIt {
     font-size: 26px;
     width: 50%;
   }
 }
 @media (min-width: 992px) {
-  /* line 1109, main.scss */
+  /* line 1110, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 1113, main.scss */
+  /* line 1114, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 1118, main.scss */
+  /* line 1119, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 1122, main.scss */
+  /* line 1123, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 1126, main.scss */
+  /* line 1127, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -8785,44 +8786,44 @@ button.btn.btn-default.navbar-btn.glyphButton {
     border-bottom: 0;
   }
 
-  /* line 1133, main.scss */
+  /* line 1134, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1137, main.scss */
+  /* line 1138, main.scss */
   .gapBelow {
     border-bottom: 1px dashed #e0e0e0;
   }
 
-  /* line 1141, main.scss */
+  /* line 1142, main.scss */
   .gapAbove {
     border-top: 1px dashed #e0e0e0;
   }
 
-  /* line 1145, main.scss */
+  /* line 1146, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1149, main.scss */
+  /* line 1150, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 1154, main.scss */
+  /* line 1155, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 1162, main.scss */
+  /* line 1163, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 1166, main.scss */
+  /* line 1167, main.scss */
   .bigBirdText {
     font-size: 28px;
   }
