@@ -745,6 +745,10 @@ $twitterButtonRadius: 3px;
     width: 100%;
 }
 
+.modal-body > .container {
+    width: 100%;
+}
+
 .modal-footer {
     margin-top: 0;
 }
@@ -755,6 +759,10 @@ $twitterButtonRadius: 3px;
 
 .filterBuilderOpen .modal-footer {
     text-align: center;
+}
+
+.scopeBtn.btn {
+    padding: 6px;
 }
 
 .noFade {

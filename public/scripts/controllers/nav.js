@@ -75,7 +75,8 @@ angular.module('wynnoApp.controllers')
   $scope.openFeedback = function() {
     var modalInstance = $modal.open({
       templateUrl: '/views/feedback.html',
-      controller: 'FeedbackModalInstanceCtrl'
+      controller: 'FeedbackModalInstanceCtrl',
+      windowClass: 'noFade'
     });
     modalInstance.result.then(function(modalResult) {
       console.log('sending feedback', modalResult.feedback, 'and email', modalResult.email);
@@ -94,7 +95,8 @@ angular.module('wynnoApp.controllers')
   $scope.openWelcome = function() {
     var modalInstance = $modal.open({
       templateUrl: '/views/welcome.html',
-      controller: 'WelcomeModalInstanceCtrl'
+      controller: 'WelcomeModalInstanceCtrl',
+      windowClass: 'noFade'
     });
     modalInstance.result.then(function(modalResult) {
       console.log('sending agreement to ToS', modalResult.agreement);
