@@ -73,12 +73,12 @@
                 <span class="icomoon-add-to-list desktopButton"></span>
               </div>
             </a>
-            <span ng-show="undismissedSugg != null && !undismissedSugg" tooltip-placement="bottom" tooltip="# votes until next filter suggestion" tooltip-popup-delay="400" class="navbar-btn whiteBackground">
+            <button ng-show="undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-btn whiteBackground">
               <div class="badge badgePurpleBadge rightMargin10">
                 <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
                 <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
               </div>
-            </span>
+            </button>
             <a ng-show="undismissedSugg != null && undismissedSugg" href="#/settings" tooltip-placement="bottom" tooltip="You have new filtering suggestions!" tooltip-popup-delay="400" class="navbar-btn whiteBackground">
               <div class="badge badgePurpleBadge rightMargin10">
                 <span class="icomoon-trophy"></span>
