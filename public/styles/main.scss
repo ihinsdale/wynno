@@ -246,6 +246,10 @@ body > .container {
     padding: 9px 5px;
 }
 
+a.navMobileSignIn:active, a.navMobileSignIn:hover {
+    text-decoration: none;
+}
+
 .mobileButton {
     font-size: 24px;
 }
@@ -263,6 +267,10 @@ a.navbar-toggle.glyphButton {
     margin-left: 5px;
 }
 
+a.navbar-toggle.glyphButton:hover {
+    text-decoration: none;
+}
+
 a.navbar-toggle.whiteBackground {
     margin-right: 5px;
 }
@@ -275,17 +283,12 @@ button.navbar-toggle.notDropdown {
     margin-right: 5px;
 }
 
-a.navbar-toggle.glyphButton:hover {
-    text-decoration: none;
+button.navbar-toggle.noBorder {
+    border-color: transparent;
 }
 
 button.btn.btn-default.navbar-btn.glyphButton {
     padding: 4px 10px 2px 10px;
-    margin-right: 4px;
-}
-
-button.navbar-toggle.noBorder {
-    border-color: transparent;
 }
 
 .customDivider {
