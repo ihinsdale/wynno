@@ -4,13 +4,15 @@ angular.module('wynnoApp.services')
 .factory('SettingsService', ['$q', '$http', 'FilterService', 'TweetService', function($q, $http, FilterService, TweetService) {
   var service = {
     settings: {},
-    // (this function is essentially deprecated now, because settings are got with the 
-    // first request for old tweets. But it serves as a backup for service.provideSettings)
     getSettingsFromDb: function() {
+      // Most of the time this function won't be used because settings will have been obtained via the InitialTweetsAndSettingsService.
+      // But if user goes directly to the #/settings page, this function will be called.
       var d = $q.defer();
       $http.get('/settings')
       .success(function(data, status) {
         console.log('success getting settings, they look like:', data);
+        // after initializing votesRequiredForNextSugg
+        data.settings.votesRequiredForNextSugg = 100 - (data.settings.voteCount - Math.floor(data.settings.voteCount / 100) * 100);
         // add the rendered text versions of the filters, since that doesn't come from the db
         service.renderFilters(data);
         service.settings = data;

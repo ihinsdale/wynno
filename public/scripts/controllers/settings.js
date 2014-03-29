@@ -11,6 +11,9 @@ angular.module('wynnoApp.controllers')
       });
       $scope.autoWynnoing = settings.autoWynnoing;
       $scope.voteCount = settings.voteCount;
+      $scope.$emit('setSuggIndicators', SettingsService.settings.votesRequiredForNextSugg, SettingsService.settings.undismissedSugg);
+    }, function(reason) {
+      console.log('There was an error fetching settings.');
     });
   };
 
