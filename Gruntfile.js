@@ -324,10 +324,7 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>/public',
           src: [
             '*.{ico,png,txt}',
-            '.htaccess',
-            'bower_components/**/*',
-            'images/{,*/}*.{webp}',
-            'fonts/**/*'
+            '.htaccess'
           ]
         }, {
           expand: true,
@@ -355,11 +352,6 @@ module.exports = function (grunt) {
           src: [
             '**/*',
           ]
-        }, { // I added this to copy over favicon, which is located within /images
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          dest: '<%= yeoman.dist %>/public/images',
-          src: ['*.ico']
         }, { // I added this to copy over blog post .md files, as well as the blog index.json file
           expand: true,
           cwd: '<%= yeoman.app %>/views/blog',
