@@ -73,7 +73,7 @@ exports.init = function(app) {
     passport.use(new TwitterStrategy({
         consumerKey: credentials[env].twitter.consumer_key,
         consumerSecret: credentials[env].twitter.consumer_secret,
-        callbackURL: 'http://' + app.get('publicDNS') + ':' + app.get('port') + '/auth/twitter/callback',
+        callbackURL: 'http://' + app.get('publicDNS') + '/auth/twitter/callback',
         //userAuthorizationURL: 'https://api.twitter.com/oauth/authorize',
         userAuthorizationURL: 'https://api.twitter.com/oauth/authenticate',
         passReqToCallback: true
