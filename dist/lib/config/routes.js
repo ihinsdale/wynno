@@ -53,6 +53,6 @@ module.exports = function(app) {
                                                          failureRedirect: '#/signinwithtwitter' }));
   }
   app.all('*', function(req, res) {
-    res.status(404).render('404.html', { title: 'wynno - Page not found' });
+    res.send(404);
   });
 };
