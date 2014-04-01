@@ -1,0 +1,17 @@
+As of 4/1/14:
+
+logout
+old
+fresh
+middle
+processVote
+saveFilter
+disableFilter
+getSettings
+makeSuggestion
+adoptSuggestion
+dismissSuggestion
+processFeedback
+processAgreement
+toggleAutoWynnoing
+enableDisFilterOrSugg

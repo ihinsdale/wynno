@@ -1,0 +1,5 @@
+integration test of filter suggestions
+integration test of toggling auto-wynnoing
+should see some tweets filtered out b/c of their p-value
+ - should indicate what these are with badge, and show vote buttons on them
+turn auto-wynnoing off, tweets should move accordingly back to /in

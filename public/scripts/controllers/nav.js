@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $rootScope, $route, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
+.controller('NavCtrl', function($scope, $rootScope, $route, $location, $modal, $cookieStore, $timeout, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
   $scope.votesRequiredForNextSugg = null;
   $scope.undismissedSugg = null;
   $scope.filterBuilderOpen = false;
-  $scope.serverError = false;
+  $scope.serverError = null;
 
   console.log('navctrl line evaluated');
 
@@ -54,12 +54,16 @@ angular.module('wynnoApp.controllers')
   });
 
   // create listener for serverError event emitted by response interceptor
-  $rootScope.$on('serverError', function(event) {
-    $scope.serverError = true;
+  $rootScope.$on('serverError', function(event, mainMsg) {
+    $scope.serverError = { mainMsg: mainMsg };
+    // make the error disappear after 10 seconds if user hasn't already closed it
+    $timeout(function() {
+      $scope.serverError = null;
+    }, 10000);
   });
 
   $scope.closeErrorAlert = function() {
-    $scope.serverError = false;
+    $scope.serverError = null;
   };
 
   $scope.doCollapse = function() {
