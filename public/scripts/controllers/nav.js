@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $route, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
+.controller('NavCtrl', function($scope, $rootScope, $route, $location, $modal, $cookieStore, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
   $scope.votesRequiredForNextSugg = null;
   $scope.undismissedSugg = null;
@@ -51,6 +51,15 @@ angular.module('wynnoApp.controllers')
       $scope.undismissedSugg = undismissedSugg;
     }
   });
+
+  // create listener for serverError event emitted by response interceptor
+  $rootScope.$on('serverError', function(event) {
+    $scope.serverError = true;
+  });
+
+  $scope.closeErrorAlert = function() {
+    $scope.serverError = false;
+  };
 
   $scope.doCollapse = function() {
     $scope.navCollapsed = true;
