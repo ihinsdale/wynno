@@ -307,6 +307,33 @@ button.btn.btn-default.navbar-btn.glyphButton {
     text-align: center;
 }
 
+@keyframes wynno-fadeout {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+
+@-webkit-keyframes wynno-fadeout {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+
+@-moz-keyframes wynno-fadeout {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+ 
+@-o-keyframes wynno-fadeout {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+.serverErrorAlert.ng-leave {
+    animation: 0.5s wynno-fadeout;
+    -webkit-animation: 0.5s wynno-fadeout;
+    -moz-animation: 0.5s wynno-fadeout;
+    -o-animation: 0.5s wynno-fadeout;
+}
+
 // landing page
 
 .jumbotron {
@@ -723,6 +750,24 @@ $twitterButtonRadius: 3px;
     }
 }
 
+@-moz-keyframes anim-rotate {
+    from {
+        -webkit-transform:rotate(0);
+    }
+    to {
+        -webkit-transform:rotate(360deg);
+    }
+}
+
+@-o-keyframes anim-rotate {
+    from {
+        -webkit-transform:rotate(0);
+    }
+    to {
+        -webkit-transform:rotate(360deg);
+    }
+}
+
 @keyframes anim-rotate-backward {
     from {
         transform: rotate(360deg);
@@ -735,6 +780,24 @@ $twitterButtonRadius: 3px;
 }
 
 @-webkit-keyframes anim-rotate-backward {
+    from {
+        -webkit-transform:rotate(360deg);
+    }
+    to {
+        -webkit-transform:rotate(0);
+    }
+}
+
+@-moz-keyframes anim-rotate-backward {
+    from {
+        -webkit-transform:rotate(360deg);
+    }
+    to {
+        -webkit-transform:rotate(0);
+    }
+}
+
+@-o-keyframes anim-rotate-backward {
     from {
         -webkit-transform:rotate(360deg);
     }
