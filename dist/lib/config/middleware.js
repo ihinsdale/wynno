@@ -9,6 +9,16 @@ var db = require('../controllers/dbRW.js');
 var expressValidator = require('express-validator');
 var RedisStore = require('connect-redis')(express);
 
+// Create a custom function for evaluating the CSRF token provided by client, for use
+// with the express.csrf middleware
+var csrfValue = function(req) {
+  var token = (req.headers['x-xsrf-token']) // this is the header used by Angular
+    || (req.body && req.body._csrf)
+    || (req.query && req.query._csrf)
+    || (req.headers['x-csrf-token']);
+  return token;
+};
+
 exports.init = function(app) {
   var env = app.get('env');
   app.use(express.logger('dev'));
@@ -26,7 +36,8 @@ exports.init = function(app) {
     secret: credentials[env].secrets.session,
     cookie: { path: '/', maxAge: 3600000 } // secure option for HTTPS? investigate this...
   }));
-  app.use(require('stylus').middleware(__dirname + '/public'));
+  app.use(express.csrf({value: csrfValue})); // Cf. http://mircozeiss.com/using-csrf-with-express-and-angular/
+
   console.log('dirname is', __dirname);
   console.log('path', path.join(__dirname, '../..', 'public'));
   app.use(express.static(path.join(__dirname, '../..', 'public')));
@@ -125,4 +136,9 @@ exports.ensureAgreedTerms = function (req, res, next) {
   // can't use 401 code because that gets caught by angular interceptor and
   // redirects user to sign in page
   res.send(402, 'User must first agree to Terms of Service.');
+};
+
+exports.setCSRFtoken = function(req, res, next) { 
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  next();
 };
