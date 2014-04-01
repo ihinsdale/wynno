@@ -543,6 +543,9 @@ angular.module('wynnoApp.services')
       })
       .error(function(reason, status) {
         console.log('error getting filter suggestion');
+        // if there was an error getting filter suggestions, we want the user to be able to try getting filter suggestions again
+        // after the next vote
+        service.settings.votesRequiredForNextSugg = 1;
         d.reject(reason);
       });
       return d.promise;

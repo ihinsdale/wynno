@@ -1,0 +1,4 @@
+pre-existing setting of errors on scope (i.e. before I introduced the 500 handler in interceptor.js):
+- NavCtrl - okay because these only pertain to displaying an alert inside the filter builder modal
+- SettingsCtrl
+- MainCtrl

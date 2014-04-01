@@ -1,0 +1,4 @@
+on ubuntu, sudo copy nginx.conf to /etc/nginx
+
+sudo service nginx stop
+sudo service nginx start
