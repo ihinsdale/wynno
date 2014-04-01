@@ -12,7 +12,8 @@ module.exports = function(app) {
   // GET request to /old grabs old tweets from database
   app.get('/old', ensureAuthenticated, ensureAgreedTerms, site.old);
   // GET request to /new initiates request to Twitter API, saves tweets to database, send to client
-  app.get('/new', ensureAuthenticated, ensureAgreedTerms, site.fresh);
+  //app.get('/new', ensureAuthenticated, ensureAgreedTerms, site.fresh);
+  app.get('/new', function(req, res) { res.send(500); }); // for purpose of testing client-side 500 response interceptor
   // GET request to /middle initiates request to Twitter API for old tweets, saves tweets to database, send to client
   app.get('/middle', ensureAuthenticated, ensureAgreedTerms, site.middle);
   // POST request to /vote saves vote in the database
