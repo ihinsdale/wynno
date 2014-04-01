@@ -300,6 +300,21 @@ button.btn.btn-default.navbar-btn.glyphButton {
     border-bottom: 1px solid #e7e7e7;
 }
 
+.serverErrorAlert, .serverErrorAlertMobile {
+    position: fixed;
+    top: 55px;
+    text-align: center;
+}
+
+.serverErrorAlert {
+    width: 50%;
+    left: 25%;
+}
+
+.serverErrorAlertMobile {
+    width: 100%;
+}
+
 // landing page
 
 .jumbotron {

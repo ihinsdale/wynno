@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Ubuntu|Open+Sans">
 
-    <link rel="stylesheet" href="styles/dd4c84a7.main.css"/>
+    <link rel="stylesheet" href="styles/75a08a98.main.css"/>
 
-    <script src="scripts/50df6aeb.scripts.js"></script>
+    <script src="scripts/b779caf7.scripts.js"></script>
   </head>
   <body ng-app="wynnoApp" ng-controller="NavCtrl">
     <div role="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -96,9 +96,16 @@
       </div>
     </div>
     <div ng-view="" class="container"></div>
-    <div class="alert alert-danger alert-dismissable serverErrorAlert" ng-if="serverError">
+    <div class="alert alert-danger alert-dismissable serverErrorAlert hidden-xs" ng-if="serverError">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="closeErrorAlert()">&times;</button>
       <strong>Internal server error.</strong>
+      <br>
+      <span>Please bear with us as we make wynno more robust. Thanks!</span>
+    </div>
+    <div class="alert alert-danger alert-dismissable serverErrorAlertMobile visible-xs" ng-if="serverError">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="closeErrorAlert()">&times;</button>
+      <strong>Internal server error.</strong>
+      <br>
       <span>Please bear with us as we make wynno more robust. Thanks!</span>
     </div>
     <script>
