@@ -6,6 +6,7 @@ angular.module('wynnoApp.controllers')
   $scope.votesRequiredForNextSugg = null;
   $scope.undismissedSugg = null;
   $scope.filterBuilderOpen = false;
+  $scope.serverError = false;
 
   console.log('navctrl line evaluated');
 
