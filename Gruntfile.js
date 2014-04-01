@@ -408,13 +408,13 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   options: {
-    //     compress: {
-    //       drop_console: true
-    //     }
-    //   }
-    // },
+    uglify: {
+      options: {
+        compress: {
+          drop_console: true
+        }
+      }
+    },
     // concat: {
     //   dist: {}
     // },
