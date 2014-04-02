@@ -38,6 +38,12 @@ exports.init = function(app) {
     cookie: { path: '/', maxAge: 3600000 } // secure option for HTTPS? investigate this...
   }));
   app.use(express.csrf({value: csrfValue})); // Cf. http://mircozeiss.com/using-csrf-with-express-and-angular/
+  app.use(function(req, res, next) { 
+    var token = req.csrfToken();
+    console.log('CSRF token created on server looks like:', token);
+    res.cookie('XSRF-TOKEN', token);
+    next();
+  });
 
   console.log('dirname is', __dirname);
   console.log('path', path.join(__dirname, '../..', 'public'));
@@ -139,9 +145,4 @@ exports.ensureAgreedTerms = function (req, res, next) {
   res.send(402, 'User must first agree to Terms of Service.');
 };
 
-exports.setCSRFtoken = function(req, res, next) { 
-  var token = req.csrfToken();
-  console.log('CSRF token created on server looks like:', token);
-  res.cookie('XSRF-TOKEN', token);
-  next();
-};
+

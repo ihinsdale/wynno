@@ -5,7 +5,6 @@ var site = require('../controllers/site.js');
 var passport = require('passport');
 var ensureAuthenticated = require('./middleware.js').ensureAuthenticated;
 var ensureAgreedTerms = require('./middleware.js').ensureAgreedTerms;
-var setCSRFtoken = require('./middleware.js').setCSRFtoken;
 
 module.exports = function(app) {
   // GET request to homepage
@@ -36,7 +35,7 @@ module.exports = function(app) {
   // POST request to /autowynnoing
   app.post('/autowynnoing', ensureAuthenticated, ensureAgreedTerms, site.toggleAutoWynnoing);
   // GET request to /checkin after authenticating with Twitter
-  app.get('/checkin', ensureAuthenticated, setCSRFtoken, site.checkin);
+  app.get('/checkin', ensureAuthenticated, site.checkin);
   // GET request to /auth/twitter caused by clicking 'Sign in with twitter'
   app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/' }));
   // GET request to /auth/twitter/callback caused by successful request for token to Twitter API

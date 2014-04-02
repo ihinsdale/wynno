@@ -52,21 +52,8 @@ describe('POST protected routes:', function() {
       .end(function(err, result) {
         if (!err) {
           console.log('response headers after mock login:', result.headers);
-          agent.saveCookies(result.res); // this only seems to be saving the connect session id cookie
-          // so we make an additional request to /checkin directly (maybe superagent isn't following the redirect
-          // to /checkin after login?)
-          var req = request(wynnoUrl).get('/checkin');
-          agent.attachCookies(req);
-          req.end(function(err, result) {
-            if (!err) {
-              console.log('response headers after checkin:', result.headers);
-              //console.log(result.headers['set-cookie']);
-              agent.saveCookies(result.res);
-              done();
-            } else {
-              done(err);
-            }
-          });
+          agent.saveCookies(result.res);
+          done();
         } else {
           done(err);
         }
@@ -80,7 +67,8 @@ describe('POST protected routes:', function() {
     this.timeout(20e3);
     var req = request(wynnoUrl).post('/logout')
     agent.attachCookies(req);
-
+    var csrfToken = unescape(/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
+    req.set('X-XSRF-TOKEN', csrfToken);
     req.end(function(err, result) {
       if (!err) {
         done();
@@ -90,26 +78,25 @@ describe('POST protected routes:', function() {
     });
   });
 
-  // it("/old queried with no X-XSRF-TOKEN header should return 403", function(done) { 
-  //   this.timeout(20e3);
-  //   var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
-  //   agent.attachCookies(req);
-  //   req.end(function(err, res) {
-  //     expect(res.status).to.eql(403);
-  //     done();
-  //   });
-  // });
+  it("/old queried with no X-XSRF-TOKEN header should return 403", function(done) { 
+    this.timeout(20e3);
+    var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
+    agent.attachCookies(req);
+    req.end(function(err, res) {
+      expect(res.status).to.eql(403);
+      done();
+    });
+  });
 
 
   it("/old queried with oldestTweetIdStr: '0' should return 50 old tweets", function(done) { // 50 is current batch size
     this.timeout(20e3);
     var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
     agent.attachCookies(req);
-    var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
-    console.log('csrfToken escaped:', csrfToken);
-    console.log('csrfToken unescaped:', unescape(csrfToken));
-    req.set('X-XSRF-TOKEN', unescape(csrfToken));
-    console.log(req);
+    console.log('req immediately after attaching cookies:', req);
+    var csrfToken = unescape(/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
+    req.set('X-XSRF-TOKEN', csrfToken);
+    console.log('req after setting header:', req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.status).to.eql(200);
