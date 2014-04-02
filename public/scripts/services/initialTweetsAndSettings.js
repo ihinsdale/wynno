@@ -10,12 +10,10 @@ angular.module('wynnoApp.services')
       // for the first load of MainCtrl, we want to get old tweets
       // and the user's filtering rules to apply to all tweets
       var d = $q.defer();
-      $http.get('/old', {
-        params: {
-          oldestTweetIdStr: '0',
-          settings: true
-        }
-      })
+      $http({ method: 'POST', url: '/old', data: {
+        oldestTweetIdStr: '0',
+        settings: true
+      } })
       .success(function(data, status) {
         console.log('success getting old tweets and settings:', data);
         // save settings in SettingsService

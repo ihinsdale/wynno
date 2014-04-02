@@ -1,0 +1,18 @@
+curl -v -b connect.sid=s%3A32jL14SwjHcpJ2Jiicm4Nd3v.R12iUcUgXNaYwDZUNXX%2BMiTgMGgeCBeeOAkuDXTFfbI http://ec2-54-186-150-50.us-west-2.compute.amazonaws.com/new
+
+vs.
+
+curl -v -b connect.sid=s%3A32jL14SwjHcpJ2Jiicm4Nd3v.R12iUcUgXNaYwDZUNXX%2BMiTgMGgeCBeeOAkuDXTFfbI  --header "X-XSRF-TOKEN:CoqSWUS1RnuckpMuGrqCwX7W7sed9A6pluSHA=" http://ec2-54-186-150-50.us-west-2.compute.amazonaws.com/new (actually, may need to add the xsrf cookie as well if express server looks that cookie and header value match)
+
+-need to convert GET requests for /old, /new, and /middle to POST requests b/c those requests can change state
+-also convert routes for login and logout? Those do change state, albeit just in a limited way
+  - logout yes, login...no...it seems, for one thing the passport-twitter auth examples have both the auth routes as GETs
+
+if i want user to be able to send feedback without having logged in, I need to use the csrf-cookie-setting middleware on EVERY request so that the user is guaranteed to have gotten the csrf cookie by the time they want to do the POST request to /feedback --> do this
+
+DO I NEED TO SANITIZE THE FEEDBACK FORM INPUT IN ANY WAY?
+
+Old - ss, done; cs, 
+New - ss, done; cs, 
+Middle - ss, done; cs, 
+Logout - ss, done; cs, 

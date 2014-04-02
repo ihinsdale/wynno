@@ -42,7 +42,6 @@ exports.logout = function(req, res) {
       res.send(500);
     }
   });
-
 };
 
 var getHistorical = function(req, oldestTweetIdStr, callback) {
@@ -85,7 +84,8 @@ var getHistorical = function(req, oldestTweetIdStr, callback) {
 
 var old;
 exports.old = old = function(req, res) {
-  var oldestTweetIdStr = req.query.oldestTweetIdStr || '0';
+  var postData = req.body;
+  var oldestTweetIdStr = postData.oldestTweetIdStr || '0';
   console.log('oldestTweetId sent in request looks like:', oldestTweetIdStr);
   console.log('typeof oldestTweetId:', typeof oldestTweetIdStr);
   async.waterfall([
@@ -105,7 +105,7 @@ exports.old = old = function(req, res) {
       //  because that case would never occur:  getHistorical is only called if oldestTweetIdStr !== '0',
       //  meaning the user had previously gotten some tweets successfully, in which case they would also
       //  have already gotten settings)
-      } else if (req.query.settings) {
+      } else if (postData.settings) {
         // Optimization: could parallelize the fetching of settings
         db.getSettings(req.user._id, tweets, callback);
       } else {
@@ -218,9 +218,10 @@ exports.fresh = function(req, res) {
 };
 
 exports.middle = function(req, res) {
-  var oldestOfMoreRecentTweetsIdStr = req.query.oldestOfMoreRecentTweetsIdStr;
-  var secondNewestOfOlderTweetsIdStr = req.query.secondNewestOfOlderTweetsIdStr;
-  var newestOfOlderTweetsIdStr = req.query.newestOfOlderTweetsIdStr;
+  var postData = req.body;
+  var oldestOfMoreRecentTweetsIdStr = postData.oldestOfMoreRecentTweetsIdStr;
+  var secondNewestOfOlderTweetsIdStr = postData.secondNewestOfOlderTweetsIdStr;
+  var newestOfOlderTweetsIdStr = postData.newestOfOlderTweetsIdStr;
   if (!oldestOfMoreRecentTweetsIdStr || !secondNewestOfOlderTweetsIdStr || !newestOfOlderTweetsIdStr) {
     res.send(400);
   } else {
@@ -409,7 +410,7 @@ exports.dismissSuggestion = function(req, res) {
 };
 
 exports.processFeedback = function(req, res) {
-  var user_id = req.user ? req.user._id : null;
+  var user_id = req.user._id; // sending feedback now requires authentication, so we know there is a req.user._id
   var data = req.body;
   var validatedEmail = req.body.email;
   async.waterfall([

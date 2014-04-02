@@ -26,7 +26,7 @@ angular.module('wynnoApp.services')
     },
     logout: function() {
       var d = $q.defer();
-      $http.get('/logout')
+      $http({ method: 'POST', url: '/logout', data: {} })
       .success(function(data) {
         $cookieStore.remove('user');
         d.resolve(data);

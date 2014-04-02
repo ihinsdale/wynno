@@ -9,12 +9,10 @@ angular.module('wynnoApp.services')
     getOldTweets: function(oldestTweetIdStr) {
       oldestTweetIdStr = oldestTweetIdStr || '0';
       var d = $q.defer();
-      $http.get('/old', {
-        params: {
-          oldestTweetIdStr: oldestTweetIdStr,
-          settings: false
-        }
-      })
+      $http({ method: 'POST', url: '/old', data: {
+        oldestTweetIdStr: oldestTweetIdStr,
+        settings: false
+      } })
       .success(function(data, status) {
         console.log('success getting old tweets:', data);
         // apply filtering rules to the tweets using whatever settings are current in the FilterService
@@ -43,7 +41,7 @@ angular.module('wynnoApp.services')
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
         d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
       } else {
-        $http.get('/new')
+        $http({ method: 'POST', url: '/new', data: {} })
         .success(function(data, status) {
           console.log('success getting new tweets, they look like:', data.tweets);
           // since the initial request for old tweets is always completed before getNewTweets is called for the first time,
@@ -78,13 +76,11 @@ angular.module('wynnoApp.services')
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
         d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
       } else {
-        $http.get('/middle', {
-          params: {
-            oldestOfMoreRecentTweetsIdStr: service.currentTweets[oldestOfMoreRecentTweetsIndex].id_str,
-            secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str,
-            newestOfOlderTweetsIdStr: service.currentTweets[newestOfOlderTweetsIndex].id_str
-          }
-        })
+        $http({ method: 'POST', url: '/middle', data: {
+          oldestOfMoreRecentTweetsIdStr: service.currentTweets[oldestOfMoreRecentTweetsIndex].id_str,
+          secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str,
+          newestOfOlderTweetsIdStr: service.currentTweets[newestOfOlderTweetsIndex].id_str
+        } })
         .success(function(data, status) {
           console.log('success getting middle tweets, they look like:', data.tweets);
           // apply filtering rules to the tweets

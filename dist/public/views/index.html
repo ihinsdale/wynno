@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="styles/10387ea6.main.css"/>
 
-    <script src="scripts/8922b2c2.scripts.js"></script>
+    <script src="scripts/3d17886f.scripts.js"></script>
   </head>
   <body ng-app="wynnoApp" ng-controller="NavCtrl">
     <div role="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -116,6 +116,6 @@
       <div class="footerItem"><a href="#/terms">Terms</a></div>
       <div class="footerItem"><a href="#/privacy">Privacy</a></div>
     </div>
-    <div ng-click="openFeedback()" class="feedbackContainer"><span class="icomoon-bullhorn"></span><span class="feedback">Feedback </span></div>
+    <div ng-click="openFeedback()" class="feedbackContainer" ng-if="currentPathNeedsAuth"><span class="icomoon-bullhorn"></span><span class="feedback">Feedback</span></div>
   </body>
 </html>

@@ -40,7 +40,7 @@ var Browser = require('zombie');
 
 // 2. INTEGRATION TESTS OF SERVER
 
-describe('GET protected routes:', function() {
+describe('POST protected routes:', function() {
   // Mock passport authentication based on https://gist.github.com/mweibel/5219403
   var agent = superagent.agent();
   beforeEach(function(done) {
@@ -62,7 +62,7 @@ describe('GET protected routes:', function() {
   // The rate limiting is managed with Redis, independent of user sessions.
   afterEach(function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/logout')
+    var req = request(wynnoUrl).post('/logout')
     agent.attachCookies(req);
     req.end(function(err, result) {
       if (!err) {
@@ -74,23 +74,24 @@ describe('GET protected routes:', function() {
   });
 
 
-  it('/old queried with oldestTweetId=0 should return 50 old tweets', function(done) { // 50 is current batch size
+  it("/old queried with oldestTweetIdStr: '0' should return 50 old tweets", function(done) { // 50 is current batch size
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/old?oldestTweetId=0');
+    var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.key('tweets');
+      expect(res.body).not.to.have.key('settings');
       expect(res.body.tweets).to.be.an('array');
       expect(res.body.tweets.length).to.eql(50);
       done();
     });
   });
 
-  it('/old queried with oldestTweetId=0 and settings=true should return 50 old tweets', function(done) { // 50 is current batch size
+  it("/old queried with oldestTweetIdStr: 0 and settings: true should return 50 old tweets", function(done) { // 50 is current batch size
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/old?oldestTweetId=0&settings=true');
+    var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0', settings: true});
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
@@ -113,7 +114,7 @@ describe('GET protected routes:', function() {
 
   it('/new should respond with new tweets', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/new');
+    var req = request(wynnoUrl).post('/new');
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
@@ -126,7 +127,7 @@ describe('GET protected routes:', function() {
 
   it('/new should respond with a 429 error for making another request less than 61 seconds after the last one', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/new');
+    var req = request(wynnoUrl).post('/new');
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(429);
@@ -136,7 +137,7 @@ describe('GET protected routes:', function() {
 
   it('/new should respond with OK after waiting 61 seconds since the last successful call to /new', function(done) {
     this.timeout(80e3);
-    var req = request(wynnoUrl).get('/new');
+    var req = request(wynnoUrl).post('/new');
     agent.attachCookies(req);
     setTimeout(function() {
       req.end(function(err, res) {
@@ -151,7 +152,7 @@ describe('GET protected routes:', function() {
 
   it('/middle should respond with a 400 error for making a request that does not contain oldestOfMoreRecentTweetsIdStr', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/middle?secondNewestOfOlderTweetsIdStr=448821706279247872&newestOfOlderTweetsIdStr=448821922131103744');
+    var req = request(wynnoUrl).post('/middle').send({secondNewestOfOlderTweetsIdStr: '448821706279247872', newestOfOlderTweetsIdStr: '448821922131103744'});
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(400);
@@ -161,7 +162,7 @@ describe('GET protected routes:', function() {
 
   it('/middle should respond with a 400 error for making a request that does not contain secondNewestOfOlderTweetsIdStr', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/middle?oldestOfMoreRecentTweetsIdStr=448824222475771904&newestOfOlderTweetsIdStr=448821922131103744');
+    var req = request(wynnoUrl).post('/middle').send({oldestOfMoreRecentTweetsIdStr: '448824222475771904', newestOfOlderTweetsIdStr: '448821922131103744'});
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(400);
@@ -171,7 +172,7 @@ describe('GET protected routes:', function() {
 
   it('/middle should respond with a 400 error for making a request that does not contain newestOfOlderTweetsIdStr', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/middle?oldestOfMoreRecentTweetsIdStr=448824222475771904&secondNewestOfOlderTweetsIdStr=448821706279247872');
+    var req = request(wynnoUrl).post('/middle').send({oldestOfMoreRecentTweetsIdStr: '448824222475771904', secondNewestOfOlderTweetsIdStr: '448821706279247872'});
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(400);
@@ -179,7 +180,7 @@ describe('GET protected routes:', function() {
     });
   });
 
-  var validMiddleQuery = '/middle?oldestOfMoreRecentTweetsIdStr=448824222475771904&secondNewestOfOlderTweetsIdStr=448821706279247872&newestOfOlderTweetsIdStr=448821922131103744';
+  var validMiddleQuery = {oldestOfMoreRecentTweetsIdStr: '448824222475771904', secondNewestOfOlderTweetsIdStr: '448821706279247872', newestOfOlderTweetsIdStr:'448821922131103744'};
   // these id strings will result in 3 tweets being returned from Twitter, one of which gets discarded because the gap is closed
   // but we can't test here for a result length of 3 because the /middle route also saves the tweets received from Twitter
   // and then fetches based on the id_str's, so the length of /middle's results is not stable because we keep adding duplicate tweets
@@ -187,7 +188,7 @@ describe('GET protected routes:', function() {
 
   it('/middle should respond with a 429 error for making the request less than 61 seconds after the last successful Twitter API call via /new', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get(validMiddleQuery);
+    var req = request(wynnoUrl).post('/middle').send(validMiddleQuery);
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(429);
@@ -199,7 +200,7 @@ describe('GET protected routes:', function() {
     // note we're not actually testing that the route correctly responds with any middle tweets
     // that would require prepping the right db data
     this.timeout(80e3);
-    var req = request(wynnoUrl).get(validMiddleQuery);
+    var req = request(wynnoUrl).post('/middle').send(validMiddleQuery);
     agent.attachCookies(req);
     setTimeout(function() {
       req.end(function(err, res) {
@@ -215,7 +216,7 @@ describe('GET protected routes:', function() {
 
   it('/middle should respond with a 429 error for making the request less than 61 seconds after the last successful Twitter API call via /middle', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get(validMiddleQuery);
+    var req = request(wynnoUrl).post('/middle').send(validMiddleQuery);
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(429);
@@ -227,7 +228,7 @@ describe('GET protected routes:', function() {
     // note we're not actually testing that the route correctly responds with any middle tweets
     // that would require prepping the right db data
     this.timeout(80e3);
-    var req = request(wynnoUrl).get(validMiddleQuery);
+    var req = request(wynnoUrl).post('/middle').send(validMiddleQuery);
     agent.attachCookies(req);
     setTimeout(function() {
       req.end(function(err, res) {
@@ -243,7 +244,7 @@ describe('GET protected routes:', function() {
 
   it('/new should respond with a 429 error for making another request less than 61 seconds after the last successful Twitter API call via /middle', function(done) {
     this.timeout(20e3);
-    var req = request(wynnoUrl).get('/new');
+    var req = request(wynnoUrl).post('/new');
     agent.attachCookies(req);
     req.end(function(err, res) {
       expect(res.status).to.eql(429);
@@ -253,7 +254,7 @@ describe('GET protected routes:', function() {
 
   it('/new should respond with OK after waiting 61 seconds since the last successful Twitter API call via /middle', function(done) {
     this.timeout(80e3);
-    var req = request(wynnoUrl).get('/new');
+    var req = request(wynnoUrl).post('/new');
     agent.attachCookies(req);
     setTimeout(function() {
       req.end(function(err, res) {
