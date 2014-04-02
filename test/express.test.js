@@ -90,15 +90,15 @@ describe('POST protected routes:', function() {
     });
   });
 
-  it("/old queried with no X-XSRF-TOKEN header should return 403", function(done) { 
-    this.timeout(20e3);
-    var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
-    agent.attachCookies(req);
-    req.end(function(err, res) {
-      expect(res.status).to.eql(403);
-      done();
-    });
-  });
+  // it("/old queried with no X-XSRF-TOKEN header should return 403", function(done) { 
+  //   this.timeout(20e3);
+  //   var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
+  //   agent.attachCookies(req);
+  //   req.end(function(err, res) {
+  //     expect(res.status).to.eql(403);
+  //     done();
+  //   });
+  // });
 
 
   it("/old queried with oldestTweetIdStr: '0' should return 50 old tweets", function(done) { // 50 is current batch size
@@ -108,10 +108,11 @@ describe('POST protected routes:', function() {
     var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
     console.log('csrfToken escaped:', csrfToken);
     console.log('csrfToken unescaped:', unescape(csrfToken));
-    req.set('X-XSRF-TOKEN', csrfToken);
+    req.set('X-XSRF-TOKEN', unescape(csrfToken));
     console.log(req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
+      expect(res.status).to.eql(200);
       expect(res.body).to.be.an('object');
       expect(res.body).to.have.key('tweets');
       expect(res.body).not.to.have.key('settings');
