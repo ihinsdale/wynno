@@ -47,30 +47,37 @@ describe('POST protected routes:', function() {
   beforeEach(function(done) {
     this.timeout(20e3);
     agent = superagent.agent();
-    request(wynnoUrl)
-      .get('/mock/login')
-      .end(function(err, result) {
-        if (!err) {
-          console.log('response headers after mock login:', result.headers);
-          agent.saveCookies(result.res); // this only seems to be saving the connect session id cookie
-          // so we make an additional request to /checkin directly (maybe superagent isn't following the redirect
-          // to /checkin after login?)
-          var req = request(wynnoUrl).get('/checkin');
-          agent.attachCookies(req);
-          req.end(function(err, result) {
-            if (!err) {
-              console.log('response headers after checkin:', result.headers);
-              //console.log(result.headers['set-cookie']);
-              agent.saveCookies(result.res);
-              done();
-            } else {
-              done(err);
-            }
-          });
-        } else {
-          done(err);
-        }
-      });
+    request(wynnoUrl).get('/').end(function(err, result) {
+      if (!err) {
+        agent.saveCookies(result.res);
+        var req = request(wynnoUrl).get('/mock/login');
+        agent.attachCookies(req);
+        req.end(function(err, result) {
+          if (!err) {
+            console.log('response headers after mock login:', result.headers);
+            agent.saveCookies(result.res); // this only seems to be saving the connect session id cookie
+            // so we make an additional request to /checkin directly (maybe superagent isn't following the redirect
+            // to /checkin after login?)
+            var req = request(wynnoUrl).get('/mockcheckin');
+            agent.attachCookies(req);
+            req.end(function(err, result) {
+              if (!err) {
+                console.log('response headers after checkin:', result.headers);
+                //console.log(result.headers['set-cookie']);
+                agent.saveCookies(result.res);
+                done();
+              } else {
+                done(err);
+              }
+            });
+          } else {
+            done(err);
+          }
+        });
+      } else {
+        done(err);
+      }
+    })
   });
  
   // Logging out after each request is important because we want to test that rate limiting, for the
@@ -80,7 +87,8 @@ describe('POST protected routes:', function() {
     this.timeout(20e3);
     var req = request(wynnoUrl).post('/logout')
     agent.attachCookies(req);
-
+    var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
+    req.set('X-XSRF-TOKEN', unescape(csrfToken));
     req.end(function(err, result) {
       if (!err) {
         done();
