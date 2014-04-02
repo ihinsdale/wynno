@@ -108,7 +108,7 @@ describe('POST protected routes:', function() {
     var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
     console.log('csrfToken escaped:', csrfToken);
     console.log('csrfToken unescaped:', unescape(csrfToken));
-    req.set('X-XSRF-TOKEN', unescape(csrfToken));
+    req.set('X-XSRF-TOKEN', csrfToken);
     console.log(req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
