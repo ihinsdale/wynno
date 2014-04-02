@@ -51,6 +51,7 @@ describe('POST protected routes:', function() {
       .get('/mock/login')
       .end(function(err, result) {
         if (!err) {
+          console.log('response headers after mock login:', result.headers);
           agent.saveCookies(result.res); // this only seems to be saving the connect session id cookie
           // so we make an additional request to /checkin directly (maybe superagent isn't following the redirect
           // to /checkin after login?)
@@ -58,7 +59,8 @@ describe('POST protected routes:', function() {
           agent.attachCookies(req);
           req.end(function(err, result) {
             if (!err) {
-              console.log(result.headers['set-cookie']);
+              console.log('response headers after checkin:', result.headers);
+              //console.log(result.headers['set-cookie']);
               agent.saveCookies(result.res);
               done();
             } else {
@@ -104,8 +106,9 @@ describe('POST protected routes:', function() {
     var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
     agent.attachCookies(req);
     var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
-    console.log(csrfToken);
-    req.set('X-XSRF-TOKEN', /XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
+    console.log('csrfToken escaped:', csrfToken);
+    console.log('csrfToken unescaped:', unescape(csrfToken));
+    req.set('X-XSRF-TOKEN', unescape(csrfToken));
     console.log(req);
     req.end(function(err, res) {
       expect(err).to.eql(null);
