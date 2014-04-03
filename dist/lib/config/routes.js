@@ -61,6 +61,7 @@ module.exports = function(app) {
       }));
       res.send(200); // no redirect is the main difference with the real /checkin
     });
+    app.post('/donothing', function(req, res) { res.send(200); });
     app.get('/donothing', function(req, res) { res.send(200); }); // this route is important because superagent
     // seems to have trouble following redirects--so we don't want to be redirected to /checkin immediately after
     // login, because then we're unable to grab the XSRF-TOKEN cookie via superagent

@@ -60,6 +60,7 @@ describe('POST protected routes:', function() {
             // to /checkin after login?)
             var req = request(wynnoUrl).get('/mockcheckin');
             agent.attachCookies(req);
+            req.set('Connection', 'keep-alive');
             req.end(function(err, result) {
               if (!err) {
                 console.log('response headers after checkin:', result.headers);
@@ -111,23 +112,33 @@ describe('POST protected routes:', function() {
 
   it("/old queried with oldestTweetIdStr: '0' should return 50 old tweets", function(done) { // 50 is current batch size
     this.timeout(20e3);
-    var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
+    var req = request(wynnoUrl).post('/donothing').send({})
     agent.attachCookies(req);
     var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
-    console.log('csrfToken escaped:', csrfToken);
-    console.log('csrfToken unescaped:', unescape(csrfToken));
     req.set('X-XSRF-TOKEN', unescape(csrfToken));
-    console.log(req);
     req.end(function(err, res) {
-      expect(err).to.eql(null);
-      expect(res.status).to.eql(200);
-      expect(res.body).to.be.an('object');
-      expect(res.body).to.have.key('tweets');
-      expect(res.body).not.to.have.key('settings');
-      expect(res.body.tweets).to.be.an('array');
-      expect(res.body.tweets.length).to.eql(50);
-      done();
-    });
+      if (!err) {
+        var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
+        agent.attachCookies(req);
+        console.log('req after attaching cookies:', req);
+        var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
+        req.set('X-XSRF-TOKEN', unescape(csrfToken));
+        req.set('Connection', 'keep-alive');
+        console.log(req);
+        req.end(function(err, res) {
+          expect(err).to.eql(null);
+          expect(res.status).to.eql(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.key('tweets');
+          expect(res.body).not.to.have.key('settings');
+          expect(res.body.tweets).to.be.an('array');
+          expect(res.body.tweets.length).to.eql(50);
+          done();
+        });
+      } else {
+        done(err);
+      }
+    })    
   });
 
   // it("/old queried with oldestTweetIdStr: 0 and settings: true should return 50 old tweets", function(done) { // 50 is current batch size
