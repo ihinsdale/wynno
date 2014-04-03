@@ -88,26 +88,26 @@
                   <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
                 </ul>
               </div>                
-              <div ng-show="condition.type == 'link'" class="inlineBlock">
+              <div ng-if="condition.type == 'link'" class="inlineBlock">
                 <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
               </div>
-              <div ng-show="condition.type == 'word'" class="inlineBlock vertAlignTop">
+              <div ng-if="condition.type == 'word'" class="inlineBlock vertAlignTop">
                 <div>
                   <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
                 </div>
                 <div>
                   <label class="checkbox caseSensitiveLabel">
-                    <input type="checkbox" ng-model="condition.wordIsCaseSensitive">Case-sensitive
+                    <input type="checkbox" ng-model="condition.wordIsCaseSensitive">case-sensitive
                   </label>
                 </div>
               </div>
-              <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
+              <div ng-if="condition.type == 'hashtag'" class="inlineBlock vertAlignTop">
                 <div>
                   <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
                 </div>
                 <div ng-if="!!condition.hashtag">
-                  <label class="checkbox caseSensitiveLabel">
-                    (Hashtags are not case-sensitive)
+                  <label class="caseSensitiveLabel">
+                    (not case-sensitive)
                   </label>
                 </div>
               </div>
