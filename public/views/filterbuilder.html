@@ -105,7 +105,7 @@
                 <div>
                   <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
                 </div>
-                <div ng-if="condition.hashtag">
+                <div ng-if="!!condition.hashtag">
                   <label class="checkbox caseSensitiveLabel">
                     (Hashtags are not case-sensitive)
                   </label>
