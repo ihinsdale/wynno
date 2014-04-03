@@ -295,7 +295,6 @@ describe('POST protected routes:', function() {
         expect(err).to.eql(null);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.key('tweets');
-        console.log('wynno server responded with ', res.body.tweets.length, 'tweets.');
         expect(res.body.tweets).to.be.an('array');
         expect(res.body.tweets).not.to.be.empty();
         done();

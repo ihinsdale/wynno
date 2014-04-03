@@ -102,7 +102,14 @@
                 </div>
               </div>
               <div ng-show="condition.type == 'hashtag'" class="inlineBlock">
-                <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                <div>
+                  <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+                </div>
+                <div ng-if="condition.hashtag">
+                  <label class="checkbox caseSensitiveLabel">
+                    (Hashtags are not case-sensitive)
+                  </label>
+                </div>
               </div>
             </div>
           </div>

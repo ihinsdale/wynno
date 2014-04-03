@@ -115,7 +115,7 @@ def tokenize_tweet_text(tweet_text):
   for each in whitespaced_words:
     # treat hashtag text as words
     if each[0] == '#':
-      pure_words.append(each[1:])
+      pure_words.append(each[1:]) # but what about a word that looks like ##this?
     elif each[0] != '@' and each[0:7] != 'http://' and each[0:8] != 'https://':
       pure_words.append(each)
   pure_lowered_text = ' '.join(pure_words).lower()
@@ -172,9 +172,12 @@ def tweet_features_dict(tweet, corpus_ngram_features):
   # number of hashtags
   features['hashtags'] = len(tweet['__entities']['hashtags'])
   # hashtags
-  # may arguably want to remove these, because we're counting hashtag text in words and bigrams
   for hashtag in tweet['__entities']['hashtags']:
-    features['hashtag_' + hashtag['text']] = True
+    # hashtag text that comes from Twitter contains capitalization
+    # but Twitter disregards hashtag capitalization in generating hashtag streams
+    # so we want to lower-case hashtag text before making a feature out of it, so that
+    # hashtag features don't regard capitalization
+    features['hashtag_' + hashtag['text'].lower()] = True
 
   # number of media
   if 'media' in tweet['__entities']:
