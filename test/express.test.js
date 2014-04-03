@@ -47,30 +47,20 @@ describe('POST protected routes:', function() {
   beforeEach(function(done) {
     this.timeout(20e3);
     agent = superagent.agent();
-    request(wynnoUrl).get('/').end(function(err, result) {
+    var req = request(wynnoUrl).get('/mock/login');
+    agent.attachCookies(req);
+    req.end(function(err, result) {
       if (!err) {
-        agent.saveCookies(result.res);
-        var req = request(wynnoUrl).get('/mock/login');
+        //console.log('response headers after mock login:', result.headers);
+        agent.saveCookies(result.res); // this only seems to be saving the connect session id cookie
+        // so we make an additional request to /checkin directly (maybe superagent isn't following the redirect
+        // to /checkin after login?)
+        var req = request(wynnoUrl).get('/checkin');
         agent.attachCookies(req);
         req.end(function(err, result) {
           if (!err) {
-            console.log('response headers after mock login:', result.headers);
-            agent.saveCookies(result.res); // this only seems to be saving the connect session id cookie
-            // so we make an additional request to /checkin directly (maybe superagent isn't following the redirect
-            // to /checkin after login?)
-            var req = request(wynnoUrl).get('/mockcheckin');
-            agent.attachCookies(req);
-            req.set('Connection', 'keep-alive');
-            req.end(function(err, result) {
-              if (!err) {
-                console.log('response headers after checkin:', result.headers);
-                //console.log(result.headers['set-cookie']);
-                agent.saveCookies(result.res);
-                done();
-              } else {
-                done(err);
-              }
-            });
+            agent.saveCookies(result.res);
+            done();
           } else {
             done(err);
           }
@@ -78,7 +68,7 @@ describe('POST protected routes:', function() {
       } else {
         done(err);
       }
-    })
+    });
   });
  
   // Logging out after each request is important because we want to test that rate limiting, for the
@@ -112,33 +102,21 @@ describe('POST protected routes:', function() {
 
   it("/old queried with oldestTweetIdStr: '0' should return 50 old tweets", function(done) { // 50 is current batch size
     this.timeout(20e3);
-    var req = request(wynnoUrl).post('/donothing').send({})
+    var req = request(wynnoUrl).post('/old').send(JSON.stringify({oldestTweetIdStr: '0'}));
     agent.attachCookies(req);
+    //console.log('req after attaching cookies:', req);
     var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
     req.set('X-XSRF-TOKEN', unescape(csrfToken));
     req.end(function(err, res) {
-      if (!err) {
-        var req = request(wynnoUrl).post('/old').send({oldestTweetIdStr: '0'});
-        agent.attachCookies(req);
-        console.log('req after attaching cookies:', req);
-        var csrfToken = (/XSRF-TOKEN=(.*?);/.exec(req.cookies)[1]);
-        req.set('X-XSRF-TOKEN', unescape(csrfToken));
-        req.set('Connection', 'keep-alive');
-        console.log(req);
-        req.end(function(err, res) {
-          expect(err).to.eql(null);
-          expect(res.status).to.eql(200);
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.key('tweets');
-          expect(res.body).not.to.have.key('settings');
-          expect(res.body.tweets).to.be.an('array');
-          expect(res.body.tweets.length).to.eql(50);
-          done();
-        });
-      } else {
-        done(err);
-      }
-    })    
+      expect(err).to.eql(null);
+      expect(res.status).to.eql(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.key('tweets');
+      expect(res.body).not.to.have.key('settings');
+      expect(res.body.tweets).to.be.an('array');
+      expect(res.body.tweets.length).to.eql(50);
+      done();
+    });
   });
 
   // it("/old queried with oldestTweetIdStr: 0 and settings: true should return 50 old tweets", function(done) { // 50 is current batch size
