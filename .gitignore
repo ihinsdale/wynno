@@ -5,6 +5,8 @@ public/bower_components
 db_admin_steps.txt
 lib/config/keys.json
 dist/lib/config/keys.json
+lib/config/ssl
+dist/lib/config/ssl
 python/output.dot
 python/.DS_Store
 python/*.pdf
