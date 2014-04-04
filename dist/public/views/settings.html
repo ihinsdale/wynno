@@ -6,7 +6,7 @@
         <div class="panel filterPanel">
           <div class="container filtersContainer">
             <div class="row" ng-if="!activeFilters.length">
-              (no filters currently active)
+              You currently have no active filters. To make one, click 
             </div>
             <div class="row" ng-repeat="filter in activeFilters">
               <div class="col-xs-12 col-md-12">
@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <a class="darkGray" ng-if="!!disabledFilters.length || !disabledIsCollapsed" href="">
+        <a class="darkGray" ng-show="!!disabledFilters.length || !disabledIsCollapsed" href="">
           <span ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">
             <span ng-if="disabledIsCollapsed">Show</span>
             <span ng-if="!disabledIsCollapsed">Hide</span>
@@ -43,7 +43,7 @@
           <div class="panel filterPanel">
             <div class="container filtersContainer">
               <div class="row" ng-if="!disabledFilters.length">
-                (there are no more disabled filters)
+                There are no more disabled filters.
               </div>
               <div class="row" ng-repeat="filter in disabledFilters">
                 <div class="col-xs-12 col-md-12">
@@ -82,11 +82,10 @@
         <div class="panel filterPanel">
           <div class="container filtersContainer">
             <div bindonce="voteCount" class="row" ng-if="!suggestedFilters.length">
-              (
               <span bo-text="votesRequiredForNextSugg"></span>
               <span bo-if="votesRequiredForNextSugg == 1">vote</span>
               <span bo-if="votesRequiredForNextSugg > 1">votes</span>
-               to go until some filter suggestions!)
+               to go until some filter suggestions!
             </div>
             <div class="row" ng-repeat="filter in suggestedFilters | reverse">
               <div class="col-xs-12 col-md-12">
@@ -113,7 +112,7 @@
             </div>
           </div>
         </div>
-        <a class="darkGray" ng-if="!!dismissedFilters.length || !dismissedIsCollapsed" href="">
+        <a class="darkGray" ng-show="!!dismissedFilters.length || !dismissedIsCollapsed" href="">
           <span ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">
             <span ng-if="dismissedIsCollapsed">Show</span>
             <span ng-if="!dismissedIsCollapsed">Hide</span>
@@ -125,7 +124,7 @@
           <div class="panel filterPanel">
             <div class="container filtersContainer">
               <div class="row" ng-if="!dismissedFilters.length">
-                (there are no more dismissed filter suggestions)
+                There are no more dismissed filter suggestions.
               </div>
               <div class="row" ng-repeat="filter in dismissedFilters | reverse">
                 <div class="col-xs-12 col-md-12">
@@ -153,12 +152,12 @@
       </div>
     </div>
   </tab>
-  <tab bindonce="voteCount">
+  <tab>
     <tab-heading>
       <span>Automatic wynnoing</span>
-      <span class="badge badgePurpleBadge" bo-text="200 - voteCount" bo-if="voteCount < 200"></span>
+      <span class="badge badgePurpleBadge" ng-bind="200 - voteCount" ng-if="voteCount < 200"></span>
     </tab-heading>
-    <div class="row">
+    <div class="row" bindonce="voteCount">
       <div class="col-xs-12 col-md-8 col-md-offset-2">
         <div class="paddingTop40">
           <div class="panel panel-default">
