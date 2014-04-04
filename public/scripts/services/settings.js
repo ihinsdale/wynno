@@ -24,8 +24,8 @@ angular.module('wynnoApp.services')
       });
       return d.promise;
     },
-    renderFilters: function(settings) {
-      var filterGroups = ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
+    renderFilters: function(settings, filterGroups) {
+      filterGroups = filterGroups || ['activeFilters', 'disabledFilters', 'suggestedFilters', 'dismissedFilters'];
       angular.forEach(filterGroups, function(filterGroup) {
         angular.forEach(settings[filterGroup], function(filter) {
           filter.rendered = service.renderFilter(filter);
@@ -532,6 +532,8 @@ angular.module('wynnoApp.services')
       .success(function(data, status, headers, config) {
         console.log('Success requesting filter suggestion.');
         console.log('Data look like:', data)
+        // render the suggested filters, since that doesn't come from the db
+        service.renderFilters(data, ['suggestedFilters']);
         // append the suggested filters received to any preexisting suggestedFilters
         for (var i = 0; i < data.suggestedFilters.length; i++) {
           service.settings.suggestedFilters.push(data.suggestedFilters[i])
