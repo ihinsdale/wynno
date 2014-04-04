@@ -1,7 +1,5 @@
 #!/bin/bash
-# To setup a VPS dedicated to hosting the database components of wynno, running Ubuntu 12.04 LTS
-# There are two such database components: MongoDB and Redis
-# This file should exist, with its dependent files as well, inside ~/setup_scripts
+# To setup a VPS dedicated to hosting the MongoDB for wynno, running Ubuntu 12.04 LTS
 
 #set -e # script will exit if any command throws an error
 
@@ -10,8 +8,6 @@ sudo apt-get upgrade
 
 sudo apt-get install build-essential
 sudo apt-get install screen
-
-sudo 
 
 # MongoDB
 
