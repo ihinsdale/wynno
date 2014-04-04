@@ -6,7 +6,9 @@
         <div class="panel filterPanel">
           <div class="container filtersContainer">
             <div class="row" ng-if="!activeFilters.length">
-              You currently have no active filters. To make one, click 
+              <div class="col-xs-12 col-md-12">
+                You currently have no active filters. To make one, click 
+              </div>
             </div>
             <div class="row" ng-repeat="filter in activeFilters">
               <div class="col-xs-12 col-md-12">
@@ -43,7 +45,9 @@
           <div class="panel filterPanel">
             <div class="container filtersContainer">
               <div class="row" ng-if="!disabledFilters.length">
-                There are no more disabled filters.
+                <div class="col-xs-12 col-md-12">
+                  There are no more disabled filters.
+                </div>
               </div>
               <div class="row" ng-repeat="filter in disabledFilters">
                 <div class="col-xs-12 col-md-12">
@@ -82,10 +86,12 @@
         <div class="panel filterPanel">
           <div class="container filtersContainer">
             <div bindonce="voteCount" class="row" ng-if="!suggestedFilters.length">
-              <span bo-text="votesRequiredForNextSugg"></span>
-              <span bo-if="votesRequiredForNextSugg == 1">vote</span>
-              <span bo-if="votesRequiredForNextSugg > 1">votes</span>
-               to go until some filter suggestions!
+              <div class="col-xs-12 col-md-12">
+                <span bo-text="votesRequiredForNextSugg"></span>
+                <span bo-if="votesRequiredForNextSugg == 1">vote</span>
+                <span bo-if="votesRequiredForNextSugg > 1">votes</span>
+                 to go until some filter suggestions!
+              </div>
             </div>
             <div class="row" ng-repeat="filter in suggestedFilters | reverse">
               <div class="col-xs-12 col-md-12">
@@ -124,7 +130,9 @@
           <div class="panel filterPanel">
             <div class="container filtersContainer">
               <div class="row" ng-if="!dismissedFilters.length">
-                There are no more dismissed filter suggestions.
+                <div class="col-xs-12 col-md-12">
+                  There are no more dismissed filter suggestions.
+                </div>
               </div>
               <div class="row" ng-repeat="filter in dismissedFilters | reverse">
                 <div class="col-xs-12 col-md-12">
