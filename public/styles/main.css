@@ -8539,7 +8539,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 /* line 958, main.scss */
 .filterNumber {
   padding-right: 10px;
-  display: inline-block;
+  display: inline-block !important;
   font-size: 20px;
 }
 
