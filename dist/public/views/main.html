@@ -88,22 +88,24 @@
           </div>
         </div>
       </div>
-      <div class="row" bo-if="tweet.gapAfterThis">
-        <div class="col-md-7 col-md-offset-2 text-center">        
-          <button type="button" class="btn btn-default fetchMiddle" ng-click="fillGapRequest($index, $index + 2, $index + 1)">
-            <span class="icomoon-loop2" ng-class="{spinner: activeTwitterRequest.middle}"></span>
-            <span class="loadingText">
-              <span ng-if="!activeTwitterRequest.middle">Load more tweets</span>
-              <span ng-if="activeTwitterRequest.middle">Loading...</span>
-            </span>
-          </button>
+      <div ng-if="tweet.gapAfterThis">
+        <div class="row">
+          <div class="col-md-7 col-md-offset-2 text-center">        
+            <button type="button" class="btn btn-default fetchMiddle" ng-click="fillGapRequest($index, $index + 2, $index + 1)">
+              <span class="icomoon-loop2" ng-class="{spinner: activeTwitterRequest.middle}"></span>
+              <span class="loadingText">
+                <span ng-if="!activeTwitterRequest.middle">Load more tweets</span>
+                <span ng-if="activeTwitterRequest.middle">Loading...</span>
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="row" bo-if="tweet.gapAfterThis">
-        <div ng-if="mustWait.middle">
-          <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
-            <div class="alert alert-warning refreshAlert">
-              <strong>Waiting {{remaining.middle}} seconds,</strong> due to Twitter API rate limiting.
+        <div class="row">
+          <div ng-if="mustWait.middle">
+            <div class="tweetColPadding col-md-7 col-md-offset-2 text-center">
+              <div class="alert alert-warning refreshAlert">
+                <strong>Waiting {{remaining.middle}} seconds,</strong> due to Twitter API rate limiting.
+              </div>
             </div>
           </div>
         </div>

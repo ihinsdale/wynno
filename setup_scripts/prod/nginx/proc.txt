@@ -1,0 +1,14 @@
+Create droplet through DO admin dashboard, with user XYZ and password XYZ
+scp nginx_vps_setup_pt_*.sh into server
+SSH into server as root
+Run nginx_vps_setup_pt_1.sh
+[setup key auth?]
+SSH into server as chilladmin (the user setup in *pt_1.sh)
+Run nginx_vps_setup_pt_2.sh
+Check that the server addresses in the upstream block of nginx.conf correspond to addresses of the node droplets
+scp nginx.conf into server's /etc/nginx folder or wherever the default nginx.conf file is located
+scp /dist/public into the server home directory
+scp the certificate or whatever for the SSL into /etc/nginx/ssl or wherever it needs to be
+SSH into server as chilladmin
+Run nginx_vps_setup_pt_3.sh
+Verify nginx is working by checking https://wynno.com
