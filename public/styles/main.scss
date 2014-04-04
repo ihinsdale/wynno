@@ -1057,10 +1057,6 @@ $twitterButtonRadius: 3px;
     text-align: left;
 }
 
-.s {
-
-}
-
 .btn.hear, .btn.hear:hover {
     background-color: $aye-green;
     color: #ffffff;
@@ -1141,6 +1137,10 @@ $twitterButtonRadius: 3px;
     font-weight: normal;
     margin-top: 5px;
     margin-bottom: 0;
+}
+
+.filtersContainer {
+    padding: 20px;
 }
 
 // media query-based styling

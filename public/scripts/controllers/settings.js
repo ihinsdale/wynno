@@ -17,9 +17,12 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.disableFilter = function(indexInReversedArray) {
+  $scope.disableFilter = function(indexInArrayUserSees) {
+    // These two lines would be appropriate if the argument passed to disableFilter were indexInReversedArray
+    // but currently (4/4/14) activeFilters is not displayed to the user in reverse order, so we just use the index passed: 
     // translate indexInReversedArray to an index in the original array
-    var index = SettingsService.settings.activeFilters.length - indexInReversedArray - 1;
+    //var index = SettingsService.settings.activeFilters.length - indexInArrayUserSees - 1;
+    var index = indexInArrayUserSees;
     SettingsService.disableFilter(index)
     .then(function(settings) {
       // no need to rebind these objects to the scope, because the arrays have just been mutated
@@ -33,12 +36,14 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.enableDisFilter = function(disabledOrDismissed, indexInReversedArray) {
+  $scope.enableDisFilter = function(disabledOrDismissed, indexInArrayUserSees) {
     var index;
+    // currently disabledFilters are not displayed in reverse order; dismissedFilters are
     if (disabledOrDismissed === 'disabled') {
-      index = SettingsService.settings.disabledFilters.length - indexInReversedArray - 1;
+      index = indexInArrayUserSees;
+      //index = SettingsService.settings.disabledFilters.length - indexInArrayUserSees - 1;
     } else if (disabledOrDismissed === 'dismissed') {
-      index = SettingsService.settings.dismissedFilters.length - indexInReversedArray - 1;
+      index = SettingsService.settings.dismissedFilters.length - indexInArrayUserSees - 1;
     }
     SettingsService.enableDisFilterOrSugg(disabledOrDismissed, index)
     .then(function(settings){
@@ -54,9 +59,10 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.adoptSugg = function(indexInReversedArray) {
-    // translate indexInReversedArray to an index in the original array
-    var index = SettingsService.settings.suggestedFilters.length - indexInReversedArray - 1;
+  $scope.adoptSugg = function(indexInArrayUserSees) {
+    // suggestedFilters is currently displayed in reverse order to user, so we need to
+    // translate indexInArrayUserSees to an index in the original array
+    var index = SettingsService.settings.suggestedFilters.length - indexInArrayUserSees - 1;
     SettingsService.adoptSugg(index)
     .then(function(settings) {
       if (!settings.undismissedSugg) {
@@ -69,9 +75,10 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.dismissSugg = function(indexInReversedArray) {
+  $scope.dismissSugg = function(indexInArrayUserSees) {
+    // suggestedFilters is currently displayed in reverse order to user, so we need to
     // translate indexInReversedArray to an index in the original array
-    var index = SettingsService.settings.suggestedFilters.length - indexInReversedArray - 1;
+    var index = SettingsService.settings.suggestedFilters.length - indexInArrayUserSees - 1;
     SettingsService.dismissSugg(index)
     .then(function(settings) {
       if (!settings.undismissedSugg) {

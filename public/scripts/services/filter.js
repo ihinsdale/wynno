@@ -268,7 +268,7 @@ angular.module('wynnoApp.services')
         tweet.__isMuted = null;
         angular.forEach(service.currentSettings.activeFilters, function(filter) {
           // set up guard so that once a filter 'catches' a tweet, no subsequent filters are applied
-          // this enables a prioritizing of filters
+          // this enables a prioritizing of filters -- older filters take priority
           if (!tweet.__isHeard && !tweet.__isMuted) {
             service.passTweetThroughFilter(tweet, filter);
           }

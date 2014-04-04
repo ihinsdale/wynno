@@ -8660,104 +8660,109 @@ button.btn.btn-default.navbar-btn.glyphButton {
   text-align: left;
 }
 
-/* line 1064, main.scss */
+/* line 1060, main.scss */
 .btn.hear, .btn.hear:hover {
   background-color: #62d7a5;
   color: #ffffff;
 }
 
-/* line 1069, main.scss */
+/* line 1065, main.scss */
 .btn.mute, .btn.mute:hover {
   background-color: #ff9c74;
   color: #ffffff;
 }
 
-/* line 1074, main.scss */
+/* line 1070, main.scss */
 .dropdown-menu > li > a.ayeGreen {
   color: #62d7a5;
 }
 
-/* line 1078, main.scss */
+/* line 1074, main.scss */
 .dropdown-menu > li > a.nayRed {
   color: #ff9c74;
 }
 
-/* line 1082, main.scss */
+/* line 1078, main.scss */
 .btn.active.toggledPurple {
   background-color: #c7a9e1;
   color: #ffffff;
 }
 
-/* line 1087, main.scss */
+/* line 1083, main.scss */
 .conditionSideBorder {
   display: inline-block;
   border-left: 4px solid #a166d5;
   padding-left: 10px;
 }
 
-/* line 1093, main.scss */
+/* line 1089, main.scss */
 .conditionInputPaddingTop {
   padding-top: 10px;
 }
 
-/* line 1097, main.scss */
+/* line 1093, main.scss */
 .downRightArrow {
   font-size: 2em;
   padding-right: 20px;
 }
 
-/* line 1102, main.scss */
+/* line 1098, main.scss */
 .downRightArrow.link {
   padding-left: 20px;
 }
 
-/* line 1106, main.scss */
+/* line 1102, main.scss */
 .downRightArrow.hashtag {
   padding-left: 20px;
 }
 
-/* line 1110, main.scss */
+/* line 1106, main.scss */
 .andCondition {
   padding: 10px 0;
 }
 
-/* line 1114, main.scss */
+/* line 1110, main.scss */
 .listOfUsers {
   padding-top: 20px;
 }
 
-/* line 1118, main.scss */
+/* line 1114, main.scss */
 .addConditionRow {
   padding-top: 10px;
 }
 
-/* line 1122, main.scss */
+/* line 1118, main.scss */
 .addCondition {
   float: right;
 }
 
-/* line 1126, main.scss */
+/* line 1122, main.scss */
 .plus {
   padding-right: 10px;
 }
 
-/* line 1130, main.scss */
+/* line 1126, main.scss */
 .stepStatus {
   padding-right: 40px;
 }
 
-/* line 1134, main.scss */
+/* line 1130, main.scss */
 .conditionSelectorWidth {
   display: inline-block;
   width: 165px;
 }
 
-/* line 1139, main.scss */
+/* line 1135, main.scss */
 .caseSensitiveLabel {
   color: #333333;
   font-weight: normal;
   margin-top: 5px;
   margin-bottom: 0;
+}
+
+/* line 1142, main.scss */
+.filtersContainer {
+  padding: 20px;
 }
 
 @media (min-width: 768px) {

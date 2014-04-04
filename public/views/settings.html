@@ -4,11 +4,11 @@
       <div class="col-xs-12 col-md-8 col-md-offset-2">
         <h3 class="darkGray">Active Filters</h3>
         <div class="panel filterPanel">
-          <div class="container">
-            <div class="row" ng-show="!activeFilters.length">
+          <div class="container filtersContainer">
+            <div class="row" ng-if="!activeFilters.length">
               (no filters currently active)
             </div>
-            <div class="row" ng-repeat="filter in activeFilters | reverse">
+            <div class="row" ng-repeat="filter in activeFilters">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
                   <div class="filterNumber">
@@ -31,12 +31,18 @@
             </div>
           </div>
         </div>
-        <a class="darkGray" ng-show="!!disabledFilters.length" href=""><span ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">Show disabled filters</span></a>
+        <a class="darkGray" ng-show="!!disabledFilters.length" href="">
+          <span ng-init="disabledIsCollapsed = true" ng-click="disabledIsCollapsed = !disabledIsCollapsed">
+            <span ng-if="disabledIsCollapsed">Show</span>
+            <span ng-if="!disabledIsCollapsed">Hide</span>
+             disabled filters
+          </span>
+        </a>
         <div collapse="disabledIsCollapsed">
           <h3 class="darkGray">Disabled Filters</h3>
           <div class="panel filterPanel">
-            <div class="container">
-              <div class="row" ng-repeat="filter in disabledFilters | reverse">
+            <div class="container filtersContainer">
+              <div class="row" ng-repeat="filter in disabledFilters">
                 <div class="col-xs-12 col-md-12">
                   <div class="filterWrapper">
                     <div class="filterNumber">
@@ -67,28 +73,104 @@
       <span>Suggestions </span>
       <span class="badge badgePurpleBadge" ng-show="!!suggestedFilters.length" ng-bind="suggestedFilters.length"></span>
     </tab-heading>
-    <span>TODO: copy structure of Your filters</span>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <h3 class="darkGray">Suggested Filters</h3>
+        <div class="panel filterPanel">
+          <div class="container filtersContainer">
+            <div bindonce="voteCount" class="row" ng-if="!suggestedFilters.length">
+              (
+              <span bo-text="votesRequiredForNextSugg"></span>
+              <span bo-if="votesRequiredForNextSugg == 1">vote</span>
+              <span bo-if="votesRequiredForNextSugg > 1">votes</span>
+               to go until some filter suggestions!)
+            </div>
+            <div class="row" ng-repeat="filter in suggestedFilters | reverse">
+              <div class="col-xs-12 col-md-12">
+                <div class="filterWrapper">
+                  <div class="filterNumber">
+                    <span ng-bind="$index + 1"></span>
+                    <span> - </span>
+                  </div>
+                  <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                    <div ng-bind-html="filter.rendered"></div>
+                  </div>
+                </div>
+                <div class="filterToggleButtonRightWrapper">
+                  <div class="hidden-xs">
+                    <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
+                    <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+                  </div>
+                </div>
+                <div class="visible-xs">
+                  <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
+                  <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="darkGray" ng-show="!!dismissedFilters.length" href="">
+          <span ng-init="dismissedIsCollapsed = true" ng-click="dismissedIsCollapsed = !dismissedIsCollapsed">
+            <span ng-if="dismissedIsCollapsed">Show</span>
+            <span ng-if="!dismissedIsCollapsed">Hide</span>
+             dismissed filter suggestions
+          </span>
+        </a>
+        <div collapse="dismissedIsCollapsed">
+          <h3 class="darkGray">Dismissed Suggestions</h3>
+          <div class="panel filterPanel">
+            <div class="container filtersContainer">
+              <div class="row" ng-repeat="filter in dismissedFilters | reverse">
+                <div class="col-xs-12 col-md-12">
+                  <div class="filterWrapper">
+                    <div class="filterNumber">
+                      <span> - </span>
+                    </div>
+                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                      <div ng-bind-html="filter.rendered"></div>
+                    </div>
+                  </div>
+                  <div class="filterToggleButtonRightWrapper">
+                    <div class="hidden-xs">
+                      <button type="button" class="btn btn-default" ng-click="enableDisFilter('dismissed', $index)">Enable</button>
+                    </div>
+                  </div>
+                  <div class="visible-xs">
+                    <button type="button" class="btn btn-default" ng-click="enableDisFilter('dismissed', $index)">Enable</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </tab>
-  <tab>
+  <tab bindonce="voteCount">
     <tab-heading>
       <span>Automatic wynnoing</span>
-      <span class="badge badgePurpleBadge" ng-bind="200 - voteCount" ng-show="voteCount < 200"></span>
+      <span class="badge badgePurpleBadge" bo-text="200 - voteCount" bo-if="voteCount < 200"></span>
     </tab-heading>
-    <div class="paddingTop40">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <span>Turn automatic wynnoing on/off</span>
-            <span class="icomoon-info"></span>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <div class="btn-group" ng-show="voteCount >= 200">
-            <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="true" ng-click="toggleAutoWynnoing(true)">On</button>
-            <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(false)">Off</button>
-          </div>
-          <div ng-show="voteCount < 200">
-            <span>In order to make helpful predictions, automatic wynnoing requires at least 200 votes. <strong><span ng-bind="200 - voteCount"></span></strong> more to go!</span>
+    <div class="row">
+      <div class="col-xs-12 col-md-8">
+        <div class="paddingTop40">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span>Toggle automatic wynnoing</span>
+                <span class="icomoon-info"></span>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group" bo-if="voteCount >= 200">
+                <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="true" ng-click="toggleAutoWynnoing(true)">On</button>
+                <button type="button" class="btn btn-primary" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(false)">Off</button>
+              </div>
+              <div bo-if="voteCount < 200">
+                <span>In order to make helpful predictions, automatic wynnoing requires at least 200 votes. <strong><span bo-text="200 - voteCount"></span></strong> more to go!</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
