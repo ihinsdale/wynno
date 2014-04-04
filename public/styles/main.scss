@@ -956,9 +956,7 @@ $twitterButtonRadius: 3px;
 }
 
 .filterNumber {
-    padding-right: 10px;
-    display: inline-block !important;
-    font-size: 20px;
+    display: none;
 }
 
 .panel.filterPanel {
@@ -1186,6 +1184,12 @@ $twitterButtonRadius: 3px;
     .serverErrorAlert {
         width: 60%;
         left: 20%;
+    }
+
+    .filterNumber {
+        padding-right: 10px;
+        display: inline-block;
+        font-size: 20px;
     }
 }
 

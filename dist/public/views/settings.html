@@ -13,7 +13,7 @@
             <div class="row" ng-repeat="filter in activeFilters">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
-                  <div class="filterNumber hidden-xs">
+                  <div class="filterNumber">
                     <span ng-bind="$index + 1"></span>
                     <span> - </span>
                   </div>
@@ -54,7 +54,7 @@
               <div class="row" ng-repeat="filter in disabledFilters">
                 <div class="col-xs-12 col-md-12">
                   <div class="filterWrapper">
-                    <div class="filterNumber hidden-xs">
+                    <div class="filterNumber">
                       <span> - </span>
                     </div>
                     <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
@@ -98,7 +98,7 @@
             <div class="row" ng-repeat="filter in suggestedFilters | reverse">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
-                  <div class="filterNumber hidden-xs">
+                  <div class="filterNumber">
                     <span ng-bind="$index + 1"></span>
                     <span> - </span>
                   </div>
@@ -141,7 +141,7 @@
               <div class="row" ng-repeat="filter in dismissedFilters | reverse">
                 <div class="col-xs-12 col-md-12">
                   <div class="filterWrapper">
-                    <div class="filterNumber hidden-xs">
+                    <div class="filterNumber">
                       <span> - </span>
                     </div>
                     <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
