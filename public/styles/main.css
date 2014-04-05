@@ -8519,13 +8519,9 @@ button.btn.btn-default.navbar-btn.glyphButton {
   padding: 10px;
 }
 
-/* line 944, main.scss */
-.filter {
-  float: left;
-}
-
-/* line 948, main.scss */
+/* line 947, main.scss */
 .filterToggleButtonWrapper {
+  margin-top: 10px;
   padding-left: 20px;
   display: inline-block;
 }
