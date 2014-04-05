@@ -941,13 +941,9 @@ $twitterButtonRadius: 3px;
     display: inline-block;
 }
 
-.filterToggleButtonRightWrapper {
-    display: inline-block;
-}
-
-.mobileFilterToggleWrapper {
+.filterToggleButtonWrapper {
     padding-left: 40px;
-    padding-bottom: 10px;
+    display: inline-block;
 }
 
 .filterWrapper > .filterText {

@@ -9,6 +9,10 @@ angular.module('wynnoApp')
         console.log('401 response from server intercepted, redirecting to /login.');
         $cookieStore.remove('user');
         $location.path('/');
+      } else if (rejection.status === 403) {
+        console.log('403 response from server intercepted, redirecting to /login.');
+        $cookieStore.remove('user');
+        $location.path('/');
       } else if (rejection.status === 500) {
         var mainMsg;
         switch(rejection.config.url) {
