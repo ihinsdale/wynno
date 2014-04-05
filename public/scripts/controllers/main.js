@@ -133,13 +133,13 @@ angular.module('wynnoApp.controllers')
     });
   };
 
-  $scope.fillGapRequest = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
+  $scope.fillGapRequest = function(oldestOfMoreRecentTweetsIdStr) {
     if (!$scope.activeTwitterRequest.middle) {
-      $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
+      $scope.fillGap(oldestOfMoreRecentTweetsIdStr);
     }
   };
 
-  $scope.fillGap = function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
+  $scope.fillGap = function(oldestOfMoreRecentTweetsIdStr) {
     // (eventual) TODO could also use index of newest of the older tweets, and decrement it by one
     // (eventual) TODO could likewise only store latestIdStr in db, don't need secondLatest because
     // we can just decrement latest by 1 when using as since_id
@@ -148,7 +148,7 @@ angular.module('wynnoApp.controllers')
     // elapse before their next use of wynno
     console.log('filling the gap');
     $scope.activeTwitterRequest.middle = true;
-    TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex)
+    TweetService.getMiddleTweets(oldestOfMoreRecentTweetsIdStr)
     .then(function(tweets) {
       $scope.renderInOrOut();
       $scope.activeTwitterRequest.middle = false; // to stop the spinner

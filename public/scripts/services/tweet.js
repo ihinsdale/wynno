@@ -67,7 +67,7 @@ angular.module('wynnoApp.services')
       }
       return d.promise;
     },
-    getMiddleTweets: function(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex) {
+    getMiddleTweets: function(oldestOfMoreRecentTweetsIdStr) {
       var d = $q.defer();
       var timeSinceLastFetch;
       if (service.timeOfLastFetch) {
@@ -76,10 +76,22 @@ angular.module('wynnoApp.services')
       if (timeSinceLastFetch && timeSinceLastFetch < 61000) {
         d.reject('Please try again in ' + Math.ceil((61000 - timeSinceLastFetch)/1000).toString() + ' seconds. Currently unable to fetch new tweets due to Twitter API rate limiting.');
       } else {
+        var secondNewestOfOlderTweetsIdStr;
+        var newestOfOlderTweetsIdStr;
+        var found = false;
+        // find the tweet with the gapAfterThis = true in currentTweets
+        // the id_str of the two tweets after it are the other two argument we need to send to /middle
+        angular.forEach(service.currentTweets, function(tweet, index) {
+          if (!found && tweet.id_str === oldestOfMoreRecentTweetsIdStr) {
+            found = true;
+            secondNewestOfOlderTweetsIdStr = service.currentTweets[index + 2].id_str;
+            newestOfOlderTweetsIdStr = service.currentTweets[index + 1].id_str;
+          }
+        });
         $http({ method: 'POST', url: '/middle', data: {
-          oldestOfMoreRecentTweetsIdStr: service.currentTweets[oldestOfMoreRecentTweetsIndex].id_str,
-          secondNewestOfOlderTweetsIdStr: service.currentTweets[secondNewestOfOlderTweetsIndex].id_str,
-          newestOfOlderTweetsIdStr: service.currentTweets[newestOfOlderTweetsIndex].id_str
+          oldestOfMoreRecentTweetsIdStr: oldestOfMoreRecentTweetsIdStr,
+          secondNewestOfOlderTweetsIdStr: secondNewestOfOlderTweetsIdStr,
+          newestOfOlderTweetsIdStr: newestOfOlderTweetsIdStr
         } })
         .success(function(data, status) {
           console.log('success getting middle tweets, they look like:', data.tweets);
