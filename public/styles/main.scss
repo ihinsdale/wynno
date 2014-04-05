@@ -938,7 +938,10 @@ $twitterButtonRadius: 3px;
 
 .filterWrapper {
     padding: 10px;
-    display: inline-block;
+}
+
+.filter {
+    float: left;
 }
 
 .filterToggleButtonWrapper {
@@ -946,7 +949,7 @@ $twitterButtonRadius: 3px;
     display: inline-block;
 }
 
-.filterWrapper > .filterText {
+.filterWrapper .filterText {
     padding: 10px;
     display: inline-block;
     border-radius: 4px;
@@ -1184,9 +1187,9 @@ $twitterButtonRadius: 3px;
     }
 
     .filterNumber {
-        padding-right: 10px;
-        display: inline-block;
+        padding-right: 6px 10px;
         font-size: 20px;
+        float: left;
     }
 }
 

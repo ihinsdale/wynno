@@ -17,11 +17,13 @@
                     <span ng-bind="$index + 1"></span>
                     <span> - </span>
                   </div>
-                  <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
-                    <div ng-bind-html="filter.rendered"></div>
-                  </div>
-                  <div class="filterToggleButtonWrapper">
-                    <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+                  <div class="filter">
+                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                      <div ng-bind-html="filter.rendered"></div>
+                    </div>
+                    <div class="filterToggleButtonWrapper">
+                      <button type="button" class="btn btn-default" ng-click="disableFilter($index)">Disable</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -52,11 +54,13 @@
                     <div class="filterNumber">
                       <span> - </span>
                     </div>
-                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
-                      <div ng-bind-html="filter.rendered"></div>
-                    </div>
-                    <div class="filterToggleButtonWrapper">
-                      <button type="button" class="btn btn-default" ng-click="enableDisFilter('disabled', $index)">Enable</button>
+                    <div class="filter">
+                      <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                        <div ng-bind-html="filter.rendered"></div>
+                      </div>
+                      <div class="filterToggleButtonWrapper">
+                        <button type="button" class="btn btn-default" ng-click="enableDisFilter('disabled', $index)">Enable</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -92,12 +96,14 @@
                     <span ng-bind="$index + 1"></span>
                     <span> - </span>
                   </div>
-                  <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
-                    <div ng-bind-html="filter.rendered"></div>
-                  </div>
-                  <div class="filterToggleButtonWrapper">
-                    <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
-                    <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+                  <div class="filter">
+                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                      <div ng-bind-html="filter.rendered"></div>
+                    </div>
+                    <div class="filterToggleButtonWrapper">
+                      <button type="button" class="btn btn-default" ng-click="adoptSugg($index)">Enable</button>
+                      <button type="button" class="btn btn-default" ng-click="dismissSugg($index)">Dismiss</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -128,11 +134,13 @@
                     <div class="filterNumber">
                       <span> - </span>
                     </div>
-                    <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
-                      <div ng-bind-html="filter.rendered"></div>
-                    </div>
-                    <div class="filterToggleButtonWrapper">
-                      <button type="button" class="btn btn-default" ng-click="enableDisFilter('dismissed', $index)">Enable</button>
+                    <div class="filter">
+                      <div class="filterText pieceOfDraft white" ng-class="{ayeGreenBackground: filter.type == 'hear', nayRedBackground: filter.type =='mute'}">
+                        <div ng-bind-html="filter.rendered"></div>
+                      </div>
+                      <div class="filterToggleButtonWrapper">
+                        <button type="button" class="btn btn-default" ng-click="enableDisFilter('dismissed', $index)">Enable</button>
+                      </div>
                     </div>
                   </div>
                 </div>
