@@ -160,7 +160,7 @@ angular.module('wynnoApp.controllers')
         $scope.mustWait.middle = true;
         $scope.waitMiddle = parseInt(reason.slice(20,22), 10);
         $scope.countdownTimer('middle', $scope.waitMiddle, function() {
-          $scope.fillGap(oldestOfMoreRecentTweetsIndex, secondNewestOfOlderTweetsIndex, newestOfOlderTweetsIndex);
+          $scope.fillGap(oldestOfMoreRecentTweetsIdStr);
         });
       } else {
         $scope.activeTwitterRequest.middle = false; // to stop the spinner
