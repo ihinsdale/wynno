@@ -1152,9 +1152,13 @@ $twitterButtonRadius: 3px;
 }
 
 .infoPopover {
-    float: right;
-    font-size: 14px;
+    padding-left: 10px;
+    font-size: 12px;
     font-weight: normal;
+}
+
+.infoPopover:hover {
+    cursor: pointer;
 }
 
 // media query-based styling
