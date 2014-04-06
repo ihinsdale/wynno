@@ -8611,7 +8611,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 }
 
 /* line 1019, main.scss */
-.btn.addNewFilter, .btn.saveFilter {
+.btn.addNewFilter, .btn.saveFilter, .btn.agreeTerms {
   background-color: #b578ea;
   color: #ffffff;
   border-color: #a166d5;
