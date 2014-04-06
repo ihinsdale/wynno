@@ -8526,14 +8526,14 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 /* line 948, main.scss */
 .filterToggleButtonWrapper {
-  margin-top: 10px;
   padding-left: 20px;
   display: inline-block;
 }
 
-/* line 954, main.scss */
+/* line 953, main.scss */
 .filterWrapper .filterText {
   padding: 10px;
+  margin-bottom: 10px;
   display: inline-block;
   border-radius: 4px;
 }
