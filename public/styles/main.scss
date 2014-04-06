@@ -124,6 +124,14 @@ $footer-height: 30px;
     padding-right: 10px;
 }
 
+.bottomMargin5 {
+    margin-bottom: 5px;
+}
+
+.topMargin3 {
+    margin-top: 3px;
+}
+
 // navbar
 
 html {
@@ -256,7 +264,7 @@ a.navMobileSignIn:active, a.navMobileSignIn:hover {
 }
 
 .mobileButton {
-    font-size: 24px;
+    font-size: 25px;
 }
 
 .desktopButton {

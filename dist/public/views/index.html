@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" media="screen" href="https://fonts.googleapis.com/css?family=Ubuntu|Open+Sans">
 
-    <link rel="stylesheet" href="styles/898f6406.main.css"/>
+    <link rel="stylesheet" href="styles/60a6aa60.main.css"/>
 
     <script src="scripts/41af354c.scripts.js"></script>
   </head>
@@ -23,9 +23,10 @@
           <span ng-show="active[0]" class="icomoon-filter ayeGreen mobileButton"></span>
           <span ng-show="active[1]" class="icomoon-filter nayRed mobileButton"></span>
           <span ng-show="active[2]" class="icomoon-cogs mobileButton"></span>
+          <span ng-show="!currentPathNeedsAuth" class="icon-bar topMargin3"></span>
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
-          <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
+          <span ng-show="!currentPathNeedsAuth" class="icon-bar bottomMargin5"></span>
         </button>
         <button ng-show="(currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)) && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder notDropdown">
           <div class="badge badgePurpleBadge">
