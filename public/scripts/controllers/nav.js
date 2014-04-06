@@ -20,9 +20,13 @@ angular.module('wynnoApp.controllers')
     console.log('locationchangesuccess listener in navctrl evaluated');
 
     // update which view is active and whether that view requires authentication
+    // can't parse the URL using $location, because that only parses the current url, not the next one we're going to
     var urlParsingNode = document.createElement('a');
     urlParsingNode.href = next;
     var nextPath = urlParsingNode.hash.slice(1); // slicing at index 1 because 0th character is #
+    // angular uses a secondary hash, which we want to lop off in order to get just the path
+    var locSecHash = nextPath.indexOf('#');
+    nextPath = locSecHash !== -1 ? nextPath.slice(0,locSecHash) : nextPath;
     $scope.currentPathNeedsAuth = AuthService.doesPathNeedAuth(nextPath);
     $scope.active = AuthService.whatPageIsActive(nextPath);
 
