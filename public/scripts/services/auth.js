@@ -36,6 +36,10 @@ angular.module('wynnoApp.services')
       return d.promise;
     },
     doesPathNeedAuth: function(path) {
+      // truncate /blog post paths
+      if (path.slice(0, 5) === '/blog') {
+        path = '/blog';
+      }
       switch(path) {
         case '':
           return false;
@@ -49,7 +53,11 @@ angular.module('wynnoApp.services')
           return true;
         case '/settings':
           return true;
-        case '/termsofservice':
+        case '/terms':
+          return false;
+        case '/privacy':
+          return false;
+        case '/blog':
           return false;
         default:
           console.log('no matching case found in doesCurrentPathNeedAuth');
