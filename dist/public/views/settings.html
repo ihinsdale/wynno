@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1">
         <h3 class="darkGray">
-          <div class="inlineBlock">Active Filters<div>
+          <div class="inlineBlock">Active Filters</div>
           <div class="infoPopover inlineBlock">
-            <span popover-placement="bottom" popover="Filters in this list are applied to tweets from top to bottom. The first filter whose conditions a tweet satisfies is the one that gets applied. Tweets that don't satisfy the conditions of any filters are placed in Good Stuff." popover-trigger="mouseenter" class="icomoon-info"></span>
+            <span popover-placement="bottom" popover="Filters in this list are applied to tweets from top to bottom. The first filter whose conditions a tweet satisfies is the one that gets applied." popover-trigger="mouseenter" class="icomoon-info"></span>
           </div>
-        </div></div></h3>
+        </h3>
         <div class="panel filterPanel">
           <div class="filtersContainer">
             <div class="row" ng-if="!activeFilters.length">
@@ -175,8 +175,8 @@
             </div>
             <div class="panel-body">
               <div class="btn-group" bo-if="voteCount >= 200">
-                <button type="button" class="btn btn-default" ng-model="autoWynnoing" btn-radio="true" ng-click="toggleAutoWynnoing(true)">On</button>
-                <button type="button" class="btn btn-default" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(false)">Off</button>
+                <button type="button" class="btn btn-default toggledPurple" ng-model="autoWynnoing" btn-radio="true" ng-click="toggleAutoWynnoing(true)">On</button>
+                <button type="button" class="btn btn-default toggledPurple" ng-model="autoWynnoing" btn-radio="false" ng-click="toggleAutoWynnoing(false)">Off</button>
               </div>
               <div bo-if="voteCount < 200">
                 <span>In order to make helpful predictions, automatic wynnoing requires at least 200 votes. <strong><span bo-text="200 - voteCount"></span></strong> more to go!</span>
