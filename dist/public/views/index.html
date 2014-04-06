@@ -27,18 +27,18 @@
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
           <span ng-show="!currentPathNeedsAuth" class="icon-bar"></span>
         </button>
-        <button ng-show="currentPathNeedsAuth && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder notDropdown">
+        <button ng-show="(currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)) && undismissedSugg != null && !undismissedSugg" popover-placement="bottom" popover="{{votesRequiredForNextSugg}} votes until next filter suggestion!" class="navbar-toggle noBorder notDropdown">
           <div class="badge badgePurpleBadge">
             <span ng-bind="votesRequiredForNextSugg" ng-show="votesRequiredForNextSugg > 0"></span>
             <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
           </div>
         </button>
-        <a ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg" href="#/settings#suggestions" class="navbar-toggle whiteBackground">
+        <a ng-show="(currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)) && undismissedSugg != null && undismissedSugg" href="#/settings#suggestions" class="navbar-toggle whiteBackground">
           <div class="badge badgePurpleBadge">
             <span class="icomoon-trophy"></span>
           </div>
         </a>
-        <button ng-show="currentPathNeedsAuth" ng-click="openFilterBuilder()" class="navbar-toggle glyphButton notDropdown">
+        <button ng-show="currentPathNeedsAuth || (!currentPathNeedsAuth && !!username)" ng-click="openFilterBuilder()" class="navbar-toggle glyphButton notDropdown">
           <div class="wynnoPurple"><span class="icomoon-add-to-list mobileButton"></span></div>
         </button>
         <a href="/auth/twitter" ng-show="!currentPathNeedsAuth && !username" class="navbar-toggle navMobileSignIn">
