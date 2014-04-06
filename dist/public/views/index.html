@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="styles/898f6406.main.css"/>
 
-    <script src="scripts/957d47c1.scripts.js"></script>
+    <script src="scripts/a3ed2f37.scripts.js"></script>
   </head>
   <body ng-app="wynnoApp" ng-controller="NavCtrl">
     <div role="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -33,7 +33,7 @@
             <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
           </div>
         </button>
-        <a ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg" href="#/settings" class="navbar-toggle whiteBackground">
+        <a ng-show="currentPathNeedsAuth && undismissedSugg != null && undismissedSugg" href="#/settings#suggestions" class="navbar-toggle whiteBackground">
           <div class="badge badgePurpleBadge">
             <span class="icomoon-trophy"></span>
           </div>
@@ -79,7 +79,7 @@
                 <span ng-show="votesRequiredForNextSugg == 0" ng-class="{spinner: votesRequiredForNextSugg == 0}" class="icomoon-spinner3"></span>
               </div>
             </button>
-            <a ng-show="undismissedSugg != null && undismissedSugg" href="#/settings" class="navbar-btn whiteBackground">
+            <a ng-show="undismissedSugg != null && undismissedSugg" href="#/settings#suggestions" class="navbar-btn whiteBackground">
               <div class="badge badgePurpleBadge sideMargins10">
                 <span class="icomoon-trophy"></span>
               </div>

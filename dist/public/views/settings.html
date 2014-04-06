@@ -12,7 +12,7 @@
           <div class="filtersContainer">
             <div class="row" ng-if="!activeFilters.length">
               <div class="col-xs-12 col-md-12">
-                You currently have no active filters. To make one, click on <span class="icomoon-add-to-list wynnoPurple desktopButton"></span> in the navigation bar.
+                You currently have no active filters. To make one, click <span class="icomoon-add-to-list wynnoPurple desktopButton"></span> in the navigation bar.
               </div>
             </div>
             <div class="row" ng-repeat="filter in activeFilters">
@@ -76,7 +76,7 @@
       </div>
     </div>
   </tab>
-  <tab>
+  <tab active="suggestionsActive">
     <tab-heading>
       <span>Suggestions </span>
       <span class="badge badgePurpleBadge" ng-show="!!suggestedFilters.length" ng-bind="suggestedFilters.length"></span>

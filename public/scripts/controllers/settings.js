@@ -104,9 +104,13 @@ angular.module('wynnoApp.controllers')
     }
   };
 
+  // Initialize
   window.scrollTo(0, 0);
   $scope.injectSettings();
+  console.log('location hash is:', $location.hash());
+  $scope.suggestionsActive = $location.hash() === 'suggestions';
 
+  // Set listener for agreeing to ToS
   $scope.$on('agreementSaved', function() {
     $scope.injectSettings();
   });
