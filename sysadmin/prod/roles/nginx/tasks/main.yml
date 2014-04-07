@@ -1,0 +1,39 @@
+---
+
+- name: Set the NODE_ENV environment variable to 'prod'
+  shell: export NODE_ENV=prod
+
+- name: Copy over the folder of static assets that will be served by nginx
+  copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist/public
+
+- name: Open up port 80
+  shell: ufw allow 80/tcp
+  sudo: yes
+
+- name: Open up port 443
+  shell: ufw allow 443/tcp
+  sudo: yes
+
+- name: Disable ufw before enabling it again, to reflect new settings
+  shell: ufw disable
+  sudo: yes
+
+- name: Enable ufw
+  shell: ufw enable
+  sudo: yes
+
+# before installing nginx, update the version of nginx that gets installed by apt?
+
+- name: Install nginx
+  apt: pkg=nginx state=installed update_cache=true
+  notify:
+    - start nginx
+
+- name: Copy over the SSL credentials
+  copy: src=www_wynno_com.pem dest=/etc/nginx/ssl/www_wynno_com.pem
+  copy: src=www_wynno_com.key dest=/etc/nginx/ssl/www_wynno_com.key
+
+- name: Replace default nginx.conf with the one for wynno
+  copy: src=nginx.conf dest=/etc/nginx mode=0644 # or try 0755 if there is nginx error
+  notify:
+    - restart nginx

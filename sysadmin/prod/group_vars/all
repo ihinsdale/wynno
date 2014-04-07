@@ -1,0 +1,6 @@
+--- 
+
+logwatch_email: engineering@wynno.com
+root_password: '$6$h3En5uu3Dm$rZfGHyljXiSjV.ZcvMTLIwuC7dljNfZVh/24T6/g/2vJgSv2U/e73eAre6lxJMRZ11/6ASw29knGO7k4Shdnk.'
+deploy_password: '$6$h3En5uu3Dm$NL4rXajVys4WXTtZ3.jiWOG8s2qgfEh0uvETDboftZikUFxATFvxPNzyJbyLEeQKEB5scjC8r9Gub7EfuB.od/'
+# crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$h3En5uu3Dm")' | python -

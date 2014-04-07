@@ -11,5 +11,7 @@ python/output.dot
 python/.DS_Store
 python/*.pdf
 sysadmin/prod/keys
-sysadmin/prod/id_rsa.pub
-sysadmin/prod/id_rsa
+sysadmin/prod/roles/nginx/files/www_wynno_com.pem
+sysadmin/prod/roles/nginx/files/www_wynno_com.key
+sysadmin/prod/roles/nginx/files/www_wynno_com.csr
+sysadmin/prod/roles/common/files/id_rsa.pub

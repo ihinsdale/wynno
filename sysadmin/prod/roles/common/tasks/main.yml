@@ -1,0 +1,79 @@
+---
+# This playbook is executed on all wynno production servers. It makes the virgin servers more secure.
+
+- name: Change root password
+  user: name=root password={{ root_password }}
+
+- name: Update APT package cache
+  apt: update_cache=yes
+
+- name: Run apt-get upgrade
+  apt: upgrade=yes
+
+- name: Install fail2ban
+  apt: pkg=fail2ban state=present
+
+- name: Copy over my custom fail2ban config file
+  # This file contains wynno-specific email address, ssh port, and activates email notifications
+  copy: src=jail.local dest=/etc/fail2ban/jail.local
+  notify: Restart fail2ban
+
+- name: Add deployment user
+  user: name=deploy password={{ deploy_password }}
+
+- name: Add authorized deploy key
+  authorized_key: user=deploy key='$FILE(id_rsa.pub)'
+
+- name: Remove sudo group rights
+  lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
+
+- name: Add deploy user to sudoers
+  lineinfile: dest=/etc/sudoers regexp="deploy ALL" line="deploy ALL=(ALL) ALL" state=present
+
+- name: Disallow root access via SSH
+  # Disallow root access
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  notify: Restart ssh
+
+- name: Change SSH port from 22 to 202
+  # Change port from 22 to 202
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^Port" line="Port 202" state=present
+  notify: Restart ssh
+  
+- name: Disable password authentication
+  # Disallow password authentication
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^UsePAM" line="UsePAM no" state=present
+  notify: Restart ssh
+  # TODO: verify that this block of multiple lineinfile commands is working, i.e. that all lines get executed
+  # by inspecting the sshd_config file
+
+- name: Enable key-based authentication
+  # Enable key-based authentication
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
+  notify: Restart ssh
+
+- name: Setup ufw to only allow incoming SSH connections
+  # For now we'll allow from all IP addresses, since I don't have a static one
+  shell: ufw allow 202/tcp
+
+- name: Enable ufw
+  shell: echo 'y' | ufw enable
+
+- name: Copy debconf selections so that Postfix can configure itself non-interactively
+  copy: src=postfix_selections dest=/tmp/postfix_selections
+
+- name: Set up Postfix to relay mail
+  command: debconf-set-selections /tmp/postfix_selections
+
+- name: Install logwatch
+  apt: pkg=logwatch state=present
+
+- name: Make logwatch mail {{ logwatch_email }} daily
+  lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ logwatch_email }} --detail high" state=present create=yes
+
+# Possible additional steps:
+# set time zone
+# install tripwire
