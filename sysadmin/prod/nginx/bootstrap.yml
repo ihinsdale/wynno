@@ -1,0 +1,37 @@
+---
+- hosts: newnginx
+  vars:
+  - ubuntu_release: precise
+  - logwatch_email: engineering@wynno.com
+  - root_password: ''
+  - deploy_password: ''
+    # crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$AC3bdCF7!")' | python -
+
+  tasks:
+# update the version of nginx that gets installed by apt?
+# install tripwire?
+
+  - name: Setup ufw
+    action: shell ufw allow 80/tcp
+ 
+  - name: Setup ufw
+    action: shell ufw allow 443/tcp
+ 
+  - name: Enable ufw
+    action: shell echo 'y' | ufw enable
+
+  - name: Install nginx
+    apt: pkg=nginx state=installed update_cache=true
+    notify:
+      - start nginx
+
+  - name: Replace default nginx.conf with the one for wynno
+    copy: src=nginx.conf dest=/etc/nginx mode=0644 # or try 0755 if there is nginx error
+    notify:
+      - restart nginx
+
+  handlers:
+  - name: start nginx
+    service: name=nginx state=started
+  - name: restart nginx
+    service: name=nginx state=restarted

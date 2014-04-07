@@ -10,3 +10,6 @@ dist/lib/config/ssl
 python/output.dot
 python/.DS_Store
 python/*.pdf
+sysadmin/prod/keys
+sysadmin/prod/id_rsa.pub
+sysadmin/prod/id_rsa
