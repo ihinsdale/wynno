@@ -1,27 +1,15 @@
 [mongoservers]
-mongo1          ansible_ssh_host=202    ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/mongo1
+mongo1          ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=./keys/mongo1
 
 [redisservers]
-redis1          ansible_ssh_host=202    ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/redis1
+redis1          ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=./keys/redis1
 
 [pythonservers]
-python1          ansible_ssh_host=202    ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/python1
+python1         ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=./keys/python1
 
 [nodeservers]
-node1          ansible_ssh_host=202    ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/node1
-node2          ansible_ssh_host=202    ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/node2
+node1           ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=./keys/node1
+node2           ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=./keys/node2
 
 [nginxservers]
-nginx1          ansible_ssh_host=202    ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/nginx1
-
-
-
-
-
-
-
-[newservers]
-107.170.30.150 ansible_ssh_user=root ansible_ssh_port=22 ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/nginx-server
-
-#[nginx]
-#107.170.30.150 ansible_ssh_port=202 ansible_ssh_user=deploy ansible_ssh_private_key_file=/Users/ian/Documents/development/wynno/wynno/sysadmin/prod/keys/nginx-server
+nginx1          ansible_ssh_host=xx.xx.xx.xx    ansible_ssh_private_key_file=./keys/nginx1

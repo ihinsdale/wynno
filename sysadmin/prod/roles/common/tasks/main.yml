@@ -22,7 +22,7 @@
   user: name=deploy password={{ deploy_password }}
 
 - name: Add authorized deploy key
-  authorized_key: user=deploy key='$FILE(id_rsa.pub)'
+  authorized_key: user=deploy key="{{ lookup('file', '../../keys/{{ ansible_hostname }}.pub') }}"
 
 - name: Remove sudo group rights
   lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
@@ -39,6 +39,11 @@
   # Change port from 22 to 202
   lineinfile: dest=/etc/ssh/sshd_config regexp="^Port" line="Port 202" state=present
   notify: Restart ssh
+  # Check that indeed port 22 has been REPLACED by 202, i.e. that both don't exist
+
+- name: Update ansible_ssh_port to the new SSH port
+  set_fact: ansible_ssh_port={{ new_ssh_port }}
+  # Cf. http://serverfault.com/questions/545978/how-to-handle-ssh-port-changes-with-ansible
   
 - name: Disable password authentication
   # Disallow password authentication
