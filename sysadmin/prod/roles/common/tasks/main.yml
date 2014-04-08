@@ -60,6 +60,12 @@
   lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
   notify: Restart ssh
 
+- name: Set default for ufw to deny all incoming connections
+  shell: sudo ufw default deny incoming
+
+- name: Set default for ufw to allow all outgoing connections
+  shell: sudo ufw default allow outgoing
+
 - name: Setup ufw to only allow incoming SSH connections
   # For now we'll allow from all IP addresses, since I don't have a static one
   shell: ufw allow 202/tcp

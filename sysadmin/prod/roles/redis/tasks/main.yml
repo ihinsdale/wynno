@@ -1,1 +1,31 @@
-main.yml
+---
+# This playbook is executed on all wynno redis servers.
+
+- name: Set NODE_ENV environment variable to 'prod'
+  shell: export NODE_ENV=prod
+
+- name: Open up the redis port to connections from nodeservers
+  shell: ufw allow {{ redis_port }}/tcp from [someaddress]
+  sudo: yes
+
+- name: Disable ufw before enabling it again, to reflect new settings
+  shell: ufw disable
+  sudo: yes
+
+- name: Enable ufw
+  shell: ufw enable
+  sudo: yes
+
+- name: Install redis-server
+  apt: pkg=redis-server state=present
+  sudo: yes
+
+- name: Make a copy on the server of the default redis config file
+  command: cp /etc/redis/redis.conf /etc/redis/redis.conf.default
+
+- name: Copy over the redis configuration file
+  copy: src=redis.conf dest=/etc/redis/redis.conf
+  notify: Restart redis
+
+# Make redis start up on reboot
+# TODO

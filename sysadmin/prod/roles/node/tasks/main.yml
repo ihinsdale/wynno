@@ -1,1 +1,42 @@
-main.yml
+---
+# This playbook is executed on all wynno webservers.
+
+- name: Set NODE_ENV environment variable to 'prod'
+  shell: export NODE_ENV=prod
+
+- name: Make a directory for wynno files
+  command: mkdir wynno
+
+- name: Copy over the dist folder
+  copy: src=../../../../../dist dest=/home/deploy/wynno
+
+- name: Install nvm
+  shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+
+- name: Load nvm
+  command: source /home/deploy/.nvm/nvm.sh
+
+- name: Install latest production version of node, 0.10.26
+  command: nvm install v0.10.26
+
+- name: Install node modules globally
+  command: npm install -g
+
+- name: Copy over the Upstart script which runs node via Forever
+  copy: src=wynno.conf dest=/etc/init/wynno.conf
+
+- name: Open up the node port to connections from nginxservers
+  shell: ufw allow {{ node_port }}/tcp
+  sudo: yes
+
+- name: Disable ufw before enabling it again, to reflect new settings
+  shell: ufw disable
+  sudo: yes
+
+- name: Enable ufw
+  shell: ufw enable
+  sudo: yes
+
+- name: Reboot, which should start server
+  command: reboot
+  sudo: yes

@@ -6,11 +6,11 @@
 - name: Copy over the folder of static assets that will be served by nginx
   copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist/public
 
-- name: Open up port 80
+- name: Open up port 80 to connections from all IP addresses, since this is our public-facing web server
   shell: ufw allow 80/tcp
   sudo: yes
 
-- name: Open up port 443
+- name: Open up port 443 to connections from all IP adddresses, for same reason
   shell: ufw allow 443/tcp
   sudo: yes
 
@@ -27,7 +27,7 @@
 - name: Install nginx
   apt: pkg=nginx state=installed update_cache=true
   notify:
-    - start nginx
+    - Start nginx
 
 - name: Copy over the SSL credentials
   copy: src=www_wynno_com.pem dest=/etc/nginx/ssl/www_wynno_com.pem
@@ -36,4 +36,4 @@
 - name: Replace default nginx.conf with the one for wynno
   copy: src=nginx.conf dest=/etc/nginx mode=0644 # or try 0755 if there is nginx error
   notify:
-    - restart nginx
+    - Restart nginx
