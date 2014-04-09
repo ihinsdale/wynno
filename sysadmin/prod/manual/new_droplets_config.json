@@ -1,8 +1,44 @@
 {
-  "mongo1": {},
-  "redis1": {},
-  "node1": {},
-  "node2": {},
-  "python1": {},
-  "nginx1": {}
+  "mongo1": {
+    "size_slug": "512mb",
+    "image_slug": "ubuntu-12-04-x64",
+    "region_slug": "nyc2",
+    "private_networking": true,
+    "backups_enabled": true
+  },
+  "redis1": {
+    "size_slug": "512mb",
+    "image_slug": "ubuntu-12-04-x64",
+    "region_slug": "nyc2",
+    "private_networking": true,
+    "backups_enabled": true
+  },
+  "node1": {
+    "size_slug": "512mb",
+    "image_slug": "ubuntu-12-04-x64",
+    "region_slug": "nyc2",
+    "private_networking": true,
+    "backups_enabled": false
+  },
+  "node2": {
+    "size_slug": "512mb",
+    "image_slug": "ubuntu-12-04-x64",
+    "region_slug": "nyc2",
+    "private_networking": true,
+    "backups_enabled": false
+  },
+  "python1": {
+    "size_slug": "512mb",
+    "image_slug": "ubuntu-12-04-x64",
+    "region_slug": "nyc2",
+    "private_networking": true,
+    "backups_enabled": false
+  },
+  "nginx1": {
+    "size_slug": "512mb",
+    "image_slug": "ubuntu-12-04-x64",
+    "region_slug": "nyc2",
+    "private_networking": true,
+    "backups_enabled": false
+  }
 }

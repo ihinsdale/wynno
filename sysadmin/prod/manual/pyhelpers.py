@@ -1,16 +1,56 @@
 import json
 import requests
 import os
+from pprint import pprint
+import copy
 
-preexisting_droplets = json.load(open('preexisting_droplets.json'))
 new_droplets = json.load(open('new_droplets_config.json'))
 
-def check_preexisting_droplet_namespace():
-  """ Checks the hostnames of the new droplets to be created as specified in new_droplets_config.json,
-      against the preexisting droplets. """
+def fetch_preexisting_droplets():
+  payload = { 'client_id': os.environ['DO_CLIENT_ID'], 'api_key': os.environ['DO_API_KEY'] }
+  r = requests.get('https://api.digitalocean.com/droplets/', params=payload)
+  res_json = r.json()
+  if res_json['status'] != 'OK':
+    raise Exception("There was a problem getting the preexisting droplets.")
+  else:
+    # Convert array of droplet dicts received from DO into dict of droplet dicts
+    droplets = {}
+    for each in res_json['droplets']:
+      droplets[each['name']] = copy.copy(each)
+      del droplets[each['name']]['name'] # Remove the name key from the droplet dict
+    with open('preexisting_droplets.json', 'w') as outfile:
+      json.dump(droplets, outfile)
+
+def droplet_namespace_is_clear():
+  """ Checks whether there are any preexisting droplets with the same names as 
+      the hostnames of the new droplets to be created, as specified in new_droplets_config.json. """
+  preexisting_droplets = json.load(open('preexisting_droplets.json'))
   for hostname in new_droplets:
     if hostname in preexisting_droplets:
-      raise Exception("Droplet with hostname %s already exists." % hostname)
+      return 0
+  return 1
+
+def clear_droplet_namespace():
+  """ Destroys any preexisting droplets that share names with the new droplets. """
+  preexisting_droplets = json.load(open('preexisting_droplets.json'))
+  for hostname in new_droplets:
+    if hostname in preexisting_droplets:
+      # Find the preexisting droplet's id
+      droplet_id = preexisting_droplets[hostname]['id']
+      # Destroy
+      payload = { 
+        'scrub_data': True, # this becomes scrub_data=True in the request url, which DO seems to accept fine (as opposed to scrub_data=true, 
+        # for which the requests Python library would require the value of scrub_data here to actually be 'true', i.e. the lowercase string
+        # representation of the boolean. Just going to trust that the DO server handles True and true equally well; it does at least reject
+        # non-Boolean values. This wouldn't be so important if the thing being controlled here weren't *scrubbing the droplet data*.)
+        'client_id': os.environ['DO_CLIENT_ID'],
+        'api_key': os.environ['DO_API_KEY']
+      }
+      r = requests.get('https://api.digitalocean.com/droplets/' + str(droplet_id) + '/destroy/', params=payload)
+      if r.json()['status'] != 'OK':
+        raise Exception("There was a problem removing the preexisting %s droplet." % hostname)
+      else:
+        print "Preexisting %s droplet successfully destroyed." % hostname
 
 def create_hostnames_file():
   """ Creates a simple file with one hostname on each line, for each new droplet. For convenient use in the bash shell. """
@@ -53,15 +93,24 @@ def upload_keys():
     json.dump(key_ids, outfile)
 
 def create_droplets():
-  """ Creates a new droplet for each host in hosts_and_ssh_key_ids.json, which is created by upload_keys().
-      Therefore should be called after upload_keys().
-      Current default settings involve the  """
+  """ Creates a new droplet for each host in new_droplets_config.json. Uses hosts_and_ssh_key_ids.json, which is created by upload_keys(), to get public key ids for each new droplet.
+      Therefore should be called after upload_keys(). """
   hostname_ssh_key_ids = json.load(open('hostname_ssh_key_ids.json'))
-  print hostname_ssh_key_ids
-  # for host in hostname_ssh_key_ids:
-  #   payload = {'name': host, 'ssh_pub_key': key_file.readline(), 'client_id': os.environ['DO_CLIENT_ID'], 'api_key': os.environ['DO_API_KEY']}
-  #   r = requests.get('https://api.digitalocean.com/ssh_keys/new/', params=payload)
-  #   if r.json()['status'] != 'OK':
-  #     raise Exception("There was a problem adding the " + host + " key.")
-  #   else:
-  #     print "Successfully added the " + host + " key."
+  for hostname in new_droplets:
+    # Cf. https://developers.digitalocean.com/droplets/
+    payload = {
+      'name': hostname,
+      'size_slug': new_droplets[hostname]['size_slug'],
+      'image_slug': new_droplets[hostname]['image_slug'],
+      'region_slug': new_droplets[hostname]['region_slug'],
+      'ssh_key_ids': hostname_ssh_key_ids[hostname],
+      'private_networking': new_droplets[hostname]['private_networking'],
+      'backups_enabled': new_droplets[hostname]['backups_enabled'],
+      'client_id': os.environ['DO_CLIENT_ID'],
+      'api_key': os.environ['DO_API_KEY']
+    }
+    r = requests.get('https://api.digitalocean.com/droplets/new', params=payload)
+    if r.json()['status'] != 'OK':
+      raise Exception("There was a problem creating the %s droplet." % hostname)
+    else:
+      print "Successfully created the %s droplet." % hostname

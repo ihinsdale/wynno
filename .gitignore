@@ -14,4 +14,3 @@ sysadmin/prod/keys
 sysadmin/prod/roles/nginx/files/www_wynno_com.pem
 sysadmin/prod/roles/nginx/files/www_wynno_com.key
 sysadmin/prod/roles/nginx/files/www_wynno_com.csr
-sysadmin/prod/manual/set_DO_creds.sh
