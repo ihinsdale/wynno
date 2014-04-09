@@ -3,6 +3,7 @@ node_modules
 .sass-cache
 public/bower_components
 db_admin_steps.txt
+lib/config/keys
 lib/config/keys.json
 dist/lib/config/keys.json
 lib/config/ssl
@@ -14,3 +15,7 @@ sysadmin/prod/keys
 sysadmin/prod/roles/nginx/files/www_wynno_com.pem
 sysadmin/prod/roles/nginx/files/www_wynno_com.key
 sysadmin/prod/roles/nginx/files/www_wynno_com.csr
+sysadmin/prod/manual/hostname_ssh_key_ids.json
+sysadmin/prod/manual/preexisting_droplets.json
+sysadmin/prod/manual/production
+sysadmin/prod/manual/dynamic_inventory.json

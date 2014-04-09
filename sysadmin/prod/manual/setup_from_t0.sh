@@ -37,8 +37,6 @@ if [ $RESULT -eq 0 ]; then
   fi
 fi
 
-exit
-
 # 2. Generate new RSA keypairs for each server to be created
 
 #      First generate a simple file with the hostnames to be created on separate lines
@@ -61,6 +59,7 @@ done < hostnames
 #      First delete any keys that have the same names as the hostnames that will be created
 #      We'll use a Python script to do the actual deleting--it's easier to work with JSON in Python
 #      We need to install the requests library if it doesn't already exist
+sudo pip list > pip_packages
 if grep -q "requests" pip_packages
 then
   echo "requests Python library already installed."
@@ -90,7 +89,6 @@ if [ ! -f digital_ocean ]; then
   chmod +x digital_ocean
 fi
 #      Install dopy if not already - required by digital_ocean
-sudo pip list > pip_packages
 if grep -q "dopy" pip_packages
 then
   echo "dopy already installed."
@@ -99,8 +97,11 @@ else
   sudo pip install dopy
 fi
 
-ansible -m ping -u root -i digital_ocean all # Cf. http://sendgrid.com/blog/ansible-and-digital-ocean/
+#      Use the Ansible digital_ocean plugin to generate a JSON file of the current inventory
+python digital_ocean --droplets | python -mjson.tool > dynamic_inventory.json
 
+#      Next use that JSON file to create the production inventory file which Ansible will use
+python -c "import pyhelpers; pyhelpers.create_ansible_production_file()"
 
 
 # Update dist/lib/config/keys.json with addresses of servers

@@ -4,7 +4,12 @@ import os
 from pprint import pprint
 import copy
 
-new_droplets = json.load(open('new_droplets_config.json'))
+new_droplets_config = json.load(open('new_droplets_config.json'))
+# For use in some of the helper functions, create a version of new_droplets_config that has no category level
+new_droplets = {}
+for category in new_droplets_config:
+  for droplet in new_droplets_config[category]:
+    new_droplets[droplet] = new_droplets_config[category][droplet]
 
 def fetch_preexisting_droplets():
   payload = { 'client_id': os.environ['DO_CLIENT_ID'], 'api_key': os.environ['DO_API_KEY'] }
@@ -114,3 +119,19 @@ def create_droplets():
       raise Exception("There was a problem creating the %s droplet." % hostname)
     else:
       print "Successfully created the %s droplet." % hostname
+
+def create_ansible_production_file():
+  """ Uses dynamic_inventory.json to create Ansible production file with group names, ssh private key paths, etc. """
+  dynamic_inventory = json.load(open('dynamic_inventory.json'))
+  # Out of dynamic_inventory, make a dictionary with same info but with the new hostnames as keys
+  droplets = {}
+  for each in dynamic_inventory['droplets']:
+    droplets[each['name']] = copy.copy(each)
+    del droplets[each['name']]['name'] # Remove the name key from the droplet dict
+  with open('production', 'w') as outfile:
+    for category in new_droplets_config:
+      outfile.write('[' + category + 'servers]\n')
+      for hostname in new_droplets_config[category]:
+        outfile.write(hostname + '    ansible_ssh_host=' + droplets[hostname]['ip_address'] + '    ansible_ssh_private_key_file=./keys/' + hostname + '\n')
+      outfile.write('\n')
+
