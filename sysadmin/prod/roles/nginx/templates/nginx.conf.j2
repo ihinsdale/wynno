@@ -21,14 +21,14 @@ http {
     sendfile        on;
     keepalive_timeout  65;
     # (Importing the next block from the default nginx.conf file)
-    include /etc/nginx/mime.types; 
+    include /etc/nginx/mime.types;
     #tcp_nopush on;
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
     access_log  /var/log/nginx/access.log  main;
     #include /etc/nginx/conf.d/*.conf;
- 
+
     gzip on;
     gzip_comp_level 6;
     gzip_vary on;
@@ -36,7 +36,7 @@ http {
     gzip_proxied any;
     gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
     gzip_buffers 16 8k;
-  
+
     upstream wynno_upstream {
       {% for host in groups['nodeservers'] %}
         server {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}:{{ node_port }}
@@ -46,31 +46,41 @@ http {
 
     server {
         listen 80;
-        return 301 https://$host$request_uri; # redirects all traffic to the corresponding HTTPS route
-        # Cf. http://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom
+        listen 443 ssl;
+        ssl_certificate /etc/nginx/ssl/www_wynno_com.pem;
+        ssl_certificate_key /etc/nginx/ssl/www_wynno_com.key;
+        server_name www.wynno.com;
+        return 301 https://wynno.com$request_uri; # redirects all traffic, HTTP or HTTPS, to the corresponding HTTPS route at root domain
+        # Cf. http://stackoverflow.com/a/11733363, http://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom
     }
- 
+
+    server {
+        listen 80;
+        server_name wynno.com
+        return 301 https://wynno.com$request_uri; # redirects all root domain HTTP traffic to the corresponding HTTPS route
+    }
+
     server {
         listen 443 ssl;
- 
+
         ssl_certificate /etc/nginx/ssl/www_wynno_com.pem;
         ssl_certificate_key /etc/nginx/ssl/www_wynno_com.key;
         ssl_protocols        SSLv3 TLSv1;
         ssl_ciphers HIGH:!aNULL:!MD5;
- 
-        server_name wynno.com www.wynno.com; 
+
+        server_name wynno.com;
         # Cf. https://library.linode.com/web-servers/nginx/configuration/basic
- 
+
         error_page 503  /views/errors/unscheduled.html;
         error_page 404  /views/errors/404.html;
- 
+
         root /home/deploy/wynno/dist/public;
 
         location ~ ^/(images/|scripts/|styles/|views/|robots.txt|humans.txt|favicon.ico) {
           access_log off;
           expires max;
         }
- 
+
         location / {
           proxy_redirect off;
           proxy_set_header   X-Real-IP            $remote_addr;

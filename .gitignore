@@ -19,3 +19,5 @@ sysadmin/prod/manual/preexisting_droplets.json
 sysadmin/prod/manual/production
 sysadmin/prod/manual/dynamic_inventory.json
 sysadmin/prod/manual/dynamic_inventory_dict.json
+sysadmin/prod/manual/hostnames
+sysadmin/prod/manual/pip_packages
