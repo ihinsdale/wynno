@@ -1,14 +1,14 @@
 'use strict';
 
 var path = require('path');
-var credentials = require('./keys.json');
+var env = process.env.NODE_ENV;
+var credentials = require('./keys/' + env + '/node.json');
 
 module.exports = function(app) {
   app.set('env', process.env.NODE_ENV || 'dev');
-  var env = app.get('env');
-  app.set('port', credentials[env].port);
-  app.set('mockAuth', credentials[env].testing.mockAuth || false);
-  app.set('publicDNS', credentials[env].publicDNS);
+  app.set('port', credentials.port);
+  app.set('mockAuth', credentials.testing.mockAuth || false);
+  app.set('publicDNS', credentials.publicDNS);
   console.log('publicDNS is:', app.get('publicDNS'));
   
   app.set('views', path.resolve(__dirname, '../../public/views'));

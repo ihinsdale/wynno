@@ -1,0 +1,39 @@
+{
+  "twitter": {
+    "consumer_key": "0adZZZjZVIDxGtDJY0shkA",
+    "consumer_secret": "Ke3KzVQk01grsPb6Df5h4nCvAQVLJQX7rEqTwkcnKY"
+  },
+  "db": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "username": "wynnoman",
+    "password": "awerou2309doizlwoi938274j498s88230ajcklaow838"
+  },
+  "redis": {
+    "host": "127.0.0.1",
+    "port": 6379,
+    "dbs": {
+      "session": 0,
+      "fetching": 1
+    },
+    "pass": "redisPASS"
+  },
+  "secrets": {
+    "cookieParser": "in the middle of a shave 234234235",
+    "session": "oh yoko 239239r8131"
+  },
+  "publicDNS": "ec2-54-186-150-50.us-west-2.compute.amazonaws.com",
+  "port": 8080,
+  "testing": {
+    "mockAuth": false,
+    "tw_username": "TimStudebaker",
+    "tw_password": "testingisrad",
+    "user_id": "533bb72bb04abbb51a96c617",
+    "tw_id": 2412149024,
+    "tw_name": "Tim Studebaker",
+    "tw_screen_name": "TimStudebaker",
+    "tw_profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png",
+    "tw_access_token": "2412149024-H7S14zSOv51D7qCUC65Xi2cse5IxygMIItNqJeB",
+    "tw_access_secret": "eUOwoq3NOkIPJyMLJo6DQQs7b56PaXPPXl5tqxF4Ud3hp"
+  }
+}

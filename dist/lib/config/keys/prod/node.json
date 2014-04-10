@@ -1,0 +1,34 @@
+{
+  "twitter": {
+    "consumer_key": "3bqYAgItnVx923g0SvDwM6Et2",
+    "consumer_secret": "rwYTQZe9UIrfZAR7U5xgAnmCQnqZSbqIWDhJW463itBcV3xbq9"
+  },
+  "db": {
+    "host": "",
+    "port": 27017,
+    "username": "wwXIJWNknwelk82838572",
+    "password": "uWybWMgNQ817Bj271gweqoVV8mN99b363FfgLzxO032NNtrex2lvWiimvnz314ED9hgQ24"
+  },
+  "redis": {
+    "host": "",
+    "port": 6379,
+    "dbs": {
+      "session": 0,
+      "fetching": 1
+    },
+    "pass": ""
+  },
+  "python": {
+    "host": "",
+    "port": 4242
+  },
+  "secrets": {
+    "cookieParser": "kiss me each morning for a million years 2387141871187",
+    "session": "well well, do-do-do do-do 239823989819823"
+  },
+  "publicDNS": "wynno.com",
+  "port": 8080,
+  "testing": {
+    "mockAuth": false
+  }
+}
