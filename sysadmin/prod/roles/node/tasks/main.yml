@@ -25,8 +25,10 @@
 - name: Copy over the Upstart script which runs node via Forever
   copy: src=wynno.conf dest=/etc/init/wynno.conf
 
-- name: Open up the node port to connections from nginxservers
-  shell: ufw allow {{ node_port }}/tcp
+- name: Open up the node port to connections from nginxservers (using private IP)
+  # Since jinja loops are not possible in a playbook, if we ever add more than one nginx server,
+  # it seems we will have to hardcode the hostname whose IP address we want like so
+  shell: ufw allow {{ node_port }}/tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }}
   sudo: yes
 
 - name: Disable ufw before enabling it again, to reflect new settings

@@ -1,7 +1,2 @@
-keys.json must reflect correct addresses of app servers
-hosts.ini must reflect correct addresses of app servers
-nginx.conf must reflect correct addresses of node servers
-amazon DNS service needs to point (www.)wynno.com to nginx server
-
 edit new_droplets_config.json
 run setup_from_t0.sh

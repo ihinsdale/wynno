@@ -104,19 +104,26 @@ python digital_ocean --droplets | python -mjson.tool > dynamic_inventory.json
 python -c "import pyhelpers; pyhelpers.create_ansible_production_file()"
 
 # 6. Update json files in lib/keys/prod and dist/lib/keys/prod with IP addresses (public or private as necessary) of droplets
+
 #      Keeping the specification of server addresses within json files, as opposed to using Ansible to set environment
 #      variables on each server which are then read by the application, allows us not to need a shell script for the dev version
 #      of the app. Granted, we still have to set the NODE_ENV variable. The json approach seems preferable now because it makes it very easy
 #      to check what variables the app is using, and because the app is currently architected to use the json approach.
 
-# Update dist/lib/config/keys.json with addresses of servers
-# or else set environment variables on each server as necessary with addresses of servers they need to talk to
-# and update app to use these env variables
-# TODO
+python -c "import pyhelpers; pyhelpers.update_json_keys_ips()"
 
-# Run the main Ansible playbook
-#ansible-playbook -i production site.yml -e ansible_ssh_port=22
-# we provide the extra variable of ansible_ssh_port set to 22 so that the first 
+#      N.B. Updating of IP addresses for upstream nodeservers in nginx.conf file is done using Ansible's template feature
+#      It allows handy looping over each nodeserver. We could have instead updated the nginx.conf file using a shell script
+#      and the dynamic_inventory.json file. So we're combining approaches: using Ansible jinja templating where that's convenient
+#      and using json files for the rest of the intra-app communication. Do I contradict myself? Very well then, I contradict myself.
+#      The app is large, it contains multitudes.
 
-# point Amazon Route 53 to the address of the nginx server
+
+# 7. Run the main Ansible playbook, configuring all the servers
+
+ansible-playbook -i production site.yml -e ansible_ssh_port=22
+
+
+# 8. With the servers up and ready, use AWS Route 53 to point the DNS record for (www.)wynno.com to the nginx1 droplet
+
 # TODO

@@ -121,17 +121,43 @@ def create_droplets():
       print "Successfully created the %s droplet." % hostname
 
 def create_ansible_production_file():
-  """ Uses dynamic_inventory.json to create Ansible production file with group names, ssh private key paths, etc. """
+  """ Uses dynamic_inventory.json (which was generated outside, in shell script) to 
+      create Ansible production file with group names, ssh private key paths, etc. """
   dynamic_inventory = json.load(open('dynamic_inventory.json'))
   # Out of dynamic_inventory, make a dictionary with same info but with the new hostnames as keys
   droplets = {}
   for each in dynamic_inventory['droplets']:
     droplets[each['name']] = copy.copy(each)
     del droplets[each['name']]['name'] # Remove the name key from the droplet dict
+  with open('dynamic_inventory_dict.json', 'w') as outfile:
+    json.dump(droplets, outfile)
   with open('production', 'w') as outfile:
     for category in new_droplets_config:
       outfile.write('[' + category + 'servers]\n')
       for hostname in new_droplets_config[category]:
         outfile.write(hostname + '    ansible_ssh_host=' + droplets[hostname]['ip_address'] + '    ansible_ssh_private_key_file=./keys/' + hostname + '\n')
       outfile.write('\n')
+
+def update_json_keys_ips():
+  """ Adds appropriate private IPs of new droplets to the /dist/lib/config/keys/prod/ node.json and python.json files. 
+      Note we only add to the /dist folder because the /dist version is the only version that gets deployed (and 
+      that is partly because the nginx configuration even in the 'dev' environment is only set up to work with the /dist folder, 
+      not the dev versions of the code. """
+
+  node_json_abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../dist/lib/config/keys/prod/node.json'))
+  python_json_abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../dist/lib/config/keys/prod/python.json'))
+
+  node_json = json.load(open(node_json_abs_path))
+  python_json = json.load(open(python_json_abs_path))
+  dynamic_inventory_dict = json.load(open('dynamic_inventory_dict.json'))
+
+  node_json['db']['host'] = dynamic_inventory_dict['mongo1']['private_ip_address']
+  python_json['db']['host'] = dynamic_inventory_dict['mongo1']['private_ip_address']
+  node_json['redis']['host'] = dynamic_inventory_dict['redis1']['private_ip_address']
+  node_json['python']['host'] = dynamic_inventory_dict['python1']['private_ip_address']
+
+  with open(node_json_abs_path, 'w') as outfile:
+    json.dump(node_json, outfile)
+  with open(python_json_abs_path, 'w') as outfile:
+    json.dump(python_json, outfile)
 
