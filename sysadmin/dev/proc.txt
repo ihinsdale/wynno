@@ -1,0 +1,7 @@
+1. Create EC2 instance with port 80 and 443 open to all IPs and port 22 open to my IP
+2. Change SSH port to 202
+3. Change security group for the instance so that port 22 is now closed and 202 open to my IP
+4. SSH back into the instance
+5. Mount the snapshotted db volume to ~/db/data
+6. Run sysadmin/dev/setup.sh
+6.

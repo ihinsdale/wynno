@@ -8,8 +8,6 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install build-essential
 sudo apt-get install screen
-#sudo apt-get install lvm2
-#sudo apt-get install mdadm
 
 sudo apt-get install fail2ban
 
@@ -50,21 +48,21 @@ sudo pip install zerorpc
 sudo pip install -U scikit-learn
 
 sudo apt-get install -y python-pygraphviz
-sudo apt-get install python-pydot # don't use pip for this, there's a bug 
+sudo apt-get install python-pydot # don't use pip for this, there's a bug
 
 sudo pip install unidecode
 
 
 # Install additional nltk packages
-# python
-# import nltk
-# nltk.download()
-# d
-# punkt
-# d
-# stopwords
-# q
-# exit()
+python
+import nltk
+nltk.download()
+d
+punkt
+d
+stopwords
+q
+exit()
 
 # Install nvm: node-version manager
 # https://github.com/creationix/nvm
@@ -82,3 +80,6 @@ npm install -g
 # Install nginx
 sudo apt-get install nginx
 
+# Setup DB accounts
+# Copy nginx.conf to its necessary /etc location and restart nginx
+# Open up screen session and make sure redis is running, Mongo, Python, node, nginx

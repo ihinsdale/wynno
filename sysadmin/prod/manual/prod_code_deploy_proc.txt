@@ -1,0 +1,8 @@
+Workflow for deploying updates to production code:
+
+1. Commit to wynno repository and push to GitHub.
+2. [insert testing steps here]
+3. When ready to actually deploy the code, run push_to_prod_repo.sh.
+4. SSH into wynno-gateway.
+5. Pull from wynno-prod-sysadmin repo.
+6. Use Ansible to propagate/deploy the new code to relevant app nodes.

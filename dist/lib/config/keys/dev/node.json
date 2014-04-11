@@ -18,6 +18,10 @@
     },
     "pass": "redisPASS"
   },
+  "python": {
+    "host": "127.0.0.1",
+    "port": 4242
+  },
   "secrets": {
     "cookieParser": "in the middle of a shave 234234235",
     "session": "oh yoko 239239r8131"
