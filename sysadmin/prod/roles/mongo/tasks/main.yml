@@ -1,1 +1,13 @@
-main.yml
+---
+
+- name: Import the public key for MongoDB used by the package management system
+  shell: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+- name: Create a list file for MongoDB
+  shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install MongoDB
+  apt: pkg=mongodb-org state=present

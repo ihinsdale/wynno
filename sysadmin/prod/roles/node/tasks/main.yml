@@ -2,7 +2,7 @@
 # This playbook is executed on all wynno webservers.
 
 - name: Set NODE_ENV environment variable to 'prod'
-  shell: export NODE_ENV=prod
+  command: export NODE_ENV=prod
 
 - name: Make a directory for wynno files
   command: mkdir wynno
@@ -16,29 +16,29 @@
 - name: Load nvm
   command: source /home/deploy/.nvm/nvm.sh
 
-- name: Install latest production version of node, 0.10.26
+- name: Install latest production version of node 0.10.26
   command: nvm install v0.10.26
 
 - name: Install node modules globally
   command: npm install -g
 
 - name: Copy over the Upstart script which runs node via Forever
-  copy: src=wynno.conf dest=/etc/init/wynno.conf
+  template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not
 
 - name: Open up the node port to connections from nginxservers (using private IP)
   # Since jinja loops are not possible in a playbook, if we ever add more than one nginx server,
   # it seems we will have to hardcode the hostname whose IP address we want like so
-  shell: ufw allow {{ node_port }}/tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }}
+  command: ufw allow {{ node_port }}/tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }}
   sudo: yes
 
-- name: Disable ufw before enabling it again, to reflect new settings
-  shell: ufw disable
+- name: Disable ufw before enabling it again to reflect new settings
+  command: ufw disable
   sudo: yes
 
 - name: Enable ufw
-  shell: ufw enable
+  command: ufw enable
   sudo: yes
 
-- name: Reboot, which should start server
+- name: Reboot - which should start server thanks to Upstart script
   command: reboot
   sudo: yes

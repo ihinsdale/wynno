@@ -1,7 +1,7 @@
 ---
-# This playbook deploys the whole application stack for the production version of wynno.  
+# This playbook deploys the whole application stack for the production version of wynno.
 
-- name: apply common configuration to all nodes of the app
+- name: apply the configuration common to all nodes of the app
   hosts: all
   remote_user: root
 

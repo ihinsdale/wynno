@@ -126,4 +126,7 @@ ansible-playbook -i production site.yml -e ansible_ssh_port=22
 
 # 8. With the servers up and ready, use AWS Route 53 to point the DNS record for (www.)wynno.com to the nginx1 droplet
 
-# TODO
+#      Actually, this doesn't need to be automated, because pointing the DNS records to the correct IP should be a
+#      one-time deal. That's because I have agreed with DO that 192.241.189.84 is reserved to my account. So the DNS
+#      records can permanently point there, and whenever I create a new nginx droplet, I just need to have DO support
+#      assign it that IP address.

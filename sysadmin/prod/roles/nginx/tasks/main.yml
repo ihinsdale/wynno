@@ -1,25 +1,25 @@
 ---
 
 - name: Set the NODE_ENV environment variable to 'prod'
-  shell: export NODE_ENV=prod
+  command: export NODE_ENV=prod
 
 - name: Copy over the folder of static assets that will be served by nginx
   copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist/public
 
-- name: Open up port 80 to connections from all IP addresses, since this is our public-facing web server
-  shell: ufw allow 80/tcp
+- name: Open up port 80 to connections from all IP addresses since this is our public-facing web server
+  command: ufw allow 80/tcp
   sudo: yes
 
-- name: Open up port 443 to connections from all IP adddresses, for same reason
-  shell: ufw allow 443/tcp
+- name: Open up port 443 to connections from all IP adddresses for same reason
+  command: ufw allow 443/tcp
   sudo: yes
 
-- name: Disable ufw before enabling it again, to reflect new settings
-  shell: ufw disable
+- name: Disable ufw before enabling it again to reflect new settings
+  command: ufw disable
   sudo: yes
 
 - name: Enable ufw
-  shell: ufw enable
+  command: ufw enable
   sudo: yes
 
 # before installing nginx, update the version of nginx that gets installed by apt?
@@ -29,12 +29,17 @@
   notify:
     - Start nginx
 
-- name: Copy over the SSL credentials
+- name: Set nginx to start on boot
+  command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
+
+- name: Copy over the SSL .pem credential
   copy: src=www_wynno_com.pem dest=/etc/nginx/ssl/www_wynno_com.pem
+
+- name: Copy over SSL .key credential
   copy: src=www_wynno_com.key dest=/etc/nginx/ssl/www_wynno_com.key
 
-- name: Make a copy of the default nginx.conf file
-  shell: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default
+- name: Make a copy of the default nginx.conf file if such copy does not already exist
+  command: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default creates=/etc/nginx/nginx.conf.default
 
 - name: Replace nginx.conf with the one for wynno
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # or try 0755 if there is nginx error
