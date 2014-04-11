@@ -44,18 +44,22 @@
 - name: Update ansible_ssh_port to the new SSH port
   set_fact: ansible_ssh_port={{ new_ssh_port }}
   # Cf. http://serverfault.com/questions/545978/how-to-handle-ssh-port-changes-with-ansible
-  
+
+  # Disable password authentication for SSH, then restart SSH
 - name: Disable password authentication
-  # Disallow password authentication
   lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+
+- name: Disable Challenge Response authentication
   lineinfile: dest=/etc/ssh/sshd_config regexp="^ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
+
+- name: Do not permit empty passwords
   lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
+
+- name: Disable PAM
   lineinfile: dest=/etc/ssh/sshd_config regexp="^UsePAM" line="UsePAM no" state=present
   notify: Restart ssh
-  # TODO: verify that this block of multiple lineinfile commands is working, i.e. that all lines get executed
-  # by inspecting the sshd_config file
 
-- name: Enable key-based authentication
+- name: Enable key-based authentication and restart SSH
   # Enable key-based authentication
   lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
   notify: Restart ssh
@@ -67,8 +71,8 @@
   shell: sudo ufw default allow outgoing
 
 - name: Setup ufw to only allow incoming SSH connections
-  # For now we'll allow from all IP addresses, since I don't have a static one
-  shell: ufw allow 202/tcp
+  # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
+  shell: ufw allow 202/tcp from 54.187.29.221
 
 - name: Enable ufw
   shell: echo 'y' | ufw enable
