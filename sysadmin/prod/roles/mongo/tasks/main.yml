@@ -1,5 +1,22 @@
 ---
 
+- name: Install pip required for Ansible pip module
+  apt: pkg=python-pip state=present
+  sudo: yes
+
+- name: Install virtualenv required for Ansible pip module if we ever want to use virtualenv
+  apt: pkg=python-virtualenv state=present
+  sudo: yes
+
+- name: Install build-essential required for PyMongo
+  apt: pkg=build-essential state=present
+  sudo: yes
+
+- name: Install python-dev required for PyMongo
+  apt: pkg=python-dev state=present
+  sudo: yes
+
+  # Install MongoDB
 - name: Import the public key for MongoDB used by the package management system
   shell: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
@@ -8,6 +25,27 @@
 
 - name: Update apt
   apt: update_cache=yes
+  sudo: yes
 
 - name: Install MongoDB
   apt: pkg=mongodb-org state=present
+  sudo: yes
+
+- name: Create db directory
+  command: mkdir /home/deploy/db
+
+- name: Create data directory within /db
+  command: mkdir /home/deploy/db/data
+
+- name: Make mongod:mongod the owner of /db/data
+  command: chown mongod:mongod ~/db/data
+  sudo: yes
+
+- name: Install PyMongo which is required for mongodb_user tasks below
+  pip: name=pymongo
+
+- name: Create the master mongo user who creates other user accounts
+  mongodb_user: database=admin user=master roles='userAdminAnyDatabase'
+
+- name: Create the user used by the app to read and write
+  mongodb_user: database=wynno-{{ app_env }} user={{ app_db_user }}

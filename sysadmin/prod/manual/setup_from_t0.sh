@@ -103,7 +103,7 @@ python digital_ocean --droplets | python -mjson.tool > dynamic_inventory.json
 #      Next use that JSON file to create the production inventory file which Ansible will use
 python -c "import pyhelpers; pyhelpers.create_ansible_production_file()"
 
-# 6. Update json files in lib/keys/prod and dist/lib/keys/prod with IP addresses (public or private as necessary) of droplets
+# 6. Update json file in dist/lib/keys/prod with IP addresses (public or private as necessary) of droplets
 
 #      Keeping the specification of server addresses within json files, as opposed to using Ansible to set environment
 #      variables on each server which are then read by the application, allows us not to need a shell script for the dev version

@@ -4,7 +4,7 @@ node_modules
 public/bower_components
 db_admin_steps.txt
 lib/config/keys
-dist/lib/keys
+dist/lib/config/keys
 lib/config/ssl
 dist/lib/config/ssl
 python/output.dot
@@ -14,10 +14,12 @@ sysadmin/prod/keys
 sysadmin/prod/roles/nginx/files/www_wynno_com.pem
 sysadmin/prod/roles/nginx/files/www_wynno_com.key
 sysadmin/prod/roles/nginx/files/www_wynno_com.csr
+sysadmin/prod/group_vars/mongoservers
 sysadmin/prod/manual/hostname_ssh_key_ids.json
 sysadmin/prod/manual/preexisting_droplets.json
 sysadmin/prod/manual/production
 sysadmin/prod/manual/dynamic_inventory.json
 sysadmin/prod/manual/dynamic_inventory_dict.json
 sysadmin/prod/manual/hostnames
+sysadmin/prod/manual/pip_packages
 sysadmin/prod/manual/pip_packages

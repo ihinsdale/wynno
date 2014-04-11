@@ -72,7 +72,7 @@
 
 - name: Setup ufw to only allow incoming SSH connections
   # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
-  shell: ufw allow 202/tcp from 54.187.29.221
+  shell: ufw allow 202/tcp from {{ gateway_perm_ip }}
 
 - name: Enable ufw
   shell: echo 'y' | ufw enable
@@ -88,6 +88,9 @@
 
 - name: Make logwatch mail {{ logwatch_email }} daily
   lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ logwatch_email }} --detail high" state=present create=yes
+
+- name: Make the NODE_ENV environment variable a system-wide variable by adding simple shell script to /etc/profile.d
+  template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
 
 # Possible additional steps:
 # set time zone

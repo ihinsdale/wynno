@@ -1,6 +1,8 @@
 #!/bin/bash
-# Script for setting up the VPS from which Ansible will be run to setup a fresh version of wynno
-# and through which all SSH administration of wynno nodes must be done
+
+# Script for part 1 of setting up the VPS from which Ansible will be run to setup
+# a fresh version of wynno and through which all SSH administration of wynno
+# nodes must be done
 
 # Update software
 sudo apt-get update

@@ -1,8 +1,5 @@
 ---
 
-- name: Set the NODE_ENV environment variable to 'prod'
-  command: export NODE_ENV=prod
-
 - name: Copy over the folder of static assets that will be served by nginx
   copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist/public
 

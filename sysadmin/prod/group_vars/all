@@ -1,7 +1,9 @@
---- 
+---
 
+app_env: prod
+gateway_perm_ip: 54.187.29.221
 new_ssh_port: 202
 logwatch_email: engineering@wynno.com
-root_password: '$6$h3En5uu3Dm$rZfGHyljXiSjV.ZcvMTLIwuC7dljNfZVh/24T6/g/2vJgSv2U/e73eAre6lxJMRZ11/6ASw29knGO7k4Shdnk.'
-deploy_password: '$6$h3En5uu3Dm$NL4rXajVys4WXTtZ3.jiWOG8s2qgfEh0uvETDboftZikUFxATFvxPNzyJbyLEeQKEB5scjC8r9Gub7EfuB.od/'
+root_password: '$6$h3En5uu3Dm$nF5HO2K5USzvI24pHbX/YPKZQK5fKVg3xJVZRw/WFiDQl2osAwn5UWiwKkogEO1zbLPH3MKK3F5tvjGFdCv6P.'
+deploy_password: '$6$h3En5uu3Dm$dMyCzcIbOf9zF2go.fyeSo8dTn0JZNGS2N6JeLCRNR6oQO3SOR7/t0qxVLLZGfXj7ZRRK6TozyiO8nT.kJCTT0'
 # crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$h3En5uu3Dm")' | python -
