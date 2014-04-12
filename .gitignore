@@ -5,8 +5,6 @@ public/bower_components
 db_admin_steps.txt
 lib/config/keys
 dist/lib/config/keys
-lib/config/ssl
-dist/lib/config/ssl
 python/output.dot
 python/.DS_Store
 python/*.pdf
@@ -22,4 +20,4 @@ sysadmin/prod/manual/dynamic_inventory.json
 sysadmin/prod/manual/dynamic_inventory_dict.json
 sysadmin/prod/manual/hostnames
 sysadmin/prod/manual/pip_packages
-sysadmin/prod/manual/pip_packages
+sysadmin/prod/manual/ansible-digital_ocean.cache

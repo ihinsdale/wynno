@@ -1,5 +1,6 @@
-# Should perhaps not clone the entire git repo. No need to clone the actual
-# development code.
+#!/bin/bash
 
-# Really want we want is to get all of /dist and all of /sysadmin except for
-# what is gitignored in both of those folders
+# Get the production code for wynno and the necessary sysadmin files
+# for running Ansible from this VPS to setup the actual app nodes.
+
+git clone https://github.com/ihinsdale/wynno-prod-admin.git
