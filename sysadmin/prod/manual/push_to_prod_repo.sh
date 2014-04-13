@@ -5,6 +5,9 @@
 # its own repo (wynno-prod-admin) which is then pushed to GitHub and
 # can then be pulled from the wynno-gateway instance
 
+# NOTE THAT BECAUSE RELATIVE PATHS ARE USED, THIS SCRIPT MUST BE RUN FROM
+# THE IMMEDIATE FOLDER, I.E. WITHIN THE manual DIRECTORY
+
 # The wynno-prod-admin repo consists of everything in /dist which is not
 # gitignored and everything in sysadmin/prod which is not gitignored.
 
