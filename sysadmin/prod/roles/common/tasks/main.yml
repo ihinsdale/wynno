@@ -26,7 +26,7 @@
   # The task here just associates the key with the deploy user, so we don't have to SSH in as root
   authorized_key: user=deploy key="{{ item }}"
   with_file:
-    - ../../keys/{{ ansible_hostname }}.pub
+    - ../../../keys/{{ ansible_hostname }}.pub
 
 - name: Remove sudo group rights
   lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
