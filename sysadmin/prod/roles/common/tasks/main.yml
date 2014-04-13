@@ -22,6 +22,8 @@
   user: name=deploy password={{ deploy_password }}
 
 - name: Add authorized deploy key
+  # Note the public key is already on the VPS; it was put there by DO in the creation of the server
+  # The task here just associates the key with the deploy user, so we don't have to SSH in as root
   authorized_key: user=deploy key="{{ lookup('file', '../../keys/{{ ansible_hostname }}.pub') }}"
 
 - name: Remove sudo group rights
@@ -30,49 +32,34 @@
 - name: Add deploy user to sudoers
   lineinfile: dest=/etc/sudoers regexp="deploy ALL" line="deploy ALL=(ALL) ALL" state=present
 
-- name: Disallow root access via SSH
+- name: Copy over our custom SSH config file
+  # Specifically our changes could have been specified vs. the default via the following lineinfile tasks:
   # Disallow root access
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
-  notify: Restart ssh
-
-- name: Change SSH port from 22 to 202
+  # lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
   # Change port from 22 to 202
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^Port" line="Port 202" state=present
+  # lineinfile: dest=/etc/ssh/sshd_config regexp="^Port" line="Port 202" state=present
+  # Disable password authentication
+  # lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  # lineinfile: dest=/etc/ssh/sshd_config regexp="^ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
+  # lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
+  # Enable key-based auth
+  # lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
+  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
   notify: Restart ssh
-  # Check that indeed port 22 has been REPLACED by 202, i.e. that both don't exist
 
 - name: Update ansible_ssh_port to the new SSH port
   set_fact: ansible_ssh_port={{ new_ssh_port }}
   # Cf. http://serverfault.com/questions/545978/how-to-handle-ssh-port-changes-with-ansible
 
-  # Disable password authentication for SSH, then restart SSH
-- name: Disable password authentication
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
-
-- name: Disable Challenge Response authentication
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
-
-- name: Do not permit empty passwords
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
-
-- name: Disable PAM
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^UsePAM" line="UsePAM no" state=present
-  notify: Restart ssh
-
-- name: Enable key-based authentication and restart SSH
-  # Enable key-based authentication
-  lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
-  notify: Restart ssh
-
 - name: Set default for ufw to deny all incoming connections
-  shell: sudo ufw default deny incoming
+  command: sudo ufw default deny incoming
 
 - name: Set default for ufw to allow all outgoing connections
-  shell: sudo ufw default allow outgoing
+  command: sudo ufw default allow outgoing
 
 - name: Setup ufw to only allow incoming SSH connections
   # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
-  shell: ufw allow 202/tcp from {{ gateway_perm_ip }}
+  command: ufw allow 202/tcp from {{ gateway_perm_ip }}
 
 - name: Enable ufw
   shell: echo 'y' | ufw enable
