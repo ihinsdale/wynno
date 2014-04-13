@@ -24,7 +24,9 @@
 - name: Add authorized deploy key
   # Note the public key is already on the VPS; it was put there by DO in the creation of the server
   # The task here just associates the key with the deploy user, so we don't have to SSH in as root
-  authorized_key: user=deploy key="{{ lookup('file', '../../keys/{{ ansible_hostname }}.pub') }}"
+  authorized_key: user=deploy key="{{ item }}"
+  with_file:
+    - ../../keys/{{ ansible_hostname }}.pub
 
 - name: Remove sudo group rights
   lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
