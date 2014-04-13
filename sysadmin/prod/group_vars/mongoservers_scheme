@@ -1,5 +1,6 @@
 ---
 
+master_user:
 master_user_password:
 app_db_user:
-app_db_user_password: 
+app_db_user_password:

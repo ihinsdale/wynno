@@ -28,7 +28,7 @@
   sudo: yes
 
 - name: Install MongoDB
-  apt: pkg=mongodb-org state=present
+  apt: pkg=mongodb-org=2.6.0 state=present
   sudo: yes
 
 - name: Create db directory
@@ -38,14 +38,18 @@
   command: mkdir /home/deploy/db/data
 
 - name: Make mongod:mongod the owner of /db/data
-  command: chown mongod:mongod ~/db/data
+  command: chown mongod:mongod /home/deploy/db/data
   sudo: yes
 
 - name: Install PyMongo which is required for mongodb_user tasks below
   pip: name=pymongo
 
 - name: Create the master mongo user who creates other user accounts
-  mongodb_user: database=admin user=master roles='userAdminAnyDatabase'
+  mongodb_user: database=admin user={{ master_user }} password={{ master_user_password }} roles='userAdminAnyDatabase'
 
 - name: Create the user used by the app to read and write
-  mongodb_user: database=wynno-{{ app_env }} user={{ app_db_user }}
+  mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }}
+  notify: Stop mongo
+
+- name: Launch mongo with authentication enabled and path to db
+  shell: mongod --auth --dbpath ~/db/data
