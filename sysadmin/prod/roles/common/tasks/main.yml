@@ -50,17 +50,21 @@
   notify: Restart ssh
 
 - name: Set default for ufw to deny all incoming connections
-  command: sudo ufw default deny incoming
+  command: ufw default deny incoming
+  sudo: yes
 
 - name: Set default for ufw to allow all outgoing connections
-  command: sudo ufw default allow outgoing
+  command: ufw default allow outgoing
+  sudo: yes
 
 - name: Setup ufw to only allow incoming SSH connections
   # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
-  command: ufw allow 202/tcp from {{ gateway_perm_ip }}
+  command: ufw allow proto tcp from {{ gateway_perm_ip }} port 202
+  sudo: yes
 
 - name: Enable ufw
   shell: echo 'y' | ufw enable
+  sudo: yes
 
 - name: Copy debconf selections so that Postfix can configure itself non-interactively
   copy: src=postfix_selections dest=/tmp/postfix_selections

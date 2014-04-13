@@ -11,12 +11,8 @@
   command: ufw allow 443/tcp
   sudo: yes
 
-- name: Disable ufw before enabling it again to reflect new settings
-  command: ufw disable
-  sudo: yes
-
-- name: Enable ufw
-  command: ufw enable
+- name: Reload ufw to enable the new settings
+  command: ufw reload
   sudo: yes
 
 # before installing nginx, update the version of nginx that gets installed by apt?

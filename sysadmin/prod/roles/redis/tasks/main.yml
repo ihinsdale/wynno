@@ -1,19 +1,12 @@
 ---
 # This playbook is executed on all wynno redis servers.
 
-- name: Set NODE_ENV environment variable to 'prod'
-  shell: export NODE_ENV=prod
-
 - name: Open up the redis port to connections from nodeservers
-  shell: ufw allow {{ redis_port }}/tcp from [someaddress]
+  command: ufw allow proto tcp from [someaddress] port {{ redis_port }}
   sudo: yes
 
-- name: Disable ufw before enabling it again, to reflect new settings
-  shell: ufw disable
-  sudo: yes
-
-- name: Enable ufw
-  shell: ufw enable
+- name: Reload ufw to reflect new settings
+  command: ufw reload
   sudo: yes
 
 - name: Install redis-server

@@ -53,3 +53,26 @@
 
 - name: Launch mongo with authentication enabled and path to db
   shell: mongod --auth --dbpath ~/db/data
+
+# RIGHT NOW IT SEEMS WE NEED TO HARDCODE THE OPENING OF THE FIREWALL FROM AS MANY
+# NODE SERVERS AND PYTHON SERVERS WE HAVE. THIS IS NOT IDEAL IF THE NUMBER OF
+# THOSE SERVERS GROWS. SOLUTION MAY BE TO USE A TEMPLATE CONFIG FILE FOR UFW? TEMPLATE
+# FILES ALLOW LOOPING OVER GROUP SERVERS
+# OR ELSE SOLUTION MAY BE TO USE ONE LINE TO OPEN UP TO A GROUP OF PRIVATE IPS
+# FOR MY SERVERS, IF THAT IS POSSIBLE
+- name: Open up mongo_port for db connections from node1
+  command: ufw allow proto tcp from {{ hostvars['node1']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
+  sudo: yes
+
+- name: Open up mongo_port for db connections from node2
+  command: ufw allow proto tcp from {{ hostvars['node2']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
+  sudo: yes
+
+- name: Open up mongo_port for db connections from python1
+  command: ufw allow proto tcp from {{ hostvars['python1']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
+  sudo: yes
+
+
+- name: Reload ufw to enable the new settings
+  command: ufw reload
+  sudo: yes

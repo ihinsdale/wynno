@@ -25,15 +25,11 @@
 - name: Open up the node port to connections from nginxservers (using private IP)
   # Since jinja loops are not possible in a playbook, if we ever add more than one nginx server,
   # it seems we will have to hardcode the hostname whose IP address we want like so
-  command: ufw allow {{ node_port }}/tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }}
+  command: ufw allow proto tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }} port {{ node_port }}
   sudo: yes
 
-- name: Disable ufw before enabling it again to reflect new settings
-  command: ufw disable
-  sudo: yes
-
-- name: Enable ufw
-  command: ufw enable
+- name: Reload ufw to enable the new firewall settings
+  command: ufw reload
   sudo: yes
 
 - name: Reboot - which should start server thanks to Upstart script
