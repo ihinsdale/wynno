@@ -32,8 +32,8 @@ logging.basicConfig();
 # connect to db
 env = os.environ.get('NODE_ENV')
 print 'Environment is ' + env
-credentials = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys.json"))))
-client = MongoClient('mongodb://' + credentials[env]['db']['username'] + ':' + credentials[env]['db']['password'] + '@' + credentials[env]['db']['host'] + ':' + str(credentials[env]['db']['port']) + '/wynno-' + env)
+credentials = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys/" + env + "/python.json"))))
+client = MongoClient('mongodb://' + credentials['db']['username'] + ':' + credentials['db']['password'] + '@' + credentials['db']['host'] + ':' + str(credentials['db']['port']) + '/wynno-' + env)
 db = client['wynno-' + env]
 tweets = db.tweets
 users = db.users

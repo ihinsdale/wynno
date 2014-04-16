@@ -1,0 +1,4 @@
+---
+
+- name: Stop mongo
+  service: name=mongodb state=stopped

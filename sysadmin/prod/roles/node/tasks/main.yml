@@ -1,0 +1,37 @@
+---
+# This playbook is executed on all wynno node.js webservers.
+
+- name: Make a directory for wynno files
+  command: mkdir wynno
+
+- name: Copy over the dist folder
+  copy: src=../../../../../dist dest=/home/deploy/wynno
+
+- name: Install nvm
+  shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+
+- name: Load nvm
+  command: source /home/deploy/.nvm/nvm.sh
+
+- name: Install latest production version of node 0.10.26
+  command: nvm install v0.10.26
+
+- name: Install node modules globally
+  command: npm install -g
+
+- name: Copy over the Upstart script which runs node via Forever
+  template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not
+
+- name: Open up the node port to connections from nginxservers (using private IP)
+  # Since jinja loops are not possible in a playbook, if we ever add more than one nginx server,
+  # it seems we will have to hardcode the hostname whose IP address we want like so
+  command: ufw allow proto tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }} port {{ node_port }}
+  sudo: yes
+
+- name: Reload ufw to enable the new firewall settings
+  command: ufw reload
+  sudo: yes
+
+- name: Reboot - which should start server thanks to Upstart script
+  command: reboot
+  sudo: yes

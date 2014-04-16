@@ -1,0 +1,24 @@
+---
+# This playbook is executed on all wynno redis servers.
+
+- name: Open up the redis port to connections from nodeservers
+  command: ufw allow proto tcp from [someaddress] port {{ redis_port }}
+  sudo: yes
+
+- name: Reload ufw to reflect new settings
+  command: ufw reload
+  sudo: yes
+
+- name: Install redis-server
+  apt: pkg=redis-server state=present
+  sudo: yes
+
+- name: Make a copy on the server of the default redis config file
+  command: cp /etc/redis/redis.conf /etc/redis/redis.conf.default
+
+- name: Copy over the redis configuration file
+  copy: src=redis.conf dest=/etc/redis/redis.conf
+  notify: Restart redis
+
+# Make redis start up on reboot
+# TODO

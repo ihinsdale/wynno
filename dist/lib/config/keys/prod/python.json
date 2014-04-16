@@ -1,0 +1,8 @@
+{
+  "db": {
+    "host": "(private_ip_address_added_by_setup_from_t0.sh)",
+    "port": 27017,
+    "username": "prodwynnoer",
+    "password": "skljOn23n8svKBjfwmxnvnoiw82h4JSfjnqwolZKnoiwe289KSFJnwnbzoqnOOnqj287r8719"
+  }
+}

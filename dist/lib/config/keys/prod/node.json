@@ -1,0 +1,34 @@
+{
+  "twitter": {
+    "consumer_key": "nbKFG4bMXF4eAsx4foddOg",
+    "consumer_secret": "ruSDVDbKnqobAhKG6fJy8b8VOnk97LA6bbANod2A"
+  },
+  "db": {
+    "host": "(private_ip_address_added_by_setup_from_t0.sh)",
+    "port": 27017,
+    "username": "prodwynnoer",
+    "password": "skljOn23n8svKBjfwmxnvnoiw82h4JSfjnqwolZKnoiwe289KSFJnwnbzoqnOOnqj287r8719"
+  },
+  "redis": {
+    "host": "(private_ip_address_added_by_setup_from_t0.sh)",
+    "port": 6379,
+    "dbs": {
+      "session": 0,
+      "fetching": 1
+    },
+    "pass": ""
+  },
+  "python": {
+    "host": "(private_ip_address_added_by_setup_from_t0.sh)",
+    "port": 4242
+  },
+  "secrets": {
+    "cookieParser": "hold me each evening by your side 91928491247",
+    "session": "woman its so hard to express 238194923491875"
+  },
+  "publicDNS": "wynno.com",
+  "port": 8080,
+  "testing": {
+    "mockAuth": false
+  }
+}

@@ -1,9 +1,11 @@
 'use strict';
 
 var zerorpc = require('zerorpc');
+var env = process.env.NODE_ENV;
+var credentials = require('../config/keys/' + env + '/node.json');
 
 var client = new zerorpc.Client();
-client.connect('tcp://127.0.0.1:4242');
+client.connect('tcp://' + credentials.python.host + ':' + credentials.python.port);
 
 exports.crunchTheNumbers = function(user_id, tweets, settingsPassingOn, callback) {
   // need to stringify the user_id ObjectId object before sending to Python
