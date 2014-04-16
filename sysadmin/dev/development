@@ -1,0 +1,2 @@
+[devservers]
+wynnodev ansible_ssh_host=54.187.91.140 ansible_ssh_private_key_file=~/.ssh/wynno-dev5.pem

@@ -15,7 +15,12 @@
   command: ufw reload
   sudo: yes
 
-# before installing nginx, update the version of nginx that gets installed by apt?
+- name: Add nginx PPA
+  shell: add-apt-repository ppa:nginx/stable
+  sudo: yes
+
+- name: Update APT package cache
+  apt: update_cache=yes
 
 - name: Install nginx
   apt: pkg=nginx state=installed update_cache=true

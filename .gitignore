@@ -8,6 +8,11 @@ dist/lib/config/keys
 python/output.dot
 python/.DS_Store
 python/*.pdf
+sysadmin/dev/server.crt
+sysadmin/dev/server.csr
+sysadmin/dev/server.key
+sysadmin/dev/server.key.org
+sysadmin/dev/wynno-dev5.pem
 sysadmin/prod/keys
 sysadmin/prod/roles/nginx/files/www_wynno_com.pem
 sysadmin/prod/roles/nginx/files/www_wynno_com.key

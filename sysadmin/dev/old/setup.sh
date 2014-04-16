@@ -80,6 +80,7 @@ npm install -g
 # Install nginx
 sudo apt-get install nginx
 
+# Next
 # Setup DB accounts
 # Copy nginx.conf to its necessary /etc location and restart nginx
 # Open up screen session and make sure redis is running, Mongo, Python, node, nginx

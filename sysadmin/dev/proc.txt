@@ -1,7 +1,11 @@
-1. Create EC2 instance with port 80 and 443 open to all IPs and port 22 open to my IP
+1. Create EC2 instance with port 22, port 202, port 80, port 443 open to my IP
 2. Change SSH port to 202
-3. Change security group for the instance so that port 22 is now closed and 202 open to my IP
-4. SSH back into the instance
-5. Mount the snapshotted db volume to ~/db/data
-6. Run sysadmin/dev/setup.sh
-6.
+3. Run the Ansible site.yml playbook with the development inventory file
+4. SSH into the instance on Port 202
+5. Open up a screen session
+6. Launch in separate windows:
+   - nodemon server.js
+   - mongod --auth --dbpath ~/db/data
+   - python server.py
+   - sudo service redis-server start
+   - sudo service nginx restart

@@ -1,0 +1,288 @@
+---
+- hosts: devservers # Note this is meant to be run on an AWS EC2 instance
+  vars:
+    app_env: dev
+    master_user: master
+    master_user_password: masterpass
+    app_db_user: wynnoman
+    app_db_user_password: awerou2309doizlwoi938274j498s88230ajcklaow838
+    mongo_port: 27017
+    db_volume_name: /dev/xvdf
+  remote_user: ubuntu
+
+  tasks:
+
+    # 1. Basic server config
+
+  - name: Update APT package cache
+    apt: update_cache=yes
+
+  - name: Run apt-get upgrade
+    apt: upgrade=yes
+
+  - name: Install fail2ban
+    apt: pkg=fail2ban state=present
+
+  - name: Copy over my custom fail2ban config file
+    # This file contains wynno-specific email address, ssh port (202), and activates email notifications
+    copy: src=jail.local dest=/etc/fail2ban/jail.local
+    notify: Restart fail2ban
+
+  - name: Copy over our custom SSH config file
+    # Specifically our changes could have been specified vs. the default via the following lineinfile tasks:
+    # Disallow root access
+    # lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+    # Change port from 22 to 202
+    # lineinfile: dest=/etc/ssh/sshd_config regexp="^Port" line="Port 202" state=present
+    # Disable password authentication
+    # lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+    # lineinfile: dest=/etc/ssh/sshd_config regexp="^ChallengeResponseAuthentication" line="ChallengeResponseAuthentication no" state=present
+    # lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitEmptyPasswords" line="PermitEmptyPasswords no" state=present
+    # Enable key-based auth
+    # lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
+    template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
+    notify: Restart ssh
+
+# In production environment, we'd set up firewall rules via ufw at this point
+# We don't need to do that since we'll use AWS' security groups feature to accomplish the same thing
+# Keeps setup simpler: all we need is to change SSH port access to 202 after this Ansible setup
+# is complete, and make sure ports 80 and 443 are open. And open only to my IP.
+
+  - name: Copy debconf selections so that Postfix can configure itself non-interactively
+    copy: src=postfix_selections dest=/tmp/postfix_selections
+
+  - name: Set up Postfix to relay mail
+    command: debconf-set-selections /tmp/postfix_selections
+
+  - name: Install logwatch
+    apt: pkg=logwatch state=present
+
+  - name: Make logwatch mail {{ logwatch_email }} daily
+    lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ logwatch_email }} --detail high" state=present create=yes
+
+  - name: Make the NODE_ENV environment variable a system-wide variable by adding simple shell script to /etc/profile.d
+    template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
+
+  - name: Install screen
+    apt: pkg=screen state=present
+    sudo: yes
+
+    # 2. Setup MongoDB
+
+  - name: Install pip required for Ansible pip module
+    apt: pkg=python-pip state=present
+    sudo: yes
+
+  - name: Install virtualenv required for Ansible pip module if we ever want to use virtualenv
+    apt: pkg=python-virtualenv state=present
+    sudo: yes
+
+  - name: Install build-essential required for PyMongo
+    apt: pkg=build-essential state=present
+    sudo: yes
+
+  - name: Install python-dev required for PyMongo
+    apt: pkg=python-dev state=present
+    sudo: yes
+
+  - name: Import the public key for MongoDB used by the package management system
+    shell: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+  - name: Create a list file for MongoDB
+    shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+  - name: Update apt
+    apt: update_cache=yes
+    sudo: yes
+
+  - name: Install MongoDB
+    apt: pkg=mongodb-org=2.6.0 state=present
+    sudo: yes
+
+  - name: Create db directory
+    shell: mkdir ~/db
+
+  - name: Create data directory within /db
+    shell: mkdir ~/db/data
+
+  - name: Make mongod:mongod the owner of /db/data
+    shell: chown mongod:mongod ~/db/data
+    sudo: yes
+
+  - name: Mount the EBS volume that contains a snapshot of the DB
+    shell: mount {{ db_volume_name }} ~/db/data
+    sudo: yes
+
+  - name: Install PyMongo which is required for mongodb_user tasks below
+    pip: name=pymongo
+
+  - name: Create the master mongo user who creates other user accounts
+    mongodb_user: database=admin user={{ master_user }} password={{ master_user_password }} roles='userAdminAnyDatabase'
+
+  - name: Create the user used by the app to read and write
+    mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }}
+    notify: Stop mongo
+
+  # We will wait to launch mongod until after the playbook is finished, manually
+  # Using mongod --auth --dbpath ~/db/data
+
+    # 3. Setup Redis
+
+  - name: Install redis-server
+    apt: pkg=redis-server state=present
+    sudo: yes
+
+    # 4. Setup Python necessaries
+
+  - name: Install python-setuptools
+    apt: pkg=python-setuptools state=present
+    sudo: yes
+
+  - name: Install python-pip
+    apt: pkg=python-pip state=present
+    sudo: yes
+
+  - name: Install python-dev
+    apt: pkg=python-dev state=present
+    sudo: yes
+
+  - name: Install virtualenv
+    apt: pkg=python-virtualenv state=present
+    sudo: yes
+
+  - name: Install libzmq-dev
+    apt: pkg=libzmq-dev state=present
+    sudo: yes
+
+  - name: Install PyZMQ
+    pip: name=pyzmq
+    sudo: yes
+
+  - name: Install PyMongo
+    pip: name=pymongo
+    sudo: yes
+
+  - name: Install numpy
+    pip: name=numpy
+    sudo: yes
+
+  - name: Install scipy
+    apt: pkg=python-scipy state=present
+    sudo: yes
+
+  - name: Install pyyaml
+    pip: name=pyyaml
+    sudo: yes
+
+  - name: Install nltk
+    pip: name=nltk
+    sudo: yes
+
+  - name: Install libevent-dev
+    apt: pkg=libevent-dev state=present
+    sudo: yes
+
+  - name: Install ZeroRPC
+    pip: name=zerorpc
+    sudo: yes
+
+  - name: Install scikit-learn
+    pip: name=scikit-learn
+    sudo: yes
+
+  - name: Install python-pygraphviz
+    apt: pkg=python-pygraphviz state=present
+    sudo: yes
+
+  - name: Install python-pydot
+    apt: pkg = python-pydot state=present
+    # We don't want to use pip for this, there's a bug with the pip install
+
+  - name: Install unidecode
+    pip: name=unidecode
+    sudo: yes
+
+  - name: Install punkt sentence tokenizer for nltk
+    command: python -m nltk.downloader punkt
+
+  - name: Install stopwords corpus for nltk
+    command: python -m nltk.downloader stopwords
+
+    # 5. Setup nginx
+
+  - name: Add nginx PPA
+    shell: add-apt-repository ppa:nginx/stable
+    sudo: yes
+
+  - name: Update APT package cache
+    apt: update_cache=yes
+
+  - name: Install nginx
+    apt: pkg=nginx state=installed update_cache=true
+    notify:
+      - Start nginx
+
+  - name: Set nginx to start on boot
+    command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
+
+  - name: Copy over the SSL .crt credential
+    copy: src=server.crt dest=/etc/nginx/ssl/server.crt
+
+  - name: Copy over SSL .csr credential
+    copy: src=server.csr dest=/etc/nginx/ssl/server.csr
+
+  - name: Copy over SSL .key credential
+    copy: src=server.key dest=/etc/nginx/ssl/server.key
+
+  - name: Copy over SSL .key.org credential
+    copy: src=server.key.org dest=/etc/nginx/ssl/server.key.org
+
+  - name: Make a copy of the default nginx.conf file if such copy does not already exist
+    command: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default creates=/etc/nginx/nginx.conf.default
+
+  - name: Replace nginx.conf with the one for wynno
+    template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # or try 0755 if there is nginx error
+    notify:
+      - Restart nginx
+
+    # 6. Setup node.js
+
+  - name: Install nvm
+    shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+
+  - name: Load nvm
+    shell: source ~/.nvm/nvm.sh
+
+  - name: Install latest production version of node 0.10.26
+    command: nvm install v0.10.26
+
+  - name: Install node modules globally
+    command: npm install -g
+
+  - name: Reboot - which should start server thanks to Upstart script
+    command: reboot
+    sudo: yes
+
+    # 7. Get the app code
+  - name: Clone the wynno repo
+    git: https://github.com/ihinsdale/wynno.git dest=/home/ubuntu
+
+    # 8. Copy over app config files, i.e. node.json and python.json
+
+  - name: Copy over the node.json file
+    copy: src=../../dist/lib/config/keys/dev/node.json dest=/home/ubuntu/wynno/dist/lib/config/keys/dev/node.json
+
+  - name: Copy over the python.json file
+    copy: src=../../dist/lib/config/keys/dev/python.json dest=/home/ubuntu/wynno/dist/lib/config/keys/dev/python.json
+
+  handlers:
+    - name: Restart ssh
+      service: name=ssh state=restarted
+    - name: Restart fail2ban
+      service: name=fail2ban state=restarted
+    - name: Stop mongo
+      service: name=mongodb state=stopped
+    - name: Start nginx
+      service: name=nginx state=started
+    - name: Restart nginx
+      service: name=nginx state=restarted

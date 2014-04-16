@@ -21,4 +21,4 @@
   notify: Restart redis
 
 # Make redis start up on reboot
-# TODO
+# TODO http://redis.io/topics/quickstart
