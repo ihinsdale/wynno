@@ -19,6 +19,9 @@ angular.module('wynnoApp.controllers')
   $scope.$on('$locationChangeSuccess', function(evt, next, current) {
     console.log('locationchangesuccess listener in navctrl evaluated');
 
+    // Register a new pageview with Google Analytics
+    $window.ga('send', 'pageview', { page: $location.path() }); // Cf. comment by CWSpear at http://stackoverflow.com/a/10713709
+
     // update which view is active and whether that view requires authentication
     // can't parse the URL using $location, because that only parses the current url, not the next one we're going to
     var urlParsingNode = document.createElement('a');
@@ -357,6 +360,3 @@ angular.module('wynnoApp.controllers')
   // initialize by creating new filter
   $scope.newDraftFilter();
 });
-
-
-
