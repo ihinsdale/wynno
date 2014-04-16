@@ -72,7 +72,6 @@
   command: ufw allow proto tcp from {{ hostvars['python1']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
   sudo: yes
 
-
 - name: Reload ufw to enable the new settings
   command: ufw reload
   sudo: yes

@@ -29,11 +29,11 @@ if [ $RESULT -eq 0 ]; then
       python -c "import pyhelpers; print pyhelpers.clear_droplet_namespace()"
     else
       echo "Preexisting droplets untouched. Exiting script."
-      exit 0
+      exit 2
     fi
   else
     echo "Preexisting droplets untouched. Exiting script."
-    exit 0
+    exit 2
   fi
 fi
 
