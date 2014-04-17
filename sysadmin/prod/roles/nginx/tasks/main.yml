@@ -16,11 +16,8 @@
   sudo: yes
 
 - name: Add nginx PPA
-  shell: add-apt-repository ppa:nginx/stable
+  apt_repository: repo='ppa:nginx/stable'
   sudo: yes
-
-- name: Update APT package cache
-  apt: update_cache=yes
 
 - name: Install nginx
   apt: pkg=nginx state=installed update_cache=true
@@ -30,16 +27,24 @@
 - name: Set nginx to start on boot
   command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
 
+- name: Make directory for ssl credentials
+  shell: mkdir -p /etc/nginx/ssl
+  sudo: yes
+
 - name: Copy over the SSL .pem credential
   copy: src=www_wynno_com.pem dest=/etc/nginx/ssl/www_wynno_com.pem
+  sudo: yes
 
 - name: Copy over SSL .key credential
   copy: src=www_wynno_com.key dest=/etc/nginx/ssl/www_wynno_com.key
+  sudo: yes
 
 - name: Make a copy of the default nginx.conf file if such copy does not already exist
   command: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default creates=/etc/nginx/nginx.conf.default
+  sudo: yes
 
 - name: Replace nginx.conf with the one for wynno
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # or try 0755 if there is nginx error
+  sudo: yes
   notify:
     - Restart nginx

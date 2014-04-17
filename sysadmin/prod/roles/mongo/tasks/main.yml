@@ -31,15 +31,8 @@
   apt: pkg=mongodb-org=2.6.0 state=present
   sudo: yes
 
-- name: Create db directory
-  command: mkdir /home/deploy/db
-
-- name: Create data directory within /db
-  command: mkdir /home/deploy/db/data
-
-- name: Make mongod:mongod the owner of /db/data
-  command: chown mongod:mongod /home/deploy/db/data
-  sudo: yes
+- name: Create ~/db/data directory
+  shell: mkdir -p ~/db/data
 
 - name: Install PyMongo which is required for mongodb_user tasks below
   pip: name=pymongo

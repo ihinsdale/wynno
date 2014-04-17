@@ -8,6 +8,7 @@
     app_db_user_password: awerou2309doizlwoi938274j498s88230ajcklaow838
     mongo_port: 27017
     db_volume_name: /dev/xvdf
+    logwatch_email: engineering@wynno.com
   remote_user: ubuntu
 
   tasks:
@@ -16,17 +17,21 @@
 
   - name: Update APT package cache
     apt: update_cache=yes
+    sudo: yes
 
   - name: Run apt-get upgrade
     apt: upgrade=yes
+    sudo: yes
 
   - name: Install fail2ban
     apt: pkg=fail2ban state=present
+    sudo: yes
 
   - name: Copy over my custom fail2ban config file
     # This file contains wynno-specific email address, ssh port (202), and activates email notifications
     copy: src=jail.local dest=/etc/fail2ban/jail.local
     notify: Restart fail2ban
+    sudo: yes
 
   - name: Copy over our custom SSH config file
     # Specifically our changes could have been specified vs. the default via the following lineinfile tasks:
@@ -42,6 +47,7 @@
     # lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
     template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
     notify: Restart ssh
+    sudo: yes
 
 # In production environment, we'd set up firewall rules via ufw at this point
 # We don't need to do that since we'll use AWS' security groups feature to accomplish the same thing
@@ -50,18 +56,22 @@
 
   - name: Copy debconf selections so that Postfix can configure itself non-interactively
     copy: src=postfix_selections dest=/tmp/postfix_selections
+    sudo: yes
 
   - name: Set up Postfix to relay mail
     command: debconf-set-selections /tmp/postfix_selections
 
   - name: Install logwatch
     apt: pkg=logwatch state=present
+    sudo: yes
 
   - name: Make logwatch mail {{ logwatch_email }} daily
     lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ logwatch_email }} --detail high" state=present create=yes
+    sudo: yes
 
   - name: Make the NODE_ENV environment variable a system-wide variable by adding simple shell script to /etc/profile.d
     template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
+    sudo: yes
 
   - name: Install screen
     apt: pkg=screen state=present
@@ -100,21 +110,15 @@
     sudo: yes
 
   - name: Create db directory
-    shell: mkdir ~/db
-
-  - name: Create data directory within /db
-    shell: mkdir ~/db/data
-
-  - name: Make mongod:mongod the owner of /db/data
-    shell: chown mongod:mongod ~/db/data
-    sudo: yes
+    shell: mkdir -p /home/ubuntu/db
 
   - name: Mount the EBS volume that contains a snapshot of the DB
-    shell: mount {{ db_volume_name }} ~/db/data
+    shell: mountpoint -q /home/ubuntu/db || mount {{ db_volume_name }} /home/ubuntu/db
     sudo: yes
 
   - name: Install PyMongo which is required for mongodb_user tasks below
     pip: name=pymongo
+    sudo: yes
 
   - name: Create the master mongo user who creates other user accounts
     mongodb_user: database=admin user={{ master_user }} password={{ master_user_password }} roles='userAdminAnyDatabase'
@@ -195,7 +199,8 @@
     sudo: yes
 
   - name: Install python-pydot
-    apt: pkg = python-pydot state=present
+    apt: pkg=python-pydot state=present
+    sudo: yes
     # We don't want to use pip for this, there's a bug with the pip install
 
   - name: Install unidecode
@@ -211,37 +216,42 @@
     # 5. Setup nginx
 
   - name: Add nginx PPA
-    shell: add-apt-repository ppa:nginx/stable
+    apt_repository: repo='ppa:nginx/stable'
     sudo: yes
-
-  - name: Update APT package cache
-    apt: update_cache=yes
 
   - name: Install nginx
     apt: pkg=nginx state=installed update_cache=true
+    sudo: yes
     notify:
       - Start nginx
 
-  - name: Set nginx to start on boot
-    command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
+  - name: Make directory for ssl credentials
+    shell: mkdir -p /etc/nginx/ssl
+    sudo: yes
 
   - name: Copy over the SSL .crt credential
     copy: src=server.crt dest=/etc/nginx/ssl/server.crt
+    sudo: yes
 
   - name: Copy over SSL .csr credential
     copy: src=server.csr dest=/etc/nginx/ssl/server.csr
+    sudo: yes
 
   - name: Copy over SSL .key credential
     copy: src=server.key dest=/etc/nginx/ssl/server.key
+    sudo: yes
 
   - name: Copy over SSL .key.org credential
     copy: src=server.key.org dest=/etc/nginx/ssl/server.key.org
+    sudo: yes
 
   - name: Make a copy of the default nginx.conf file if such copy does not already exist
     command: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default creates=/etc/nginx/nginx.conf.default
+    sudo: yes
 
   - name: Replace nginx.conf with the one for wynno
-    template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # or try 0755 if there is nginx error
+    copy: src=nginx.conf dest=/etc/nginx/nginx.conf mode=0644 # or try 0755 if there is nginx error
+    sudo: yes
     notify:
       - Restart nginx
 
@@ -250,22 +260,16 @@
   - name: Install nvm
     shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 
-  - name: Load nvm
-    shell: source ~/.nvm/nvm.sh
-
   - name: Install latest production version of node 0.10.26
-    command: nvm install v0.10.26
-
-  - name: Install node modules globally
-    command: npm install -g
-
-  - name: Reboot - which should start server thanks to Upstart script
-    command: reboot
-    sudo: yes
+    shell: . ~/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
 
     # 7. Get the app code
+
   - name: Clone the wynno repo
-    git: https://github.com/ihinsdale/wynno.git dest=/home/ubuntu
+    git: repo=https://github.com/ihinsdale/wynno.git dest=/home/ubuntu
+
+  - name: Install node modules used in production globally
+    npm: global=yes production=yes
 
     # 8. Copy over app config files, i.e. node.json and python.json
 
@@ -278,8 +282,10 @@
   handlers:
     - name: Restart ssh
       service: name=ssh state=restarted
+      sudo: yes
     - name: Restart fail2ban
       service: name=fail2ban state=restarted
+      sudo: yes
     - name: Stop mongo
       service: name=mongodb state=stopped
     - name: Start nginx

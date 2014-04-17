@@ -6,12 +6,15 @@
 
 - name: Update APT package cache
   apt: update_cache=yes
+  sudo: yes
 
 - name: Run apt-get upgrade
   apt: upgrade=yes
+  sudo: yes
 
 - name: Install fail2ban
   apt: pkg=fail2ban state=present
+  sudo: yes
 
 - name: Copy over my custom fail2ban config file
   # This file contains wynno-specific email address, ssh port, and activates email notifications
