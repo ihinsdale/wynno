@@ -93,7 +93,7 @@ python -c "import pyhelpers; pyhelpers.create_droplets()"
 #      So I have just created a helper function to create my own dynamic_inventory.json
 #      Which looks exactly the same. Except my own dynamic_inventory also only includes
 #      the droplets which are newly created, i.e. the ones in new_droplets_config.json)
-python -c "import pyhelpers; pyhelpers.get_dynamic_new_inventory()" | python -mjson.tool > dynamic_inventory.json
+python -c "import pyhelpers; print pyhelpers.get_dynamic_new_inventory()" | python -mjson.tool > dynamic_inventory.json
 
 exit
 
