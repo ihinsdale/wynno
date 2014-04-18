@@ -23,6 +23,20 @@
     apt: upgrade=yes
     sudo: yes
 
+  - name: Upgrade the kernel
+    apt: pkg=linux-virtual state=latest
+    sudo: yes
+    register: kernelup
+
+  - name: Reboot
+    command: reboot
+    sudo: yes
+    when: kernelup.changed
+
+  - name: Wait for server to boot up again
+    local_action: wait_for host={{ ansible_ssh_host }} port=22 delay=120
+    when: kernelup.changed
+
   - name: Install fail2ban
     apt: pkg=fail2ban state=present
     sudo: yes
@@ -46,8 +60,8 @@
     # Enable key-based auth
     # lineinfile: dest=/etc/ssh/sshd_config regexp="^PubkeyAuthentication" line="PubkeyAuthentication yes" state=present
     template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
-    notify: Restart ssh
     sudo: yes
+    notify: Restart ssh
 
 # In production environment, we'd set up firewall rules via ufw at this point
 # We don't need to do that since we'll use AWS' security groups feature to accomplish the same thing
@@ -265,11 +279,18 @@
 
     # 7. Get the app code
 
-  - name: Clone the wynno repo
-    git: repo=https://github.com/ihinsdale/wynno.git dest=/home/ubuntu
+  - name: Install git
+    apt: pkg=git-core state=present
+    sudo: yes
 
-  - name: Install node modules used in production globally
-    npm: global=yes production=yes
+  - name: Copy over SSH key for use with Github
+    copy: src=~/.ssh/github dest=/home/ubuntu/github
+
+  - name: Clone the wynno repo
+    git: repo=ssh://git@github.com/ihinsdale/wynno.git dest=/home/ubuntu/wynno key_file=/home/ubuntu/github accept_hostkey=yes
+
+  - name: Install node modules used in production locally
+    npm: path=/home/ubuntu/wynno/dist production=yes executable=/home/ubuntu/.nvm/v0.10.26/bin/npm
 
     # 8. Copy over app config files, i.e. node.json and python.json
 
@@ -287,7 +308,8 @@
       service: name=fail2ban state=restarted
       sudo: yes
     - name: Stop mongo
-      service: name=mongodb state=stopped
+      service: name=mongod state=stopped
+      sudo: yes
     - name: Start nginx
       service: name=nginx state=started
     - name: Restart nginx

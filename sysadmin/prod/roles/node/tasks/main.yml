@@ -17,7 +17,7 @@
   command: nvm install v0.10.26
 
 - name: Install node modules globally
-  command: npm install -g
+  npm: TODO
 
 - name: Copy over the Upstart script which runs node via Forever
   template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not

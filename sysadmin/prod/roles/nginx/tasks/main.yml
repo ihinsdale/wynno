@@ -15,6 +15,10 @@
   command: ufw reload
   sudo: yes
 
+- name: Install python-software-properties so we can add PPA
+  apt: pkg=python-software-properties state=present
+  sudo: yes
+
 - name: Add nginx PPA
   apt_repository: repo='ppa:nginx/stable'
   sudo: yes
@@ -26,6 +30,7 @@
 
 - name: Set nginx to start on boot
   command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
+  # HOW TO MAKE THIS NOT CAUSE AN ERROR IF IT'S ALREADY SET TO START ON BOOT?
 
 - name: Make directory for ssl credentials
   shell: mkdir -p /etc/nginx/ssl
