@@ -95,8 +95,6 @@ python -c "import pyhelpers; pyhelpers.create_droplets()"
 #      the droplets which are newly created, i.e. the ones in new_droplets_config.json)
 python -c "import pyhelpers; print pyhelpers.get_dynamic_new_inventory()" | python -mjson.tool > dynamic_inventory.json
 
-exit
-
 #      Next use that JSON file to create the production inventory file which Ansible will use
 python -c "import pyhelpers; pyhelpers.create_ansible_production_file()"
 
