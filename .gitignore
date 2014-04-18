@@ -17,7 +17,6 @@ sysadmin/prod/keys
 sysadmin/prod/roles/nginx/files/www_wynno_com.pem
 sysadmin/prod/roles/nginx/files/www_wynno_com.key
 sysadmin/prod/roles/nginx/files/www_wynno_com.csr
-sysadmin/prod/group_vars/mongoservers
 sysadmin/prod/manual/hostname_ssh_key_ids.json
 sysadmin/prod/manual/preexisting_droplets.json
 sysadmin/prod/manual/production

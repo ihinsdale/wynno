@@ -18,7 +18,8 @@
 
   # Install MongoDB
 - name: Import the public key for MongoDB used by the package management system
-  shell: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+  shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+  sudo: yes
 
 - name: Create a list file for MongoDB
   shell: echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
@@ -41,30 +42,27 @@
   mongodb_user: database=admin user={{ master_user }} password={{ master_user_password }} roles='userAdminAnyDatabase'
 
 - name: Create the user used by the app to read and write
-  mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }}
-  notify: Stop mongo
+  mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }} roles='readWrite'
+
+- name: Stop mongo
+  # Note we want to stop mongo here rather than use a notify handler, so that we can then
+  # launch mongo again with the right parameters. (Maybe it's possible to use multiple notify handlers
+  # but I won't worry about that for now)
+  service: name=mongod state=stopped
+  sudo: yes
 
 - name: Launch mongo with authentication enabled and path to db
   shell: mongod --auth --dbpath ~/db/data
-
-# RIGHT NOW IT SEEMS WE NEED TO HARDCODE THE OPENING OF THE FIREWALL FROM AS MANY
-# NODE SERVERS AND PYTHON SERVERS WE HAVE. THIS IS NOT IDEAL IF THE NUMBER OF
-# THOSE SERVERS GROWS. SOLUTION MAY BE TO USE A TEMPLATE CONFIG FILE FOR UFW? TEMPLATE
-# FILES ALLOW LOOPING OVER GROUP SERVERS
-# OR ELSE SOLUTION MAY BE TO USE ONE LINE TO OPEN UP TO A GROUP OF PRIVATE IPS
-# FOR MY SERVERS, IF THAT IS POSSIBLE
-- name: Open up mongo_port for db connections from node1
-  command: ufw allow proto tcp from {{ hostvars['node1']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
   sudo: yes
 
-- name: Open up mongo_port for db connections from node2
-  command: ufw allow proto tcp from {{ hostvars['node2']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
-  sudo: yes
+- name: Copy script to open up mongo_port for db connections from nodeservers and pythonservers
+  # Note we use a template file here so we can loop over all hosts in the nodeservers group
+  # Otherwise we'd have to hardcode the names of the hosts to get the IPs for which we want to make ufw rules
+  template: src=ufw_allow_node_and_python_servers.sh.j2 dest=/home/deploy/ufw_allow_node_and_python_servers.sh
 
-- name: Open up mongo_port for db connections from python1
-  command: ufw allow proto tcp from {{ hostvars['python1']['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
-  sudo: yes
+- name: Execute that script to create the new ufw rules
+  shell: sh ufw_allow_node_and_python_servers.sh
 
-- name: Reload ufw to enable the new settings
-  command: ufw reload
+- name: Reload ufw to enable the new rules
+  ufw: state=reloaded
   sudo: yes

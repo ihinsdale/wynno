@@ -138,7 +138,7 @@
     mongodb_user: database=admin user={{ master_user }} password={{ master_user_password }} roles='userAdminAnyDatabase'
 
   - name: Create the user used by the app to read and write
-    mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }}
+    mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }} roles='readWrite'
     notify: Stop mongo
 
   # We will wait to launch mongod until after the playbook is finished, manually

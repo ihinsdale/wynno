@@ -1,24 +1,34 @@
 ---
 # This playbook is executed on all wynno production servers. It makes the virgin servers more secure.
+# We don't need to worry about sudo commands because all these are executed as the root user
 
 - name: Change root password
   user: name=root password={{ root_password }}
 
 - name: Update APT package cache
   apt: update_cache=yes
-  sudo: yes
 
 - name: Run apt-get upgrade
   apt: upgrade=yes
-  sudo: yes
+
+- name: Upgrade the kernel
+  apt: pkg=linux-virtual state=latest
+  register: kernelup
+
+- name: Reboot
+  command: reboot
+  when: kernelup.changed
+
+- name: Wait 2 minutes for server to boot up again
+  local_action: wait_for host={{ ansible_ssh_host }} port=22 delay=120
+  when: kernelup.changed
 
 - name: Install fail2ban
   apt: pkg=fail2ban state=present
-  sudo: yes
 
 - name: Copy over my custom fail2ban config file
   # This file contains wynno-specific email address, ssh port, and activates email notifications
-  copy: src=jail.local dest=/etc/fail2ban/jail.local
+  template: src=jail.local.j2 dest=/etc/fail2ban/jail.local
   notify: Restart fail2ban
 
 - name: Add deployment user
@@ -53,21 +63,20 @@
   notify: Restart ssh
 
 - name: Set default for ufw to deny all incoming connections
-  command: ufw default deny incoming
-  sudo: yes
+  ufw: direction=incoming policy=deny
 
 - name: Set default for ufw to allow all outgoing connections
-  command: ufw default allow outgoing
-  sudo: yes
+  ufw: direction=outgoing policy=allow
 
 - name: Setup ufw to only allow incoming SSH connections
   # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
-  command: ufw allow proto tcp from {{ gateway_perm_ip }} port 202
-  sudo: yes
+  ufw: rule=allow proto=tcp src={{ gateway_perm_ip }} port={{ new_ssh_port }}
+
+- name: Turn on ufw logging
+  ufw: logging=on
 
 - name: Enable ufw
-  shell: echo 'y' | ufw enable
-  sudo: yes
+  ufw: state=enabled
 
 - name: Copy debconf selections so that Postfix can configure itself non-interactively
   copy: src=postfix_selections dest=/tmp/postfix_selections
