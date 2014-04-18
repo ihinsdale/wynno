@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('NavCtrl', function($scope, $rootScope, $route, $location, $modal, $cookieStore, $timeout, TweetService, AuthService, FeedbackService) {
+.controller('NavCtrl', function($scope, $rootScope, $route, $location, $modal, $cookieStore, $timeout, $window, TweetService, AuthService, FeedbackService) {
   $scope.currentPathNeedsAuth = false;
   $scope.votesRequiredForNextSugg = null;
   $scope.undismissedSugg = null;
