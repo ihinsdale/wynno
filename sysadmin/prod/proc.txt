@@ -29,9 +29,7 @@ Truly from scratch:
 8.  Run setup_wynno_gateway_pt_2.sh. Once it finishes, exit the SSH connection.
 9.  scp dist/lib/config/keys/prod/node.json and dist/lib/config/keys/prod/python.json
     to corresponding location on the gateway instance.
-10. scp sysadmin/prod/group_vars/mongoservers to corresponding location on the
-    gateway instance.
-11. scp sysadmin/prod/roles/nginx/files/www_wynno_com.pem and
+10. scp sysadmin/prod/roles/nginx/files/www_wynno_com.pem and
     sysadmin/prod/roles/nginx/files/www_wynno_com.key to corresponding locations
     on the gateway instance.
-12. SSH into gateway instance and run setup_from_t0.sh.
+11. SSH into gateway instance and run setup_from_t0.sh.

@@ -11,6 +11,10 @@ export DO_CLIENT_ID=e70b7609d9c9b65b4278752f63467502
 
 #      So first we need to be able to get an inventory of the existing droplets from the DO API
 #      Which means first we need to install the requests library if it doesn't already exist
+#      So we need pip, which may not come with the system Python install if we're on Ubuntu
+if [ $OSTYPE == "linux-gnu" ]; then
+  sudo apt-get install python-pip
+fi
 sudo pip list > pip_packages
 if grep -q "requests" pip_packages
 then
