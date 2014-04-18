@@ -28,4 +28,3 @@ echo "Enter a commit message for this push to the wynno-prod-admin repo master b
 read commit_message
 git commit -m "$commit_message"
 git push origin master
-# Admin will need to enter their GitHub credentials at this point

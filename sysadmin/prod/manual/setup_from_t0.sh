@@ -121,7 +121,10 @@ python -c "import pyhelpers; pyhelpers.update_json_keys_ips()"
 
 # 7. Run the main Ansible playbook, configuring all the servers
 
-ansible-playbook -i production site.yml -e ansible_ssh_port=22
+echo "Enter the filename of the playbook you wish to run:"
+read playbook
+
+ansible-playbook -i production ../$playbook
 
 
 # 8. With the servers up and ready, use AWS Route 53 to point the DNS record for (www.)wynno.com to the nginx1 droplet
