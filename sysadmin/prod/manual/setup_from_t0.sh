@@ -10,6 +10,15 @@ export DO_API_KEY=38671d2f4cb02f0bb9b79a7af901e008
 export DO_CLIENT_ID=e70b7609d9c9b65b4278752f63467502
 
 #      So first we need to be able to get an inventory of the existing droplets from the DO API
+#      Which means first we need to install the requests library if it doesn't already exist
+sudo pip list > pip_packages
+if grep -q "requests" pip_packages
+then
+  echo "requests Python library already installed."
+else
+  echo "Installing requests Python library."
+  sudo pip install requests
+fi
 python -c "import pyhelpers; pyhelpers.fetch_preexisting_droplets()"
 
 #      Check if the droplet namespace is clear, i.e. no droplets already exist with hostnames of those to be created
@@ -58,16 +67,6 @@ done < hostnames
 
 #      First delete any keys that have the same names as the hostnames that will be created
 #      We'll use a Python script to do the actual deleting--it's easier to work with JSON in Python
-#      We need to install the requests library if it doesn't already exist
-sudo pip list > pip_packages
-if grep -q "requests" pip_packages
-then
-  echo "requests Python library already installed."
-else
-  echo "Installing requests Python library."
-  sudo pip install requests
-fi
-#      Now we can do the deleting
 python -c "import pyhelpers; pyhelpers.delete_samenamed_keys()"
 
 #      With the key namespace clear, upload the new public keys
