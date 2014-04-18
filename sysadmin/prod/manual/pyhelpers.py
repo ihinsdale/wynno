@@ -27,7 +27,7 @@ def fetch_preexisting_droplets():
       json.dump(droplets, outfile)
 
 def droplet_namespace_is_clear():
-  """ Checks whether there are any preexisting droplets with the same names as 
+  """ Checks whether there are any preexisting droplets with the same names as
       the hostnames of the new droplets to be created, as specified in new_droplets_config.json. """
   preexisting_droplets = json.load(open('preexisting_droplets.json'))
   for hostname in new_droplets:
@@ -43,8 +43,8 @@ def clear_droplet_namespace():
       # Find the preexisting droplet's id
       droplet_id = preexisting_droplets[hostname]['id']
       # Destroy
-      payload = { 
-        'scrub_data': True, # this becomes scrub_data=True in the request url, which DO seems to accept fine (as opposed to scrub_data=true, 
+      payload = {
+        'scrub_data': True, # this becomes scrub_data=True in the request url, which DO seems to accept fine (as opposed to scrub_data=true,
         # for which the requests Python library would require the value of scrub_data here to actually be 'true', i.e. the lowercase string
         # representation of the boolean. Just going to trust that the DO server handles True and true equally well; it does at least reject
         # non-Boolean values. This wouldn't be so important if the thing being controlled here weren't *scrubbing the droplet data*.)
@@ -120,8 +120,22 @@ def create_droplets():
     else:
       print "Successfully created the %s droplet." % hostname
 
+def get_dynamic_new_inventory():
+  """ Returns a JSON string (of an object with a droplets array) containing info about the new DO droplets. """
+  payload = { 'client_id': os.environ['DO_CLIENT_ID'], 'api_key': os.environ['DO_API_KEY'] }
+  r = requests.get('https://api.digitalocean.com/droplets/', params=payload)
+  res_json = r.json()
+  if res_json['status'] != 'OK':
+    raise Exception("There was a problem getting the DO inventory.")
+  else:
+    results = { "droplets": [] }
+    for each in res_json['droplets']:
+      if each['name'] in new_droplets:
+        results['droplets'].append(each)
+    return json.dumps(results)
+
 def create_ansible_production_file():
-  """ Uses dynamic_inventory.json (which was generated outside, in shell script) to 
+  """ Uses dynamic_inventory.json (which was generated outside, in shell script) to
       create Ansible production file with group names, ssh private key paths, etc. """
   dynamic_inventory = json.load(open('dynamic_inventory.json'))
   # Out of dynamic_inventory, make a dictionary with same info but with the new hostnames as keys
@@ -139,9 +153,9 @@ def create_ansible_production_file():
       outfile.write('\n')
 
 def update_json_keys_ips():
-  """ Adds appropriate private IPs of new droplets to the /dist/lib/config/keys/prod/ node.json and python.json files. 
-      Note we only add to the /dist folder because the /dist version is the only version that gets deployed (and 
-      that is partly because the nginx configuration even in the 'dev' environment is only set up to work with the /dist folder, 
+  """ Adds appropriate private IPs of new droplets to the /dist/lib/config/keys/prod/ node.json and python.json files.
+      Note we only add to the /dist folder because the /dist version is the only version that gets deployed (and
+      that is partly because the nginx configuration even in the 'dev' environment is only set up to work with the /dist folder,
       not the dev versions of the code. """
 
   node_json_abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../dist/lib/config/keys/prod/node.json'))
@@ -160,4 +174,3 @@ def update_json_keys_ips():
     json.dump(node_json, outfile)
   with open(python_json_abs_path, 'w') as outfile:
     json.dump(python_json, outfile)
-

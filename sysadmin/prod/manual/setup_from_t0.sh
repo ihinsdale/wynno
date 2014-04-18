@@ -87,25 +87,15 @@ python -c "import pyhelpers; pyhelpers.create_droplets()"
 
 
 # 5. Generate the inventory file based on these new droplets
-#      If we don't already have the DigitalOcean inventory plugin for Ansible, get it:
-if [ ! -f digital_ocean ]; then
-#      Get the Ansible plugin which can dynamically generate an inventory file with my servers on DigitalOcean
-  curl https://raw.githubusercontent.com/ansible/ansible/release1.5.4/plugins/inventory/digital_ocean.ini > digital_ocean.ini
-  curl https://raw.githubusercontent.com/ansible/ansible/release1.5.4/plugins/inventory/digital_ocean.py > digital_ocean
-#      Make the script executable
-  chmod +x digital_ocean
-fi
-#      Install dopy if not already - required by digital_ocean
-if grep -q "dopy" pip_packages
-then
-  echo "dopy already installed."
-else
-  echo "Installing dopy."
-  sudo pip install dopy
-fi
+#      (The Ansible digital_ocean plugin was able on my Mac to do this using:
+#          python digital_ocean --droplets | python -mjson.tool > dynamic_inventory.json
+#      However this command encountered an error when running this script on Ubuntu on the wynno-gateway VPS.
+#      So I have just created a helper function to create my own dynamic_inventory.json
+#      Which looks exactly the same. Except my own dynamic_inventory also only includes
+#      the droplets which are newly created, i.e. the ones in new_droplets_config.json)
+python -c "import pyhelpers; pyhelpers.get_dynamic_new_inventory()" | python -mjson.tool > dynamic_inventory.json
 
-#      Use the Ansible digital_ocean plugin to generate a JSON file of the current inventory
-python digital_ocean --droplets | python -mjson.tool > dynamic_inventory.json
+exit
 
 #      Next use that JSON file to create the production inventory file which Ansible will use
 python -c "import pyhelpers; pyhelpers.create_ansible_production_file()"
