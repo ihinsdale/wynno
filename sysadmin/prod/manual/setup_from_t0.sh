@@ -87,6 +87,10 @@ python -c "import pyhelpers; pyhelpers.create_droplets()"
 
 
 # 5. Generate the inventory file based on these new droplets
+
+#      Wait a few seconds for the new droplets to all get assigned IP addresses
+sleep 10s
+
 #      (The Ansible digital_ocean plugin was able on my Mac to do this using:
 #          python digital_ocean --droplets | python -mjson.tool > dynamic_inventory.json
 #      However this command encountered an error when running this script on Ubuntu on the wynno-gateway VPS.
