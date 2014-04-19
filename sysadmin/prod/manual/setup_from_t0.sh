@@ -119,7 +119,7 @@ python -c "import pyhelpers; pyhelpers.update_json_keys_ips()"
 echo "Enter the filename of the playbook you wish to run:"
 read playbook
 
-ansible-playbook -i production ../$playbook
+ansible-playbook -i production ../$playbook --ask-vault-pass
 
 
 # 8. With the servers up and ready, use AWS Route 53 to point the DNS record for (www.)wynno.com to the nginx1 droplet
