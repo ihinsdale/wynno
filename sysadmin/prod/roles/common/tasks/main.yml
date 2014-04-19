@@ -103,10 +103,6 @@
 - name: Make the NODE_ENV environment variable a system-wide variable by adding simple shell script to /etc/profile.d
   template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
 
-- name: Update ansible_ssh_port to the new SSH port for subsequent SSH connections
-  set_fact: ansible_ssh_port={{ new_ssh_port }}
-  # Cf. http://serverfault.com/questions/545978/how-to-handle-ssh-port-changes-with-ansible
-
 # Possible additional steps:
 # set time zone
 # install tripwire
