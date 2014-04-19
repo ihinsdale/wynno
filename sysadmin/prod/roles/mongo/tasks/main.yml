@@ -64,5 +64,6 @@
   shell: sh ufw_allow_node_and_python_servers.sh
 
 - name: Reload ufw to enable the new rules
-  ufw: state=reloaded
+  #ufw: state=reloaded
+  command: ufw reload
   sudo: yes
