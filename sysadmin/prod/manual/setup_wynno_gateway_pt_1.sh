@@ -17,6 +17,11 @@ sudo apt-get install python-software-properties
 sudo apt-add-repository ppa:rquillo/ansible
 sudo apt-get update
 sudo apt-get install ansible
+# Ansible (vault) needs a newer version of pycrypto
+sudo apt-get install python-pip
+sudo apt-get install build-essential
+sudo apt-get install python-dev
+sudo pip install pycrypto --upgrade
 
 # Change the SSH port from 22 to 202
 # (after this, will of course need to change SSH connection port on local machine to 202)
