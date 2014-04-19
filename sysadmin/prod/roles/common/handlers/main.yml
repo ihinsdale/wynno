@@ -2,5 +2,10 @@
 
 - name: Restart ssh
   service: name=ssh state=restarted
+  notify: Update ansible_ssh_port
+- name: Update ansible_ssh_port
+  # Because restarting SSH implements our change of the SSH port
+  set_fact: ansible_ssh_port={{ new_ssh_port }}
+  # Cf. http://serverfault.com/questions/545978/how-to-handle-ssh-port-changes-with-ansible
 - name: Restart fail2ban
   service: name=fail2ban state=restarted
