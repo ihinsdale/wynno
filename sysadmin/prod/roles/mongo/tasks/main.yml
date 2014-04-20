@@ -37,6 +37,7 @@
 
 - name: Install PyMongo which is required for mongodb_user tasks below
   pip: name=pymongo
+  sudo: yes
 
 - name: Create the master mongo user who creates other user accounts
   mongodb_user: database=admin user={{ master_user }} password={{ master_user_password }} roles='userAdminAnyDatabase'
