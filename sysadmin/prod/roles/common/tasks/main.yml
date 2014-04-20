@@ -45,7 +45,7 @@
   lineinfile: dest=/etc/sudoers regexp="^%sudo" state=absent
 
 - name: Add deploy user to sudoers
-  lineinfile: dest=/etc/sudoers regexp="deploy ALL" line="deploy ALL=(ALL) ALL" state=present
+  lineinfile: dest=/etc/sudoers regexp="deploy ALL" line="deploy ALL=(ALL) NOPASSWD:ALL" state=present
 
 - name: Copy over our custom SSH config file
   # Specifically our changes could have been specified vs. the default via the following lineinfile tasks:
