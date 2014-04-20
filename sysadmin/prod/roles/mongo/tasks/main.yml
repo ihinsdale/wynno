@@ -54,16 +54,8 @@
   sudo: yes
   notify: Restart mongo
 
-- name: Stop mongo
-  # Note we want to stop mongo here rather than use a notify handler, so that we can then
-  # launch mongo again with the right parameters. (Maybe it's possible to use multiple notify handlers
-  # but I won't worry about that for now)
-  service: name=mongod state=stopped
-  sudo: yes
-
-- name: Launch mongo with authentication enabled and path to db
-  shell: mongod --auth --dbpath /home/deploy/{{ db_path }}
-  sudo: yes
+# Note that Mongo is setup to start by default upon boot when installed via apt on Ubuntu
+# So we don't need to worry about configuring that
 
 - name: Copy script to open up mongo_port for db connections from nodeservers and pythonservers
   # Note we use a template file here so we can loop over all hosts in the nodeservers group
