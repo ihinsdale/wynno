@@ -2,23 +2,95 @@
 # This playbook is executed on all wynno redis servers.
 
 - name: Open up the redis port to connections from nodeservers
-  command: ufw allow proto tcp from [someaddress] port {{ redis_port }}
+  command: ufw allow proto tcp from {{ gateway_perm_ip }} to any port {{ redis_port }}
   sudo: yes
 
 - name: Reload ufw to reflect new settings
   command: ufw reload
   sudo: yes
 
-- name: Install redis-server
-  apt: pkg=redis-server state=present
+# Now install redis - adapted from https://github.com/jprichardson/ansible-redis/blob/master/main.yml
+- name: Update apt
+  apt: update_cache=yes
   sudo: yes
 
-- name: Make a copy on the server of the default redis config file
+- name: Ensure necessary packages installed
+  apt: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - make
+    - build-essential
+    - tcl8.5
+
+- name: Download latest stable redis
+  get_url: url=http://download.redis.io/redis-stable.tar.gz dest=/tmp/redis-stable.tar.gz
+
+- name: Untar redis
+  command: tar xvzf /tmp/redis-stable.tar.gz -C /tmp
+
+- name: Build redis
+  command: make -C /tmp/redis-stable
+
+- name: Make sure that /etc/redis exists
+  file: path=/etc/redis state=directory mode=0755
+  sudo: yes
+
+- name: Make sure that /var/redis exists
+  file: path=/var/redis state=directory mode=0755
+  sudo: yes
+
+- name: Make a copy of the default redis config file
   command: cp /etc/redis/redis.conf /etc/redis/redis.conf.default
 
 - name: Copy over the redis configuration file
-  copy: src=redis.conf dest=/etc/redis/redis.conf
-  notify: Restart redis
+  template: src=redis.conf.j2 dest=/etc/redis/redis.conf
+  sudo: yes
 
-# Make redis start up on reboot
-# TODO http://redis.io/topics/quickstart
+- name: Install redis binaries
+  command: cp /tmp/redis-stable/src/{{ item }} /usr/local/bin
+  with_items:
+    - redis-server
+    - redis-cli
+    - redis-check-aof
+    - redis-check-dump
+  sudo: yes
+
+- name: Clean up build files
+  command: rm -rf /tmp/{{ item }}
+  with_items:
+    - redis-stable
+    - redis-stable.tar.gz
+
+# Make Redis start up on boot
+- name: Copy init script
+  template: src=my_redis_script.j2 dest=/etc/init.d/my_redis_script
+  sudo: yes
+
+- name: Make directory for my Redis data
+  file: path={{ data_dir }} state=directory
+  sudo: yes
+
+- name: Add my_redis_script to the default runlevels
+  command: update-rc.d my_redis_script defaults
+  sudo: yes
+
+- name: Start Redis
+  command: /etc/init.d/redis_6379 start
+
+- name: Ping Redis to make sure it's working
+  command: redis-cli ping
+  register: ping_response
+  failed_when: "ping_response.stdout != 'PONG'"
+
+- name: Reboot
+  command: reboot
+  when: kernelup.changed
+
+- name: Wait 2 minutes for server to boot up again
+  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=120
+  when: kernelup.changed
+
+- name: Ping Redis again to make sure it's working upon reboot
+  command: redis-cli ping
+  register: ping_response2
+  failed_when: "ping_response2.stdout != 'PONG'"
