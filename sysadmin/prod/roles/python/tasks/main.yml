@@ -1,1 +1,113 @@
-main.yml
+---
+# This playbook is executed on wynno production servers that do the Python machine learning.
+
+# Open up the Python server to connections from the nodeservers
+
+- name: Copy script to open up zerorpc_port for connections from nodeservers
+  # Note we use a template file here so we can loop over all hosts in the nodeservers group
+  # Otherwise we'd have to hardcode the names of the hosts to get the IPs for which we want to make ufw rules
+  template: src=ufw_allow_node_servers.sh.j2 dest=/home/deploy/ufw_allow_node_servers.sh
+
+- name: Execute that script to create the new ufw rules
+  shell: sh ufw_allow_node_servers.sh
+
+- name: Reload ufw to enable the new rules
+  #ufw: state=reloaded
+  command: ufw reload
+  sudo: yes
+
+# Install necessary Python components
+
+- name: Install python-setuptools
+  apt: pkg=python-setuptools state=present
+  sudo: yes
+
+- name: Install python-pip
+  apt: pkg=python-pip state=present
+  sudo: yes
+
+- name: Install python-dev
+  apt: pkg=python-dev state=present
+  sudo: yes
+
+- name: Install virtualenv
+  apt: pkg=python-virtualenv state=present
+  sudo: yes
+
+- name: Install libzmq-dev
+  apt: pkg=libzmq-dev state=present
+  sudo: yes
+
+- name: Install PyZMQ
+  pip: name=pyzmq
+  sudo: yes
+
+- name: Install PyMongo
+  pip: name=pymongo
+  sudo: yes
+
+- name: Install numpy
+  pip: name=numpy
+  sudo: yes
+
+- name: Install scipy
+  apt: pkg=python-scipy state=present
+  sudo: yes
+
+- name: Install pyyaml
+  pip: name=pyyaml
+  sudo: yes
+
+- name: Install nltk
+  pip: name=nltk
+  sudo: yes
+
+- name: Install libevent-dev
+  apt: pkg=libevent-dev state=present
+  sudo: yes
+
+- name: Install ZeroRPC
+  pip: name=zerorpc
+  sudo: yes
+
+- name: Install scikit-learn
+  pip: name=scikit-learn
+  sudo: yes
+
+- name: Install python-pygraphviz
+  apt: pkg=python-pygraphviz state=present
+  sudo: yes
+
+- name: Install python-pydot
+  apt: pkg=python-pydot state=present
+  sudo: yes
+  # We don't want to use pip for this, there's a bug with the pip install
+
+- name: Install unidecode
+  pip: name=unidecode
+  sudo: yes
+
+- name: Install punkt sentence tokenizer for nltk
+  command: python -m nltk.downloader punkt
+
+- name: Install stopwords corpus for nltk
+  command: python -m nltk.downloader stopwords
+
+# Copy over the relevant application code
+
+- name: Create directories for app code
+  # This will create the dist, lib, and config directories
+  file: path=/home/deploy/dist/lib/config state=directory
+
+- name: Copy over the python.json file
+  copy: src=../../../../../dist/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
+
+- name: Copy over the Python files
+  copy: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib/python
+
+- name: Set server.py to run on launch by copying over our upstart script
+  copy: src=wynno_python.conf dest=/etc/init/wynno_python.conf
+  sudo: yes
+
+- name: Run server.py
+  service: name=wynno_python state=started
