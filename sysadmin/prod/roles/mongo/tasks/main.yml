@@ -33,7 +33,11 @@
   sudo: yes
 
 - name: Create /db/data directory
-  shell: mkdir -p /home/deploy/db/data
+  shell: mkdir -p /home/deploy/{{ db_path }}
+
+- name: Make the mongod user the owner of the directory
+  command: chown mongod:mongod /home/deploy/{{ db_path }}
+  sudo: yes
 
 - name: Install PyMongo which is required for mongodb_user tasks below
   pip: name=pymongo
@@ -45,6 +49,11 @@
 - name: Create the user used by the app to read and write
   mongodb_user: database=wynno-{{ app_env }} login_user={{ master_user }} login_password={{ master_user_password }} user={{ app_db_user }} password={{ app_db_user_password }} roles='readWrite'
 
+- name: Copy over the mongod.conf file
+  template: src=mongod.conf.j2 dest=/etc/mongod.conf
+  sudo: yes
+  notify: Restart mongo
+
 - name: Stop mongo
   # Note we want to stop mongo here rather than use a notify handler, so that we can then
   # launch mongo again with the right parameters. (Maybe it's possible to use multiple notify handlers
@@ -53,7 +62,7 @@
   sudo: yes
 
 - name: Launch mongo with authentication enabled and path to db
-  shell: mongod --auth --dbpath /home/deploy/db/data
+  shell: mongod --auth --dbpath /home/deploy/{{ db_path }}
   sudo: yes
 
 - name: Copy script to open up mongo_port for db connections from nodeservers and pythonservers
