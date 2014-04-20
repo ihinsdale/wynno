@@ -62,31 +62,30 @@
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
   notify: Restart ssh
 
-# - name: Set default for ufw to deny all incoming connections
-#   #ufw: direction=incoming policy=deny
-#   command: ufw default deny incoming
-#   sudo: yes
-#
-# - name: Set default for ufw to allow all outgoing connections
-#   #ufw: direction=outgoing policy=allow
-#   command: ufw default allow outgoing
-#   sudo: yes
-#
-# - name: Setup ufw to only allow incoming SSH connections
-#   # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
-#   #ufw: rule=allow proto=tcp src={{ gateway_perm_ip }} port={{ new_ssh_port }}
-#   command: ufw allow proto tcp from {{ gateway_perm_ip }} port {{ new_ssh_port }}
-#   sudo: yes
-#
-# - name: Turn on ufw logging
-#   #ufw: logging=on
-#   command: ufw logging on
-#   sudo: yes
-#
-# - name: Enable ufw
-#   #ufw: state=enabled
-#   shell: echo 'y' | ufw enable
-#   sudo: yes
+- name: Set default for ufw to deny all incoming connections
+  #ufw: direction=incoming policy=deny
+  command: ufw default deny incoming
+  sudo: yes
+
+- name: Set default for ufw to allow all outgoing connections
+  #ufw: direction=outgoing policy=allow
+  command: ufw default allow outgoing
+  sudo: yes
+
+- name: Setup ufw to only allow incoming SSH connections
+  # We allow connections only from the wynno-gateway AWS instance which has a permanent IP
+  command: ufw allow proto tcp from {{ gateway_perm_ip }} to any port {{ new_ssh_port }}
+  sudo: yes
+
+- name: Turn on ufw logging
+  #ufw: logging=on
+  command: ufw logging on
+  sudo: yes
+
+- name: Enable ufw
+  #ufw: state=enabled
+  shell: echo 'y' | ufw enable
+  sudo: yes
 
 - name: Copy debconf selections so that Postfix can configure itself non-interactively
   copy: src=postfix_selections dest=/tmp/postfix_selections

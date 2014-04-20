@@ -3,9 +3,9 @@
 set -e # script will exit if any command throws an error
 
 {% for host in groups['nodeservers'] %}
-  sudo ufw allow proto tcp from {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
+  sudo ufw allow proto tcp from {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} to any port {{ mongo_port }}
 {% endfor %}
 
 {% for host in groups['pythonservers'] %}
-  sudo ufw allow proto tcp from {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} port {{ mongo_port }}
+  sudo ufw allow proto tcp from {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} to any port {{ mongo_port }}
 {% endfor %}
