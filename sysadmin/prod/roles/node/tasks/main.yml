@@ -2,9 +2,11 @@
 # This playbook is executed on all wynno node.js webservers.
 
 - name: Make a directory for wynno files
-  command: mkdir wynno
+  file: path=/home/deploy/wynno state=directory
 
 - name: Copy over the dist folder
+  # Because we are copying from the wynno-gateway server, the necessary config keys
+  # are present there and so will be copied over in this step too
   copy: src=../../../../../dist dest=/home/deploy/wynno
 
 - name: Install nvm
@@ -14,10 +16,10 @@
   command: source /home/deploy/.nvm/nvm.sh
 
 - name: Install latest production version of node 0.10.26
-  command: nvm install v0.10.26
+  shell: . ~/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
 
-- name: Install node modules globally
-  npm: TODO
+- name: Install node modules used in production locally
+  npm: path=/home/deploy/wynno/dist production=yes executable=/home/deploy/.nvm/v0.10.26/bin/npm
 
 - name: Copy over the Upstart script which runs node via Forever
   template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not

@@ -97,7 +97,7 @@
 
 - name: Create directories for app code
   # This will create the dist, lib, and config directories
-  file: path=/home/deploy/dist/lib/config state=directory
+  file: path=/home/deploy/dist/lib/config/keys/prod state=directory
 
 - name: Copy over the python.json file
   copy: src=../../../../../dist/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
@@ -111,3 +111,4 @@
 
 - name: Run server.py
   service: name=wynno_python state=started
+  sudo: yes
