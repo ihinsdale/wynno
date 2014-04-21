@@ -31,6 +31,10 @@
   file: path=/var/redis state=directory mode=0755
   sudo: yes
 
+- name: Make sure that directory for log file exists
+  file: path=/var/log/redis state=directory
+  sudo: yes
+
 - name: Copy over the redis configuration file
   template: src=redis.conf.j2 dest=/etc/redis/redis.conf
   sudo: yes
