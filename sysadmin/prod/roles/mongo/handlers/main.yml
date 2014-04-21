@@ -2,3 +2,4 @@
 
 - name: Restart mongo
   service: name=mongod state=restarted
+  sudo: yes
