@@ -61,7 +61,10 @@ tcp-backlog 511
 # Examples:
 #
 # bind 192.168.1.100 10.0.0.1
-bind 127.0.0.1 {% for host in groups['nodeservers'] %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} {% endfor %}
+# (Ian: I'm copying out the line below because it is apparently unnecessary to bind Redis
+# to specific interfaces since we have a firewall; we'll just set it to listen on all interfaces
+# and then rely on the firewall to restrict the possible ones to the nodeservers)
+#bind 127.0.0.1 {% for host in groups['nodeservers'] %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} {% endfor %}
 
 # Specify the path for the Unix socket that will be used to listen for
 # incoming connections. There is no default, so Redis will not listen
@@ -100,7 +103,7 @@ loglevel notice
 # Specify the log file name. Also the empty string can be used to force
 # Redis to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null
-logfile /var/log/redis/redis-server.log
+logfile /home/deploy/redis-server.log
 
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.

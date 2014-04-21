@@ -1,6 +1,20 @@
 ---
 # This playbook is executed on all wynno redis servers.
 
+# Open up the firewall as appropriate
+- name: Copy script to open up redis_port for connections from nodeservers
+  # Note we use a template file here so we can loop over all hosts in the nodeservers group
+  # Otherwise we'd have to hardcode the names of the hosts to get the IPs for which we want to make ufw rules
+  template: src=ufw_allow_node_servers.sh.j2 dest=/home/deploy/ufw_allow_node_servers.sh
+
+- name: Execute that script to create the new ufw rules
+  shell: sh ufw_allow_node_servers.sh
+
+- name: Reload ufw to enable the new rules
+  #ufw: state=reloaded
+  command: ufw reload
+  sudo: yes
+
 # Install redis - adapted from https://github.com/jprichardson/ansible-redis/blob/master/main.yml
 - name: Update apt
   apt: update_cache=yes
@@ -32,10 +46,6 @@
 
 - name: Make sure that /var/redis exists
   file: path=/var/redis state=directory mode=0755
-  sudo: yes
-
-- name: Make sure that directory for log file exists
-  file: path=/var/log/redis state=directory
   sudo: yes
 
 - name: Copy over the redis configuration file
@@ -72,26 +82,11 @@
 
 - name: Start Redis
   command: /etc/init.d/wynno_redis_init_script start
-  sudo: yes
 
 - name: Ping Redis to make sure it's working
   command: redis-cli ping
   register: ping_response
   failed_when: "ping_response.stdout != 'PONG'"
-
-# Open up the firewall as appropriate
-- name: Copy script to open up redis_port for connections from nodeservers
-  # Note we use a template file here so we can loop over all hosts in the nodeservers group
-  # Otherwise we'd have to hardcode the names of the hosts to get the IPs for which we want to make ufw rules
-  template: src=ufw_allow_node_servers.sh.j2 dest=/home/deploy/ufw_allow_node_servers.sh
-
-- name: Execute that script to create the new ufw rules
-  shell: sh ufw_allow_node_servers.sh
-
-- name: Reload ufw to enable the new rules
-  #ufw: state=reloaded
-  command: ufw reload
-  sudo: yes
 
 # Reboot and make sure Redis starts up after reboot
 - name: Reboot
