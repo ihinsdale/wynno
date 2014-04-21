@@ -11,7 +11,7 @@ sudo apt-get install screen
 
 # MongoDB
 
-# Install 
+# Install
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 sudo apt-get update
@@ -23,9 +23,9 @@ sudo mkdir db
 cd db
 sudo mkdir data
 # Make a user:group called mongo that will own this ~/db/data folder
-# so that mongo can make the journal folder as big as it needs to be 
+# so that mongo can make the journal folder as big as it needs to be
 # (previously, on EC2, an error was being thrown complaining there wasn't enough space)
-sudo chown mongod:mongod ~/db/data
+sudo chown mongodb:mongodb ~/db/data
 mongod --dbpath ~/db/data &
 PID=$!
 sleep 2

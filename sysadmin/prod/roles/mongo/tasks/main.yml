@@ -35,8 +35,8 @@
 - name: Create /db/data directory
   shell: mkdir -p /home/deploy/{{ db_path }}
 
-- name: Make the mongod user the owner of the directory
-  command: chown mongod:mongod /home/deploy/{{ db_path }}
+- name: Make the mongodb user (which the Mongo installation creates) the owner of the directory
+  command: chown mongodb:mongodb /home/deploy/{{ db_path }}
   sudo: yes
 
 - name: Install PyMongo which is required for mongodb_user tasks below

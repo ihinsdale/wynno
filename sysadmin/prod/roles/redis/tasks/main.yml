@@ -39,9 +39,6 @@
   file: path=/var/redis state=directory mode=0755
   sudo: yes
 
-- name: Make a copy of the default redis config file
-  command: cp /etc/redis/redis.conf /etc/redis/redis.conf.default
-
 - name: Copy over the redis configuration file
   template: src=redis.conf.j2 dest=/etc/redis/redis.conf
   sudo: yes
