@@ -72,7 +72,7 @@
   sudo: yes
 
 - name: Start Redis
-  command: /etc/init.d/redis_6379 start
+  command: /etc/init.d/wynno_redis_init_script start
 
 - name: Ping Redis to make sure it's working
   command: redis-cli ping

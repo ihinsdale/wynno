@@ -240,7 +240,7 @@
       - Start nginx
 
   - name: Make directory for ssl credentials
-    shell: mkdir -p /etc/nginx/ssl
+    file: path=/etc/nginx/ssl state=directory
     sudo: yes
 
   - name: Copy over the SSL .crt credential
@@ -293,6 +293,9 @@
     npm: path=/home/ubuntu/wynno/dist production=yes executable=/home/ubuntu/.nvm/v0.10.26/bin/npm
 
     # 8. Copy over app config files, i.e. node.json and python.json
+
+  - name: Create directory for app keys
+    file: path=/home/ubuntu/wynno/dist/lib/config/keys/dev state=directory
 
   - name: Copy over the node.json file
     copy: src=../../dist/lib/config/keys/dev/node.json dest=/home/ubuntu/wynno/dist/lib/config/keys/dev/node.json

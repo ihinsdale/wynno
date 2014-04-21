@@ -1,10 +1,10 @@
-1. Create EC2 instance with port 22, port 202, port 80, port 443 open to my IP
-2. Change SSH port to 202
-3. Run the Ansible site.yml playbook with the development inventory file:
+1. Create EC2 instance with port 22, port 202, port 80, port 443 open to my IP. Associate the wynno-dev Elastic
+   IP (snap-c5f81436) with this instance, and also attach a volume created from the db snapshot snap-c5f81436.
+2. Run the Ansible site.yml playbook with the development inventory file:
    ansible-playbook -i development site.yml
-4. SSH into the instance on Port 202
-5. Open up a screen session
-6. Launch in separate windows:
+3. SSH into the instance on Port 202
+4. Open up a screen session
+5. Launch in separate windows:
    - nodemon wynno/dist/server.js
    - sudo mongod --auth --dbpath ~/db/data
    - python server.py
