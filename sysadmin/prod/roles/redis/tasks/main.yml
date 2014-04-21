@@ -23,6 +23,9 @@
 - name: Build redis
   command: make -C /tmp/redis-stable
 
+- name: Run make test
+  command: make -C /tmp/redis-stable test
+
 - name: Make sure that /etc/redis exists
   file: path=/etc/redis state=directory mode=0755
   sudo: yes
