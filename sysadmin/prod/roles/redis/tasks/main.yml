@@ -52,7 +52,7 @@
 
 # Make Redis start up on boot
 - name: Copy init script
-  template: src=wynno_redis_init_script.j2 dest=/etc/init.d/wynno_redis_init_script
+  template: src=wynno_redis_init_script.j2 dest=/etc/init.d/wynno_redis_init_script mode=0755
   sudo: yes
 
 - name: Make directory for my Redis data
