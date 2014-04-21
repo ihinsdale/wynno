@@ -21,19 +21,35 @@
 - name: Install node modules used in production locally
   npm: path=/home/deploy/wynno/dist production=yes executable=/home/deploy/.nvm/v0.10.26/bin/npm
 
+- name: Install the Forever node module globally
+  # This is necessary so that the Upstart script below finds Forever, which is what
+  # actually runs the node process
+  npm: name=forever global=yes executable=/home/deploy/.nvm/v0.10.26/bin/npm
+
 - name: Copy over the Upstart script which runs node via Forever
   template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not
 
-- name: Open up the node port to connections from nginxservers (using private IP)
-  # Since jinja loops are not possible in a playbook, if we ever add more than one nginx server,
-  # it seems we will have to hardcode the hostname whose IP address we want like so
-  command: ufw allow proto tcp from {{ hostvars['nginx1']['ansible_eth1']['ipv4']['address'] }} port {{ node_port }}
-  sudo: yes
+- name: Copy script to open up node_port for connections from nginxservers
+  # Note we use a template file here so we can loop over all hosts in the nodeservers group
+  # Otherwise we'd have to hardcode the names of the hosts to get the IPs for which we want to make ufw rules
+  template: src=ufw_allow_nginx_servers.sh.j2 dest=/home/deploy/ufw_allow_nginx_servers.sh
 
-- name: Reload ufw to enable the new firewall settings
+- name: Execute that script to create the new ufw rules
+  shell: sh ufw_allow_nginx_servers.sh
+
+- name: Reload ufw to enable the new rules
+  #ufw: state=reloaded
   command: ufw reload
   sudo: yes
 
 - name: Reboot - which should start server thanks to Upstart script
   command: reboot
   sudo: yes
+
+- name: Wait 2 minutes for server to boot up again
+  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=120
+
+- name: Check that node server is launched upon reboot
+  command: sudo service wynno status
+  register: wynno_status
+  failed_when: "wynno_status.stdout != ' * wynno is running'"

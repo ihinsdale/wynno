@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e # script will exit if any command throws an error
+
+{% for host in groups['nginxservers'] %}
+  sudo ufw allow proto tcp from {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} to any port {{ node_port }}
+{% endfor %}

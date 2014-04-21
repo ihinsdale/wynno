@@ -112,3 +112,8 @@
 - name: Run server.py
   service: name=wynno_python state=started
   sudo: yes
+
+- name: Reboot
+
+- name: Check that Python server is launched after reboot
+  # TODO

@@ -33,7 +33,7 @@
   sudo: yes
 
 - name: Create /db/data directory
-  shell: mkdir -p /home/deploy/{{ db_path }}
+  file: path=/home/deploy/{{ db_path }} state=directory
 
 - name: Make the mongodb user (which the Mongo installation creates) the owner of the directory
   command: chown mongodb:mongodb /home/deploy/{{ db_path }}

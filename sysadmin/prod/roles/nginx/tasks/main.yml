@@ -1,7 +1,7 @@
 ---
 
 - name: Copy over the folder of static assets that will be served by nginx
-  copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist/public
+  copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist
 
 - name: Open up port 80 to connections from all IP addresses since this is our public-facing web server
   command: ufw allow 80/tcp
@@ -25,15 +25,13 @@
 
 - name: Install nginx
   apt: pkg=nginx state=installed update_cache=true
-  notify:
-    - Start nginx
 
 - name: Set nginx to start on boot
   command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
-  # HOW TO MAKE THIS NOT CAUSE AN ERROR IF IT'S ALREADY SET TO START ON BOOT?
+  sudo: yes
 
 - name: Make directory for ssl credentials
-  shell: mkdir -p /etc/nginx/ssl
+  file: path=/etc/nginx/ssl state=directory
   sudo: yes
 
 - name: Copy over the SSL .pem credential

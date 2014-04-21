@@ -1,15 +1,7 @@
 ---
 # This playbook is executed on all wynno redis servers.
 
-- name: Open up the redis port to connections from nodeservers
-  command: ufw allow proto tcp from {{ gateway_perm_ip }} to any port {{ redis_port }}
-  sudo: yes
-
-- name: Reload ufw to reflect new settings
-  command: ufw reload
-  sudo: yes
-
-# Now install redis - adapted from https://github.com/jprichardson/ansible-redis/blob/master/main.yml
+# Install redis - adapted from https://github.com/jprichardson/ansible-redis/blob/master/main.yml
 - name: Update apt
   apt: update_cache=yes
   sudo: yes
@@ -67,25 +59,40 @@
   file: path={{ data_dir }} state=directory
   sudo: yes
 
-- name: Add my_redis_script to the default runlevels
+- name: Add wynno_redis_init_script to the default runlevels
   command: update-rc.d wynno_redis_init_script defaults
   sudo: yes
 
 - name: Start Redis
   command: /etc/init.d/wynno_redis_init_script start
+  sudo: yes
 
 - name: Ping Redis to make sure it's working
   command: redis-cli ping
   register: ping_response
   failed_when: "ping_response.stdout != 'PONG'"
 
+# Open up the firewall as appropriate
+- name: Copy script to open up redis_port for connections from nodeservers
+  # Note we use a template file here so we can loop over all hosts in the nodeservers group
+  # Otherwise we'd have to hardcode the names of the hosts to get the IPs for which we want to make ufw rules
+  template: src=ufw_allow_node_servers.sh.j2 dest=/home/deploy/ufw_allow_node_servers.sh
+
+- name: Execute that script to create the new ufw rules
+  shell: sh ufw_allow_node_servers.sh
+
+- name: Reload ufw to enable the new rules
+  #ufw: state=reloaded
+  command: ufw reload
+  sudo: yes
+
+# Reboot and make sure Redis starts up after reboot
 - name: Reboot
   command: reboot
-  when: kernelup.changed
+  sudo: yes
 
 - name: Wait 2 minutes for server to boot up again
   local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=120
-  when: kernelup.changed
 
 - name: Ping Redis again to make sure it's working upon reboot
   command: redis-cli ping
