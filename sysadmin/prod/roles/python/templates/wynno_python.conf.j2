@@ -4,6 +4,8 @@ author  "engineering@wynno.com"
 start on runlevel [2345]
 stop on runlevel [!2345]
 
+env NODE_ENV={{ app_env }}
+
 respawn
 
 exec python /home/deploy/dist/lib/python/server.py

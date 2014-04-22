@@ -103,10 +103,10 @@
   copy: src=../../../../../dist/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
 
 - name: Copy over the Python files
-  copy: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib/python
+  copy: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib
 
 - name: Set server.py to run on launch by copying over our upstart script
-  copy: src=wynno_python.conf dest=/etc/init/wynno_python.conf
+  template: src=wynno_python.conf.j2 dest=/etc/init/wynno_python.conf
   sudo: yes
 
 - name: Run server.py
@@ -123,4 +123,4 @@
 - name: Check that Python server is launched after reboot
   command: sudo service wynno_python status
   register: python_status
-  failed_when: "python_status.stdout != ' * wynno_python is running'"
+  failed_when: "python_status.stdout.find('start/running') == -1"

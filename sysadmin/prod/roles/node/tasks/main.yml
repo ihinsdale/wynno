@@ -28,6 +28,7 @@
 
 - name: Copy over the Upstart script which runs node via Forever
   template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not
+  sudo: yes
 
 - name: Copy script to open up node_port for connections from nginxservers
   # Note we use a template file here so we can loop over all hosts in the nodeservers group
@@ -52,4 +53,4 @@
 - name: Check that node server is launched upon reboot
   command: sudo service wynno status
   register: wynno_status
-  failed_when: "wynno_status.stdout != ' * wynno is running'"
+  failed_when: "wynno_status.stdout.find('start/running') == -1"

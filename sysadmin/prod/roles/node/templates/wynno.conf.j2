@@ -10,8 +10,8 @@
 #
 description "Example upstart script for a Node.js process"
 
-start on startup
-stop on shutdown
+start on runlevel [2345]
+stop on runlevel [!2345]
 
 # This line is needed so that Upstart reports the pid of the Node.js process
 # started by Forever rather than Forever's pid.
@@ -47,6 +47,7 @@ env NODE_PATH="/home/deploy/.nvm/v0.10.26/lib/node_modules"
 env APPLICATION_DIRECTORY="/home/deploy/wynno/dist"
 env APPLICATION_START="server.js"
 env LOG="/var/log/wynno.log"
+env NODE_ENV={{ app_env }}
 
 script
     # Add the node executables to the path, which includes Forever if it is
