@@ -12,11 +12,8 @@
 - name: Install nvm
   shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 
-- name: Load nvm
-  command: source /home/deploy/.nvm/nvm.sh
-
 - name: Install latest production version of node 0.10.26
-  shell: . ~/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
+  shell: . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
 
 - name: Install node modules used in production locally
   npm: path=/home/deploy/wynno/dist production=yes executable=/home/deploy/.nvm/v0.10.26/bin/npm
