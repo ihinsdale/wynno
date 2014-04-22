@@ -1,5 +1,6 @@
 ---
 # This playbook deploys the whole application stack for the production version of wynno.
+# To be used, obviously, on fresh servers only. For use with the 'production' inventory file.
 
 - name: apply the configuration common to all nodes of the app
   hosts: all

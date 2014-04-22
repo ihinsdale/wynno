@@ -145,7 +145,7 @@ def create_ansible_production_file():
     del droplets[each['name']]['name'] # Remove the name key from the droplet dict
   with open('dynamic_inventory_dict.json', 'w') as outfile:
     json.dump(droplets, outfile)
-  with open('production', 'w') as outfile:
+  with open(os.path.abspath(os.path.join(os.path.dirname(__file__), '../production')), 'w') as outfile:
     print droplets
     for category in new_droplets_config:
       outfile.write('[' + category + 'servers]\n')

@@ -1,0 +1,6 @@
+---
+# This playbook copies over the static assets served by nginx. It is used by both the
+# initial deployment playbook (site.yml) and in rolling upgrades of app code.
+
+- name: Copy over the folder of static assets that will be served by nginx
+  copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist

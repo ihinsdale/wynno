@@ -1,0 +1,13 @@
+---
+# This playbook copies over the app code run by the node.js/express servers.
+# It also installs the production node modules specified in package.json.
+# It is used by both the initial deployment playbook (site.yml) and in rolling
+# upgrades of app code.
+
+- name: Copy over the dist folder
+  # Because we are copying from the wynno-gateway server, the necessary config keys
+  # are present there and so will be copied over in this step too
+  copy: src=../../../../../dist dest=/home/deploy/wynno
+
+- name: Install node modules used in production locally
+  npm: path=/home/deploy/wynno/dist production=yes executable=/home/deploy/.nvm/v0.10.26/bin/npm

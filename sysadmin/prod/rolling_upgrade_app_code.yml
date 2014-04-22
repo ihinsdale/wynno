@@ -1,0 +1,62 @@
+---
+# This playbook deploys the whole application stack for the production version of wynno.
+# To be used, obviously, on fresh servers only. For use with the 'production' inventory file.
+
+# First we need to set the ansible_ssh_port to the ssh port we use for our app nodes
+- name: Set ansible_ssh_port
+  set_fact: ansible_ssh_port={{ new_ssh_port }}
+
+# Next we have a generic 'monitoring' task which grabs facts about all app nodes
+- hosts: all
+  tasks: []
+
+# We will take this opportunity to update the apt cache and upgrade our packages
+- hosts: all
+  tasks:
+  - name: Update APT package cache
+    apt: update_cache=yes
+    sudo: yes
+  - name: Run apt-get upgrade
+    apt: upgrade=yes
+    sudo: yes
+
+- name: Update code on Python machine learning server(s)
+  hosts: pythonservers
+  remote_user: deploy
+  serial: 1 # Updates only one server at a time, rather than in parallel
+  tasks:
+  #- name: Check if new code contains changes to Python code
+  #  register: new_code
+  # If it does, then we need to update. If not, we are finished.
+  - name: (Politely?) close the server.py process by stopping the wynno_python service
+    service: name=wynno_python state=stopped
+    sudo: yes
+    #when:
+  # Copy over the new Python code
+  - include: roles/python/tasks/copy_code.yml
+    #when:
+  - name: Restart the wynno_python service
+    service: name=wynno_python state=restarted
+    sudo: yes
+    #when:
+
+- name: Update code on our node.js/express servers
+  hosts: nodeservers
+  remote_user: deploy
+  serial: 1
+  tasks:
+  - name: Stop the node server process
+    service: name=wynno state=stopped
+  - include: roles/node/tasks/copy_code.yml
+  - name: Restart the node server process
+    service: name=wynno state=restarted
+
+- name: Update the static app files on our nginx server(s)
+  hosts: nginxservers
+  remote_user: deploy
+  serial: 1
+  tasks:
+    # It's not necessary to stop and restart nginx, we can just replace the static files
+    # and nginx will serve them for all subsequent requests. This is because I'm
+    # not using any nginx caching.
+  - include: roles/nginx/tasks/copy_code.yml

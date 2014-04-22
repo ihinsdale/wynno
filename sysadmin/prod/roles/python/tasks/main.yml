@@ -99,11 +99,8 @@
   # This will create the dist, lib, and config directories
   file: path=/home/deploy/dist/lib/config/keys/prod state=directory
 
-- name: Copy over the python.json file
-  copy: src=../../../../../dist/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
-
-- name: Copy over the Python files
-  copy: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib
+  # Do the actual copying over
+- include: copy_code.yml
 
 - name: Set server.py to run on launch by copying over our upstart script
   template: src=wynno_python.conf.j2 dest=/etc/init/wynno_python.conf

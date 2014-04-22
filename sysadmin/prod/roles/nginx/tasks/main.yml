@@ -1,7 +1,7 @@
 ---
 
-- name: Copy over the folder of static assets that will be served by nginx
-  copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist
+  # Copy over the wynno app static files
+- include: copy_code.yml
 
 - name: Open up port 80 to connections from all IP addresses since this is our public-facing web server
   command: ufw allow 80/tcp

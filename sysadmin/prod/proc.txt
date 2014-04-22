@@ -1,4 +1,4 @@
-Truly from scratch:
+To setup/launch/create the app truly from scratch:
 
 -1.  Any changes to files in lib/config/keys/prod require 'grunt build' to be run on the
     developer's local machine, so that the changes are propagated to
