@@ -67,7 +67,7 @@ while read hostname; do
     rm ../keys/$hostname.pub
   fi
 #      And generate a new keypair with the name
-  ssh-keygen -t rsa -f ../keys/$hostname
+  ssh-keygen -t rsa -f ../keys/$hostname -N ''
 done < hostnames
 
 # 3. Upload the just-created public keys to DO
@@ -134,7 +134,7 @@ while read line; do
   echo "Checking ${hostname}'s public key..."
   keyscan="`ssh-keyscan -p 22 $ip 2>/dev/null`"
   server_pub_key="$( cut -d ' ' -f 2- <<< "$keyscan" )"
-  my_pub_key="$(cat ../keys/hostname.pub)"
+  my_pub_key="$(cat ../keys/${hostname}.pub)"
   if [ server_pub_key == my_pub_key ]
   then
     echo "It matches the key we created."
