@@ -99,8 +99,13 @@
 - name: Make logwatch mail {{ logwatch_email }} daily
   lineinfile: dest=/etc/cron.daily/00logwatch regexp="^/usr/sbin/logwatch" line="/usr/sbin/logwatch --output mail --mailto {{ logwatch_email }} --detail high" state=present create=yes
 
-- name: Make the NODE_ENV environment variable a system-wide variable by adding simple shell script to /etc/profile.d
-  template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
+- name: Make the NODE_ENV environment variable a system-wide variable
+  # There are two ways to do this. (1) The shell script in /etc/profile.d method did not seem
+  # to work for the purposes of our Python servers, which run server.py via an Upstart script
+  #template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
+  # (2) The second approach is to add a line to /etc/environment
+  lineinfile: dest=/etc/environment line="NODE_ENV=prod" state=present
+  sudo: yes
 
 # Install New Relic server monitoring
 - name: Configure apt repository for New Relic
