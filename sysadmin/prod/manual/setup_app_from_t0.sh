@@ -133,6 +133,8 @@ while read line; do
 #      public key from the keypair we created
   echo "Checking ${hostname}'s public key..."
   keyscan="`ssh-keyscan -p 22 $ip 2>/dev/null`"
+  echo "keyscan is:"
+  echo $keyscan
   server_pub_key="$( cut -d ' ' -f 2- <<< "$keyscan" )"
   echo "server_pub_key is:"
   echo $server_pub_key
