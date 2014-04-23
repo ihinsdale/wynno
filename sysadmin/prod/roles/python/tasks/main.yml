@@ -114,8 +114,8 @@
   command: reboot
   sudo: yes
 
-- name: Wait 2 minutes for server to boot up again
-  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=120
+- name: Wait 3 minutes for server to boot up again
+  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=180
 
 - name: Check that Python server is launched after reboot
   command: sudo service wynno_python status

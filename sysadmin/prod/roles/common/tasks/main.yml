@@ -102,6 +102,25 @@
 - name: Make the NODE_ENV environment variable a system-wide variable by adding simple shell script to /etc/profile.d
   template: src=set_env.sh.j2 dest=/etc/profile.d/set_env.sh
 
+# Install New Relic server monitoring
+- name: Configure apt repository for New Relic
+  shell: echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
+
+- name: Trust the New Relic GPG key
+  shell: wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
+
+- name: Update APT package cache
+  apt: update_cache=yes
+
+- name: Install New Relic
+  apt: pkg=newrelic-sysmond state=present
+
+- name: Add license key to New Relic config file
+  shell: nrsysmond-config --set license_key=412cfbd560880a7b85f0d44ff362e568cf8a7bb2
+
+- name: Launch New Relic
+  shell: /etc/init.d/newrelic-sysmond start
+
 # Possible additional steps:
 # set time zone
 # install tripwire
