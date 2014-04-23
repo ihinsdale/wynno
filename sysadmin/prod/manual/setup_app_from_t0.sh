@@ -132,16 +132,21 @@ while read line; do
 #      Now try to SSH in, and compare the fingerprint to what we expect given the
 #      public key from the keypair we created
   echo "Checking ${hostname}'s public key..."
-  keyscan="`ssh-keyscan -p 22 $ip 2>/dev/null`"
+  ssh-keyscan -p 22 $ip 2>/dev/null > tmp_server_pub_key
+  keyscan="$(cat tmp_server_pub_key)"
   echo "keyscan is:"
   echo $keyscan
   server_pub_key="$( cut -d ' ' -f 2- <<< "$keyscan" )"
+  server_pub_key_fingerprint="$(ssh-keygen -lf tmp_server_pub_key)"
   echo "server_pub_key is:"
   echo $server_pub_key
+  echo "server_pub_key_fingerprint is:"
+  echo $server_pub_key_fingerprint
   my_pub_key="$(cat ../keys/${hostname}.pub)"
-  echo "my_pub_key is:"
-  echo $my_pub_key
-  if [ $server_pub_key == $my_pub_key ]
+  my_pub_key_fingerprint="$(ssh-keygen -lf ../keys/${hostname}.pub)"
+  echo "my_pub_key_fingerprint is:"
+  echo $my_pub_key_fingerprint
+  if [ $server_pub_key_fingerprint == $my_pub_key_fingerprint ]
   then
     echo "It matches the key we created."
     echo 'yes' | ssh -p 22 -i ../keys/$hostname -T root@$ip
@@ -150,6 +155,7 @@ while read line; do
     exit 3
   fi
 done < ips
+rm tmp_server_pub_key
 
 exit
 
