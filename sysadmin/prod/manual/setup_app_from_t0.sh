@@ -134,8 +134,12 @@ while read line; do
   echo "Checking ${hostname}'s public key..."
   keyscan="`ssh-keyscan -p 22 $ip 2>/dev/null`"
   server_pub_key="$( cut -d ' ' -f 2- <<< "$keyscan" )"
+  echo "server_pub_key is:"
+  echo $server_pub_key
   my_pub_key="$(cat ../keys/${hostname}.pub)"
-  if [ server_pub_key == my_pub_key ]
+  echo "my_pub_key is:"
+  echo $my_pub_key
+  if [ $server_pub_key == $my_pub_key ]
   then
     echo "It matches the key we created."
     echo 'yes' | ssh -p 22 -i ../keys/$hostname -T root@$ip

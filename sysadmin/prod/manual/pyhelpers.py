@@ -146,11 +146,9 @@ def create_ansible_production_file():
   with open('dynamic_inventory_dict.json', 'w') as outfile:
     json.dump(droplets, outfile)
   with open(os.path.abspath(os.path.join(os.path.dirname(__file__), '../production')), 'w') as outfile:
-    print droplets
     for category in new_droplets_config:
       outfile.write('[' + category + 'servers]\n')
       for hostname in new_droplets_config[category]:
-        print hostname
         outfile.write(hostname + '    ansible_ssh_host=' + droplets[hostname]['ip_address'] + '    ansible_ssh_private_key_file=../keys/' + hostname + '\n')
       outfile.write('\n')
 
