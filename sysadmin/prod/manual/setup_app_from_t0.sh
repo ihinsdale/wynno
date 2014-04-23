@@ -120,46 +120,19 @@ python -c "import pyhelpers; pyhelpers.update_json_keys_ips()"
 
 # 7. Run the main Ansible playbook, configuring all the servers
 
-#      We'll first verify that when we SSH into the new servers, we're SSHing
-#      in to the ones we think we are
+#      First we clear out the IP addresses of each server from the known_hosts file
+#      This is necessary because DigitalOcean tends to reuse IP addresses
 python -c "import pyhelpers; pyhelpers.create_ips_file()"
 while read line; do
   hostname="$( cut -d ' ' -f 1 <<< "$line" )"
   ip="$( cut -d ' ' -f 2 <<< "$line" )"
-#      First we clear out the IP addresses of each server from the known_hosts file
-#      This is necessary because DigitalOcean tends to reuse IP addresses
   ssh-keygen -f ~/.ssh/known_hosts -R $ip
-#      Now try to SSH in, and compare the fingerprint to what we expect given the
-#      public key from the keypair we created
-  echo "Checking ${hostname}'s public key..."
-  ssh-keyscan -p 22 $ip 2>/dev/null > tmp_server_pub_key
-  keyscan="$(cat tmp_server_pub_key)"
-  echo "keyscan is:"
-  echo $keyscan
-  server_pub_key="$( cut -d ' ' -f 2- <<< "$keyscan" )"
-  server_pub_key_fingerprint="$(ssh-keygen -lf tmp_server_pub_key)"
-  echo "server_pub_key is:"
-  echo $server_pub_key
-  echo "server_pub_key_fingerprint is:"
-  echo $server_pub_key_fingerprint
-  my_pub_key="$(cat ../keys/${hostname}.pub)"
-  my_pub_key_fingerprint="$(ssh-keygen -lf ../keys/${hostname}.pub)"
-  echo "my_pub_key_fingerprint is:"
-  echo $my_pub_key_fingerprint
-  if [ $server_pub_key_fingerprint == $my_pub_key_fingerprint ]
-  then
-    echo "It matches the key we created."
-    echo 'yes' | ssh -p 22 -i ../keys/$hostname -T root@$ip
-  else
-    echo "Whoa! DANGER: ${hostname}'s public key retrieved via ssh-keyscan did not match the public key we created."
-    exit 3
-  fi
 done < ips
-rm tmp_server_pub_key
-
-exit
 
 #      Now we run the playbook
+echo "If this is a real live production deployment (as opposed to a practice setup"
+echo "of a production deployment, admin will want to verify the fingerprints of each"
+echo "server before answering 'yes' to trust each host at the start of the playbook."
 ansible-playbook -i ../production ../site.yml --ask-vault-pass -vvvv
 
 
