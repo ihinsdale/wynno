@@ -176,3 +176,10 @@ def update_json_keys_ips():
     json.dump(node_json, outfile)
   with open(python_json_abs_path, 'w') as outfile:
     json.dump(python_json, outfile)
+
+def create_ips_file():
+  """ Creates a file containing the hostnames and public IPs of the new droplets, one pair on each line. """
+  dynamic_inventory = json.load(open('dynamic_inventory.json'))
+  with open('ips', 'w') as outfile:
+    for each in dynamic_inventory['droplets']:
+      outfile.write(each['name'] + ' ' + each['ip_address'] + '\n')
