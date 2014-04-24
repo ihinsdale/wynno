@@ -29,16 +29,17 @@
     - tcl8.5
 
 - name: Download latest stable redis
-  get_url: url=http://download.redis.io/redis-stable.tar.gz dest=/tmp/redis-stable.tar.gz
+  # Since this a production deployment, we want to specify a particular version of Redis to use
+  get_url: url=http://download.redis.io/releases/redis-2.8.9.tar.gz dest=/tmp/redis-2.8.9.tar.gz
 
 - name: Untar redis
-  command: tar xvzf /tmp/redis-stable.tar.gz -C /tmp
+  command: tar xvzf /tmp/redis-2.8.9.tar.gz -C /tmp
 
 - name: Build redis
-  command: make -C /tmp/redis-stable
+  command: make -C /tmp/redis-2.8.9
 
 - name: Run make test
-  command: make -C /tmp/redis-stable test
+  command: make -C /tmp/redis-2.8.9 test
 
 - name: Make sure that /etc/redis exists
   file: path=/etc/redis state=directory mode=0755
@@ -48,12 +49,15 @@
   file: path=/var/redis state=directory mode=0755
   sudo: yes
 
+- name: Make a copy of the default redis config file
+  shell: cp /tmp/redis-2.8.9/redis.conf /home/deploy/redis.conf.default 
+
 - name: Copy over the redis configuration file
   template: src=redis.conf.j2 dest=/etc/redis/redis.conf
   sudo: yes
 
 - name: Install redis binaries
-  command: cp /tmp/redis-stable/src/{{ item }} /usr/local/bin
+  command: cp /tmp/redis-2.8.9/src/{{ item }} /usr/local/bin
   with_items:
     - redis-server
     - redis-cli
@@ -64,8 +68,8 @@
 - name: Clean up build files
   command: rm -rf /tmp/{{ item }}
   with_items:
-    - redis-stable
-    - redis-stable.tar.gz
+    - redis-2.8.9
+    - redis-2.8.9.tar.gz
 
 # Make Redis start up on boot
 - name: Copy init script
