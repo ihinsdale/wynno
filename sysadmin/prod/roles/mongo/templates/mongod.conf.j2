@@ -15,7 +15,10 @@ logappend=true
 port = {{ mongo_port }}
 
 # Listen to local interface only. Comment out to listen on all interfaces.
-bind_ip = {% for host in groups['nodeservers'] %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}, {% endfor %}{% for host in groups['pythonservers'] %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}, {% endfor %} 127.0.0.1
+# (Ian: I'm not sure that the binding to the multiple interfaces is working. Instead
+# we'll comment out the line, thereby listening on all interfaces, and rely on the
+# firewall rules to allow connections only from the app hosts.)
+#bind_ip = {% for host in groups['nodeservers'] %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}, {% endfor %}{% for host in groups['pythonservers'] %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}, {% endfor %} 127.0.0.1
 
 # Disables write-ahead journaling
 # nojournal = true

@@ -33,7 +33,8 @@ logging.basicConfig();
 env = os.environ.get('NODE_ENV')
 print 'Environment is ' + env
 credentials = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__),"../config/keys/" + env + "/python.json"))))
-client = MongoClient('mongodb://' + credentials['db']['username'] + ':' + credentials['db']['password'] + '@' + credentials['db']['host'] + ':' + str(credentials['db']['port']) + '/wynno-' + env)
+db_uri = 'mongodb://' + credentials['db']['username'] + ':' + credentials['db']['password'] + '@' + credentials['db']['host'] + ':' + str(credentials['db']['port']) + '/wynno-' + env
+client = MongoClient(db_uri)
 db = client['wynno-' + env]
 tweets = db.tweets
 users = db.users
@@ -63,9 +64,9 @@ def get_domain(url, tlds):
     wildcard_candidate = ".".join(["*"] + last_i_elements[1:]) # *.co.uk, *.uk, *
     exception_candidate = "!" + candidate
 
-    # match tlds: 
+    # match tlds:
     if (exception_candidate in tlds):
-      return ".".join(url_elements[i:]) 
+      return ".".join(url_elements[i:])
     if (candidate in tlds or wildcard_candidate in tlds):
       return ".".join(url_elements[i-1:])
       # returns "abcde.co.uk"
@@ -285,7 +286,7 @@ def evaluate_accuracy(NB_classifier, binarized_vectorized_voted_tweets, votes, m
   # per https://github.com/scikit-learn/scikit-learn/issues/2508 and https://github.com/scikit-learn/scikit-learn/pull/2694,
   # votes needs to be converted from a list to a numpy array
 
-  # we will define a custom scorer function (Cf. http://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter): 
+  # we will define a custom scorer function (Cf. http://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter):
   # we only want to make use of classifier predictions where
   # the classifier is very very sure the user won't like a tweet
   def custom_score_fcn(ground_truth, probs):
@@ -343,7 +344,7 @@ def decision_tree(feature_dicts, votes):
   vec = DictVectorizer()
   vectorized_features = vec.fit_transform(feature_dicts).toarray()
   feature_names = vec.get_feature_names()
-  
+
   # train the classifier
   criterion = "entropy"
   clf = tree.DecisionTreeClassifier(criterion=criterion,min_samples_leaf=10)
@@ -358,10 +359,10 @@ def decision_tree(feature_dicts, votes):
   out = tree.export_graphviz(clf, out_file=out, feature_names=feature_names)
   print out.getvalue()
   # also create pdf graph from dotfile
-  dot_data = sk_StringIO() 
-  tree.export_graphviz(clf, out_file=dot_data, feature_names=feature_names) 
-  graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
-  graph.write_pdf("graph_" + criterion + ".pdf") 
+  dot_data = sk_StringIO()
+  tree.export_graphviz(clf, out_file=dot_data, feature_names=feature_names)
+  graph = pydot.graph_from_dot_data(dot_data.getvalue())
+  graph.write_pdf("graph_" + criterion + ".pdf")
 
 def sk_naive_bayes(X, Y, feature_names):
   clf = naive_bayes.BernoulliNB() # using my own binarization of feature dicts
@@ -453,12 +454,12 @@ def custom(feature_dicts, votes_vector, user_id):
   results = []
 
   def recur_find(vector_to_search, inherited_features, min_tweets=5):
-    """ NB each tweet features vector must have the vote/class of the tweet as its last element. 
+    """ NB each tweet features vector must have the vote/class of the tweet as its last element.
         Works as follows:
         For each feature with at least min_tweets tweets with non-zero value,
         check if that feature corresponds to a 100% or 0% voting percentage.
         If it does, add that feature to results (closure variable).
-        Also, recursively search all tweets with the current feature for features with at least min_tweets tweets 
+        Also, recursively search all tweets with the current feature for features with at least min_tweets tweets
         with non-zero value for 100% or 0% voting percentage. """
     a = vector_to_search
     # count number of rows with non-zero elements in each column (excluding the vote column)
@@ -489,7 +490,7 @@ def custom(feature_dicts, votes_vector, user_id):
         next_inherited_features = inherited_features[:]
         next_inherited_features.append(feature_names[index])
         recur_find(b, next_inherited_features)
-  
+
   start = time.time()
   recur_find(vectorized_features_and_votes, [])
   elapsed = time.time() - start
@@ -504,11 +505,11 @@ def custom(feature_dicts, votes_vector, user_id):
 
 def remove_unimplementable_results(results):
   """ Removes from results list the feature combinations which cannot be the basis of filters
-      because filtering functionality based on one or more features does not exist. 
+      because filtering functionality based on one or more features does not exist.
       CURRENT LIST OF UNIMPLEMENTABLE RESULTS -- if 'features' contains:
       -- a tweeter=* feature and retweeter=* feature
       -- any of ['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions']
-      -- a user_mention_* feature 
+      -- a user_mention_* feature
       -- a bigram or trigram: b__* or t__* """
   non_filterable_features = set(['favorite_count', 'retweet_count', 'is_geotagged', 'num_followers_orig_tweeter', 'user_mentions'])
   trimmed_results = []
@@ -534,7 +535,7 @@ def remove_unimplementable_results(results):
   return trimmed_results
 
 def remove_redundant_hashtag_text_words(result):
-  """ Removes from result the word feature of a hashtag's text, 
+  """ Removes from result the word feature of a hashtag's text,
       if that specific hashtag feature is also present. Necessary because hashtag text is
       currently used to create a word feature for tweet. Assumes, as is currently the case,
       that word feature text is always lowercase but hashtag text might not be. """
@@ -580,7 +581,7 @@ def remove_redundant_entity_type_indicator_features(entity_type_indicator_featur
 
 def remove_any_remaining_duplicate_results(results):
   """ Safeguard to remove any remaining duplicate results. Duplicates could result
-      e.g. in cases of multiple redundant features of different types in the same tweet -- the 
+      e.g. in cases of multiple redundant features of different types in the same tweet -- the
       removal functions might not have caught all such combinations. """
   # convert feature list to tuple -- order doesn't matter at this point
   # this is necessary so we can use dict() (I think), which requires hashable keys
@@ -604,7 +605,7 @@ def select_winning_results(results, user_id, n=5):
       possible_winners.append(result)
       last_unique_result = result
       continue
-    # if all features in result are features of the last_unique_result, and both results have same number of votes, 
+    # if all features in result are features of the last_unique_result, and both results have same number of votes,
     # then result is a weaker variant of last_unique_result and should be skipped
     if result['num_votes'] == last_unique_result['num_votes'] and set(result['features']) < set(last_unique_result['features']):
       continue
@@ -673,11 +674,11 @@ def minimum_defining_aspects_of_filters(filters):
 
 def parse_result_into_filter(result):
   """ Converts a list of result dictionaries into a list of filter dictionaries, i.e. dictionaries
-      in the format of a filter parsed by client-side. Removes redundant features before doing so. 
-      Filter format is: 
-      { 
+      in the format of a filter parsed by client-side. Removes redundant features before doing so.
+      Filter format is:
+      {
         type: 'hear' or 'mute',
-        users: [screen_name1_str, screen_name2_str, ...], 
+        users: [screen_name1_str, screen_name2_str, ...],
         conditions: [{
           type: 'link' or 'word' or 'hashtag' or 'picture' or 'quotation',
           (optional, as appropriate:)
@@ -685,7 +686,7 @@ def parse_result_into_filter(result):
           word: word_or_phrase_str,
           wordIsCaseSensitive: Boolean,
           hashtag: hashtag_str
-        }, ...], 
+        }, ...],
         scope: 'all' or 'tweets' or 'retweets'
       } """
   # remove redundant features from result
@@ -754,7 +755,7 @@ def from_votes_to_filters(user_id, tweets):
   # define array of votes, i.e. class labels, also known as Y array for scikit classifiers
   votes = [tweet['__vote'] for tweet in tweets]
 
-  # decision tree classifier 
+  # decision tree classifier
   #decision_tree(feature_dicts, votes)
 
   # make filter suggestions, using compute custom approach
@@ -774,7 +775,7 @@ class RPC(object):
   def predict(self, user_id, tweets_to_predict):
     print 'Auto-wynnoing for user ' + str(user_id)
     # user_id ObjectId string representation needs to be converted to actual ObjectId for querying
-    user_id = ObjectId(user_id) 
+    user_id = ObjectId(user_id)
     # when computing resources become more scarce, because of more users, can implement saving of classifiers
     # using joblib (http://stackoverflow.com/a/11169797) - e.g. refit the classifier after every 20 votes
     print 'Tweets voted on: ' + str(tweets.find({ "user_id": user_id, "__vote": { "$nin": [None] } }).count())

@@ -131,7 +131,7 @@ done < ips
 
 #      Now we run the playbook
 echo "If this is a real live production deployment (as opposed to a practice setup"
-echo "of a production deployment, admin will want to verify the fingerprints of each"
+echo "of a production deployment), admin will want to verify the fingerprints of each"
 echo "server before answering 'yes' to trust each host at the start of the playbook."
 ansible-playbook -i ../production ../site.yml --ask-vault-pass -vvvv
 
