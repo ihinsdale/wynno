@@ -9,5 +9,9 @@ env NODE_ENV={{ app_env }}
 respawn
 
 script
-  screen -d -m /home/deploy/launch_zerorpc_python_server.sh
+  screen -S zerorpc_server -d -m /home/deploy/launch_zerorpc_python_server.sh
+end script
+
+post-stop script
+  screen -S zerorpc_server -X quit
 end script
