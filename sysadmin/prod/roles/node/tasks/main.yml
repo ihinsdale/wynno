@@ -7,12 +7,14 @@
 - name: Install latest production version of node 0.10.26
   shell: . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
 
-- name: Ensure system packages necessary for node modules installed
+- name: Ensure system packages necessary for node modules particularly zerorpc are installed
   apt: pkg={{ item }} state=present update_cache=yes
   sudo: yes
   with_items:
     - make
     - build-essential
+    - libzmq-dev
+    - libevent-dev
 
 - name: Make a directory for wynno files
   file: path=/home/deploy/wynno state=directory
