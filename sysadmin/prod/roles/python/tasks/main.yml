@@ -106,6 +106,9 @@
   template: src=wynno_python.conf.j2 dest=/etc/init/wynno_python.conf
   sudo: yes
 
+- name: Copy over the shell script which the wynno_python service runs
+  copy: src=launch_zerorpc_python_server.sh dest=/home/deploy/launch_zerorpc_python_server.sh
+
 - name: Run server.py
   service: name=wynno_python state=started
   sudo: yes

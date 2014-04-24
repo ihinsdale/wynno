@@ -8,4 +8,6 @@ env NODE_ENV={{ app_env }}
 
 respawn
 
-exec python /home/deploy/dist/lib/python/server.py
+script
+  screen -d -m /home/deploy/launch_zerorpc_python_server.sh
+end script

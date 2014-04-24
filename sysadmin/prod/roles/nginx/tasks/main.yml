@@ -25,6 +25,7 @@
 
 - name: Install nginx
   apt: pkg=nginx state=installed update_cache=true
+  sudo: yes
 
 - name: Set nginx to start on boot
   command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
