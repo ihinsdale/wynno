@@ -19,6 +19,9 @@
   - name: Run apt-get upgrade
     apt: upgrade=yes
     sudo: yes
+  - name: Upgrade packages usually held back
+    apt: pkg=linux-virtual
+    sudo: yes
 
 - name: Update code on Python machine learning server(s)
   hosts: pythonservers
