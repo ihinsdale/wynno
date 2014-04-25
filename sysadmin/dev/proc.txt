@@ -5,8 +5,8 @@
 3. SSH into the instance on Port 202
 4. Open up a screen session
 5. Launch in separate windows:
-   - nodemon wynno/dist/server.js
    - sudo mongod --auth --dbpath ~/db/data
    - python server.py
    - sudo service redis-server start
+   - nodemon wynno/dist/server.js
    - sudo service nginx restart

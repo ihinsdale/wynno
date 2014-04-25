@@ -1,5 +1,3 @@
-Hello, world!
-
 wynno is a tool for seeing the tweets in your Twitter timeline that interest you, and skipping the rest.
 
 The more people you follow on Twitter, the more you probably find yourself sifting through tweets that don't interest you to find the ones that do. That's the problem that wynno wants to solve.

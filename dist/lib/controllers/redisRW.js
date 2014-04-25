@@ -6,9 +6,9 @@ var redis = require('redis');
 var env = process.env.NODE_ENV;
 var credentials = require('../config/keys/' + env + '/node.json');
 
-var client = redis.createClient(credentials.redis.port, credentials.redis.localhost);
+var client = redis.createClient(credentials.redis.port, credentials.redis.host);
 // Switch to the database specfically for fetching
-client.select(credentials.redis.dbs.fetching, function() {}); // I don't think we need this callback, 
+client.select(credentials.redis.dbs.fetching, function() {}); // I don't think we need this callback,
 // even though the command is ultimately asynchronous
 
 exports.checkRateLimitingAndSetIfNone = function(user_id, callback) {
@@ -27,7 +27,7 @@ exports.checkRateLimitingAndSetIfNone = function(user_id, callback) {
     // otherwise we want to set a rate limiter, then proceed with the request to Twitter
     // note we want to set a rate limiter before the request is made AND afterwards as a way of blocking
     // any other requests that could theoretically be made before the call to the Twitter API has returned
-    // and the rate limiting after that call has been set up 
+    // and the rate limiting after that call has been set up
     } else {
       setRateLimiter(user_id, callback);
     }
