@@ -1,4 +1,5 @@
-#!upstart
+description "Upstart script to run the wynno Node.js servers"
+
 # Cf. https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/
 #
 # An example upstart script for running a Node.js process as a service
@@ -8,7 +9,6 @@
 # You will need to set the environment variables noted below to conform to
 # your use case, and should change the description.
 #
-description "Example upstart script for a Node.js process"
 
 start on runlevel [2345]
 stop on runlevel [!2345]
@@ -59,6 +59,9 @@ script
     # someone makes an error in application initialization code, or bringing down
     # production servers the same way if a database or other critical service
     # suddenly becomes inaccessible.
+    sudo su - deploy
+    . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
+    npm install -g forever
     exec forever --sourceDir $APPLICATION_DIRECTORY -a -l $LOG \
          --minUptime 5000 --spinSleepTime 2000 start $APPLICATION_START
 end script

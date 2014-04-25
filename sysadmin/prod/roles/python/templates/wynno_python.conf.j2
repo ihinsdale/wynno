@@ -6,12 +6,11 @@ stop on runlevel [!2345]
 
 env NODE_ENV={{ app_env }}
 
+chdir /home/deploy/dist/lib/python
+
 respawn
 
 script
-  screen -S zerorpc_server -d -m /home/deploy/launch_zerorpc_python_server.sh
-end script
-
-post-stop script
-  screen -S zerorpc_server -X quit
+    sudo su - deploy
+    exec python server.py
 end script
