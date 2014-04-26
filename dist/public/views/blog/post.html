@@ -1,5 +1,7 @@
-<h2 ng-bind="post.title"></h2>
-<div>by <span ng-bind="post.author"></span></div>
-<div><span ng-bind="post.published.month"></span> <span ng-bind="post.published.day"></span>, <span ng-bind="post.published.year"></span></div>
-
-<div btf-markdown="" ng-include="'views/blog/' + post.file"></div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 jumbotron">
+    <a href="#/blog/{{post.slug}}"><h2 ng-bind="post.title" class="wynnoPurple"></h2></a>
+    <div class="white"><span ng-bind="post.published.month"></span> <span ng-bind="post.published.day"></span>, <span ng-bind="post.published.year"></span></div>
+    <div btf-markdown="" ng-include="'views/blog/' + post.file" class="blogPostBody"></div>
+  </div>
+</div>

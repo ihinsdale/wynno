@@ -197,7 +197,7 @@ body > .container {
     line-height: 18px;
 }
 
-.wynno, 
+.wynno,
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
     font-family: "Ubuntu", sans-serif;
@@ -329,7 +329,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
   from { opacity:1; }
   to { opacity:0; }
 }
- 
+
 @-o-keyframes wynno-fadeout {
   from { opacity:1; }
   to { opacity:0; }
@@ -873,7 +873,7 @@ $twitterButtonRadius: 3px;
 }
 
 .noFade {
-    transition: none;   
+    transition: none;
 }
 
 .bigBird {
@@ -1169,6 +1169,16 @@ $twitterButtonRadius: 3px;
 .infoPopover:hover {
     cursor: pointer;
 }
+
+// Blog styling
+
+.blogPostBody {
+  font-size: 18px;
+}
+
+
+
+
 
 // media query-based styling
 

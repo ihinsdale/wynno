@@ -1,8 +1,12 @@
 ---
 # This playbook is executed on all wynno node.js webservers.
 
-- name: Install nvm
-  shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+- name: Copy over nvm install script
+  # Downloaded on 4/25/14 from https://raw.github.com/creationix/nvm/master/install.sh
+  copy: src=install.sh dest=/home/deploy/install.sh
+
+- name: Run nvm install script
+  command: sh /home/deploy/install.sh
 
 - name: Install latest production version of node 0.10.26
   shell: . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
