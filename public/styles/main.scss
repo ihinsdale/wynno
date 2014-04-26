@@ -1073,6 +1073,10 @@ $twitterButtonRadius: 3px;
     text-align: left;
 }
 
+.textAlignRight {
+    text-align: right;
+}
+
 .btn.hear, .btn.hear:hover {
     background-color: $aye-green;
     color: #ffffff;
@@ -1176,7 +1180,13 @@ $twitterButtonRadius: 3px;
   font-size: 18px;
 }
 
+.blog a:hover {
+  text-decoration: none;
+}
 
+.blog .jumbotron {
+  padding-top: 20px;
+}
 
 
 
