@@ -1180,6 +1180,10 @@ $twitterButtonRadius: 3px;
     font-size: 18px;
 }
 
+.blogPostBody li {
+    line-height: inherit;
+}
+
 .blogPost .metaInfo {
     color: #777;
     text-align: right;
@@ -1198,7 +1202,7 @@ $twitterButtonRadius: 3px;
 }
 
 .blogPost h2 {
-    margin-top: 0px;
+    margin-top: 10px;
     margin-bottom: 20px;
 }
 

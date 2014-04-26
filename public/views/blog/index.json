@@ -2,9 +2,9 @@
   [
     {
       "id": 0,
-      "title"    : "Introducing wynno, part 1",
-      "slug"     : "introducing-wynno-part-1",
-      "file"     : "introducing-wynno-part-1.md",
+      "title"    : "Introducing wynno",
+      "slug"     : "introducing-wynno",
+      "file"     : "introducing-wynno.md",
       "author"   : "Ian",
       "published": {
         "day": "28th",
@@ -14,9 +14,9 @@
     },
     {
       "id": 1,
-      "title"    : "Introducing wynno, part 2",
-      "slug"     : "introducing-wynno-part-2",
-      "file"     : "introducing-wynno-part-2.md",
+      "title"    : "Introducing wynno (continued)",
+      "slug"     : "introducing-wynno-continued",
+      "file"     : "introducing-wynno-continued.md",
       "author"   : "Ian",
       "published": {
         "day": "29th",
