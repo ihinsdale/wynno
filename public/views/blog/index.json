@@ -23,24 +23,11 @@
         "month": "April",
         "year": 2014
       }
-    },
-    {
-      "id": 2,
-      "title"    : "Filtering basics",
-      "slug"     : "filtering-basics",
-      "file"     : "filtering-basics.md",
-      "author"   : "Ian",
-      "published": {
-        "day": "30th",
-        "month": "April",
-        "year": 2014
-      }
     }
   ],
   "lookup":
   {
     "introducing-wynno-part-1": 0,
-    "introducing-wynno-part-2": 1,
-    "filtering-basics": 2
+    "introducing-wynno-part-2": 1
   }
 }
