@@ -1,33 +1,46 @@
 { "posts":
   [
     {
-      "id": 1,
-      "title"    : "Introducing wynno",
-      "slug"     : "introducing-wynno",
-      "file"     : "introducing-wynno.md",
+      "id": 0,
+      "title"    : "Introducing wynno, part 1",
+      "slug"     : "introducing-wynno-part-1",
+      "file"     : "introducing-wynno-part-1.md",
       "author"   : "Ian",
       "published": {
         "day": "28th",
-        "month": "Apr",
+        "month": "April",
+        "year": 2014
+      }
+    },
+    {
+      "id": 1,
+      "title"    : "Introducing wynno, part 2",
+      "slug"     : "introducing-wynno-part-2",
+      "file"     : "introducing-wynno-part-2.md",
+      "author"   : "Ian",
+      "published": {
+        "day": "29th",
+        "month": "April",
         "year": 2014
       }
     },
     {
       "id": 2,
-      "title"    : "Filtering Basics",
+      "title"    : "Filtering basics",
       "slug"     : "filtering-basics",
       "file"     : "filtering-basics.md",
       "author"   : "Ian",
       "published": {
-        "day": "29th",
-        "month": "Apr",
+        "day": "30th",
+        "month": "April",
         "year": 2014
       }
     }
   ],
   "lookup":
   {
-    "introducing-wynno": 0,
-    "filtering-basics": 1
+    "introducing-wynno-part-1": 0,
+    "introducing-wynno-part-2": 1,
+    "filtering-basics": 2
   }
 }
