@@ -6,7 +6,7 @@
   copy: src=install.sh dest=/home/deploy/install.sh
 
 - name: Run nvm install script
-  command: sh /home/deploy/install.sh
+  shell: sh /home/deploy/install.sh
 
 - name: Install latest production version of node 0.10.26
   shell: . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
