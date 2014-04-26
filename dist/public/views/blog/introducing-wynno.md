@@ -20,4 +20,6 @@ One last thing, about privacy: your activity on wynno is private. <span class="w
 
 We'd love for you to send feedback to [feedback@wynno.com](mailto:feedback@wynno.com). Thanks for checking us out!
 
-Ian Hinsdale<br>Founder and CEO
+Ian Hinsdale
+
+Founder and CEO

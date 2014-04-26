@@ -1177,20 +1177,28 @@ $twitterButtonRadius: 3px;
 // Blog styling
 
 .blogPostBody {
-  font-size: 18px;
+    font-size: 18px;
+}
+
+.blogPost .metaInfo {
+    color: #777;
+}
+
+.blogPost .blogPostBody > strong {
+    color: #eee;
 }
 
 .blogPost a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .blogPost .jumbotron {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .blogPost h2 {
-  margin-top: 0px;
-  margin-bottom: 20px;
+    margin-top: 0px;
+    margin-bottom: 20px;
 }
 
 // media query-based styling
