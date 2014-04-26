@@ -8810,7 +8810,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 /* line 1183, main.scss */
 .blogPostBody li {
-  line-height: inherit;
+  line-height: 1.4;
 }
 
 /* line 1187, main.scss */
