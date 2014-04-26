@@ -20,4 +20,8 @@ angular.module('wynnoApp.controllers')
       $scope.error = 'There was an error loading the article.';
     });
   }
+
+  // Initialize
+  // Always start at the top
+  window.scrollTo(0, 0);
 });

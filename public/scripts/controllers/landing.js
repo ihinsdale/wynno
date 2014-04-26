@@ -5,4 +5,7 @@ angular.module('wynnoApp.controllers')
   if (AuthService.isAuthenticated()) {
     $location.path('/in');
   }
+
+  // Always start at the top
+  window.scrollTo(0, 0);
 });
