@@ -146,6 +146,7 @@
 
     # 3. Setup Redis
 
+  # TODO replicate the manual install procedure used in production
   - name: Install redis-server
     apt: pkg=redis-server state=present
     sudo: yes
@@ -271,6 +272,7 @@
 
     # 6. Setup node.js
 
+  # TODO refactor this so that the install file is static, i.e. use a local copy
   - name: Install nvm
     shell: curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 
