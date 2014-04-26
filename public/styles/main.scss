@@ -1202,6 +1202,11 @@ $twitterButtonRadius: 3px;
     margin-bottom: 20px;
 }
 
+.blogPost p > img {
+  display: block;
+  margin: 0 auto;
+}
+
 // media query-based styling
 
 @media (min-width: 768px) {
