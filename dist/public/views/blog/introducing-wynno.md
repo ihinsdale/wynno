@@ -1,4 +1,4 @@
-<span class="wynnoPurple">wynno is a tool for seeing the tweets in your Twitter timeline that interest you, and skipping the rest.</span>
+<span class="wynnoPurple">**wynno is a tool for seeing the tweets in your Twitter timeline that interest you, and skipping the rest.**</span>
 
 The more people you follow on Twitter, the more you probably find yourself sifting through tweets that don't interest you to find the ones that do. That's the problem that wynno wants to solve.
 
@@ -20,5 +20,4 @@ One last thing, about privacy: your activity on wynno is private. <span class="w
 
 We'd love for you to send feedback to [feedback@wynno.com](mailto:feedback@wynno.com). Thanks for checking us out!
 
-Ian Hinsdale
-Founder and CEO
+Ian Hinsdale<br>Founder and CEO
