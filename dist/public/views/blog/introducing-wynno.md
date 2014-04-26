@@ -6,7 +6,7 @@ It's not a problem that can be solved by unfollowing people. Unfollowing someone
 
 wynno enables a finer approach: you can apply specific **filters** to your Twitter timeline. Filters are simply rules you make about the kinds of tweets you want to **hear** or **mute**.
 
-![Jean-François Millet - Le vanneur](images/Millet_008.jpg)
+![Jean-François Millet - Le vanneur](images/blog/Millet_008.jpg)
 
 Maybe you always want to hear tweets that contain a particular **hashtag**. Maybe for your work it's important to keep up with breaking news, and so you always want to hear tweets that contain a **keyword** like 'BREAKING'. Or maybe you couldn't care less about breaking news and want to mute those tweets. Maybe you never want to see Foursquare updates or **links** to Facebook from that former coworker of yours, whom you don't really know anyway but nevertheless don't want to unfollow because that would sow seeds of awkwardness. Maybe you always want to hear tweets by that erudite friend of yours whenever she tweets **quotations**. But maybe you've seen enough baby **pictures** from her at this point.
 

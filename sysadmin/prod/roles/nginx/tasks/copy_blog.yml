@@ -1,0 +1,9 @@
+---
+# This playbook copies over the static blog assets served by nginx.
+# It is used by blog_post_publish.yml.
+
+- name: Copy over the blog folder that will be served by nginx
+  copy: src=../../../../../dist/public/views/blog dest=/home/deploy/wynno/dist/public/views
+
+- name: Copy over the blog images folder too in case the new blog posts use new images
+  copy: src=../../../../../dist/public/images/blog dest=/home/deploy/wynno/dist/public/images

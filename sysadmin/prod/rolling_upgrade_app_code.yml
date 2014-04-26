@@ -1,6 +1,9 @@
 ---
-# This playbook deploys the whole application stack for the production version of wynno.
-# To be used, obviously, on fresh servers only. For use with the 'production' inventory file.
+# This playbook upgrades the core application code, in a rolling fashion,
+# for the production version of wynno.
+
+# To be used on an existing deployment (i.e. one created via site.yml).
+# For use with the 'production' inventory file.
 
 # First we need to set the ansible_ssh_port to the ssh port we use for our app nodes
 - name: Set ansible_ssh_port

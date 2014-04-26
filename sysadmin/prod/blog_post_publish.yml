@@ -1,0 +1,25 @@
+---
+# This playbook is for publishing new blog posts.
+# It should be used only when the changes to the codebase are just the addition of blog post
+# Markdown files, the index.json blog file, and images.
+# For use with the 'production' inventory file.
+
+# First we need to set the ansible_ssh_port to the ssh port we use for our app nodes
+- name: Set ansible_ssh_port
+  set_fact: ansible_ssh_port={{ new_ssh_port }}
+
+# Next we have a generic 'monitoring' task which grabs facts about all app nodes
+- hosts: all
+  tasks: []
+
+# No code needs to be updated on our node servers, since all that has changed are static files
+
+- name: Update the static blog files on our nginx server(s)
+  hosts: nginxservers
+  remote_user: deploy
+  serial: 1
+  tasks:
+    # It's not necessary to stop and restart nginx, we can just replace the static files
+    # and nginx will serve them for all subsequent requests. This is because I'm
+    # not using any nginx caching.
+  - include: roles/nginx/tasks/copy_blog.yml

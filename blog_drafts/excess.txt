@@ -1,0 +1,43 @@
+
+
+
+
+
+--votes which are completely private, by the way, not seen by other users-- "I like tweets like this and would like to see this kind of tweet in the future," or the opposite. wynno figures out what you mean exactly by 'like this' and 'this kind of tweet'.
+
+wynno can suggest filters for you to adopt. wynno can even create a customized filter just for you which will mute tweets that it thinks you won't like.
+
+wynno will suggest filters for you to adopt after every
+
+ gives you vote buttons next each tweet. When you vote on tweets,
+
+If you want, you can keep tabs on the things that are getting caught by your mute filters. If you
+
+
+
+that are applied to your timeline. Since a tweet is, after all, a bird noise, we call the two types of filters 'Hear' and 'Mute'
+
+An ideal solution would allow you to
+
+
+
+wynno takes your Twitter timeline and helps you winnow out the tweets you don't like, so that only the good stuff is left. It does this in two ways: filters, and automatic wynnoing.
+
+Filters are simply rules you make about the kinds of tweets you always want to 'hear' or 'mute' (a tweet is, strictly speaking, a bird noise, so we figured the language of listening was appropriate).
+
+
+ always want to mute tweets from that former coworker links to Facebook.
+
+'hear' or 'mute'. Maybe you always want to see tweets that contain a certain hashtag. Maybe you never want to s
+
+At any
+
+ Muted tweets are takOr maybe you want to mute that annoying former coworker entirely (unfollowing them might sow the seed of awkwardness)
+
+wynno helps you mute the noise, so to speak, among all the. Turn the cacophony of chirping birds into a symphony, or something like that.
+
+Maybe you always want to see tweets that contain 'BREAKING:' news--or maybe you never do. Maybe you always want to see tweets by that well-read friend of yours who's always tweeting quotations. Maybe you never want to see tweets that mention Congress. Maybe you always want to see tweets that contain a particular hashtag. Maybe you don't ever want to see tweets by that annoying former coworker which contain pictures.
+
+wynno is a tool for getting more out of Twitter. It does that by helping you remove the stuff you don't care about from your Timeline. Less noise means more time for exploring the tweets that interest you.
+
+ helps you get more out of Twitter by reducing the number of tweets in your timeline which you don't care about.

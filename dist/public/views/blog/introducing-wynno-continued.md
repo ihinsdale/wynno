@@ -5,8 +5,8 @@ Filters are simple, effective, and the essence of wynno. But there is more compl
 
 wynno can do these things once you give it a bit of training, to recognize the tweets you like and dislike. wynno places vote buttons next to tweets that aren't handled by any of your filters.
 
-![Yea](images/checkmark-circle.svg)
-![Nay](images/cancel-circle.svg)
+![Yea](images/blog/checkmark-circle.svg)
+![Nay](images/blog/cancel-circle.svg)
 
 When you vote on tweets, you're telling wynno, "I like tweets like this and want to see this kind of tweet in the future," or the opposite. It's wynno's job to figure out what you mean exactly by 'like this' and 'this kind of tweet'. Because wynno needs a fair amount of data to figure that out, filter suggestions are currently offered after every 100 votes.
 
