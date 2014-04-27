@@ -33,3 +33,8 @@ To setup/launch/create the app truly from scratch:
     sysadmin/prod/roles/nginx/files/www_wynno_com.key to corresponding locations
     on the gateway instance.
 11. SSH into gateway instance and run setup_from_t0.sh.
+
+To upgrade the app code:
+1. `ansible-playbook -i ../production ../rolling_upgrade_app_code.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
+   (Note that admin must be within the /manual directory so that the relative paths used in the production file
+    work correctly.)

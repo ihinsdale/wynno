@@ -5,12 +5,10 @@
 # To be used on an existing deployment (i.e. one created via site.yml).
 # For use with the 'production' inventory file.
 
-# First we need to set the ansible_ssh_port to the ssh port we use for our app nodes
+# First we want to contact all nodes
 - hosts: all
   remote_user: deploy
   tasks:
-  - name: set ansible_ssh_port
-    set_fact: ansible_ssh_port={{ new_ssh_port }}
 # We will take this opportunity to update the apt cache and upgrade our packages
   - name: Update APT package cache
     apt: update_cache=yes
