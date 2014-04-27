@@ -4,6 +4,10 @@
 
 - name: Copy over the blog folder that will be served by nginx
   copy: src=../../../../../dist/public/views/blog dest=/home/deploy/wynno/dist/public/views
+  sudo: yes
+  # Again sudo is crucial because deploy user doesn't have write privileges, www-data does
 
 - name: Copy over the blog images folder too in case the new blog posts use new images
   copy: src=../../../../../dist/public/images/blog dest=/home/deploy/wynno/dist/public/images
+  sudo: yes
+  # Again sudo is crucial because deploy user doesn't have write privileges, www-data does

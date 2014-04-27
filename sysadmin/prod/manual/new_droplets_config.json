@@ -1,7 +1,7 @@
 {
   "mongo": {
     "mongo1": {
-      "size_slug": "512mb",
+      "size_slug": "4gb",
       "image_slug": "ubuntu-12-04-x64",
       "region_slug": "nyc2",
       "private_networking": true,

@@ -4,6 +4,10 @@
 
 - name: Copy over the folder of static assets that will be served by nginx
   copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist
+  sudo: yes
+  # sudo is crucial here because the deploy user loses write privileges on the folder
+  # per the below steps, which have already been run by site.yml when this playbook
+  # is used in a rolling upgrade
 
 - name: Make the nginx_user the owner of this folder
   shell: chown -R {{ nginx_user }}:{{ nginx_user }} /home/deploy/wynno/dist/public
