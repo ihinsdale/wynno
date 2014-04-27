@@ -32,13 +32,7 @@
 # Copy over the app code, the necessary config .json files, and install node modules
 - include: copy_code.yml
 
-- name: Install the Forever node module globally
-  # This is necessary so that the Upstart script below finds Forever, which is what
-  # actually runs the node process
-  npm: name=forever global=yes
-  sudo: yes
-
-- name: Copy over the Upstart script which runs node via Forever
+- name: Copy over the Upstart script which runs node
   template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not
   sudo: yes
 
