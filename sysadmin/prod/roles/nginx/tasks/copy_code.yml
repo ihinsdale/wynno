@@ -4,3 +4,11 @@
 
 - name: Copy over the folder of static assets that will be served by nginx
   copy: src=../../../../../dist/public dest=/home/deploy/wynno/dist
+
+- name: Make the nginx_user the owner of this folder
+  shell: chown -R {{ nginx_user }}:{{ nginx_user }} /home/deploy/wynno/dist/public
+  sudo: yes
+
+- name: Set read permissions on this folder
+  shell: chmod -R 0755 /home/deploy/wynno/dist/public
+  sudo: yes

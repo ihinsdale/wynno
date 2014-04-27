@@ -48,7 +48,7 @@
   sudo: yes
 
 - name: Replace nginx.conf with the one for wynno
-  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # or try 0755 if there is nginx error
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # 0644 or try 0755 if there is nginx error
   sudo: yes
   notify:
     - Restart nginx

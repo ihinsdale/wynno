@@ -1,9 +1,9 @@
 # Adapted from default nginx.conf that came with v1.4.7
 
-user  www-data;
+user  {{ nginx_user }};
 worker_processes  1;
 
-pid        /run/nginx.pid;
+pid /run/nginx.pid;
 
 events {
     worker_connections  768;
@@ -13,6 +13,7 @@ events {
 
 http {
     #server_names_hash_bucket_size  128;
+    types_hash_max_size 2048;
 
     #proxy_cache_path  /var/cache/nginx levels=1:2 keys_zone=one:8m max_size=3000m inactive=600m;
     #proxy_temp_path /var/tmp;
@@ -30,6 +31,7 @@ http {
     #include /etc/nginx/conf.d/*.conf;
 
     gzip on;
+    gzip_disable "msie6";
     gzip_comp_level 6;
     gzip_vary on;
     gzip_min_length  1000;
@@ -41,7 +43,7 @@ http {
       {% for host in groups['nodeservers'] %}
         server {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}:{{ node_port }};
       {% endfor %}
-      keepalive 64;
+        keepalive 64;
     }
 
     server {
