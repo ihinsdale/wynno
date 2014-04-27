@@ -42,8 +42,8 @@ expect fork
 # Log file path.
 # env LOG="/var/log/my-application.log"
 
-env NODE_BIN_DIR="/home/deploy/.nvm/v0.10.26/bin/node"
-env NODE_PATH="/home/deploy/.nvm/v0.10.26/lib/node_modules"
+env NODE_BIN_DIR="/home/deploy/v0.10.26/bin/node"
+env NODE_PATH="/home/deploy/v0.10.26/lib/node_modules"
 env APPLICATION_DIRECTORY="/home/deploy/wynno/dist"
 env APPLICATION_START="server.js"
 env LOG="/var/log/wynno.log"
@@ -59,10 +59,7 @@ script
     # someone makes an error in application initialization code, or bringing down
     # production servers the same way if a database or other critical service
     # suddenly becomes inaccessible.
-    sudo su - deploy
-    . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
-    npm install -g forever
-    exec forever --sourceDir $APPLICATION_DIRECTORY -a -l $LOG \
+    exec sudo -u deploy forever --sourceDir $APPLICATION_DIRECTORY -a -l $LOG \
          --minUptime 5000 --spinSleepTime 2000 start $APPLICATION_START
 end script
 
@@ -74,5 +71,5 @@ pre-stop script
     # its data. Note that doing it this way means that each application that
     # runs under Forever must have a different start file name, regardless of
     # which directory it is in.
-    exec forever stop $APPLICATION_START >> $LOG
+    exec sudo -u deploy forever stop $APPLICATION_START >> $LOG
 end script

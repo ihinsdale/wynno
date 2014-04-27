@@ -8,3 +8,5 @@ fail2ban_email: engineering@wynno.com
 root_password: '$6$h3En5uu3Dm$nF5HO2K5USzvI24pHbX/YPKZQK5fKVg3xJVZRw/WFiDQl2osAwn5UWiwKkogEO1zbLPH3MKK3F5tvjGFdCv6P.'
 deploy_password: '$6$h3En5uu3Dm$dMyCzcIbOf9zF2go.fyeSo8dTn0JZNGS2N6JeLCRNR6oQO3SOR7/t0qxVLLZGfXj7ZRRK6TozyiO8nT.kJCTT0'
 # crypted password, generated on a Linux box using: echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$h3En5uu3Dm")' | python -
+node_port: 8080
+# node_port is defined here because it is used by both nodeservers and nginxservers

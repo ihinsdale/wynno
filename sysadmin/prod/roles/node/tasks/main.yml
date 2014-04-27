@@ -1,24 +1,30 @@
 ---
 # This playbook is executed on all wynno node.js webservers.
 
-- name: Copy over nvm install script
-  # Downloaded on 4/25/14 from https://raw.github.com/creationix/nvm/master/install.sh
-  copy: src=install.sh dest=/home/deploy/install.sh
-
-- name: Run nvm install script
-  shell: sh /home/deploy/install.sh
-
-- name: Install latest production version of node 0.10.26
-  shell: . /home/deploy/.nvm/nvm.sh && nvm install v0.10.26 executable=/bin/bash
-
 - name: Ensure system packages necessary for node modules particularly zerorpc are installed
   apt: pkg={{ item }} state=present update_cache=yes
   sudo: yes
   with_items:
+    - python-software-properties
     - make
     - build-essential
     - libzmq-dev
     - libevent-dev
+
+# We install a particular version of node using the package manager
+# We don't need to use nvm to install node, because we aren't going to be working
+# with multiple versions of node
+# because this is a production environment. We can still upgrade node via the apt
+# package manager as necessary.
+# (nvm was making things difficult in our Upstart script because we had to run nvm.sh
+# in every shell just so that the paths worked)
+- name: Add node.js PPA
+  apt_repository: repo='ppa:chris-lea/node.js'
+  sudo: yes
+
+- name: Install node.js
+  apt: pkg=nodejs=0.10.26-1chl1~precise1 state=installed update_cache=true
+  sudo: yes
 
 - name: Make a directory for wynno files
   file: path=/home/deploy/wynno state=directory
