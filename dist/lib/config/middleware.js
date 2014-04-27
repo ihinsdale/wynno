@@ -35,7 +35,7 @@ exports.init = function(app) {
       pass: credentials.redis.pass
     }),
     secret: credentials.secrets.session,
-    cookie: { path: '/', maxAge: 3600000 } // secure option for HTTPS? investigate this...
+    cookie: { path: '/', maxAge: 36000000 } // secure option for HTTPS? investigate this...
   }));
   app.use(express.csrf({value: csrfValue})); // Cf. http://mircozeiss.com/using-csrf-with-express-and-angular/
   app.use(function(req, res, next) {
