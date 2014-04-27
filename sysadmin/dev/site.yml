@@ -261,7 +261,7 @@
     sudo: yes
 
   - name: Make a copy of the default nginx.conf file if such copy does not already exist
-    command: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default creates=/etc/nginx/nginx.conf.default
+    command: cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.default
     sudo: yes
 
   - name: Replace nginx.conf with the one for wynno

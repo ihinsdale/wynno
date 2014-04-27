@@ -1,21 +1,9 @@
 description "Upstart script to run the wynno Node.js servers"
 
 # Cf. https://www.exratione.com/2013/02/nodejs-and-forever-as-a-service-simple-upstart-and-init-scripts-for-ubuntu/
-#
-# An example upstart script for running a Node.js process as a service
-# using Forever as the process monitor. For more configuration options
-# associated with Forever, see: https://github.com/nodejitsu/forever
-#
-# You will need to set the environment variables noted below to conform to
-# your use case, and should change the description.
-#
 
 start on runlevel [2345]
 stop on runlevel [!2345]
-
-# This line is needed so that Upstart reports the pid of the Node.js process
-# started by Forever rather than Forever's pid.
-expect fork
 
 # The following environment variables must be set so as to define
 # where Node.js and Forever binaries and the Node.js source code
