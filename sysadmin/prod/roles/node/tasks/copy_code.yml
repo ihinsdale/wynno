@@ -10,4 +10,4 @@
   copy: src=../../../../../dist dest=/home/deploy/wynno
 
 - name: Install node modules used in production locally
-  npm: path=/home/deploy/wynno/dist production=yes executable=/home/deploy/.nvm/v0.10.26/bin/npm
+  npm: path=/home/deploy/wynno/dist production=yes

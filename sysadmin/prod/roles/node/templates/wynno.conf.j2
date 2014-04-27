@@ -42,8 +42,8 @@ expect fork
 # Log file path.
 # env LOG="/var/log/my-application.log"
 
-env NODE_BIN_DIR="/home/deploy/v0.10.26/bin/node"
-env NODE_PATH="/home/deploy/v0.10.26/lib/node_modules"
+env NODE_BIN_DIR="/usr/bin/node"
+env NODE_PATH="/usr/lib/node_modules"
 env APPLICATION_DIRECTORY="/home/deploy/wynno/dist"
 env APPLICATION_START="server.js"
 env LOG="/var/log/wynno.log"
@@ -52,7 +52,7 @@ env NODE_ENV={{ app_env }}
 script
     # Add the node executables to the path, which includes Forever if it is
     # installed globally, which it should be.
-    PATH=$NODE_BIN_DIR:$NODE_PATH:$PATH
+    PATH=$NODE_BIN_DIR:$PATH
     # The minUptime and spinSleepTime settings stop Forever from thrashing if
     # the application fails immediately on launch. This is generally necessary to
     # avoid loading development servers to the point of failure every time
@@ -65,7 +65,7 @@ end script
 
 pre-stop script
     # Add the node executables to the path.
-    PATH=$NODE_BIN_DIR:$NODE_PATH:$PATH
+    PATH=$NODE_BIN_DIR:$PATH
     # Here we're using the pre-stop script to stop the Node.js application
     # process so that Forever is given a chance to do its thing and tidy up
     # its data. Note that doing it this way means that each application that
