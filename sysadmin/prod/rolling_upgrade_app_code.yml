@@ -47,9 +47,11 @@
   tasks:
   - name: Stop the node server process
     service: name=wynno state=stopped
+    sudo: yes
   - include: roles/node/tasks/copy_code.yml
   - name: Restart the node server process
     service: name=wynno state=restarted
+    sudo: yes
 
 - name: Update the static app files on our nginx server(s)
   hosts: nginxservers
