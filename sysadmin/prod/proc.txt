@@ -38,3 +38,6 @@ To upgrade the app code:
 1. `ansible-playbook -i ../production ../rolling_upgrade_app_code.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
    (Note that admin must be within the /manual directory so that the relative paths used in the production file
     work correctly.)
+
+To publish a blog post:
+(see proc.txt within /blog_drafts)
