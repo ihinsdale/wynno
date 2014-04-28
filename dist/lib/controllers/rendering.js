@@ -39,7 +39,7 @@ var handleType = function(type, tweet) {
           }
           // provide lowercased versions of the username and the text to search, because capitalization of usernames is irrelevant
           // but retaining it in the renderedText that is searched can cause problems
-          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, ('@' + items[i].screen_name).toLowerCase(), tweet.renderedText.toLowerCase(), after) + 1;
+          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, ('@' + items[i].screen_name).toLowerCase(), tweet.renderedText.toLowerCase(), after, 'user_mentions') + 1;
           end = start + items[i].screen_name.length;
           tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a href='https://twitter.com/" + items[i].screen_name + "' target='_blank'>" + items[i].screen_name + "</a>");
         }
@@ -62,21 +62,36 @@ var handleType = function(type, tweet) {
   }
 };
 
-var findProperInsertionLocation = function(uniquelyInvalidPrecedingChars, targetText, renderedText, after) {
+var findProperInsertionLocation = function(uniquelyInvalidPrecedingChars, targetText, renderedText, after, entityType) {
   // invalid preceding characters common to all entity types
   var invalidPrecedingChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
   invalidPrecedingChars += uniquelyInvalidPrecedingChars;
   var foundProperLocation = false;
   var loc;
   var precedingChar;
+  var secondPrecedingChar;
   while (!foundProperLocation) {
     loc = renderedText.indexOf(targetText, after)
     precedingChar = renderedText[loc - 1];
     if (precedingChar) {
       precedingChar = precedingChar.toLowerCase(); // so that invalidPrecedingChars effectively includes capital letters too
     }
-    // if preceding character is not in invalidPrecedingChars, we have found the proper location to insert HTML
-    if (invalidPrecedingChars.indexOf(precedingChar) === -1) {
+    // Edge case:
+    // we need to identify the second to last character as well if entityType is 'user_mentions'
+    // because RT and rt are permissible preceding characters
+    if (entityType === 'user_mentions') {
+      secondPrecedingChar = renderedText[loc - 2];
+      if (secondPrecedingChar) {
+        secondPrecedingChar = secondPrecedingChar.toLowerCase();
+      }
+    }
+
+    // if preceding character is not in invalidPrecedingChars,
+    if (invalidPrecedingChars.indexOf(precedingChar) === -1 ||
+    // or if we're working with user_mentions and the preceding two characters are rt,
+        entityType === 'user_mentions' && precedingChar === 't' && secondPrecedingChar === 'r'
+    ) {
+    // then we have found the proper location to insert HTML
       foundProperLocation = true;
     // otherwise keep looking - have to increment after to avoid infinite loop
     } else {
