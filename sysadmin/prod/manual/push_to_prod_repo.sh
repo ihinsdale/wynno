@@ -27,9 +27,19 @@ rm -rf $PATH_TO_WYNNO_PROD_ADMIN_REPO/sysadmin
 # wynno-prod-admin any uncommitted or non-master-branch changes that have been made
 # to the wynno repo
 cd $PATH_TO_TEMP_WYNNO_CLONE_DIR
-git clone git@github:ihinsdale/wynno.git # note this requires an entry for HostName github in ~/.ssh/config
-cd wynno
-git checkout master
+if [ -d "wynno" ]
+then
+  # in this case, this script has been run before, so we just fast-forward the repo
+  cd wynno
+  git fetch
+  git checkout master
+  git pull
+else
+  # in this case, this script has never been run before, so we clone the wynno repo
+  git clone git@github:ihinsdale/wynno.git # note this requires an entry for HostName github in ~/.ssh/config
+  cd wynno
+  git checkout master
+fi
 
 # Next we copy over the necessary files from our temp-wynno-clone
 cp -R $PATH_TO_WYNNO_SOURCE_REPO/dist $PATH_TO_WYNNO_PROD_ADMIN_REPO
@@ -48,5 +58,5 @@ cd $PATH_TO_WYNNO_PROD_ADMIN_REPO
 git add --all .
 last_line_of_master_log=`tail -r -n 1 $PATH_TO_WYNNO_SOURCE_REPO/.git/logs/refs/heads/master`
 last_commit_hash="$( cut -d ' ' -f 2 <<< $last_line_of_master_log )"
-git commit -m "Through master commit ${last_commit_hash}"
+git commit -m "Through wynno repo master branch commit ${last_commit_hash}"
 git push origin master
