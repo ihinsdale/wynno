@@ -228,6 +228,10 @@
   - name: Install stopwords corpus for nltk
     command: python -m nltk.downloader stopwords
 
+  - name: Copy these files that have just been download over to the path where Python looks for them
+    shell: cp -r /home/deploy/nltk_data /usr/local/lib
+    sudo: yes
+
     # 5. Setup nginx
 
   - name: Add nginx PPA
