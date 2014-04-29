@@ -73,7 +73,8 @@ http {
         server_name wynno.com;
         # Cf. https://library.linode.com/web-servers/nginx/configuration/basic
 
-        error_page 503  /views/errors/unscheduled.html;
+        error_page 502 =200 /views/errors/unscheduled_maintenance.html;
+        error_page 503 =200 /views/errors/scheduled_maintenance.html;
         error_page 404  /views/errors/404.html;
 
         root /home/deploy/wynno/dist/public;
@@ -84,6 +85,12 @@ http {
         }
 
         location / {
+          # If we want to take the server down for maintenance, just add a file called
+          # maintenance.html to the root dir. Then remove it when finished.
+          if (-f $document_root/maintenance.html) {
+            return 503;
+          }
+
           proxy_redirect off;
           proxy_set_header   X-Real-IP            $remote_addr;
           proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
