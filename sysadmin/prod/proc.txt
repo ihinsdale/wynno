@@ -33,11 +33,48 @@ To setup/launch/create the app truly from scratch:
     sysadmin/prod/roles/nginx/files/www_wynno_com.key to corresponding locations
     on the gateway instance.
 11. SSH into gateway instance and run setup_from_t0.sh.
+12. When prompted whether to trust each app node / host, verify the fingerprints by
+    going onto DigitalOcean.com dashboard, resetting root password for each server,
+    then logging into the server via Console Access with root and the password which
+    gets emailed to you, then see the fingerprint via
+    `ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub`, write that fingerprint down,
+    and then compare it to what you are prompted yes/no for. If they match, enter yes.
+13. Update A record in AWS Route 53 to point to IP address of nginx server. Wait for this
+    record change to propagate--this can be checked using `dig wynno.com`.
+14. If the app appears as expected, you're done!
+15. If the app doesn't appear as expected, and instead you seethe default Welcome to nginx!
+    page, SSH into the nginx server and run `sudo service nginx restart`.
+16. Refresh the page--if you see the app as expected, you're done! If not, debug!
 
 To upgrade the app code:
-1. `ansible-playbook -i ../production ../rolling_upgrade_app_code.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
-   (Note that admin must be within the /manual directory so that the relative paths used in the production file
+
+0.  (On developer's local machine:)
+1.  Ensure that code is safe for deployment to production, e.g. by first testing it out on wynno-dev.
+2.  Make sure desired code changes have been committed/merged into the master branch of the wynno repo.
+3.  Push the master branch to GitHub, if step 2 wasn't accomplished by merging feature branch into master branch on github.com.
+4.  Run push_to_prod_repo.sh.
+5.  SSH into wynno-gateway.
+6.  `git pull origin master` to bring the wynno-prod-admin repo up to speed.
+7.  cd to sysadmin/prod/manual
+8.  `ansible-playbook -i ../production ../rolling_upgrade_app_code.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
+    (Note that admin MUST be within the /manual directory so that the relative paths used in the production file
     work correctly.)
 
 To publish a blog post:
-(see proc.txt within /blog_drafts)
+
+1.  Ensure that you are on the master branch and that THE MASTER BRANCH IS CLEAN,
+    i.e. there are no outstanding changes to be committed.
+2.  Copy the blog post's Markdown file from /blog_drafts to to /public/views/blog,
+    and copy any images used in the post to /public/views/images/blog.
+3.  /public/views/blog/index.json should be updated: an object should be appended
+    to the posts array with the relevant details, and the lookup object should also
+    have a key-value pair added to it with the post's slug and id.
+4.  `grunt build` should be run, to copy over the new post and info into the dist folder.
+5.  The repo should be committed at this point - ENSURING ONCE AGAIN that you are
+    on the master branch and that NO OTHER CHANGES besides the new blog post are
+    being committed.
+6.  sysadmin/prod/manual/push_to_prod_repo.sh should then be run.
+7.  SSH into the wynno gateway.
+8.  From within wynno-prod-admin, `git pull origin master`.
+9.  cd into sysadmin/prod/manual
+10. Run `ansible-playbook -i ../production ../blog_post_publish.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
