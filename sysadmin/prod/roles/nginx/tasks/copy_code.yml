@@ -8,6 +8,10 @@
   # sudo is crucial here because the deploy user loses write privileges on the folder
   # per the below steps, which have already been run by site.yml when this playbook
   # is used in a rolling upgrade
+  # Note also that we could replace /home/deploy/wynno/dist/public with {{ root_path }}
+  # later in this file but since we don't have a variable for the /home/deploy/wynno/dist
+  # path used in this task, we won't make that variable substitution, just for the sake
+  # of clarity
 
 - name: Make the nginx_user the owner of this folder
   shell: chown -R {{ nginx_user }}:{{ nginx_user }} /home/deploy/wynno/dist/public

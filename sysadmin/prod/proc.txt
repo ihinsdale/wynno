@@ -78,3 +78,13 @@ To publish a blog post:
 8.  From within wynno-prod-admin, `git pull origin master`.
 9.  cd into sysadmin/prod/manual
 10. Run `ansible-playbook -i ../production ../blog_post_publish.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
+
+To reboot all servers except nginxservers:
+
+To reboot nginxservers:
+
+To take the app down:
+
+(can either put maintenance.html on nginxservers, which will display scheduled maintenance
+page, or can sudo service wynno stop on all nodeservers which will result in 502 intercepted by
+nginx which will then display the unscheduled maintenance page)
