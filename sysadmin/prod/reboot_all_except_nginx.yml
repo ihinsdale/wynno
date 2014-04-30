@@ -20,25 +20,45 @@
     # sudo is necessary because the www-data user is made owner of root_path and
     # permissions are set to 0755, by copy_code.yml
 
-- name: Go through the reboot cycle
-  hosts: pythonservers:nodeservers:mongoservers:redisservers
+- name: Stop the node.js/express servers
+  hosts: nodeservers
+  remote_user: deploy
+  tasks:
+  - name: Issue service stop command
+    command: service wynno stop
+    sudo: yes
+
+- name: Go through the reboot cycle for Python Mongo and Redis servers
+  # We need to be sure these servers, or at least the Mongo one, are back online
+  # before the node.js/express server is launched on the nodeservers. If the app
+  # can't connect to the db it throws an error. (In the case that the app hit that
+  # error, wouldn't our Upstart script relaunch the app anyway because we included
+  # the respawn option? Possibly; probably. But I haven't checked.)
+  hosts: pythonservers:mongoservers:redisservers
   remote_user: deploy
   tasks:
   - name: Issue reboot command
     command: reboot
     sudo: yes
-  - name: Wait 3 minutes for servers to boot up again
-    local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=180
+  - name: Wait 2.5 minutes for servers to boot up again
+    local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=150
   - name: Check that servers are all back up
     local_action: ping
     register: ping_result
-  - name: Wait 2 extra minutes if not all servers are back up
-    local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=120
-    when: "ping_result.ping != 'pong'"
-  - name: Check if server is back up now
+    failed_when: "ping_result.ping != 'pong'"
+
+- name: Reboot the nodeservers
+  hosts: nodeservers
+  remote_user: deploy
+  tasks:
+  - name: Issue reboot command
+    command: reboot
+    sudo: yes
+  - name: Wait 2.5 minutes for servers to boot up again
+    local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=150
+  - name: Check that servers are all back up
     local_action: ping
     register: ping2_result
-    when: "ping_result.ping != 'pong'"
     failed_when: "ping2_result.ping != 'pong'"
 
 - name: Take down maintenance page
