@@ -1,0 +1,25 @@
+---
+# This playbook reboots the production nginxservers.
+
+# First we want to contact all nodes just to make sure everything is chill
+- hosts: all
+  remote_user: deploy
+  tasks: []
+
+- name: Reboot the nginxservers
+  # We don't actually need to check for when this is finished
+  hosts: nginxservers
+  remote_user: deploy
+  tasks:
+  - name: Issue reboot command
+    command: reboot
+    sudo: yes
+  - name: Wait 4 minutes for servers to boot up again
+    # Note the server will actually be back online as soon as it's booted up again
+    # We're just waiting 4 minutes here to give it ample opportunity to do so. If
+    # booting up takes longer than 4 minutes, that's something to investigate.
+    local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=240
+  - name: Check that servers are all back up
+    local_action: ping
+    register: ping_result
+    failed_when: "ping_result.ping != 'pong'"

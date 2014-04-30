@@ -80,8 +80,10 @@ To publish a blog post:
 10. Run `ansible-playbook -i ../production ../blog_post_publish.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
 
 To reboot all servers except nginxservers:
+`ansible-playbook -i ../production ../reboot_all_except_nginx.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
 
 To reboot nginxservers:
+`ansible-playbook -i ../production ../reboot_nginx.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
 
 To take the app down:
 

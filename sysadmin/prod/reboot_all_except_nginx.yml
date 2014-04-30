@@ -1,6 +1,5 @@
 ---
-# This playbook upgrades the core application code, in a rolling fashion,
-# for the production version of wynno.
+# This playbook reboots all wynno production servers except the nginxservers.
 
 # To be used on an existing deployment (i.e. one created via site.yml).
 # For use with the 'production' inventory file.
