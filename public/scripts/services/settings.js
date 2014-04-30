@@ -514,6 +514,8 @@ angular.module('wynnoApp.services')
       .success(function(data, status) {
         console.log('Success disabling filter.');
         // apply the new filters to currentTweets
+        // service.settings reflects the new filters because we previously spliced
+        // from activeFilters and pushed to disabledFilters
         FilterService.applyFilterRules(TweetService.currentTweets, service.settings);
         d.resolve(service.settings);
       })
@@ -626,6 +628,8 @@ angular.module('wynnoApp.services')
       } })
       .success(function(data, status) {
         console.log('Success enabling filter.');
+        // apply the new filters to currentTweets
+        FilterService.applyFilterRules(TweetService.currentTweets, service.settings);
         d.resolve(service.settings);
       })
       .error(function(reason, status) {
