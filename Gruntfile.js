@@ -343,6 +343,7 @@ module.exports = function (grunt) {
           src: [
             'package.json',
             'server.js',
+            'newrelic.js',
             'lib/**/*'
           ]
         }, { // I added this to copy over the icomoon font files
