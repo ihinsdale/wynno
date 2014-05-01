@@ -1,5 +1,5 @@
 var env = process.env.NODE_ENV;
-var credentials = require('./lib/config/keys' + env + '/node.json');
+var credentials = require('./lib/config/keys/' + env + '/node.json');
 
 /**
  * New Relic agent configuration.
