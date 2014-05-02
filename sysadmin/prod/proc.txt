@@ -42,7 +42,7 @@ To setup/launch/create the app truly from scratch:
 13. Update A record in AWS Route 53 to point to IP address of nginx server. Wait for this
     record change to propagate--this can be checked using `dig wynno.com`.
 14. If the app appears as expected, you're done!
-15. If the app doesn't appear as expected, and instead you seethe default Welcome to nginx!
+15. If the app doesn't appear as expected, and instead you see the default Welcome to nginx!
     page, SSH into the nginx server and run `sudo service nginx restart`.
 16. Refresh the page--if you see the app as expected, you're done! If not, debug!
 
