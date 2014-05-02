@@ -11,3 +11,10 @@
 
 - name: Install node modules used in production locally
   npm: path=/home/deploy/wynno/dist production=yes
+
+- name: Make the www-data user the owner of the New Relic log file
+  # The previous task installed the New Relic node module
+  # Since we run our server as the www-data user, that user needs to be able to write
+  # to the newrelic_agent.log file
+  shell: chown www-data:www-data /home/deploy/wynno/dist/newrelic_agent.log
+  sudo: yes

@@ -10,6 +10,8 @@ stop on runlevel [!2345]
 
 env NODE_ENV={{ app_env }}
 
+chdir /home/deploy/wynno/dist
+
 respawn
 respawn limit 3 30
 
