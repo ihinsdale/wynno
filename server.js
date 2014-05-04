@@ -1,4 +1,5 @@
-require('newrelic');
+// (5/4/14: Disabling New Relic due to absurd memory leak in their node module.)
+// require('newrelic');
 var express = require('express');
 var http = require('http');
 
