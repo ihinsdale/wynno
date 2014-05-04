@@ -1,0 +1,21 @@
+---
+# This playbook reboots all wynno nodeservers, in rolling fashion so that the app is never down.
+
+# To be used on an existing deployment (i.e. one created via site.yml).
+# For use with the 'production' inventory file.
+
+- name: Reboot the node.js/express servers
+  hosts: nodeservers
+  remote_user: deploy
+  serial: 1
+  tasks:
+  - name: Issue reboot command
+    command: reboot
+    sudo: yes
+  - name: Wait 2.5 minutes for server to boot up again
+    local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=150
+  - name: Check that server is back up
+    local_action: ping
+    register: ping_result
+    failed_when: "ping_result.ping != 'pong'"
+
