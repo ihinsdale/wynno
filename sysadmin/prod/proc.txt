@@ -88,6 +88,9 @@ To reboot nginxservers:
 To reboot the nodeservers:
 `ansible-playbook -i ../production ../reboot_nodeservers.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
 
+To install system updates:
+`ansible-playbook -i ../production ../install_system_updates.yml --ask-vault-pass -vvvv -e ansible_ssh_port=202`
+
 To take the app down:
 
 (can either put maintenance.html on nginxservers, which will display scheduled maintenance

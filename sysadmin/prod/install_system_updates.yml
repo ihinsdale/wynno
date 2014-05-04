@@ -1,0 +1,32 @@
+---
+# This playbook installs all available Ubuntu package updates including security updates.
+# (Note this does not update any wynno app code.)
+# It then reboots all servers as gracefully as possible: first non-nginx servers are
+# rebooted, and then nginx servers, so that total downtime where wynno.com resolves to nothing
+# is minimized.
+
+# To be used on an existing deployment (i.e. one created via site.yml).
+# For use with the 'production' inventory file.
+
+# First we install the updates on all nodes
+- hosts: all
+  remote_user: deploy
+  tasks:
+  - name: Update APT package cache
+    apt: update_cache=yes
+    sudo: yes
+  - name: Run apt-get upgrade
+    apt: upgrade=yes
+    sudo: yes
+    register: upgrade_status
+  - name: Upgrade packages usually held back
+    apt: pkg=linux-virtual
+    sudo: yes
+    register: kernel_upgrade_status.changed
+
+- include: reboot_all_except_nginx.yml
+  when: upgrade_status.changed or kernel_upgrade_status.changed
+  # We only need to reboot if we actually installed any updates
+
+- include: reboot_nginx.yml
+  when: upgrade_status.changed or kernel_upgrade_status.changed

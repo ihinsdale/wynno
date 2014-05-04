@@ -8,17 +8,7 @@
 # First we want to contact all nodes
 - hosts: all
   remote_user: deploy
-  tasks:
-# We will take this opportunity to update the apt cache and upgrade our packages
-  - name: Update APT package cache
-    apt: update_cache=yes
-    sudo: yes
-  - name: Run apt-get upgrade
-    apt: upgrade=yes
-    sudo: yes
-  - name: Upgrade packages usually held back
-    apt: pkg=linux-virtual
-    sudo: yes
+  tasks: []
 
 - name: Update code on Python machine learning server(s)
   hosts: pythonservers
