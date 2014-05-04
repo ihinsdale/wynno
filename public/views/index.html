@@ -94,8 +94,8 @@
           <li ng-class="{active: active[2]}" class="visible-xs"><a href="#/settings" ng-click="doCollapse()"><span class="icomoon-cogs"></span><span class="wynnoButtonDesc">Settings</span></a></li>
           <li class="visible-xs customDivider"></li>
           <li class="visible-xs"><a href="https://twitter.com/{{username}}" target="_blank" ng-click="doCollapse()"><span ng-bind="username"></span></a></li>
-          <li class="visible-xs"><a href="https://twitter.com/intent/tweet" target="_blank" ng-click="doCollapse()"><span class="icomoon-quill"></span><span>Compose a tweet</span></a></li>
-          <li class="visible-xs"><a href="" ng-click="logout('twitter')"><span class="icomoon-exit"></span><span>Sign out</span></a></li>
+          <li class="visible-xs"><a href="https://twitter.com/intent/tweet" target="_blank" ng-click="doCollapse()"><span class="icomoon-quill"></span><span class="wynnoButtonDesc">Compose a tweet</span></a></li>
+          <li class="visible-xs"><a href="" ng-click="logout('twitter')"><span class="icomoon-exit"></span><span class="wynnoButtonDesc">Sign out</span></a></li>
           <!-- these items displayed on not-mobile-->
           <li ng-class="{active: active[0]}" class="passing hidden-xs"><a href="#/in" tooltip-placement="bottom" tooltip="Good Stuff" tooltip-popup-delay="400"><span class="icomoon-filter"></span></a></li>
           <li ng-class="{active: active[1]}" class="failing hidden-xs"><a href="#/out" tooltip-placement="bottom" tooltip="The Rest" tooltip-popup-delay="400"><span class="icomoon-filter"></span></a></li>
@@ -127,7 +127,7 @@
               <a ng-cloak href="" ng-bind="username" class="btn btn-default navbar-btn username dropdown-toggle"></a>
               <ul class="dropdown-menu">
                 <li><a href="https://twitter.com/intent/tweet" target="_blank"><span class="icomoon-quill"></span><span>Compose a tweet</span></a></li>
-                <li><a ng-click="logout('twitter')"><span class="icomoon-exit"></span><span>Sign out</span></a></li>
+                <li><a ng-click="logout('twitter')" class="signOutAnchor"><span class="icomoon-exit"></span><span>Sign out</span></a></li>
               </ul>
             </div>
           </div>
