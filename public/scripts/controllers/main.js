@@ -54,6 +54,10 @@ angular.module('wynnoApp.controllers')
       var currentTweetsLength = TweetService.currentTweets.length;
       if ($scope.tweets && !$scope.tweets.length && currentTweetsLength) {
         $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
+        // (This approach results in the oldestScanned value remaining the same even when you click 
+        // Load more multiple times--as many times as necessary to get to the else block below which invokes
+        // getMoreOldTweets. TODO - SHOULD FIX THIS SO USER SEES A CHANGE IN oldestScanned WHENEVER Load button IS CLICKED)
+
       // If there are tweets bound to the scope
       } else if ($scope.tweets && $scope.tweets.length) {
         // then if our currentLimit is trying to show us more tweets than are actually bound to the scope
