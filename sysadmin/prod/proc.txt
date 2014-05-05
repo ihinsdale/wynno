@@ -73,6 +73,7 @@ To publish a blog post:
 5.  The repo should be committed at this point - ENSURING ONCE AGAIN that you are
     on the master branch and that NO OTHER CHANGES besides the new blog post are
     being committed.
+6.  Deploy to wynno-dev and make sure it looks as desired.
 6.  sysadmin/prod/manual/push_to_prod_repo.sh should then be run.
 7.  SSH into the wynno gateway.
 8.  From within wynno-prod-admin, `git pull origin master`.

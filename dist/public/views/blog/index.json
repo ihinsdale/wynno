@@ -23,11 +23,37 @@
         "month": "April",
         "year": 2014
       }
+    },
+    {
+      "id": 2,
+      "title"    : "Basics of filtering",
+      "slug"     : "filtering-basics",
+      "file"     : "filtering-basics.md",
+      "author"   : "Ian",
+      "published": {
+        "day": "5th",
+        "month": "May",
+        "year": 2014
+      }
+    },
+    {
+      "id": 3,
+      "title"    : "On voting",
+      "slug"     : "on-voting",
+      "file"     : "on-voting.md",
+      "author"   : "Ian",
+      "published": {
+        "day": "6th",
+        "month": "May",
+        "year": 2014
+      }
     }
   ],
   "lookup":
   {
     "introducing-wynno": 0,
-    "introducing-wynno-continued": 1
+    "introducing-wynno-continued": 1,
+    "filtering-basics": 2,
+    "on-voting": 3
   }
 }
