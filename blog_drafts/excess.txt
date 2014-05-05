@@ -1,6 +1,4 @@
-
-
-
+INTRO
 
 
 --votes which are completely private, by the way, not seen by other users-- "I like tweets like this and would like to see this kind of tweet in the future," or the opposite. wynno figures out what you mean exactly by 'like this' and 'this kind of tweet'.
@@ -41,3 +39,29 @@ Maybe you always want to see tweets that contain 'BREAKING:' news--or maybe you 
 wynno is a tool for getting more out of Twitter. It does that by helping you remove the stuff you don't care about from your Timeline. Less noise means more time for exploring the tweets that interest you.
 
  helps you get more out of Twitter by reducing the number of tweets in your timeline which you don't care about.
+
+
+ VOTING
+
+ 
+
+Voting on tweets essentially tells wynno, "I like tweets like this and want to see this kind of tweet in the future" (check), or "I don't care about tweets like this and would be happy not to see them in the future" (x). Wynno analyzes your votes and will suggest filters for you to adopt.
+
+It also helps wynno, too, to suggest filters for you and to improve automatic wynnoing for you.
+
+
+
+
+And one more thing, before we go any further: remember that your votes are private. No one's feelings will be hurt when you vote that you dislike a tweet.
+
+Here are some guidelines for getting the most out of voting:
+
+1. "I like tweets like this and want to see this kind of tweet in the future" (check), or "I don't care about tweets like this and would be happy not to see them in the future" (x)
+1. You don't need to vote on every tweet. In fact, you shouldn't vote on every tweet. Vote only when you have a quick, clear reaction to a tweet. If you have to think for more than a moment about whether you want to see more tweets like this in the future, just skip it.
+2. Try to find a balance between your Yea and Nay votes. You might be tempted only to vote Nay, but Yea votes are equally important for helping wynno to avoid false inferences.
+3. Be consistent in your voting; don't vote randomly. This probably goes without saying. Voting randomly only lowers the quality of recommendations wynno can make for you.
+
+Cathartic
+Fun
+A little more work than you're used to but you probably already make these judgments anyway
+Voting will help you realize the filters you should make
