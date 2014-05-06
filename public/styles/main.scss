@@ -1012,6 +1012,10 @@ $twitterButtonRadius: 3px;
     padding-top: 16px;
 }
 
+.paddingTop5 {
+    padding-top: 5px;
+}
+
 .paddingBottom20 {
     padding-bottom: 20px;
 }
@@ -1214,6 +1218,16 @@ $twitterButtonRadius: 3px;
   display: block;
   margin: 0 auto;
   padding: 20px 0;
+}
+
+.liNestedItemLeftCol {
+    height: 100%;
+    float: left;
+}
+
+.liNestedItemRightCol {
+    padding-left: 10px;
+    overflow: hidden;
 }
 
 // media query-based styling
