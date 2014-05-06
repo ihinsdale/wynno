@@ -9,13 +9,13 @@ angular.module('wynnoApp.controllers')
   $scope.newDraftFilter = FilterBuilderService.newDraftFilter($scope);
 
   $scope.draftFilterAddUser = function(username) {
-    FilterBuilderService.draftFilterAddUser(username, $scope);
+    FilterBuilderService.draftFilterAddUser(username, $scope)();
   };
 
   $scope.draftFilterIsIncomplete = FilterBuilderService.draftFilterIsIncomplete($scope);
 
   $scope.draftFilterRemoveUser = function(userIndex) {
-    FilterBuilderService.draftFilterRemoveUser(userIndex, $scope);
+    FilterBuilderService.draftFilterRemoveUser(userIndex, $scope)();
   };
 
   $scope.dismissError = FilterBuilderService.dismissError($scope);
@@ -27,7 +27,7 @@ angular.module('wynnoApp.controllers')
   $scope.addAnotherCondition = FilterBuilderService.addAnotherCondition($scope);
 
   $scope.removeCondition = function(index) {
-    FilterBuilderService.removeCondition(index, $scope);
+    FilterBuilderService.removeCondition(index, $scope)();
   };
 
   $scope.saveFilter = function(draftFilter, originalIndex) {
