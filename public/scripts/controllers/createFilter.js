@@ -5,30 +5,26 @@ angular.module('wynnoApp.controllers')
   // The use of bindings to FilterBuilderService functions here is done so that we can reuse the FilterBuilderService
   // logic from within the blog post on how to use the Filter Builder. This is useful so that over time as the
   // Filter Builder evolves, we will be able to have interactive examples/tutorials of how to use it.
-  // TODO: At present, the methods AddUser, RemoveUser, and removeCondition don't seem to be working
-  $scope.newDraftFilter = FilterBuilderService.newDraftFilter($scope);
 
+  $scope.newDraftFilter = FilterBuilderService.newDraftFilter($scope);
   $scope.draftFilterAddUser = function(username) {
     FilterBuilderService.draftFilterAddUser(username, $scope)();
   };
-
   $scope.draftFilterIsIncomplete = FilterBuilderService.draftFilterIsIncomplete($scope);
-
   $scope.draftFilterRemoveUser = function(userIndex) {
     FilterBuilderService.draftFilterRemoveUser(userIndex, $scope)();
   };
-
   $scope.dismissError = FilterBuilderService.dismissError($scope);
-
   $scope.hasValidCondition = FilterBuilderService.hasValidCondition($scope);
-
   $scope.hasInvalidCondition = FilterBuilderService.hasInvalidCondition($scope);
-
   $scope.addAnotherCondition = FilterBuilderService.addAnotherCondition($scope);
-
   $scope.removeCondition = function(index) {
     FilterBuilderService.removeCondition(index, $scope)();
   };
+  // initialize by creating new filter
+  $scope.newDraftFilter();
+
+  // BELOW HERE, WE DON'T NEED TO REPLICATE THIS FUNCTIONALITY IN THE filtering-basics BLOG POST
 
   $scope.saveFilter = function(draftFilter, originalIndex) {
     if (!$scope.busySaving) {
@@ -52,6 +48,5 @@ angular.module('wynnoApp.controllers')
     $modalInstance.dismiss('cancel');
   };
 
-  // initialize by creating new filter
-  $scope.newDraftFilter();
+
 });
