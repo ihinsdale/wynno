@@ -16,5 +16,5 @@ That's the simple innovation of wynno: splitting your Twitter timeline in two, a
 
 We'd love for you to send feedback to [feedback@wynno.com](mailto:feedback@wynno.com). Thanks for wynnoing!
 
-Ian Hinsdale
+Ian Hinsdale  
 Founder and CEO

@@ -28,10 +28,10 @@
     },
     {
       "id": 2,
-      "type": "markdown",
+      "type": "html",
       "title"    : "Basics of filtering",
       "slug"     : "filtering-basics",
-      "file"     : "filtering-basics.md",
+      "file"     : "filtering-basics.html",
       "author"   : "Ian",
       "published": {
         "day": "5th",
