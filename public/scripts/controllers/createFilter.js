@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('CreateFilterCtrl', function($scope, $modalInstance, SettingsService) {
+.controller('CreateFilterCtrl', function($scope, filterBuilderModalService, SettingsService) {
   $scope.newDraftFilter = function() {
     // reset any editExistingFilterIndex value
     $scope.editExistingFilterIndex = null;
@@ -143,6 +143,7 @@ angular.module('wynnoApp.controllers')
   // this if blog is used so that we don't define saveFilter or cancel functions in the case
   // where CreateFilterCtrl is used inside of a blog post (explaining how to use the Filter Builder). 
   // Inside of a blog post, there is no modal instance, so $modalInstance causes an error. 
+  // So we created the filterBuilderModalService, which wraps to $modalInstance.
   // Furthermore inside of a blog post saving and canceling are not applicable.
     $scope.saveFilter = function(draftFilter, originalIndex) {
       if (!$scope.busySaving) {
@@ -153,7 +154,7 @@ angular.module('wynnoApp.controllers')
           // no need to rebind this object to the scope
           //$scope.activeFilters = settings.activeFilters;
           $scope.busySaving = false;
-          $modalInstance.close(settings.activeFilters[settings.activeFilters.length - 1].rendered);
+          filterBuilderModalService.close()(settings.activeFilters[settings.activeFilters.length - 1].rendered);
         }, function(reason) {
           console.log('Error saving filter:', reason);
           $scope.error = { message: reason };
@@ -163,7 +164,7 @@ angular.module('wynnoApp.controllers')
     };
 
     $scope.cancel = function() {
-      $modalInstance.dismiss('cancel');
+      filterBuilderModalService.dismiss()('cancel');
     };
   }
 
