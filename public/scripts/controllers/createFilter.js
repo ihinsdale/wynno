@@ -2,6 +2,10 @@
 
 angular.module('wynnoApp.controllers')
 .controller('CreateFilterCtrl', function($scope, $modalInstance, FilterBuilderService, SettingsService) {
+  // The use of bindings to FilterBuilderService functions here is done so that we can reuse the FilterBuilderService
+  // logic from within the blog post on how to use the Filter Builder. This is useful so that over time as the
+  // Filter Builder evolves, we will be able to have interactive examples/tutorials of how to use it.
+  // TODO: At present, the methods AddUser, RemoveUser, and removeCondition don't seem to be working
   $scope.newDraftFilter = FilterBuilderService.newDraftFilter($scope);
 
   $scope.draftFilterAddUser = function(username) {
