@@ -139,27 +139,33 @@ angular.module('wynnoApp.controllers')
     }
   };
 
-  $scope.saveFilter = function(draftFilter, originalIndex) {
-    if (!$scope.busySaving) {
-      $scope.busySaving = true;
-      $scope.error = null;
-      SettingsService.saveFilter(draftFilter, originalIndex)
-      .then(function(settings) {
-        // no need to rebind this object to the scope
-        //$scope.activeFilters = settings.activeFilters;
-        $scope.busySaving = false;
-        $modalInstance.close(settings.activeFilters[settings.activeFilters.length - 1].rendered);
-      }, function(reason) {
-        console.log('Error saving filter:', reason);
-        $scope.error = { message: reason };
-        $scope.busySaving = false;
-      });
-    }
-  };
+  if (!$scope.insideBlogPost) {
+  // this if blog is used so that we don't define saveFilter or cancel functions in the case
+  // where CreateFilterCtrl is used inside of a blog post (explaining how to use the Filter Builder). 
+  // Inside of a blog post, there is no modal instance, so $modalInstance causes an error. 
+  // Furthermore inside of a blog post saving and canceling are not applicable.
+    $scope.saveFilter = function(draftFilter, originalIndex) {
+      if (!$scope.busySaving) {
+        $scope.busySaving = true;
+        $scope.error = null;
+        SettingsService.saveFilter(draftFilter, originalIndex)
+        .then(function(settings) {
+          // no need to rebind this object to the scope
+          //$scope.activeFilters = settings.activeFilters;
+          $scope.busySaving = false;
+          $modalInstance.close(settings.activeFilters[settings.activeFilters.length - 1].rendered);
+        }, function(reason) {
+          console.log('Error saving filter:', reason);
+          $scope.error = { message: reason };
+          $scope.busySaving = false;
+        });
+      }
+    };
 
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
+    $scope.cancel = function() {
+      $modalInstance.dismiss('cancel');
+    };
+  }
 
   // initialize by creating new filter
   $scope.newDraftFilter();
