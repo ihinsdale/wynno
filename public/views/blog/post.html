@@ -2,6 +2,11 @@
   <div class="col-md-6 col-md-offset-3 jumbotron">
     <div class="metaInfo"><span ng-bind="post.published.month"></span> <span ng-bind="post.published.day"></span>, <span ng-bind="post.published.year"></span></div>
     <a href="#/blog/{{post.slug}}"><h2 ng-bind="post.title" class="white"></h2></a>
-    <div btf-markdown ng-include="'views/blog/' + post.file" class="blogPostBody"></div>
+    <div ng-if="post.type == 'markdown'">
+      <div btf-markdown ng-include="'views/blog/' + post.file" class="blogPostBody"></div>
+    </div>
+    <div ng-if="post.type == 'html'">
+      <div ng-include="'views/blog'/ + post.file"></div>
+    </div>
   </div>
 </div>
