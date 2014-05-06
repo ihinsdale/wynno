@@ -120,7 +120,7 @@
     sudo: yes
 
   - name: Install MongoDB
-    apt: pkg=mongodb-org=2.6.0 state=present
+    apt: pkg=mongodb-org=2.6.1 state=present
     sudo: yes
 
   - name: Create db directory

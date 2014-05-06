@@ -6,9 +6,9 @@
 4. Open up a screen session
 5. Launch in separate windows:
    - sudo mongod --auth --dbpath ~/db/data
-   - python /home/ubuntu/wynno/dist/lib/python/server.py
+   - python /home/ubuntu/wynno/dist/lib/python/server.py // cd into the python folder first
    - sudo service redis-server start // not necessary, redis-server should be running automatically and after boot
    - source ~/.nvm/nvm.sh
      nvm use v0.10.26
-     nodemon wynno/dist/server.js
+     nodemon ~/wynno/dist/server.js
    - sudo service nginx restart
