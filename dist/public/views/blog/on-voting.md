@@ -13,7 +13,7 @@ One more thing, before we give some guidelines for voting effectively: remember 
 Here are some guidelines for getting the most out of voting:
 
 1. Think of your votes as telling wynno: 
-    - <span class="aye icomoon-checkmark-circle"></span><span class="ayeGreen">asdf</span> &ndash; "I like tweets like this and want to see this kind of tweet in the future."
+    - <span class="aye icomoon-checkmark-circle" markdown="1"></span><span class="ayeGreen" markdown="1">asdf</span> &ndash; "I like tweets like this and want to see this kind of tweet in the future."
     - <span class="nay icomoon-cancel-circle"></span> &ndash; "I don't care about tweets like this and would be happy not to see them in the future."
 2. You don't need to vote on every tweet. In fact, you shouldn't vote on every tweet. Vote only when you have a quick, clear reaction to a tweet. If you have to think for more than a moment about whether you like the tweet or not, just skip it.
 3. Try to find a balance between your <span class="aye icomoon-checkmark-circle"></span> and <span class="nay icomoon-cancel-circle"></span> votes. You might be tempted only to vote <span class="nay icomoon-cancel-circle"></span>, but <span class="aye icomoon-checkmark-circle"></span> votes are equally important for helping wynno to avoid false inferences.
