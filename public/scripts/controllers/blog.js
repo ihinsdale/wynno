@@ -20,7 +20,7 @@ angular.module('wynnoApp.controllers')
   };
   $scope.dismissError = function() {
     FilterBuilderService.dismissError($scope);
-  ];
+  };
   $scope.hasValidCondition = function() {
     return FilterBuilderService.hasValidCondition($scope);
   };
