@@ -150,7 +150,7 @@ angular.module('wynnoApp.services')
         });
       }
       return d.promise;
-    };
+    }
   };
 
   return service;
