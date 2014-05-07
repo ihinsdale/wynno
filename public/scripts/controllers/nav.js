@@ -156,7 +156,7 @@ angular.module('wynnoApp.controllers')
     });
     modalInstance.result.then(function(modalResult) {
       console.log('Created filter successfully.');
-      // display alert containing the rendered filter
+      // TODO: display alert containing the rendered filter
       console.log('the rendered filter text is:', modalResult);
       $scope.filterBuilderOpen = false;
       // if user is currently viewing /in or /out, we need to reload the page
