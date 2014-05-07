@@ -148,9 +148,11 @@ angular.module('wynnoApp.services')
           scope.busySaving = false;
           d.reject(reason);
         });
+      } else {
+        d.reject("Already busy saving.");
       }
       return d.promise;
-    };
+    }
   };
 
   return service;
