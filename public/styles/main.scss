@@ -355,6 +355,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 .jumbotron {
     background-color: $jumbo-purple;
+    line-height: inherit; // important for height of input-group-addon in filtering-basics blog post
 }
 
 .jumbotron > .headline {
@@ -1235,8 +1236,8 @@ $twitterButtonRadius: 3px;
     overflow: hidden;
 }
 
-.jumbotron .input-group-addon {
-    line-height: 1 !important;
+.blogPostBody h2 {
+  margin-top: 20px;
 }
 
 // media query-based styling
