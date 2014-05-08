@@ -1,15 +1,17 @@
 <p>Let's walk through the creation of a filter.</p><p>
 
 </p><p>Filters are simply rules you make about whether to 'hear' or 'mute' different types of tweets.
-  To make one, you use the Filter Builder, which you can open by clicking the <span class="icomoon-add-to-list"></span> button in the navigation bar.
-  No need to open it now! We've reproduced the Filter Builder here, broken down into parts which we'll now explain.
-  At the end, if you're signed in you'll be able to save the filter you've created.</p>
+  To make one, you use the Filter Builder, which you can open by clicking the <span class="icomoon-add-to-list wynnoPurple"></span> button in the navigation bar.
+  No need to open it now! We've reproduced the Filter Builder here. It's been broken down into parts which will now be explained step by step.</p>
 
-<h1 class="wynnoPurple"><span class="icomoon-filter rightPadding10"></span>Create a filter</h1>
+<h2 class="wynnoPurple text-center"><span class="icomoon-filter rightPadding10"></span>Create a filter</h2>
 
-<p>There are three steps to making a filter:</p>
+<p>There are three steps to making a filter. In completing these steps, you are composing a sentence
+that states the rule that the filter follows. Let's take the first step:</p>
 
-<h2 class="darkGray">1. How </h2>
+<h3 class="darkGray">1. How </h3>
+
+<p>This step defines whether the filter should 'hear' or 'mute' the tweets that satisfy its conditions.</p>
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12">
@@ -28,11 +30,12 @@
   </div>
 </div>
 
-<p>This step defines whether the filter should 'hear' or 'mute' the tweets that satisfy its conditions.
-  Tweets caught by a 'mute' filter will be moved to The Rest; tweets caught by a 'hear' filter will stay in the Good Stuff.</p>
-<p>Click the dropdown button above to select one of the options. This step is required.</p>
+<p>Tweets caught by a 'mute' filter will be moved to The Rest; tweets caught by a 'hear' filter will stay in the Good Stuff.</p>
+<p>Click the dropdown button above to select one of the options. This step is <strong>required</strong>.</p>
 
-<h2 class="darkGray">2. Who </h2>
+<h3 class="darkGray">2. Who </h3>
+
+<p>This step defines what users the filter applies to.</p>
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12">
@@ -64,15 +67,20 @@
   </div>
 </div>
 
-<p>This step defines what users the filter applies to.</p>
-<p>By default, a filter applies to tweets by any user. So you're not required to do anything in this step, as long as you give your filter more specific conditions in step 3.</p>
-<p> If you want the filter to apply to tweets by particular users, just enter their Twitter username(s)
+<p>By default, a filter applies to tweets by <strong>any</strong> user.</p>
+
+<p>If you want the filter to apply to tweets by a particular user or users, just enter their Twitter username(s)
   in the input field and click the Add button. Usernames are not case sensitive, so no need to worry about capitalization.</p>
 
-<p>As an example, you can make a filter that mutes a user entirely: just add their username here, and you're done.
-  You can skip to the Save Filter button below&mdash;click it and your filter will be applied!</p>
+<p>You can make a filter that mutes a user entirely&mdash;this is useful if you don't
+  want to see any of a user's tweets, but don't want to unfollow them.
+  Just add their username to the filter, and you're done.
+  Skip step 3, click the Save Filter button below, and your filter will be applied!</p>
 
-<h2 class="darkGray">3. What </h2>
+<h3 class="darkGray">3. What </h3>
+
+<p>This step is where the real power of filters resides. In this step we can specify an unlimited combination of conditions
+which a tweet must satisfy.</p>
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12">
@@ -92,6 +100,11 @@
     <div class="visible-xs paddingTop16"></div>
   </div>
 </div>
+
+<p>First we can select whether it matters if a tweet is a retweet or not. By default, a filter will apply to any kind of tweet that
+  shows up in your Twitter timeline; it doesn't matter if it's an original tweet by someone you follow or if it's one of their retweets. You can, however,
+  specify that the filter should apply to original tweets only, or to retweets only. Just select the desired option from the dropdown menu.</p>
+
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-15">
     <div class="hidden-xs hidden-sm paddingTop56"></div>
@@ -150,37 +163,51 @@
   </div>
 </div>
 
-<p>When you're finished creating your filter, click the Save Filter button. The button will be disabled if you haven't defined a valid filter in steps 1-3.</p>
+<p>Next we can add conditions for the content of a tweet. Currently wynno supports filtering based on five different
+  features of tweets, namely, whether a tweet contains:
+  <ul>
+    <li>a link, and where to</li>
+    <li>a keyword or phrase</li>
+    <li>a hashtag, and which</li>
+    <li>a picture</li>
+    <li>a quotation</li>
+  </ul>
+</p>
+<p>You can string any number of these conditions together by clicking the Add condition button.</p>
+<p>Link and hashtag conditions do not require you to specify a particular domain or hashtag.
+  For instance, if you want to just require that a tweet contain <em>a</em> link, to any domain,
+  or that it contain <em>any</em> hashtag, you can just select the desired option
+  from the dropdown menu, and leave the input field blank.
+  You can require that it contain two links to any domain, or two hashtags, or one link and one hashtag, and so on,
+  in the same way&mdash;just add more conditions with the Add condition button.</p>
+<p>If you haven't specified any particular users in step 2, you will need to provide at
+  least one filter condition in step 3.</p>
 
-<div class="alert alert-danger alert-dismissable" ng-show="error">
+<div class="alert alert-danger alert-dismissable text-center" ng-show="error">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissError()">&times;</button>
   <strong ng-bind="error.message"></strong>
 </div>
-<button type="button" class="btn btn-primary btn-lg saveFilter" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()">
+<button type="button" class="btn btn-primary btn-lg saveFilter text-center" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()">
   <span ng-hide="busySaving">Save filter</span>
   <span class="icomoon-spinner3" ng-class="{spinner: busySaving}" ng-show="busySaving"></span>
 </button>
 
+<p>When you're finished creating your filter, click the Save Filter button.</p>
+<p>If you want to save the filter you have created here, go ahead and click it now (just make sure you're signed into wynno).</p>
+<p>This button will be disabled if you haven't defined a valid filter in steps 1-3.
+  That can happen if you haven't completed step 1, or if you didn't specify a username in step 2 and didn't add a condition in step 3.
+</p>
 
+<p>That's all there is to it!</p>
 
-
-<p>
-Create
-
-Mute a user entirely:
-
-
-
-Hear tweets that contain a link to a certain domain
-
-Mute tweets from particular users that contain a picture:
-
-Hear tweets that contain a quotation:
-
-Mute a user's retweets:
-
-Note that it's currently not possible to hear or mute *all retweets from all users*, but that feature is in the pipeline.
-
-Active filters are applied to tweets in the order they are listed, that is, from the top down. That means if a tweet matches the criteria of both a hear filter and a mute filter, the filter that is listed first is the one that gets applied. Since active filters are currently listed in the order in which they were created, older filters take priority over newly created filters. This chronological priority is only temporary, though; we are hard at work on a drag-and-drop feature that will allow you to easily reorder your filters however you want.
-
+<p>One last word, about features that are in the works:
+  <ul>
+    <li>Drag-and-drop reordering of your <a href="#/settings">Active Filters</a>. This will allow you to easily change
+    which filters take priority over others. Filters are applied in the order listed in Active Filters, which is
+    currently the order in which they were enabled.</li>
+    <li>Relaxing the requirement that you must specify either a username in step 2 or a condition in step 3.
+    This would allow you to create a filter which hears or mutes all retweets or all original tweets.
+    You could even create a filter which would mute <em>all</em> tweets, retweets or original, and that way wynno
+    would filter out everything in your timeline that was not caught by a 'hear' filter.</li>
+  </ul>
 </p>
