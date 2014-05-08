@@ -132,9 +132,9 @@ $footer-height: 30px;
     margin-top: 3px;
 }
 
-.topAndBottomPadding10 {
+.paddingTop10AndBottomPadding20 {
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 // navbar
@@ -1233,6 +1233,10 @@ $twitterButtonRadius: 3px;
 .liNestedItemRightCol {
     padding-left: 10px;
     overflow: hidden;
+}
+
+.jumbotron .input-group-addon {
+    line-height: 1 !important;
 }
 
 // media query-based styling

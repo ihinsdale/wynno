@@ -13,7 +13,7 @@ that states the rule that the filter follows.</p>
 
 <p>This step defines whether the filter should 'hear' or 'mute' the tweets that satisfy its conditions.</p>
 
-<div class="topAndBottomPadding10">
+<div class="paddingTop10AndBottomPadding20">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
@@ -39,7 +39,7 @@ that states the rule that the filter follows.</p>
 
 <p>This step defines what users the filter applies to.</p>
 
-<div class="topAndBottomPadding10">
+<div class="paddingTop10AndBottomPadding20">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
@@ -86,7 +86,7 @@ that states the rule that the filter follows.</p>
 <p>This step is where the real power of filters resides. In this step we can specify an unlimited combination of conditions
 which a tweet must satisfy.</p>
 
-<div class="topAndBottomPadding10">
+<div class="paddingTop10AndBottomPadding20">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="pieceOfDraft scope" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
@@ -109,9 +109,9 @@ which a tweet must satisfy.</p>
 
 <p>First we can select whether it matters if a tweet is a retweet or not. By default, a filter will apply to any kind of tweet that
   shows up in your Twitter timeline; it doesn't matter if it's an original tweet by someone you follow or if it's one of their retweets. You can, however,
-  specify that the filter should apply to original tweets only, or to retweets only. Just select the desired option from the dropdown menu.</p>
+  specify that the filter should apply to original tweets only, or to retweets only. Just select the desired option from the dropdown menu above.</p>
 
-<div class="topAndBottomPadding10">
+<div class="paddingTop10AndBottomPadding20">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-15">
       <div class="hidden-xs hidden-sm"></div>
@@ -191,7 +191,7 @@ which a tweet must satisfy.</p>
 <p>If you haven't specified any particular users in step 2, you will need to provide at
   least one filter condition in step 3.</p>
 
-<div class="topAndBottomPadding10 text-center">
+<div class="paddingTop10AndBottomPadding20 text-center">
   <div class="alert alert-danger alert-dismissable text-center" ng-show="error">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissError()">&times;</button>
     <strong ng-bind="error.message"></strong>
@@ -217,7 +217,7 @@ which a tweet must satisfy.</p>
     currently the order in which they were enabled.</li>
     <li>Relaxing the requirement that you must specify either a username in step 2 or a condition in step 3.
     This would allow you to create a filter which hears or mutes all retweets or all original tweets.
-    You could even create a filter which would mute <em>all</em> tweets, retweets or original, and that way wynno
+    You could even create a filter which would mute <em>all</em> tweets (i.e. retweets or original), and that way wynno
     would filter out everything in your timeline that was not caught by a 'hear' filter.</li>
   </ul>
 </p>
