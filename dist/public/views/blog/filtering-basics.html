@@ -2,29 +2,31 @@
 
 </p><p>Filters are simply rules you make about whether to 'hear' or 'mute' different types of tweets.
   To make one, you use the Filter Builder, which you can open by clicking the <span class="icomoon-add-to-list wynnoPurple"></span> button in the navigation bar.
-  No need to open it now! We've reproduced the Filter Builder here. It's been broken down into parts which will now be explained step by step.</p>
+  No need to open it now! We've reproduced the Filter Builder here and broken it down into parts.</p>
 
 <h2 class="wynnoPurple text-center"><span class="icomoon-filter rightPadding10"></span>Create a filter</h2>
 
 <p>There are three steps to making a filter. In completing these steps, you are composing a sentence
-that states the rule that the filter follows. Let's take the first step:</p>
+that states the rule that the filter follows.</p>
 
 <h3 class="darkGray">1. How </h3>
 
 <p>This step defines whether the filter should 'hear' or 'mute' the tweets that satisfy its conditions.</p>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          <span ng-bind="draftFilter.typeDisplayed" ng-class="{ayeGreen: draftFilter.type == 'hear', nayRed: draftFilter.type =='mute'}"></span>
-          <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
-        </button>
-        <ul class="dropdown-menu textAlignLeft" role="menu">
-          <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
-          <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
-        </ul>
+<div class="topAndBottomPadding10">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span ng-bind="draftFilter.typeDisplayed" ng-class="{ayeGreen: draftFilter.type == 'hear', nayRed: draftFilter.type =='mute'}"></span>
+            <span class="caret" ng-class="{white: draftFilter.type == 'hear' || draftFilter.type == 'mute'}"></span>
+          </button>
+          <ul class="dropdown-menu textAlignLeft" role="menu">
+            <li><a href="" ng-click="draftFilter.type = 'hear'; draftFilter.typeDisplayed = 'Hear'" class="ayeGreen">Hear</a></li>
+            <li><a href="" ng-click="draftFilter.type = 'mute'; draftFilter.typeDisplayed = 'Mute'" class="nayRed">Mute</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -37,32 +39,34 @@ that states the rule that the filter follows. Let's take the first step:</p>
 
 <p>This step defines what users the filter applies to.</p>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-      <div class="dropdown">
-        <a class="btn btn-default dropdown-toggle">
-          <span ng-bind="draftFilter.usersDisplayed"></span>
-          <span class="caret" ng-show="!!draftFilter.users.length"></span>
-        </a>
-        <span class="s sentenceText">'s</span>
-        <ul class="dropdown-menu textAlignLeft" role="menu">
-          <li ng-show="!draftFilter.users.length" class="paddingLeft10">(default is all users)</li>
-          <li ng-repeat="user in draftFilter.users">
-            <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
-              <span class="icomoon-cancel-circle"></span>
-            </button>
-            <span class="user">@{{user}}</span>
-          </li>
-        </ul>
+<div class="topAndBottomPadding10">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+        <div class="dropdown">
+          <a class="btn btn-default dropdown-toggle">
+            <span ng-bind="draftFilter.usersDisplayed"></span>
+            <span class="caret" ng-show="!!draftFilter.users.length"></span>
+          </a>
+          <span class="s sentenceText">'s</span>
+          <ul class="dropdown-menu textAlignLeft" role="menu">
+            <li ng-show="!draftFilter.users.length" class="paddingLeft10">(default is all users)</li>
+            <li ng-repeat="user in draftFilter.users">
+              <button class="removeSetting" ng-click="draftFilterRemoveUser($index)">
+                <span class="icomoon-cancel-circle"></span>
+              </button>
+              <span class="user">@{{user}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="input-group paddingTop16">
-      <span class="input-group-addon">@</span>
-      <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
-      <span class="input-group-btn">
-        <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
-      </span>
+      <div class="input-group paddingTop16">
+        <span class="input-group-addon">@</span>
+        <input class="form-control" id="prependedInput" type="text" placeholder="Enter a username" ng-model="draftFilter.usernameInput" ng-minlength="1">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" ng-click="draftFilterAddUser(draftFilter.usernameInput)" value="Add">Add</button>
+        </span>
+      </div>
     </div>
   </div>
 </div>
@@ -82,22 +86,24 @@ that states the rule that the filter follows. Let's take the first step:</p>
 <p>This step is where the real power of filters resides. In this step we can specify an unlimited combination of conditions
 which a tweet must satisfy.</p>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="pieceOfDraft scope" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-      <div class="btn-group">
-        <button type="button" class="scopeBtn btn btn-default dropdown-toggle" data-toggle="dropdown">
-          <span ng-bind="draftFilter.scopeDisplayed"></span>
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu textAlignLeft" role="menu">
-          <li><a href="" ng-click="draftFilter.scope = 'all'; draftFilter.scopeDisplayed = 'tweets and retweets'">tweets and retweets</a></li>
-          <li><a href="" ng-click="draftFilter.scope = 'tweets'; draftFilter.scopeDisplayed = 'tweets only'">tweets only</a></li>
-          <li><a href="" ng-click="draftFilter.scope = 'retweets'; draftFilter.scopeDisplayed = 'retweets only'">retweets only</a></li>
-        </ul>
+<div class="topAndBottomPadding10">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="pieceOfDraft scope" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+        <div class="btn-group">
+          <button type="button" class="scopeBtn btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span ng-bind="draftFilter.scopeDisplayed"></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu textAlignLeft" role="menu">
+            <li><a href="" ng-click="draftFilter.scope = 'all'; draftFilter.scopeDisplayed = 'tweets and retweets'">tweets and retweets</a></li>
+            <li><a href="" ng-click="draftFilter.scope = 'tweets'; draftFilter.scopeDisplayed = 'tweets only'">tweets only</a></li>
+            <li><a href="" ng-click="draftFilter.scope = 'retweets'; draftFilter.scopeDisplayed = 'retweets only'">retweets only</a></li>
+          </ul>
+        </div>
       </div>
+      <div class="visible-xs paddingTop16"></div>
     </div>
-    <div class="visible-xs paddingTop16"></div>
   </div>
 </div>
 
@@ -105,60 +111,62 @@ which a tweet must satisfy.</p>
   shows up in your Twitter timeline; it doesn't matter if it's an original tweet by someone you follow or if it's one of their retweets. You can, however,
   specify that the filter should apply to original tweets only, or to retweets only. Just select the desired option from the dropdown menu.</p>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-15">
-    <div class="hidden-xs hidden-sm paddingTop56"></div>
-    <div class="thatContain sentenceText" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">that contain ...</div>
-    <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
-      <div class="" ng-repeat="condition in draftFilter.conditions">
-        <div class="">
-          <div class="andCondition sentenceText" ng-show="!$first">and</div>
-          <button class="removeSetting" ng-click="removeCondition($index)" ng-hide="condition.typeDisplayed == '(anything)'">
-            <span class="icomoon-cancel-circle"></span>
-          </button>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <span ng-bind="condition.typeDisplayed"></span>
-              <span class="caret"></span>
+<div class="topAndBottomPadding10">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-15">
+      <div class="hidden-xs hidden-sm"></div>
+      <div class="thatContain sentenceText" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">that contain ...</div>
+      <div class="pieceOfDraft" ng-class="{ayeGreenBackground: draftFilter.type == 'hear', nayRedBackground: draftFilter.type =='mute'}">
+        <div class="" ng-repeat="condition in draftFilter.conditions">
+          <div class="">
+            <div class="andCondition sentenceText" ng-show="!$first">and</div>
+            <button class="removeSetting" ng-click="removeCondition($index)" ng-hide="condition.typeDisplayed == '(anything)'">
+              <span class="icomoon-cancel-circle"></span>
             </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="" ng-click="condition.type = 'link'; condition.typeDisplayed = 'a link to'" class="">a link to</a></li>
-              <li><a href="" ng-click="condition.type = 'word'; condition.typeDisplayed = 'the word/phrase'; condition.wordIsCaseSensitive = false" class="">the word/phrase</a></li>
-              <li><a href="" ng-click="condition.type = 'hashtag'; condition.typeDisplayed = 'the hashtag'" class="">the hashtag</a></li>
-              <li><a href="" ng-click="condition.type = 'picture'; condition.typeDisplayed = 'a picture'" class="">a picture</a></li>
-              <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
-            </ul>
-          </div>
-          <div ng-if="condition.type == 'link'" class="inlineBlock">
-            <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
-          </div>
-          <div ng-if="condition.type == 'word'" class="inlineBlock vertAlignTop">
-            <div>
-              <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span ng-bind="condition.typeDisplayed"></span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="" ng-click="condition.type = 'link'; condition.typeDisplayed = 'a link to'" class="">a link to</a></li>
+                <li><a href="" ng-click="condition.type = 'word'; condition.typeDisplayed = 'the word/phrase'; condition.wordIsCaseSensitive = false" class="">the word/phrase</a></li>
+                <li><a href="" ng-click="condition.type = 'hashtag'; condition.typeDisplayed = 'the hashtag'" class="">the hashtag</a></li>
+                <li><a href="" ng-click="condition.type = 'picture'; condition.typeDisplayed = 'a picture'" class="">a picture</a></li>
+                <li><a href="" ng-click="condition.type = 'quotation'; condition.typeDisplayed = 'a quotation'" class="">a quotation</a></li>
+              </ul>
             </div>
-            <div>
-              <label class="checkbox caseSensitiveLabel">
-                <input type="checkbox" ng-model="condition.wordIsCaseSensitive">case-sensitive
-              </label>
+            <div ng-if="condition.type == 'link'" class="inlineBlock">
+              <input type="text" class="form-control" placeholder="(any domain)" ng-model="condition.link">
             </div>
-          </div>
-          <div ng-if="condition.type == 'hashtag'" class="inlineBlock vertAlignTop">
-            <div>
-              <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+            <div ng-if="condition.type == 'word'" class="inlineBlock vertAlignTop">
+              <div>
+                <input type="text" class="form-control" placeholder="Enter a word or phrase" ng-model="condition.word">
+              </div>
+              <div>
+                <label class="checkbox caseSensitiveLabel">
+                  <input type="checkbox" ng-model="condition.wordIsCaseSensitive">case-sensitive
+                </label>
+              </div>
             </div>
-            <div ng-if="!!condition.hashtag">
-              <label class="caseSensitiveLabel">
-                (not case-sensitive)
-              </label>
+            <div ng-if="condition.type == 'hashtag'" class="inlineBlock vertAlignTop">
+              <div>
+                <input type="text" class="form-control" placeholder="(any hashtag)" ng-model="condition.hashtag">
+              </div>
+              <div ng-if="!!condition.hashtag">
+                <label class="caseSensitiveLabel">
+                  (not case-sensitive)
+                </label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="paddingTop16">
-      <button type="button" class="btn btn-primary" ng-click="addAnotherCondition()">
-        <span class="icomoon-plus plus"></span>Add another
-      </button>
+      <div class="paddingTop16">
+        <button type="button" class="btn btn-primary" ng-click="addAnotherCondition()">
+          <span class="icomoon-plus plus"></span>Add another
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -175,7 +183,7 @@ which a tweet must satisfy.</p>
 </p>
 <p>You can string any number of these conditions together by clicking the Add condition button.</p>
 <p>Link and hashtag conditions do not require you to specify a particular domain or hashtag.
-  For instance, if you want to just require that a tweet contain <em>a</em> link, to any domain,
+  For instance, if you want to require that a tweet contain <em>any</em> link, to any domain,
   or that it contain <em>any</em> hashtag, you can just select the desired option
   from the dropdown menu, and leave the input field blank.
   You can require that it contain two links to any domain, or two hashtags, or one link and one hashtag, and so on,
@@ -183,14 +191,16 @@ which a tweet must satisfy.</p>
 <p>If you haven't specified any particular users in step 2, you will need to provide at
   least one filter condition in step 3.</p>
 
-<div class="alert alert-danger alert-dismissable text-center" ng-show="error">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissError()">&times;</button>
-  <strong ng-bind="error.message"></strong>
+<div class="topAndBottomPadding10 text-center">
+  <div class="alert alert-danger alert-dismissable text-center" ng-show="error">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismissError()">&times;</button>
+    <strong ng-bind="error.message"></strong>
+  </div>
+  <button type="button" class="btn btn-primary btn-lg saveFilter text-center" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()">
+    <span ng-hide="busySaving">Save filter</span>
+    <span class="icomoon-spinner3" ng-class="{spinner: busySaving}" ng-show="busySaving"></span>
+  </button>
 </div>
-<button type="button" class="btn btn-primary btn-lg saveFilter text-center" ng-click="saveFilter(draftFilter)" ng-disabled="draftFilterIsIncomplete()">
-  <span ng-hide="busySaving">Save filter</span>
-  <span class="icomoon-spinner3" ng-class="{spinner: busySaving}" ng-show="busySaving"></span>
-</button>
 
 <p>When you're finished creating your filter, click the Save Filter button.</p>
 <p>If you want to save the filter you have created here, go ahead and click it now (just make sure you're signed into wynno).</p>
@@ -211,3 +221,5 @@ which a tweet must satisfy.</p>
     would filter out everything in your timeline that was not caught by a 'hear' filter.</li>
   </ul>
 </p>
+
+<p>&mdash;Ian</p>
