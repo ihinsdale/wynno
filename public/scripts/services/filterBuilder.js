@@ -15,9 +15,13 @@ angular.module('wynnoApp.services')
     },
     draftFilterAddUser: function(username, scope) {
       // have to prevent duplicates from being added
+      // (5/9/14: do we actually HAVE to, or does it just make life easier? We're using regular
+      // indexing in ng-repeat, so I'd think name collisions wouldn't strictly be a problem...)
       var duplicate = false;
       for (var i = 0; i < scope.draftFilter.users.length; i++) {
-        if (!duplicate && scope.draftFilter.users[i] === username) {
+        if (!duplicate && scope.draftFilter.users[i].toLowerCase() === username.toLowerCase()) {
+          // our evaluation of duplication uses toLowerCase() so that user can't add two effectively
+          // identical usernames just with different capitalization
           duplicate = true;
         }
       }
