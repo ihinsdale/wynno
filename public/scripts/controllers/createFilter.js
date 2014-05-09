@@ -17,7 +17,7 @@ angular.module('wynnoApp.controllers')
     return FilterBuilderService.draftFilterIsIncomplete($scope);
   };
   $scope.draftFilterRemoveUser = function(userIndex) {
-    $scope.$apply(FilterBuilderService.draftFilterRemoveUser(userIndex, $scope));
+    FilterBuilderService.draftFilterRemoveUser(userIndex, $scope);
   };
   $scope.dismissError = function() {
     FilterBuilderService.dismissError($scope);

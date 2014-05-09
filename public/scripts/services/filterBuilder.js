@@ -67,7 +67,7 @@ angular.module('wynnoApp.services')
         return false;
       }
     },
-    draftFilterRemoveUser: function(userIndex) {
+    draftFilterRemoveUser: function(userIndex, scope) {
       scope.draftFilter.users.splice(userIndex, 1);
       if (!scope.draftFilter.users.length) {
         scope.draftFilter.usersDisplayed = '(all users)';
