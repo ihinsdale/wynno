@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.services')
-.factory('FilterBuilderService', ['$q', 'SettingsService', function($q, SettingsService) {
+.factory('FilterBuilderService', ['$rootScope', '$q', 'SettingsService', function($rootScope, $q, SettingsService) {
   var service = {
     newDraftFilter: function(scope) {
       // reset any editExistingFilterIndex value
@@ -90,6 +90,7 @@ angular.module('wynnoApp.services')
           }
         }
       }
+      $rootScope.$apply();
     },
     dismissError: function(scope) {
       scope.error = null;
