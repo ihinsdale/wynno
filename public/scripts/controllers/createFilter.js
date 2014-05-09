@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('BlogCtrl', function($scope, $location, BlogService, FilterBuilderService) {
-  // bind necessary Filter Builder variables to the scope for use in the filtering-basics post
-  // ideally this would only be done when we know filtering-basics is being displayed
-  // currently, since the blog index actually loads the contents of all posts,
-  // we know filtering-basics is being displayed
+.controller('CreateFilterCtrl', function($scope, $modalInstance, FilterBuilderService, SettingsService) {
+  // The use of bindings to FilterBuilderService functions here is done so that we can reuse the FilterBuilderService
+  // logic from within the blog post on how to use the Filter Builder. This is useful so that over time as the
+  // Filter Builder evolves, we will be able to have interactive examples/tutorials of how to use it,
+  // without having to duplicate any code.
+
   $scope.newDraftFilter = function() {
     FilterBuilderService.newDraftFilter($scope);
   };
@@ -35,40 +36,22 @@ angular.module('wynnoApp.controllers')
   };
   // initialize by creating new filter
   $scope.newDraftFilter();
-  // we create save functionality so that users can actually create filters directly
-  // from the filtering-basis blog post
+
   $scope.saveFilter = function(draftFilter, originalIndex) {
     FilterBuilderService.saveFilter(draftFilter, originalIndex, $scope)
     .then(function(settings) {
-      // unlike in the actual Filter Builder modal, we don't need to do anything here
+      $modalInstance.close(settings.activeFilters[settings.activeFilters.length - 1].rendered);
     }, function(reason) {
       // error handling logic is performed in FilterBuilderService.saveFilter, so we
       // don't need to do anything here
     });
   };
 
+// BELOW HERE, WE DON'T NEED TO REPLICATE THIS FUNCTIONALITY IN THE filtering-basics BLOG POST
 
-  // bind posts to the current scope
-  var currentLocation = $location.path();
-  if (currentLocation === '/blog') {
-    BlogService.getPosts()
-    .then(function(posts) {
-      $scope.posts = posts;
-    }, function(reason) {
-      console.log('Error grabbing blog posts.');
-      $scope.error = 'There was an error loading the blog.';
-    });
-  } else {
-    var slug = currentLocation.slice(6);
-    BlogService.getPosts()
-    .then(function(posts) {
-      $scope.post = posts[BlogService.lookup[slug]];
-    }, function(reason) {
-      $scope.error = 'There was an error loading the article.';
-    });
-  }
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
 
-  // Initialize
-  // Always start at the top
-  window.scrollTo(0, 0);
+
 });

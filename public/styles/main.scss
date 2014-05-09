@@ -132,6 +132,11 @@ $footer-height: 30px;
     margin-top: 3px;
 }
 
+.paddingTop10AndBottomPadding20 {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
 // navbar
 
 html {
@@ -350,6 +355,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 .jumbotron {
     background-color: $jumbo-purple;
+    line-height: inherit; // important for height of input-group-addon in filtering-basics blog post
 }
 
 .jumbotron > .headline {
@@ -1228,6 +1234,10 @@ $twitterButtonRadius: 3px;
 .liNestedItemRightCol {
     padding-left: 10px;
     overflow: hidden;
+}
+
+.blogPostBody h2 {
+  margin-top: 20px;
 }
 
 // media query-based styling
