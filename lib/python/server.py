@@ -140,10 +140,17 @@ def tweet_features_dict(tweet, corpus_ngram_features):
 
   # tweeter
   features['tweeter'] = tweet['__user']['screen_name']
+  # we could lower() the screen_name so that the tweeter screen_name feature isn't case-sensitive
+  # in case that tweeter ever changes the capitalization of the screen_name. The tradeoff
+  # is that then the screen_name used in filter suggestions will always be lowercase (unless
+  # we implement a feature to find the user's original capitalization of their screen_name).
+  # Since it seems unlikely that users would change capitalization of their name that often,
+  # we'll leave it the way it is for now (5/9/14)
 
   # retweeter
   if '__retweeter' in tweet and tweet['__retweeter'] is not None:
     features['retweeter'] = tweet['__retweeter']['screen_name']
+    # again if we wanted to implement strict case-insensitivity we would lower() the screen_name here
   # number of followers of the person being retweeted
     features['num_followers_orig_tweeter'] = tweet['__user']['followers_count']
   # number of times original tweet has been retweeted
@@ -162,6 +169,8 @@ def tweet_features_dict(tweet, corpus_ngram_features):
     # currently identifying mentioned users by their screen_name, because screen_name is also what's used
     # by tweet filters. But if a user changed screen_name, this would break. Stronger version would be
     # to identify user by id_str
+    # and again we'd want to lower() this screen_name if we actually wanted to implement the user_mentions
+    # filtering functionality
 
   # number of (non-media) links
   features['urls'] = len(tweet['__entities']['urls'])

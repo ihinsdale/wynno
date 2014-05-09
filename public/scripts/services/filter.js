@@ -21,7 +21,9 @@ angular.module('wynnoApp.services')
       }
       var result = false;
       for (var i = 0; i < filterUsers.length; i++) {
-        if (tweet.__user.screen_name === filterUsers[i] || (tweet.__retweeter && tweet.__retweeter.screen_name === filterUsers[i])) {
+        if (tweet.__user.screen_name.toLowerCase() === filterUsers[i].toLowerCase() || (tweet.__retweeter && tweet.__retweeter.screen_name.toLowerCase() === filterUsers[i].toLowerCase())) {
+          // we turn the tweet's user/retweeter screen_name to lowercase and the filterUser[i] to lowercase so that
+          // user conditions are not evaluated case-sensitively
           result = true;
           break;
         }
@@ -191,7 +193,7 @@ angular.module('wynnoApp.services')
               // keeping track of the total number of quotation conditions
 
               quotationResult = false;
-              // could work on more complicated variations, e.g. if tweet contains 
+              // could work on more complicated variations, e.g. if tweet contains
               // two quotation marks or a quotation mark and ..., pass
               // currently, I am just using presence of a quotation mark " to indicate
               // TODO make sure this method of checking handles unicode characters correctly
