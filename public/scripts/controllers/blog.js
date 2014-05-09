@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wynnoApp.controllers')
-.controller('BlogCtrl', function($scope, $location, BlogService, FilterBuilderService) {
+.controller('BlogCtrl', function($scope, $location, BlogService, FilterBuilderService, AuthService) {
   // bind necessary Filter Builder variables to the scope for use in the filtering-basics post
   // ideally this would only be done when we know filtering-basics is being displayed
   // currently, since the blog index actually loads the contents of all posts,
@@ -38,13 +38,19 @@ angular.module('wynnoApp.controllers')
   // we create save functionality so that users can actually create filters directly
   // from the filtering-basis blog post
   $scope.saveFilter = function(draftFilter, originalIndex) {
-    FilterBuilderService.saveFilter(draftFilter, originalIndex, $scope)
-    .then(function(settings) {
-      // unlike in the actual Filter Builder modal, we don't need to do anything here
-    }, function(reason) {
-      // error handling logic is performed in FilterBuilderService.saveFilter, so we
-      // don't need to do anything here
-    });
+    if (AuthService.isAuthenticated()) {
+      FilterBuilderService.saveFilter(draftFilter, originalIndex, $scope)
+      .then(function(settings) {
+        // unlike in the actual Filter Builder modal, we don't need to do anything here
+      }, function(reason) {
+        // error handling logic is performed in FilterBuilderService.saveFilter, so we
+        // don't need to do anything here
+      });
+    } else {
+      $scope.error = {
+        message: "You must be signed in to wynno to save a filter."
+      };
+    }
   };
 
 
