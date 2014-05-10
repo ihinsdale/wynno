@@ -30,6 +30,35 @@
     sudo: yes
     #when:
 
+- name: Update the static app files on our nginx server(s)
+  hosts: nginxservers
+  remote_user: deploy
+  #serial: 1 isn't necessary
+  tasks:
+    # It's not necessary to stop and restart nginx, we can just replace the static files
+    # and nginx will serve them for all subsequent requests. This is because I'm
+    # not using any nginx caching.
+  - name: Ensure we have a folder where to put temp copies of the preexisting app js and css files
+    file: path=/home/deploy/apptemp state=directory
+    sudo: yes
+  - name: Ensure that folder is empty
+    command: rm -rf /home/deploy/apptemp/
+    sudo: yes
+  - name: First make a copy of the existing app js file
+  # This is necessary because we don't just want to remove those files while there are any express
+  # servers which will still serve index.html which links to them
+    command: cp -r /home/deploy/wynno/dist/public/scripts/*.js /home/deploy/apptemp
+    sudo: yes
+  - name: And make a copy of the existing app css file
+    command: cp -r /home/deploy/wynno/dist/public/styles/*.css
+    sudo: yes
+  - include: roles/nginx/tasks/copy_code.yml
+  - name: Copy the old app js file over so that it can be served until all express servers are updated
+    command: cp -n
+    # the -n option ensures we don't overwrite a same-named file that was copied over in copy_code.yml
+  - name: And copy the old app css file for the same reason
+    command: cp -n
+
 - name: Update code on our node.js/express servers
   hosts: nodeservers
   remote_user: deploy
@@ -43,12 +72,9 @@
     service: name=wynno state=restarted
     sudo: yes
 
-- name: Update the static app files on our nginx server(s)
+- name: Remove the old app js and css files from /public on our nginx server(s)
   hosts: nginxservers
-  remote_user: deploy
-  serial: 1
+  remove_user: deploy
+  #serial: 1 isn't necessary
   tasks:
-    # It's not necessary to stop and restart nginx, we can just replace the static files
-    # and nginx will serve them for all subsequent requests. This is because I'm
-    # not using any nginx caching.
-  - include: roles/nginx/tasks/copy_code.yml
+  - name:
