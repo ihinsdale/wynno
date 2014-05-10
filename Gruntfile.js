@@ -250,7 +250,15 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/public/views/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/public/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>/public']
+        assetsDirs: ['<%= yeoman.dist %>/public', '<%= yeoman.dist %>/public/styles/fonts'],
+        patterns: {
+          css: [
+            [/(icomoon\.woff)/, 'Replacing reference to icomoon.woff'],
+            [/(icomoon\.ttf)/, 'Replacing reference to icomoon.ttf'],
+            [/(icomoon\.eot)/, 'Replacing reference to icomoon.eot'],
+            [/(icomoon\.svg)/, 'Replacing reference to icomoon.svg']
+          ]
+        }
       }
     },
 
