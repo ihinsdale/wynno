@@ -62,6 +62,7 @@
     # Because files with such filenames will not be overwritten and therefore we don't want to
     # delete them in remove_active_old_app_files.sh
     copy: src=./roles/nginx/files/note_same_filenames.sh dest=/home/deploy/apptemp
+    sudo: yes
 
   - include: roles/nginx/tasks/copy_code.yml
 
@@ -123,6 +124,7 @@
   tasks:
   - name: Copy over shell script which will do the removing
     copy: src=./roles/nginx/files/remove_active_old_app_files.sh dest=/home/deploy/apptemp
+    sudo: yes
   - name: Remove via shell script
     shell: sh /home/deploy/apptemp/remove_active_old_app_files.sh
     sudo: yes
