@@ -7,4 +7,4 @@
   copy: src=../../../../../dist/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
 
 - name: Copy over the Python files
-  copy: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib
+  synchronize: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib delete=yes
