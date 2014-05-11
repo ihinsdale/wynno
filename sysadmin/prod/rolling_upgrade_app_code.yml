@@ -48,7 +48,7 @@
     file: path=/home/deploy/apptemp state=directory
     sudo: yes
   - name: Ensure that folder is empty
-    command: rm -rf /home/deploy/apptemp/
+    command: rm -rf /home/deploy/apptemp/*
     sudo: yes
   - name: First make a copy of the existing app js file
   # This is necessary because we don't just want to remove those files while there are any express
@@ -56,17 +56,20 @@
     command: cp /home/deploy/wynno/dist/public/scripts/*.js /home/deploy/apptemp
     sudo: yes
   - name: And make a copy of the existing app css file and icomoon font files inside /fonts subdir
-    command: cp -r /home/deploy/wynno/dist/public/styles/
+    command: cp -r /home/deploy/wynno/dist/public/styles/*
     sudo: yes
-  - include: roles/nginx/tasks/copy_code.yml
-  - name: Copy over shell script which will make note of filenames in /apptemp that are now (after copy_code.yml) in /public
+  - name: Copy over shell script which will make note of filenames in /apptemp that will be (after copy_code.yml has run) in /public
     # Because files with such filenames will not be overwritten and therefore we don't want to
     # delete them in remove_active_old_app_files.sh
     copy: src=./roles/nginx/files/note_same_filenames.sh dest=/home/deploy/apptemp
-  - name: Run that shell script (note_same_filenames.sh)
+
+  - include: roles/nginx/tasks/copy_code.yml
+
+  - name: Run shell script note_same_filenames.sh
+    # This creates a file called same_filenames which we use to be sure we don't remove any new app code later
     shell: sh /home/deploy/apptemp/note_same_filenames.sh
     sudo: yes
-  - name: Copy the old app js file over so that it can be served until all express servers are updated
+  - name: Conservatively copy the old app js file over so that it can be served until all express servers are updated
     # Note that this copying of the app js file AFTER the /public dir has been replaced via copy_code.yml
     # means there is a small window where it is possible a nodeserver would send an index.html file to a user
     # which would lead to a request for the old app js file which wouldn't be there
@@ -82,13 +85,25 @@
     command: cp -n /home/deploy/apptemp/*.css /home/deploy/wynno/dist/public/styles
     sudo: yes
   - name: And copy the old icomoon font files in case those changed
-    command: cp -n /home/deploy/apptemp/fonts/ /home/deploy/wynno/dist/public/styles/fonts
+    command: cp -n /home/deploy/apptemp/fonts/* /home/deploy/wynno/dist/public/styles/fonts
     sudo: yes
 
-- name: Update code on our node.js/express servers
-  hosts: nodeservers
+- name: Update app code on our 'go-to' node.js/express servers
+  hosts: node1
   remote_user: deploy
-  serial: 1
+  tasks:
+  - name: Stop the node server process
+    service: name=wynno state=stopped
+    sudo: yes
+  - include: roles/node/tasks/copy_code.yml
+  - name: Restart the node server process
+    service: name=wynno state=restarted
+    sudo: yes
+
+- name: Once some node.js/express servers have the new app code the remaining servers serving the old code should be taken down immediately and updated
+  hosts: nodeservers:!node1
+  # So that the only express servers in nginx's upstream pool are serving the new code
+  remote_user: deploy
   tasks:
   - name: Stop the node server process
     service: name=wynno state=stopped

@@ -12,8 +12,10 @@
 cd /home/deploy/apptemp
 
 # Loop through js files
+
 shopt -s nullglob # This line is important for making sure we don't erroneously
 # do something with '*.js' if there are no js files in the dir
+
 for f in *.js
 do
   if [ -f /home/deploy/wynno/dist/public/scripts/$f ]
