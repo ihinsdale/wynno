@@ -48,15 +48,15 @@
     file: path=/home/deploy/apptemp state=directory
     sudo: yes
   - name: Ensure that folder is empty
-    command: rm -rf /home/deploy/apptemp/*
+    shell: rm -rf /home/deploy/apptemp/*
     sudo: yes
   - name: First make a copy of the existing app js file
   # This is necessary because we don't just want to remove those files while there are any express
   # servers which will still serve index.html which links to them
-    command: cp /home/deploy/wynno/dist/public/scripts/*.js /home/deploy/apptemp
+    shell: cp /home/deploy/wynno/dist/public/scripts/*.js /home/deploy/apptemp
     sudo: yes
   - name: And make a copy of the existing app css file and icomoon font files inside /fonts subdir
-    command: cp -r /home/deploy/wynno/dist/public/styles/*
+    shell: cp -r /home/deploy/wynno/dist/public/styles/*
     sudo: yes
   - name: Copy over shell script which will make note of filenames in /apptemp that will be (after copy_code.yml has run) in /public
     # Because files with such filenames will not be overwritten and therefore we don't want to
@@ -78,14 +78,14 @@
     # this really isn't a problem until we're getting lots of traffic
     # and note there wouldn't be this gap if we had multiple nginx servers, because each one would be taken
     # down while replacing the static files
-    command: cp -n /home/deploy/apptemp/*.js /home/deploy/wynno/dist/public/scripts
+    shell: cp -n /home/deploy/apptemp/*.js /home/deploy/wynno/dist/public/scripts
     sudo: yes
     # the -n option ensures we don't overwrite a same-named file that was copied over in copy_code.yml
   - name: And copy the old app css file for the same reason
-    command: cp -n /home/deploy/apptemp/*.css /home/deploy/wynno/dist/public/styles
+    shell: cp -n /home/deploy/apptemp/*.css /home/deploy/wynno/dist/public/styles
     sudo: yes
   - name: And copy the old icomoon font files in case those changed
-    command: cp -n /home/deploy/apptemp/fonts/* /home/deploy/wynno/dist/public/styles/fonts
+    shell: cp -n /home/deploy/apptemp/fonts/* /home/deploy/wynno/dist/public/styles/fonts
     sudo: yes
 
 - name: Update app code on our 'go-to' node.js/express servers
