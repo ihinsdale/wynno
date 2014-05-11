@@ -118,7 +118,7 @@
   # over from apptemp by the previous cp commands - this is what note_same_filenames.sh
   # helps us do
   hosts: nginxservers
-  remove_user: deploy
+  remote_user: deploy
   #serial: 1 isn't necessary (see above for reason)
   tasks:
   - name: Copy over shell script which will do the removing
