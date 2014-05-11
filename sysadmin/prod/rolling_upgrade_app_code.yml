@@ -72,5 +72,5 @@
   remote_user: deploy
   #serial: 1 isn't necessary (see above for reason)
   tasks:
-  - synchronize: src=../../dist/public dest=/home/deploy/wynno/dist delete=yes
+  - synchronize: src={{ gateway_abs_path_to_dist }}/public dest=/home/deploy/wynno/dist delete=yes
     sudo: yes

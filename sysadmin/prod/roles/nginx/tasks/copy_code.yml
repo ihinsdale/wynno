@@ -3,7 +3,7 @@
 # initial deployment playbook (site.yml) and in rolling upgrades of app code.
 
 - name: Copy over the folder of static assets that will be served by nginx
-  synchronize: src=../../../../../dist/public dest=/home/deploy/wynno/dist
+  synchronize: src={{ gateway_abs_path_to_dist }}/public dest=/home/deploy/wynno/dist
   # note we don't use the delete option with synchronize here because we want old app static files
   # to be capable of being served until all nodeservers have been updated to point to the new
   # app static files

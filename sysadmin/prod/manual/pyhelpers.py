@@ -149,7 +149,7 @@ def create_ansible_production_file():
     for category in new_droplets_config:
       outfile.write('[' + category + 'servers]\n')
       for hostname in new_droplets_config[category]:
-        outfile.write(hostname + '    ansible_ssh_host=' + droplets[hostname]['ip_address'] + '    ansible_ssh_private_key_file=../keys/' + hostname + '\n')
+        outfile.write(hostname + '    ansible_ssh_host=' + droplets[hostname]['ip_address'] + '    ansible_ssh_private_key_file=~/wynno-prod-admin/sysadmin/prod/keys/' + hostname + '\n')
       outfile.write('\n')
 
 def update_json_keys_ips():

@@ -4,7 +4,7 @@
 # upgrades of app code.
 
 - name: Copy over the python.json file
-  copy: src=../../../../../dist/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
+  copy: src={{ gateway_abs_path_to_dist }}/lib/config/keys/prod/python.json dest=/home/deploy/dist/lib/config/keys/prod/python.json
 
 - name: Copy over the Python files
-  synchronize: src=../../../../../dist/lib/python dest=/home/deploy/dist/lib delete=yes
+  synchronize: src={{ gateway_abs_path_to_dist }}/lib/python dest=/home/deploy/dist/lib delete=yes
