@@ -51,8 +51,10 @@ var processTweet = function(user_id, tweet) {
   tweet.renderedText = tweet.__text;
   // escape the text back to how it came from Twitter
   tweet.renderedText = _.escape(tweet.renderedText);
-  // then insert html for urls, media, and user mentions into renderedText
-  rendering.renderLinksAndMentions(tweet);
+  // then insert link html for urls, media, user mentions, and hashtags into renderedText
+  rendering.renderLinks(tweet);
+  // then insert html for embedded media entities
+  rendering.renderMedia(tweet);
 
   // the tweet's profile_image_url gets replaced with an HTTPS version
   if (tweet.__user.profile_image_url.slice(0, 7) === 'http://') {

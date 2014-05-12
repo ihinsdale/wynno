@@ -13,8 +13,6 @@ var handleType = function(type, tweet) {
     var uniquelyInvalidPrecedingChars;
     switch(type) {
       case 'urls':
-        // no break statement here, as a way of making the case 'urls' || 'media'
-      case 'media':
         uniquelyInvalidPrecedingChars = '@#$';
         for (var i = 0; i < items.length; i++) {
           if (i === 0) {
@@ -26,6 +24,20 @@ var handleType = function(type, tweet) {
           start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, items[i].url, tweet.renderedText, after);
           end = start + items[i].url.length;
           tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a href='" + items[i].url + "' target='_blank'>" + items[i].display_url + "</a>");
+        }
+        break;
+      case 'media':
+        uniquelyInvalidPrecedingChars = '@#$';
+        for (var i = 0; i < items.length; i++) {
+          if (i === 0) {
+            after = 0;
+          } else {
+            // so that we always search for items[i].url after our last insertion (assumes urls come in order from Twitter API, which they appear to be)
+            after = start + 48 + items[i-1].url.length + items[i-1].display_url.length; // 48 is length of the static link html minus 1
+          }
+          start = findProperInsertionLocation(uniquelyInvalidPrecedingChars, items[i].url, tweet.renderedText, after);
+          end = start + items[i].url.length;
+          tweet.renderedText = replaceAt(tweet.renderedText, start, end, "<a class='hidden-xs' href='" + items[i].url + "' target='_blank'>" + items[i].display_url + "</a>");
         }
         break;
       case 'user_mentions':
@@ -101,7 +113,7 @@ var findProperInsertionLocation = function(uniquelyInvalidPrecedingChars, target
   return loc;
 };
 
-var insertHTML = function(tweet) {
+var insertLinkHTML = function(tweet) {
   var types = ['urls', 'media', 'user_mentions', 'hashtags'];
   for (var i = 0; i < types.length; i++) {
     if (tweet.__entities[types[i]]) {
@@ -110,6 +122,23 @@ var insertHTML = function(tweet) {
   }
 };
 
-exports.renderLinksAndMentions = function(tweet) {
-  insertHTML(tweet);
+exports.renderLinks = function(tweet) {
+  insertLinkHTML(tweet);
+};
+
+exports.renderMedia = function(tweet) {
+  // 1. Pictures
+  if (tweet.__entities['media']) {
+    var mediaEntity;
+    for (var i = 0; i < tweet.__entities['media'].length; i++) {
+      mediaEntity = tweet.__entities['media'][i];
+      if (mediaEntity.type === 'photo') {
+        // we can just append the entity HTML to the end of renderedText, because media entities are always
+        // displayed after the text of the tweet
+        tweet.renderedText += "<div class='tweetPicLinkWrapperContainer'><a class='tweetPicLinkWrapper' href='" + mediaEntity.url + "'><div class='tweetPicContainer'><img class='tweetPic' src='" + mediaEntity.media_url_https + "'></div></a></div>"
+      }
+    }
+  }
+  // 2. YouTube clips
+  // TODO
 };

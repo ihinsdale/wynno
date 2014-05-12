@@ -612,6 +612,26 @@ $retweet-header-padding-bottom: 3px;
     text-decoration: underline;
 }
 
+.tweetPicLinkWrapperContainer {
+    padding: 10px;
+}
+
+.tweetPicLinkWrapper {
+    display: block;
+    overflow: hidden;
+    max-height: 253px;
+    border-radius: 5px;
+}
+
+.tweetPicContainer {
+    text-align: center;
+}
+
+.tweetPic {
+    width: 100%;
+    max-width: 496px;
+}
+
 // vote button styling
 
 .voteButtons {
