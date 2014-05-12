@@ -5,7 +5,6 @@
     "angular": "1.2.15",
     "json3": "~3.3.0",
     "jquery": "~2.1.0",
-    "bootstrap-sass": "~3.0.2",
     "es5-shim": "~2.3.0",
     "angular-resource": "1.2.15",
     "angular-cookies": "1.2.15",
@@ -17,14 +16,14 @@
     "angular-markdown-directive": "~0.3.0",
     "showdown": "~0.3.1",
     "fastclick": "~1.0.0",
-    "angular-bindonce": "~0.3.1"
+    "angular-bindonce": "~0.3.1",
+    "bootstrap-sass-official": "~3.1.1+2"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14",
     "angular-scenario": "~1.2.14"
   },
   "resolutions": {
-    "jquery": "~2.1.0",
     "angular": "1.2.15",
     "angular-sanitize": "1.2.15"
   }
