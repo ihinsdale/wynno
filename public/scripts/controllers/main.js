@@ -48,32 +48,14 @@ angular.module('wynnoApp.controllers')
     if ($scope.currentLimit < TweetService.currentTweets.length - 30) {
       console.log('incrementing limit');
       $scope.currentLimit += limitIncrement;
-      // Update the value showing how far back in history what's displayed represents
-      // If there aren't any tweets bound to the scope but there are tweets in TweetService.currentTweets
-      // then we know nextPage is incrementing through currentTweets in blocks of limitIncrement
-      var currentTweetsLength = TweetService.currentTweets.length;
-      if ($scope.tweets && !$scope.tweets.length && currentTweetsLength) {
-        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
-        // (This approach results in the oldestScanned value remaining the same even when you click 
-        // Load more multiple times--as many times as necessary to get to the else block below which invokes
-        // getMoreOldTweets. TODO - SHOULD FIX THIS SO USER SEES A CHANGE IN oldestScanned WHENEVER Load button IS CLICKED)
-
-      // If there are tweets bound to the scope
-      } else if ($scope.tweets && $scope.tweets.length) {
-        // then if our currentLimit is trying to show us more tweets than are actually bound to the scope
-        if ($scope.tweets.length < $scope.currentLimit) {
-          // we know we have searched in currentTweets as far as the index of the last tweet in $scope.tweets plus the difference between currentLimit and the length of $scope.tweets
-          $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - $scope.tweets.length, currentTweetsLength - 1)].created_at);
-        // otherwise we have searched as far as the currentLimit'eth tweet of the tweets bound to the scope
-        } else {
-          $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
-        }
-      }
+      // update the value of oldestScanned to reflect this new currentLimit
+      $scope.updateOldestScanned();
       $scope.busy = false;
     // otherwise get more old tweets from the server
     } else {
       console.log('incrementing limit and getting more old tweets from server');
       $scope.currentLimit += limitIncrement;
+      // ($scope.updateOldestScanned will get called in $scope.display() once we have gotten more old tweets)
       $scope.getMoreOldTweets(); // $scope.busy gets reset to false once getMoreOldTweets completes
     }
 
@@ -222,22 +204,38 @@ angular.module('wynnoApp.controllers')
     $scope.tweets = tweets;
     console.log('displaying tweets:', $scope.tweets);
     $scope.busy = false;
-    // set the value of oldestScanned here
-    var currentTweetsLength = TweetService.currentTweets.length;
-    if (currentTweetsLength) {
-      if (!tweets.length) {
-        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
-      } else if (tweets.length < $scope.currentLimit) {
-        $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - tweets.length, currentTweetsLength - 1)].created_at);
-      } else {
-        $scope.oldestScanned = Date.parse(tweets[$scope.currentLimit - 1].created_at);
-      }
-    }
+    // update the value of oldestScanned
+    $scope.updateOldestScanned();
+
     // set timeOfLastFetch - doing it here, as opposed to in getNewTweets success,
     // so that it is displayed in both /in and /out streams
-    if (!$scope.twitterError.new) { // this guard ensures that the time of last update / fetching of new tweets 
+    if (!$scope.twitterError.new) { // this guard ensures that the time of last update / fetching of new tweets
     // which the user sees is only for the last *successful* attempt
       $scope.timeOfLastFetch = TweetService.timeOfLastFetch;
+    }
+  };
+
+  $scope.updateOldestScanned = function() {
+    // Update the value showing how far back in history has been searched to display the
+    // tweets that are displayed
+
+    var currentTweetsLength = TweetService.currentTweets.length;
+    if (currentTweetsLength) {
+      // If there aren't any tweets bound to the scope but there are tweets in TweetService.currentTweets
+      // then we know nextPage is incrementing through currentTweets in blocks of limitIncrement
+      if ($scope.tweets && !$scope.tweets.length) {
+        $scope.oldestScanned = Date.parse(TweetService.currentTweets[$scope.currentLimit - 1].created_at);
+      // If there are tweets bound to the scope
+      } else if ($scope.tweets && $scope.tweets.length) {
+        // then if our currentLimit is trying to show us more tweets than are actually bound to the scope
+        if ($scope.tweets.length < $scope.currentLimit) {
+          // we know we have searched in currentTweets as far as the index of the last tweet in $scope.tweets plus the difference between currentLimit and the length of $scope.tweets
+          $scope.oldestScanned = Date.parse(TweetService.currentTweets[Math.min($scope.indexOfLast + $scope.currentLimit - $scope.tweets.length, currentTweetsLength - 1)].created_at);
+        // otherwise we have searched as far as the currentLimit'eth tweet of the tweets bound to the scope
+        } else {
+          $scope.oldestScanned = Date.parse($scope.tweets[$scope.currentLimit - 1].created_at);
+        }
+      }
     }
   };
 
