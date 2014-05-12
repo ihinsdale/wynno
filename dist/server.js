@@ -1,4 +1,5 @@
-require('newrelic');
+// (Disabling newrelic because 1.5.4 still has the memory leak problem)
+//require('newrelic');
 var express = require('express');
 var http = require('http');
 
