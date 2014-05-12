@@ -14,8 +14,8 @@
 - name: Install node modules used in production locally
   npm: path=/home/deploy/wynno/dist production=yes
 
-- name: Make a newrelic_agent.log file (this is necessary because the old one gets deleted by the rsync above)
-  file: path=/home/deploy/wynno/dist/newrelic_agent.log
+- name: Make a newrelic_agent.log file if it doesn't exist
+  copy: src=newrelic_agent.log dest=/home/deploy/wynno/dist/newrelic_agent.log force=no
 
 - name: Make the www-data user the owner of the New Relic log file
   # The previous task installed the New Relic node module
