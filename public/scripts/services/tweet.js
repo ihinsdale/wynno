@@ -78,12 +78,17 @@ angular.module('wynnoApp.services')
       } else {
         var secondNewestOfOlderTweetsIdStr;
         var newestOfOlderTweetsIdStr;
+        var oldestOfMoreRecentTweetsIndex;
+        var secondNewestOfOlderTweetsIndex;
         var found = false;
         // find the tweet with the gapAfterThis = true in currentTweets
         // the id_str of the two tweets after it are the other two argument we need to send to /middle
+        // and we use the indices in currentTweets after the call to /middle
         angular.forEach(service.currentTweets, function(tweet, index) {
           if (!found && tweet.id_str === oldestOfMoreRecentTweetsIdStr) {
             found = true;
+            oldestOfMoreRecentTweetsIndex = index;
+            secondNewestOfOlderTweetsIndex = index + 2;
             secondNewestOfOlderTweetsIdStr = service.currentTweets[index + 2].id_str;
             newestOfOlderTweetsIdStr = service.currentTweets[index + 1].id_str;
           }
@@ -100,7 +105,7 @@ angular.module('wynnoApp.services')
           // update gapAfterThis to false on the cutoff tweet, because there is no longer a gap after this tweet
           service.currentTweets[oldestOfMoreRecentTweetsIndex].gapAfterThis = false;
           // now add the tweets to currentTweets
-          service.currentTweets = service.currentTweets.slice(0,oldestOfMoreRecentTweetsIndex + 1).concat(data.tweets).concat(service.currentTweets.slice(secondNewestOfOlderTweetsIndex - 1));
+          service.currentTweets = service.currentTweets.slice(0, oldestOfMoreRecentTweetsIndex + 1).concat(data.tweets).concat(service.currentTweets.slice(secondNewestOfOlderTweetsIndex - 1));
           // update timeOfLastFetch
           service.timeOfLastFetch = new Date();
           d.resolve(service.currentTweets);
