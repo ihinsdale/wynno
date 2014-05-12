@@ -21,7 +21,7 @@
     "connect-redis": "1.4.7",
     "ejs": "^0.8.6",
     "redis": "^0.10.1",
-    "newrelic": "^1.5.3"
+    "newrelic": "^1.5.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
