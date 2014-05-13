@@ -9,6 +9,7 @@ angular.module('wynnoApp', [
   'wynnoApp.services',
   'wynnoApp.controllers',
   'wynnoApp.filters',
+  'wynnoApp.directives',
   'infinite-scroll',
   'ngRoute',
   'btford.markdown',

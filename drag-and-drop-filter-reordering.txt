@@ -1,0 +1,16 @@
+filters are applied to tweets by looping through activeFilters
+so lower-indexed filters in activeFilters take priority over higher-indexed filters
+
+db.saveFilter, db.adoptSuggestion, and db.enableDisFilterOrSugg add filters to activeFilters by pushing, i.e.
+adding to the end - so they are given lowest priority, which is good
+
+so we just need to persist any new ordering of activeFilters to the db after a drag and drop
+this is not so efficient because essentially we have to rewrite the array each time
+but it shouldn't be too hard to implement
+
+after every drag-n-drop that results in a new order:
+update activeFilters in the db
+reapply the activeFilters to all of the currentTweets
+
+could minimize computation on the client side and rewrites to the db by requiring click of an edit button
+to enable reordering, and then requiring a save click
