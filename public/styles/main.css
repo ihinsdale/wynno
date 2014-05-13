@@ -8510,7 +8510,7 @@ button.btn.btn-default.navbar-btn.glyphButton {
 
 /* line 630, main.scss */
 .tweetPic {
-  max-width: 330px;
+  max-width: 250px;
 }
 
 /* line 634, main.scss */
@@ -9297,29 +9297,34 @@ button.btn.btn-default.navbar-btn.glyphButton {
   .filterBuilderOpen .modal-dialog {
     width: 100%;
   }
+
+  /* line 1348, main.scss */
+  .tweetPic {
+    max-width: 330px;
+  }
 }
 @media (min-width: 992px) {
-  /* line 1350, main.scss */
+  /* line 1354, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 1354, main.scss */
+  /* line 1358, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 1359, main.scss */
+  /* line 1363, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 1363, main.scss */
+  /* line 1367, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 1367, main.scss */
+  /* line 1371, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -9327,49 +9332,49 @@ button.btn.btn-default.navbar-btn.glyphButton {
     border-bottom: 0;
   }
 
-  /* line 1374, main.scss */
+  /* line 1378, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1378, main.scss */
+  /* line 1382, main.scss */
   .gapBelow {
     border-bottom: 1px dashed #e0e0e0;
   }
 
-  /* line 1382, main.scss */
+  /* line 1386, main.scss */
   .gapAbove {
     border-top: 1px dashed #e0e0e0;
   }
 
-  /* line 1386, main.scss */
+  /* line 1390, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1390, main.scss */
+  /* line 1394, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 1395, main.scss */
+  /* line 1399, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 1403, main.scss */
+  /* line 1407, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 1407, main.scss */
+  /* line 1411, main.scss */
   .bigBirdText {
     font-size: 28px;
   }
 
-  /* line 1411, main.scss */
+  /* line 1415, main.scss */
   .serverErrorAlert {
     width: 50%;
     left: 25%;

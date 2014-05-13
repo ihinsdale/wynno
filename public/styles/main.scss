@@ -628,7 +628,7 @@ $retweet-header-padding-bottom: 3px;
 }
 
 .tweetPic {
-    max-width: 330px;
+    max-width: 250px;
 }
 
 .videoContainer {
@@ -1343,6 +1343,10 @@ $twitterButtonRadius: 3px;
 
     .filterBuilderOpen .modal-dialog {
         width: 100%;
+    }
+
+    .tweetPic {
+        max-width: 330px;
     }
 }
 
