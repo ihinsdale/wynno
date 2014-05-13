@@ -13,4 +13,4 @@ update activeFilters in the db
 reapply the activeFilters to all of the currentTweets
 
 could minimize computation on the client side and rewrites to the db by requiring click of an edit button
-to enable reordering, and then requiring a save click
+to enable reordering, and then requiring a save click. but this is a bit cumbersome for the user

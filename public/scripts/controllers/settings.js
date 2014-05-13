@@ -19,7 +19,7 @@ angular.module('wynnoApp.controllers')
 
   $scope.disableFilter = function(indexInArrayUserSees) {
     // These two lines would be appropriate if the argument passed to disableFilter were indexInReversedArray
-    // but currently (4/4/14) activeFilters is not displayed to the user in reverse order, so we just use the index passed: 
+    // but currently (4/4/14) activeFilters is not displayed to the user in reverse order, so we just use the index passed:
     // translate indexInReversedArray to an index in the original array
     //var index = SettingsService.settings.activeFilters.length - indexInArrayUserSees - 1;
     var index = indexInArrayUserSees;
@@ -104,6 +104,10 @@ angular.module('wynnoApp.controllers')
     }
   };
 
+  $scope.handleDrop = function(itemId, binId) {
+    alert('Item ' + itemId + ' has been dropped in bin ' + binId);
+  };
+
   // Initialize
   window.scrollTo(0, 0);
   $scope.injectSettings();
@@ -115,4 +119,3 @@ angular.module('wynnoApp.controllers')
     $scope.injectSettings();
   });
 });
-  
