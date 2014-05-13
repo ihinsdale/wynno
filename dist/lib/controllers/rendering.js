@@ -135,7 +135,7 @@ exports.renderMedia = function(tweet) {
       if (mediaEntity.type === 'photo') {
         // we can just append the entity HTML to the end of renderedText, because media entities are always
         // displayed after the text of the tweet
-        tweet.renderedText += "<div class='tweetPicLinkWrapperContainer'><a class='tweetPicLinkWrapper' href='" + mediaEntity.url + "'><div class='tweetPicContainer'><img class='tweetPic' src='" + mediaEntity.media_url_https + "'></div></a></div>";
+        tweet.renderedText += "<div class='tweetPicLinkWrapperContainer'><a class='tweetPicLinkWrapper' href='" + mediaEntity.url + "' target='_blank'><div class='tweetPicContainer'><img class='tweetPic' src='" + mediaEntity.media_url_https + "'></div></a></div>";
       }
     }
   }
@@ -145,6 +145,8 @@ exports.renderMedia = function(tweet) {
     for (var j = 0; j < tweet.__entities.urls.length; j++) {
       parsedUrl = url.parse(tweet.__entities.urls[j].expanded_url, true)
       if (parsedUrl.hostname === 'www.youtube.com') {
+        // again we can just append the entity HTML to the end of renderedText, because media entities are always
+        // displayed after the text of the tweet
         tweet.renderedText += "<div class='flex-video widescreen'><iframe src='//www.youtube.com/embed/" + parsedUrl.query.v + "' frameborder='0' scrolling='no' allowtransparency='true'></iframe></div>"
       } else if (parsedUrl.hostname === 'youtu.be') {
         tweet.renderedText += "<div class='flex-video widescreen'><iframe src='//www.youtube.com/embed/" + parsedUrl.pathname.slice(1) + "' frameborder='0' scrolling='no' allowtransparency='true'></iframe></div>"
