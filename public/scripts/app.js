@@ -13,7 +13,8 @@ angular.module('wynnoApp', [
   'infinite-scroll',
   'ngRoute',
   'btford.markdown',
-  'pasvaz.bindonce'
+  'pasvaz.bindonce',
+  'ngRepeatReorder'
 ])
 .config(function ($routeProvider) {
   $routeProvider

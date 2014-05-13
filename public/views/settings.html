@@ -15,7 +15,7 @@
                 You currently have no active filters. To make one, click <span class="icomoon-add-to-list wynnoPurple desktopButton"></span> in the navigation bar.
               </div>
             </div>
-            <div class="row" ng-repeat="filter in activeFilters">
+            <div class="row" ng-repeat-reorder="filter in activeFilters" ng-repeat-reorder-handle="filterWrapper">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
                   <div class="filterNumber">
