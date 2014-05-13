@@ -617,19 +617,18 @@ $retweet-header-padding-bottom: 3px;
 }
 
 .tweetPicLinkWrapper {
-    display: block;
+    display: inline-block;
     overflow: hidden;
     max-height: 253px;
     border-radius: 5px;
-    max-width: 593px;
 }
 
 .tweetPicContainer {
-    text-align: center;
+    //text-align: center;
 }
 
 .tweetPic {
-    width: 100%;
+    max-width: 330px;
 }
 
   // CSS for responsive Youtube iframe embed
@@ -639,7 +638,8 @@ $retweet-header-padding-bottom: 3px;
   padding-top: 25px;
   padding-bottom: 67.5%;
   height: 0;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   overflow: hidden;
 }
  
