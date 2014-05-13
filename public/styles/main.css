@@ -9185,6 +9185,11 @@ button.btn.btn-default.navbar-btn.glyphButton {
   margin-top: 80px;
 }
 
+/* line 1251, main.scss */
+.drag {
+  margin-top: -80px;
+}
+
 /* line 1257, main.scss */
 .blogPostBody {
   font-size: 18px;
