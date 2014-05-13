@@ -9181,117 +9181,154 @@ button.btn.btn-default.navbar-btn.glyphButton {
 }
 
 /* line 1249, main.scss */
+.ng-repeat-reorder-parent, [ng-repeat-reorder] {
+  z-index: 10;
+  position: relative;
+}
+
+/* line 1254, main.scss */
+[ng-repeat-reorder].dragging {
+  z-index: 11;
+  position: absolute;
+}
+
+/* line 1259, main.scss */
+.row.dragging .filterWrapper {
+  border: 1px solid #cccccc;
+}
+
+/* line 1263, main.scss */
+.row.dragging-after .filterWrapper {
+  background-color: green;
+  border-top: 1px solid #cccccc;
+}
+
+/* line 1268, main.scss */
+.row.dragging-before .filterWrapper {
+  background-color: red;
+}
+
+/* line 1272, main.scss */
+.active-drag-below {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 1281, main.scss */
 .blogPostBody {
   font-size: 18px;
 }
 
-/* line 1253, main.scss */
+/* line 1285, main.scss */
 .blogPostBody li {
   line-height: 1.4;
 }
 
-/* line 1257, main.scss */
+/* line 1289, main.scss */
 .blogPost .metaInfo {
   color: #777;
   text-align: right;
   font-size: 20px;
 }
 
-/* line 1263, main.scss */
+/* line 1295, main.scss */
 .blogPost .blogPostBody strong {
   color: #a166d5;
 }
 
-/* line 1267, main.scss */
+/* line 1299, main.scss */
 .blogPost a:hover {
   text-decoration: none;
 }
 
-/* line 1271, main.scss */
+/* line 1303, main.scss */
 .blogPost .jumbotron {
   padding-top: 20px;
 }
 
-/* line 1275, main.scss */
+/* line 1307, main.scss */
 .blogPost h2 {
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-/* line 1280, main.scss */
+/* line 1312, main.scss */
 .blogPost p > img {
   display: block;
   margin: 0 auto;
   padding: 20px 0;
 }
 
-/* line 1286, main.scss */
+/* line 1318, main.scss */
 .liNestedItemLeftCol {
   height: 100%;
   float: left;
 }
 
-/* line 1291, main.scss */
+/* line 1323, main.scss */
 .liNestedItemRightCol {
   padding-left: 10px;
   overflow: hidden;
 }
 
-/* line 1296, main.scss */
+/* line 1328, main.scss */
 .blogPostBody h2 {
   margin-top: 20px;
 }
 
 @media (min-width: 400px) {
-  /* line 1303, main.scss */
+  /* line 1335, main.scss */
   .tweetPic {
     max-width: 330px;
   }
 }
 @media (min-width: 768px) {
-  /* line 1309, main.scss */
+  /* line 1341, main.scss */
   body > .container {
     padding-top: 60px;
   }
 
-  /* line 1313, main.scss */
+  /* line 1345, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 1317, main.scss */
+  /* line 1349, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 1321, main.scss */
+  /* line 1353, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 
-  /* line 1325, main.scss */
+  /* line 1357, main.scss */
   .landingMainBig {
     font-size: 10em;
   }
 
-  /* line 1329, main.scss */
+  /* line 1361, main.scss */
   .landingFeature {
     font-size: 8em;
   }
 
-  /* line 1333, main.scss */
+  /* line 1365, main.scss */
   .tryIt {
     font-size: 26px;
     width: 50%;
   }
 
-  /* line 1338, main.scss */
+  /* line 1370, main.scss */
   .serverErrorAlert {
     width: 60%;
     left: 20%;
   }
 
-  /* line 1343, main.scss */
+  /* line 1375, main.scss */
   .filterNumber {
     display: block;
     padding: 6px 10px;
@@ -9299,33 +9336,33 @@ button.btn.btn-default.navbar-btn.glyphButton {
     float: left;
   }
 
-  /* line 1350, main.scss */
+  /* line 1382, main.scss */
   .filterBuilderOpen .modal-dialog {
     width: 100%;
   }
 }
 @media (min-width: 992px) {
-  /* line 1356, main.scss */
+  /* line 1388, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 1360, main.scss */
+  /* line 1392, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 1365, main.scss */
+  /* line 1397, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 1369, main.scss */
+  /* line 1401, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 1373, main.scss */
+  /* line 1405, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -9333,49 +9370,49 @@ button.btn.btn-default.navbar-btn.glyphButton {
     border-bottom: 0;
   }
 
-  /* line 1380, main.scss */
+  /* line 1412, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1384, main.scss */
+  /* line 1416, main.scss */
   .gapBelow {
     border-bottom: 1px dashed #e0e0e0;
   }
 
-  /* line 1388, main.scss */
+  /* line 1420, main.scss */
   .gapAbove {
     border-top: 1px dashed #e0e0e0;
   }
 
-  /* line 1392, main.scss */
+  /* line 1424, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1396, main.scss */
+  /* line 1428, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 1401, main.scss */
+  /* line 1433, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 1409, main.scss */
+  /* line 1441, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 1413, main.scss */
+  /* line 1445, main.scss */
   .bigBirdText {
     font-size: 28px;
   }
 
-  /* line 1417, main.scss */
+  /* line 1449, main.scss */
   .serverErrorAlert {
     width: 50%;
     left: 25%;

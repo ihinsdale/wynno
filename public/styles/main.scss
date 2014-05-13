@@ -1244,6 +1244,38 @@ $twitterButtonRadius: 3px;
     cursor: pointer;
 }
 
+// ngRepeatReorder styling
+
+.ng-repeat-reorder-parent, [ng-repeat-reorder]{
+	z-index: 10;
+	position: relative;
+}
+
+[ng-repeat-reorder].dragging{
+	z-index: 11;
+	position: absolute;
+}
+
+.row.dragging .filterWrapper {
+  border: 1px solid #cccccc;
+}
+
+.row.dragging-after .filterWrapper {
+  background-color: green;
+  border-top: 1px solid #cccccc;
+}
+
+.row.dragging-before .filterWrapper {
+  background-color: red;
+}
+
+.active-drag-below {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 // Blog styling
 
 .blogPostBody {
