@@ -57,7 +57,11 @@ angular.module('wynnoApp.directives')
               'dragenter',
               function(e) {
                 this.classList.add('over');
+
+                var binId = this.id;
+                var item = document.getElementById(e.dataTransfer.getData('Text'));
                 // if entered bin is above source, move items in between down
+                
                 // if entered bin is below source, move items in between up
                 return false;
               },
@@ -68,6 +72,8 @@ angular.module('wynnoApp.directives')
               'dragleave',
               function(e) {
                 this.classList.remove('over');
+
+                var binId = this.id;
                 return false;
               },
               false

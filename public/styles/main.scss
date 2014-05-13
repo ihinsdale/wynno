@@ -646,10 +646,10 @@ $retweet-header-padding-bottom: 3px;
   margin-top: 10px;
   overflow: hidden;
 }
- 
+
 .flex-video.widescreen { padding-bottom: 57.25%; }
 .flex-video.vimeo { padding-top: 0; }
- 
+
 .flex-video iframe,
 .flex-video object,
 .flex-video embed {
@@ -1242,6 +1242,14 @@ $twitterButtonRadius: 3px;
 
 .infoPopover:hover {
     cursor: pointer;
+}
+
+.over {
+    margin-top: 80px;
+}
+
+.drag {
+    margin-top: -80px;
 }
 
 // Blog styling
