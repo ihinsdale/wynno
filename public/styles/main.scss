@@ -631,8 +631,12 @@ $retweet-header-padding-bottom: 3px;
     max-width: 330px;
 }
 
+.videoContainer {
+    max-width: 400px;
+}
+
   // CSS for responsive Youtube iframe embed
-  // Cf. https://gist.github.com/jgarber/2302238, http://stackoverflow.com/a/12235638
+  // Cf. https://gist.github.com/jgarber/2302238
 .flex-video {
   position: relative;
   padding-top: 25px;
