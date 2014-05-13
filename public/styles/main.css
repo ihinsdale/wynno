@@ -8506,17 +8506,17 @@ button.btn.btn-default.navbar-btn.glyphButton {
   overflow: hidden;
   max-height: 253px;
   border-radius: 5px;
+  max-width: 593px;
 }
 
-/* line 626, main.scss */
+/* line 627, main.scss */
 .tweetPicContainer {
   text-align: center;
 }
 
-/* line 630, main.scss */
+/* line 631, main.scss */
 .tweetPic {
   width: 100%;
-  max-width: 496px;
 }
 
 /* line 645, main.scss */

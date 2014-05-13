@@ -621,6 +621,7 @@ $retweet-header-padding-bottom: 3px;
     overflow: hidden;
     max-height: 253px;
     border-radius: 5px;
+    max-width: 593px;
 }
 
 .tweetPicContainer {
@@ -629,7 +630,6 @@ $retweet-header-padding-bottom: 3px;
 
 .tweetPic {
     width: 100%;
-    max-width: 496px;
 }
 
 // vote button styling
