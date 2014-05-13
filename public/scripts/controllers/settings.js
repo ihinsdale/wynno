@@ -104,10 +104,6 @@ angular.module('wynnoApp.controllers')
     }
   };
 
-  $scope.handleDrop = function(itemId, binId) {
-    alert('Item ' + itemId + ' has been dropped in bin ' + binId);
-  };
-
   // Initialize
   window.scrollTo(0, 0);
   $scope.injectSettings();
