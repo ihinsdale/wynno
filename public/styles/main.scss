@@ -1299,6 +1299,12 @@ $twitterButtonRadius: 3px;
 
 // media query-based styling
 
+@media (min-width: 400px) {
+    .tweetPic {
+        max-width: 330px;
+    }
+}
+
 @media (min-width: 768px) {
     body > .container {
         padding-top: 60px;
@@ -1343,10 +1349,6 @@ $twitterButtonRadius: 3px;
 
     .filterBuilderOpen .modal-dialog {
         width: 100%;
-    }
-
-    .tweetPic {
-        max-width: 330px;
     }
 }
 
