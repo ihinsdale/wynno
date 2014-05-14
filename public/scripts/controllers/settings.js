@@ -104,6 +104,12 @@ angular.module('wynnoApp.controllers')
     }
   };
 
+  $scope.reorderActiveFilters = function(origIndexDragged) {
+    activeFilters.splice(origIndexDragged, 1);
+    // Update activeFilters saved in db
+    // TODO
+  }
+
   // Initialize
   window.scrollTo(0, 0);
   $scope.injectSettings();
