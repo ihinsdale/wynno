@@ -9,13 +9,13 @@
           </div>
         </h3>
         <div class="panel filterPanel">
-          <div class="filtersContainer">
+          <div class="filtersContainer" dnd-list="activeFilters">
             <div class="row" ng-if="!activeFilters.length">
               <div class="col-xs-12 col-md-12">
                 You currently have no active filters. To make one, click <span class="icomoon-add-to-list wynnoPurple desktopButton"></span> in the navigation bar.
               </div>
             </div>
-            <div class="row" ng-repeat="filter in activeFilters">
+            <div class="row filterRow" ng-repeat="filter in activeFilters" dnd-draggable="filter" dnd-moved="activeFilters.splice($index, 1)" dnd-effect-allowed="move" dnd-selected="models.selected = filter" ng-class="{'selected': models.selected === filter}">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
                   <div class="filterNumber">

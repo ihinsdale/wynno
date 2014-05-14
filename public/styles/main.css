@@ -9180,128 +9180,197 @@ button.btn.btn-default.navbar-btn.glyphButton {
   cursor: pointer;
 }
 
-/* line 1247, main.scss */
-.over {
-  margin-top: 80px;
+/*
+ * With nested lists it's very important that only the droplist and the
+ * draggable elements react to mouse events. This can be achieved as follows:
+ */
+/* line 1254, main.scss */
+.filtersContainer[dnd-list] * {
+  pointer-events: none;
 }
 
-/* line 1251, main.scss */
-.drag {
-  margin-top: -80px;
+/*
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+/* line 1262, main.scss */
+.filtersContainer[dnd-list], .filtersContainer[dnd-list] > .row.filterRow {
+  pointer-events: auto;
+  position: relative;
 }
 
-/* line 1257, main.scss */
+/*
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+/* line 1271, main.scss */
+.filtersContainer[dnd-list] {
+  min-height: 42px;
+  padding-left: 0px;
+}
+
+/*
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+/* line 1282, main.scss */
+.filtersContainer[dnd-list] .dndDraggingSource {
+  display: none;
+}
+
+/*
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+/* line 1291, main.scss */
+.filtersContainer[dnd-list] .dndPlaceholder {
+  display: block;
+  background-color: #ddd;
+  min-height: 42px;
+}
+
+/*
+ * The dnd-lists's child elements currently MUST have
+ * position: relative. Otherwise we can not determine
+ * whether the mouse pointer is in the upper or lower
+ * half of the element we are dragging over. In other
+ * browsers we can use event.offsetY for this.
+ */
+/* line 1304, main.scss */
+.filtersContainer[dnd-list] .row.filterRow {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+}
+
+/*
+ * Show selected elements in green
+ */
+/* line 1317, main.scss */
+.filtersContainer[dnd-list] .row.filterRow.selected {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+/* line 1326, main.scss */
 .blogPostBody {
   font-size: 18px;
 }
 
-/* line 1261, main.scss */
+/* line 1330, main.scss */
 .blogPostBody li {
   line-height: 1.4;
 }
 
-/* line 1265, main.scss */
+/* line 1334, main.scss */
 .blogPost .metaInfo {
   color: #777;
   text-align: right;
   font-size: 20px;
 }
 
-/* line 1271, main.scss */
+/* line 1340, main.scss */
 .blogPost .blogPostBody strong {
   color: #a166d5;
 }
 
-/* line 1275, main.scss */
+/* line 1344, main.scss */
 .blogPost a:hover {
   text-decoration: none;
 }
 
-/* line 1279, main.scss */
+/* line 1348, main.scss */
 .blogPost .jumbotron {
   padding-top: 20px;
 }
 
-/* line 1283, main.scss */
+/* line 1352, main.scss */
 .blogPost h2 {
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-/* line 1288, main.scss */
+/* line 1357, main.scss */
 .blogPost p > img {
   display: block;
   margin: 0 auto;
   padding: 20px 0;
 }
 
-/* line 1294, main.scss */
+/* line 1363, main.scss */
 .liNestedItemLeftCol {
   height: 100%;
   float: left;
 }
 
-/* line 1299, main.scss */
+/* line 1368, main.scss */
 .liNestedItemRightCol {
   padding-left: 10px;
   overflow: hidden;
 }
 
-/* line 1304, main.scss */
+/* line 1373, main.scss */
 .blogPostBody h2 {
   margin-top: 20px;
 }
 
 @media (min-width: 400px) {
-  /* line 1311, main.scss */
+  /* line 1380, main.scss */
   .tweetPic {
     max-width: 330px;
   }
 }
 @media (min-width: 768px) {
-  /* line 1317, main.scss */
+  /* line 1386, main.scss */
   body > .container {
     padding-top: 60px;
   }
 
-  /* line 1321, main.scss */
+  /* line 1390, main.scss */
   .navbar-brand {
     line-height: 12px;
   }
 
-  /* line 1325, main.scss */
+  /* line 1394, main.scss */
   .wynnoButtons {
     padding-left: 60px;
   }
 
-  /* line 1329, main.scss */
+  /* line 1398, main.scss */
   .landingFeatureSmall.hidden-xs {
     display: inline !important;
   }
 
-  /* line 1333, main.scss */
+  /* line 1402, main.scss */
   .landingMainBig {
     font-size: 10em;
   }
 
-  /* line 1337, main.scss */
+  /* line 1406, main.scss */
   .landingFeature {
     font-size: 8em;
   }
 
-  /* line 1341, main.scss */
+  /* line 1410, main.scss */
   .tryIt {
     font-size: 26px;
     width: 50%;
   }
 
-  /* line 1346, main.scss */
+  /* line 1415, main.scss */
   .serverErrorAlert {
     width: 60%;
     left: 20%;
   }
 
-  /* line 1351, main.scss */
+  /* line 1420, main.scss */
   .filterNumber {
     display: block;
     padding: 6px 10px;
@@ -9309,33 +9378,33 @@ button.btn.btn-default.navbar-btn.glyphButton {
     float: left;
   }
 
-  /* line 1358, main.scss */
+  /* line 1427, main.scss */
   .filterBuilderOpen .modal-dialog {
     width: 100%;
   }
 }
 @media (min-width: 992px) {
-  /* line 1364, main.scss */
+  /* line 1433, main.scss */
   .tweet {
     padding-bottom: 0;
   }
 
-  /* line 1368, main.scss */
+  /* line 1437, main.scss */
   .voteButtons {
     margin-top: 1px;
   }
 
-  /* line 1373, main.scss */
+  /* line 1442, main.scss */
   .tweet:hover .btn-group-vertical > .btn, .tweet:hover .tweetStuff {
     background-color: #f8f8f8;
   }
 
-  /* line 1377, main.scss */
+  /* line 1446, main.scss */
   .voteButtons > .btn-group-vertical > .btn:hover {
     background-color: #efe6f6;
   }
 
-  /* line 1381, main.scss */
+  /* line 1450, main.scss */
   .tweetStuff {
     border-top: 1px solid #e0e0e0;
     border-left: 1px solid #e0e0e0;
@@ -9343,49 +9412,49 @@ button.btn.btn-default.navbar-btn.glyphButton {
     border-bottom: 0;
   }
 
-  /* line 1388, main.scss */
+  /* line 1457, main.scss */
   .tweetBelowHiddenGivenVote {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1392, main.scss */
+  /* line 1461, main.scss */
   .gapBelow {
     border-bottom: 1px dashed #e0e0e0;
   }
 
-  /* line 1396, main.scss */
+  /* line 1465, main.scss */
   .gapAbove {
     border-top: 1px dashed #e0e0e0;
   }
 
-  /* line 1400, main.scss */
+  /* line 1469, main.scss */
   .lastTweet {
     border-bottom: 1px solid #e0e0e0;
   }
 
-  /* line 1404, main.scss */
+  /* line 1473, main.scss */
   .voteAye, .voteNay {
     display: block;
     width: 100%;
   }
 
-  /* line 1409, main.scss */
+  /* line 1478, main.scss */
   .voteAye {
     border-right: 0;
     border-bottom: 1px dotted #e0e0e0;
   }
 
-  /* line 1417, main.scss */
+  /* line 1486, main.scss */
   .feedback {
     display: inline;
   }
 
-  /* line 1421, main.scss */
+  /* line 1490, main.scss */
   .bigBirdText {
     font-size: 28px;
   }
 
-  /* line 1425, main.scss */
+  /* line 1494, main.scss */
   .serverErrorAlert {
     width: 50%;
     left: 25%;

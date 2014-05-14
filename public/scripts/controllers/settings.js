@@ -110,6 +110,11 @@ angular.module('wynnoApp.controllers')
   console.log('location hash is:', $location.hash());
   $scope.suggestionsActive = $location.hash() === 'suggestions';
 
+  // Required for drag-and-drop of activeFilters
+  $scope.dnd = {
+    selected: null
+  };
+
   // Set listener for agreeing to ToS
   $scope.$on('agreementSaved', function() {
     $scope.injectSettings();
