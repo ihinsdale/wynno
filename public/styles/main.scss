@@ -1264,6 +1264,10 @@ $twitterButtonRadius: 3px;
     position: relative;
 }
 
+.filtersContainer[dnd-list] > .row.filterRow {
+    margin-left: 0;
+}
+
 /*
  * The dnd-list should always have a min-height,
  * otherwise you can't drop to it once it's empty
@@ -1279,7 +1283,7 @@ $twitterButtonRadius: 3px;
  * sense to hide it to give the user the feeling
  * that he's actually moving it.
  */
-.filtersContainer[dnd-list] .dndDraggingSource {
+.filtersContainer[dnd-list] .row.filterRow.dndDraggingSource {
     display: none;
 }
 
@@ -1303,9 +1307,9 @@ $twitterButtonRadius: 3px;
  */
 .filtersContainer[dnd-list] .row.filterRow {
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
+    //border: 1px solid #ddd;
+    //border-top-right-radius: 4px;
+    //border-top-left-radius: 4px;
     display: block;
     padding: 10px 15px;
     margin-bottom: -1px;
