@@ -15,7 +15,7 @@
                 You currently have no active filters. To make one, click <span class="icomoon-add-to-list wynnoPurple desktopButton"></span> in the navigation bar.
               </div>
             </div>
-            <div class="row filterRow" ng-repeat="filter in activeFilters" dnd-draggable="filter" dnd-moved="activeFilters.splice($index, 1)" dnd-effect-allowed="move" dnd-selected="dnd.selected = filter" ng-class="{'selected': dnd.selected === filter}">
+            <div class="row filterRow" ng-repeat="filter in activeFilters" dnd-draggable="filter" dnd-moved="" dnd-effect-allowed="move" dnd-selected="dnd.selected = filter" ng-class="{'selected': dnd.selected === filter}">
               <div class="col-xs-12 col-md-12">
                 <div class="filterWrapper">
                   <div class="filterNumber">
