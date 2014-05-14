@@ -1252,7 +1252,7 @@ $twitterButtonRadius: 3px;
  * draggable elements react to mouse events. This can be achieved as follows:
  */
 .filtersContainer[dnd-list] * {
-    pointer-events: none;
+    //pointer-events: none;
 }
 
 /*

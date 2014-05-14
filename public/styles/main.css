@@ -9184,11 +9184,6 @@ button.btn.btn-default.navbar-btn.glyphButton {
  * With nested lists it's very important that only the droplist and the
  * draggable elements react to mouse events. This can be achieved as follows:
  */
-/* line 1254, main.scss */
-.filtersContainer[dnd-list] * {
-  pointer-events: none;
-}
-
 /*
  * For the correct positioning of the placeholder element, the dnd-list and
  * it's children must have position: relative
