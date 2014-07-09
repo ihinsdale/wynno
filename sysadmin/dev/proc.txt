@@ -12,3 +12,17 @@
      nvm use v0.10.26
      nodemon ~/wynno/dist/server.js
    - sudo service nginx restart
+
+After reboot:
+sudo fdisk -l
+sudo mount /dev/xvdf /home/ubuntu/db
+sudo service mongod stop
+Then in a new screen session, in separate windows:
+- sudo mongod --auth --dbpath ~/db/data
+- cd /home/ubuntu/wynno/dist/lib/python
+  python /home/ubuntu/wynno/dist/lib/python/server.py
+- source ~/.nvm/nvm.sh
+  nvm use v0.10.26
+  nodemon ~/wynno/dist/server.js
+- sudo service nginx restart
+

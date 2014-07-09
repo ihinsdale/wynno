@@ -1,0 +1,6 @@
+scaling nodeservers
+
+create digitalocean droplet
+add new nodeserver to nginx's list of upstream servers
+deploy app code to droplet
+update ufw rules to allow connections from droplet, on mongoservers, redisservers, and pythonservers

@@ -97,3 +97,9 @@ To take the app down:
 (can either put maintenance.html on nginxservers, which will display scheduled maintenance
 page, or can sudo service wynno stop on all nodeservers which will result in 502 intercepted by
 nginx which will then display the unscheduled maintenance page)
+
+To inspect the database manually:
+
+ssh -p 202 -i ../keys/mongo1 deploy@162.243.195.145
+mongo -u [username] -p [password] --authenticationDatabase wynno-prod
+e.g. db.users.find()
