@@ -1,0 +1,10 @@
+servers' root passwd:
+sWu726FB7wjhf8euBG8Zjnqne9923bKEzmqppopp0i1u1i2928xnnaoZZnaqppwjsee617Qvb
+servers' deploy passwd:
+c4m281bz73bbQQErsknx827nvbp9U78zej5GhgWjaubG31b31b554u2h34ji8UW981zxvnkW2
+mongo master user passwd:
+nwu2j3JW9823bWF82bkOQIOnm8h2301BSiueOIiofwn23bSDhfweH23b4tMnzxcJS8298hBFu
+mongo app db user passwd:
+skljOn23n8svKBjfwmxnvnoiw82h4JSfjnqwolZKnoiwe289KSFJnwnbzoqnOOnqj287r8719
+Vault pass
+[firsthome]

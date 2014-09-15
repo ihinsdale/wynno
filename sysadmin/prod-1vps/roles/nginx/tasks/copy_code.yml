@@ -1,0 +1,16 @@
+---
+# This playbook copies over the static assets served by nginx. It is used by both the
+# initial deployment playbook (site.yml) and in rolling upgrades of app code.
+
+# (If our nginxserver were a separate machine, i.e. if we didn't already 
+# have the entire git repo for wynno on this machine, this is where
+# we would have a synchronize task to actually copy the folder of static assets)
+# In the case of wynno-prod, we already have the static files
+
+- name: Make the nginx_user the owner of the folder of static assets that will be served by nginx
+  shell: chown -R {{ nginx_user }}:{{ nginx_user }} /home/deploy/wynno/dist/public
+  sudo: yes
+
+- name: Set read permissions on this folder
+  shell: chmod -R 0755 /home/deploy/wynno/dist/public
+  sudo: yes

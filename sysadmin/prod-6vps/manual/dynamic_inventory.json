@@ -1,0 +1,82 @@
+{
+    "droplets": [
+        {
+            "backups_active": "False",
+            "created_at": "2014-04-09T15_15_18Z",
+            "id": "1439522",
+            "image_id": "1505447",
+            "ip_address": "192.241.189.84",
+            "locked": "False",
+            "name": "nginx1",
+            "private_ip_address": "10.128.195.97",
+            "region_id": "4",
+            "size_id": "66",
+            "status": "active"
+        },
+        {
+            "backups_active": "True",
+            "created_at": "2014-04-09T15_15_19Z",
+            "id": "1439523",
+            "image_id": "1505447",
+            "ip_address": "107.170.30.150",
+            "locked": "False",
+            "name": "redis1",
+            "private_ip_address": "10.128.197.136",
+            "region_id": "4",
+            "size_id": "66",
+            "status": "active"
+        },
+        {
+            "backups_active": "True",
+            "created_at": "2014-04-09T15_15_20Z",
+            "id": "1439526",
+            "image_id": "1505447",
+            "ip_address": "162.243.123.46",
+            "locked": "False",
+            "name": "mongo1",
+            "private_ip_address": "10.128.195.94",
+            "region_id": "4",
+            "size_id": "66",
+            "status": "active"
+        },
+        {
+            "backups_active": "False",
+            "created_at": "2014-04-09T15_15_21Z",
+            "id": "1439527",
+            "image_id": "1505447",
+            "ip_address": "162.243.194.234",
+            "locked": "False",
+            "name": "node1",
+            "private_ip_address": "10.128.195.96",
+            "region_id": "4",
+            "size_id": "66",
+            "status": "active"
+        },
+        {
+            "backups_active": "False",
+            "created_at": "2014-04-09T15_15_23Z",
+            "id": "1439528",
+            "image_id": "1505447",
+            "ip_address": "107.170.20.57",
+            "locked": "False",
+            "name": "node2",
+            "private_ip_address": "10.128.197.134",
+            "region_id": "4",
+            "size_id": "66",
+            "status": "active"
+        },
+        {
+            "backups_active": "False",
+            "created_at": "2014-04-09T15_15_24Z",
+            "id": "1439529",
+            "image_id": "1505447",
+            "ip_address": "162.243.195.145",
+            "locked": "False",
+            "name": "python1",
+            "private_ip_address": "10.128.195.95",
+            "region_id": "4",
+            "size_id": "66",
+            "status": "active"
+        }
+    ]
+}

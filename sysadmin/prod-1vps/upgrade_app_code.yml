@@ -1,0 +1,24 @@
+---
+
+- name: Update app code on node.js server and the static files served by nginx
+  hosts: nodeservers
+  remote_user: deploy
+  tasks:
+  - name: Stop the node server process
+    service: name=wynno state=stopped
+    sudo: yes
+  - name: Copy over SSH key for use with Github
+    copy: src=~/.ssh/github dest=/home/deploy/github
+  - name: Update the app code
+    git: repo=ssh://git@github.com/ihinsdale/wynno.git dest=/home/deploy/wynno key_file=/home/deploy/github accept_hostkey=yes
+    sudo: yes
+  - name: Delete the SSH key for github
+    command: rm -rf /home/deploy/github
+    sudo: yes
+  - name: Copy over the info.json file
+    copy: src=../../dist/lib/config/keys/prod/info.json dest=/home/deploy/wynno/dist/lib/config/keys/prod/info.json
+  - name: Install node modules used in production locally
+    npm: path=/home/deploy/wynno/dist production=yes
+  - name: Restart the node server process
+    service: name=wynno state=restarted
+    sudo: yes

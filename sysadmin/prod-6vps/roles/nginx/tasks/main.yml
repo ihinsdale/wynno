@@ -1,0 +1,54 @@
+---
+
+  # Copy over the wynno app static files
+- include: copy_code.yml
+
+- name: Open up port 80 to connections from all IP addresses since this is our public-facing web server
+  command: ufw allow 80/tcp
+  sudo: yes
+
+- name: Open up port 443 to connections from all IP adddresses for same reason
+  command: ufw allow 443/tcp
+  sudo: yes
+
+- name: Reload ufw to enable the new settings
+  command: ufw reload
+  sudo: yes
+
+- name: Install python-software-properties so we can add PPA
+  apt: pkg=python-software-properties state=present
+  sudo: yes
+
+- name: Add nginx PPA
+  apt_repository: repo='ppa:nginx/stable'
+  sudo: yes
+
+- name: Install nginx
+  apt: pkg=nginx state=installed update_cache=true
+  sudo: yes
+
+- name: Set nginx to start on boot
+  command: update-rc.d nginx defaults # Cf. https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
+  sudo: yes
+
+- name: Make directory for ssl credentials
+  file: path=/etc/nginx/ssl state=directory
+  sudo: yes
+
+- name: Copy over the SSL .pem credential
+  copy: src=www_wynno_com.pem dest=/etc/nginx/ssl/www_wynno_com.pem
+  sudo: yes
+
+- name: Copy over SSL .key credential
+  copy: src=www_wynno_com.key dest=/etc/nginx/ssl/www_wynno_com.key
+  sudo: yes
+
+- name: Make a copy of the default nginx.conf file if such copy does not already exist
+  command: cp /etc/nginx/nginx.conf /home/deploy/nginx.conf.default
+  sudo: yes
+
+- name: Replace nginx.conf with the one for wynno
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf mode=0644 # 0644 or try 0755 if there is nginx error
+  sudo: yes
+  notify:
+    - Restart nginx

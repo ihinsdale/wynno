@@ -1,0 +1,16 @@
+description "wynno Python machine learning"
+author  "engineering@wynno.com"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+env NODE_ENV={{ app_env }}
+
+chdir /home/deploy/dist/lib/python
+
+respawn
+
+script
+    sudo su - deploy
+    exec python server.py
+end script

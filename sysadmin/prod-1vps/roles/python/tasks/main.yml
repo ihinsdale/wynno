@@ -1,0 +1,112 @@
+---
+# This playbook is executed on wynno production servers that do the Python machine learning.
+
+# Install necessary Python components
+
+- name: Install python-setuptools
+  apt: pkg=python-setuptools state=present
+  sudo: yes
+
+- name: Install python-pip
+  apt: pkg=python-pip state=present
+  sudo: yes
+
+- name: Install python-dev
+  apt: pkg=python-dev state=present
+  sudo: yes
+
+- name: Install virtualenv
+  apt: pkg=python-virtualenv state=present
+  sudo: yes
+
+- name: Install libzmq-dev
+  apt: pkg=libzmq-dev state=present
+  sudo: yes
+
+- name: Install PyZMQ
+  pip: name=pyzmq
+  sudo: yes
+
+- name: Install PyMongo
+  pip: name=pymongo
+  sudo: yes
+
+- name: Install numpy
+  pip: name=numpy
+  sudo: yes
+
+- name: Install scipy
+  apt: pkg=python-scipy state=present
+  sudo: yes
+
+- name: Install pyyaml
+  pip: name=pyyaml
+  sudo: yes
+
+- name: Install nltk
+  pip: name=nltk
+  sudo: yes
+
+- name: Install libevent-dev
+  apt: pkg=libevent-dev state=present
+  sudo: yes
+
+- name: Install ZeroRPC
+  pip: name=zerorpc
+  sudo: yes
+
+- name: Install scikit-learn
+  pip: name=scikit-learn
+  sudo: yes
+
+- name: Install python-pygraphviz
+  apt: pkg=python-pygraphviz state=present
+  sudo: yes
+
+- name: Install python-pydot
+  apt: pkg=python-pydot state=present
+  sudo: yes
+  # We don't want to use pip for this, there's a bug with the pip install
+
+- name: Install unidecode
+  pip: name=unidecode
+  sudo: yes
+
+- name: Install punkt sentence tokenizer for nltk
+  command: python -m nltk.downloader punkt
+
+- name: Install stopwords corpus for nltk
+  command: python -m nltk.downloader stopwords
+
+- name: Copy these files that have just been download over to the path where Python looks for them
+  shell: cp -r /home/deploy/nltk_data /usr/local/lib
+  sudo: yes
+
+# Copy over the relevant application code
+
+- name: Create directories for app code
+  # This will create the dist, lib, and config directories
+  file: path=/home/deploy/dist/lib/config/keys/prod state=directory
+
+  # Do the actual copying over
+- include: copy_code.yml
+
+- name: Set server.py to run on launch by copying over our upstart script
+  template: src=wynno_python.conf.j2 dest=/etc/init/wynno_python.conf
+  sudo: yes
+
+- name: Run server.py
+  service: name=wynno_python state=started
+  sudo: yes
+
+- name: Reboot
+  command: reboot
+  sudo: yes
+
+- name: Wait 3 minutes for server to boot up again
+  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=180
+
+- name: Check that Python server is launched after reboot
+  command: sudo service wynno_python status
+  register: python_status
+  failed_when: "python_status.stdout.find('start/running') == -1"

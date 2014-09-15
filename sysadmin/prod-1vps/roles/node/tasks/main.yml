@@ -1,0 +1,52 @@
+---
+# This playbook is executed on all wynno-prod node.js webservers.
+
+# - name: Copy over nvm install.sh script
+#   copy: src=install.sh dest=/home/deploy/install.sh
+#
+# - name: Run the nvm install script
+#   shell: sh /home/deploy/install.sh
+#
+# - name: Install latest production version of node 0.10.28
+#   shell: . ~/.nvm/nvm.sh && nvm install v0.10.28 executable=/bin/bash
+
+# Decided not to use nvm, so that I could use an Upstart script to run node without much difficulty
+# The advantage of this is it makes it easy to update app code, using Ansible via upgrade_app_code.yml
+
+- name: Ensure system packages necessary for node modules particularly zerorpc are installed
+  apt: pkg={{ item }} state=present update_cache=yes
+  sudo: yes
+  with_items:
+    - python-software-properties # This is necessary for adding the PPA
+    - make
+    - build-essential
+
+- name: Add node.js PPA
+  apt_repository: repo='ppa:chris-lea/node.js'
+  sudo: yes
+
+- name: Install node.js
+  apt: pkg=nodejs=0.10.31-1chl1~trusty1 state=installed update_cache=true
+  sudo: yes
+
+- name: Make a directory for wynno files
+  file: path=/home/deploy/wynno state=directory
+
+# Copy over the app code, the necessary config .json files, and install node modules
+- include: copy_code.yml
+
+- name: Copy over the Upstart script which runs node
+  template: src=wynno.conf.j2 dest=/etc/init/wynno.conf # not sure if mode=0644 is necessary or not
+  sudo: yes
+
+- name: Reboot which will run the Upstart script that launches node
+  command: reboot
+  sudo: yes
+
+- name: Wait 2 minutes for server to boot up again
+  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=120
+
+- name: Check that node server is launched upon reboot
+  command: sudo service wynno status
+  register: wynno_status
+  failed_when: "wynno_status.stdout.find('start/running') == -1"

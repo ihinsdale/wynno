@@ -1,0 +1,4 @@
+---
+
+nginx_user: www-data
+root_path: /home/deploy/wynno/dist/public

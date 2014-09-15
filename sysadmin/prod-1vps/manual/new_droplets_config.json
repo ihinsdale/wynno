@@ -1,0 +1,11 @@
+{
+  "wynno": {
+    "wynno-prod": {
+      "size": "512mb",
+      "image": 5141286,
+      "region": "nyc2",
+      "private_networking": true,
+      "backups": true
+    }
+  }
+}

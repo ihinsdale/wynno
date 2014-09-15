@@ -1,0 +1,25 @@
+description "Upstart script to run the wynno Node.js servers"
+
+# Originally I had tried to use Forever with this Upstart script. However
+# I simply could not get the script to run successfully. So I abandoned
+# the use of Forever and instead just use the respawn option to relaunch
+# node if it fails (Cf. http://stackoverflow.com/a/22945382)
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+env NODE_ENV={{ app_env }}
+
+chdir /home/deploy/wynno/dist
+
+respawn
+respawn limit 3 30
+
+script
+    exec npm start 2>&1 >> /var/log/wynno.log
+    # Note that this runs node as root. We would not do this in production;
+    # we'd want to run node as www-data user. But trying to run as www-data
+    # here was causing a problem, because it seems editing /etc/environment
+    # as we do in the common role was not properly setting the NODE_ENV variable
+    # when sudo is also used to switch user to www-data
+end script

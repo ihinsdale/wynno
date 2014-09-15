@@ -1,0 +1,41 @@
+To setup/deploy wynno-prod from scratch:
+-1.  Any changes to files in lib/config/keys/prod require 'grunt build' to be run on the
+    developer's local machine, so that the changes are propagated to
+    /dist/lib/config/keys/prod. It's these keys in the /dist folder which are what
+    get dynamically populated with IP addresses of the relevant app nodes
+    and then deployed to the relevant nodes.
+0.  new_droplets_config.json should be specified as desired and COMMITed if any
+    changes were made. We want to keep track of the app 'inventory' using version
+    control.
+1.  Run create_infra.sh and update the production inventory file with correct ansible_ssh_host addresses,
+    i.e the IP of the new droplet
+-OR-
+1. Manually create a DO droplet running Ubuntu 14.04 x64 called wynno-prod, using a samenamed SSH
+   key generated via `ssh-keygen -t rsa -f ~/.ssh/wynno-prod -N ''`
+   and update IP addresses in /dist/lib/config/keys/prod/(node.json, python.json) to be "127.0.0.1"
+   and update ansible_ssh_host in production (file) with IP of the new droplet
+2. Run prepare_deployed_copy.sh.
+3. Connect to VPN
+4. Run configure.sh.
+5. This should launch the app--it can be checked by going to the IP of the droplet in a browser
+6. To check, SSH into wynno-prod instance on Port new_ssh_port
+
+To inspect the database manually:
+
+ssh into wynno-prod
+mongo -u [username] -p [password] --authenticationDatabase wynno-prod
+e.g. db.users.find()
+
+
+**************************************
+BELOW HERE NOT TESTED
+**************************************
+
+To upgrade app code:
+Code should be committed and pushed to Github. Must be connected to VPN.
+`sh deploy.sh`
+(Note this playbook will have our prod server using the master branch of the repo)
+
+To upgrade app code and run our tests:
+After pushing code to Github, and after connecting to VPN:
+`sh deploy_and_test.sh`

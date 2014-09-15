@@ -1,0 +1,25 @@
+---
+# This playbook copies over the app code run by the node.js/express servers.
+# It also installs the production node modules specified in package.json.
+# It is used by both the initial deployment playbook (site.yml) and in rolling
+# upgrades of app code.
+
+- name: Copy over the dist folder
+  # Because we are copying from the wynno-gateway server, the necessary config keys
+  # are present there and so will be copied over in this step too
+  copy: src={{ gateway_abs_path_to_dist }} dest=/home/deploy/wynno
+  # It's not necessary to delete old app files on these servers; the cruft we are talking about is minimal
+  # furthermore it's important to preserve newrelic_agent.log and all the node_modules
+
+- name: Install node modules used in production locally
+  npm: path=/home/deploy/wynno/dist production=yes
+
+- name: Make a newrelic_agent.log file if it doesn't exist
+  copy: src=newrelic_agent.log dest=/home/deploy/wynno/dist/newrelic_agent.log force=no
+
+- name: Make the www-data user the owner of the New Relic log file
+  # The previous task installed the New Relic node module
+  # Since we run our server as the www-data user, that user needs to be able to write
+  # to the newrelic_agent.log file
+  shell: chown www-data:www-data /home/deploy/wynno/dist/newrelic_agent.log
+  sudo: yes
