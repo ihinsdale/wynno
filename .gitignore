@@ -15,8 +15,9 @@ sysadmin/dev/server.key
 sysadmin/dev/server.key.org
 sysadmin/dev/wynno-dev5.pem
 sysadmin/prod/keys
-sysadmin/prod/roles/nginx/files/www_wynno_com.pem
-sysadmin/prod/roles/nginx/files/www_wynno_com.key
+cert_chain.crt
+www_wynno_com.pem
+www_wynno_com.key
 sysadmin/prod/roles/nginx/files/www_wynno_com.csr
 sysadmin/prod/manual/hostname_ssh_key_ids.json
 sysadmin/prod/manual/preexisting_droplets.json

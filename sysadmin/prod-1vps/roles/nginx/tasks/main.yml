@@ -35,8 +35,8 @@
   file: path=/etc/nginx/ssl state=directory
   sudo: yes
 
-- name: Copy over the SSL .pem credential
-  copy: src=www_wynno_com.pem dest=/etc/nginx/ssl/www_wynno_com.pem
+- name: Copy over the SSL .crt credential
+  copy: src=cert_chain.crt dest=/etc/nginx/ssl/cert_chain.crt
   sudo: yes
 
 - name: Copy over SSL .key credential

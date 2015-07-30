@@ -26,7 +26,7 @@
   sudo: yes
 
 - name: Install node.js
-  apt: pkg=nodejs=0.10.31-1chl1~trusty1 state=installed update_cache=true
+  apt: pkg=nodejs state=installed update_cache=true
   sudo: yes
 
 - name: Make a directory for wynno files

@@ -47,7 +47,7 @@ http {
     server {
         listen 80;
         listen 443 ssl;
-        ssl_certificate /etc/nginx/ssl/www_wynno_com.pem;
+        ssl_certificate /etc/nginx/ssl/cert_chain.crt;
         ssl_certificate_key /etc/nginx/ssl/www_wynno_com.key;
         server_name www.wynno.com;
         return 301 https://wynno.com$request_uri; # redirects all traffic, HTTP or HTTPS, to the corresponding HTTPS route at root domain
@@ -64,7 +64,7 @@ http {
     server {
         listen 443 ssl;
 
-        ssl_certificate /etc/nginx/ssl/www_wynno_com.pem;
+        ssl_certificate /etc/nginx/ssl/cert_chain.crt;
         ssl_certificate_key /etc/nginx/ssl/www_wynno_com.key;
         ssl_protocols        SSLv3 TLSv1;
         ssl_ciphers HIGH:!aNULL:!MD5;
