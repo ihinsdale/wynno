@@ -1,1 +1,1 @@
-Copyright 2013-2014, Ian Hinsdale. All rights reserved.
+Copyright (c) Ian Hinsdale, 2013-2014. All rights reserved.
